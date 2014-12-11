@@ -30,14 +30,7 @@ namespace Text.Core
             var locase = Enumerable.Range(0x61, 26).Select(i => (char)i);
             foreach (var c in upcase.Concat(locase).Where(this.Scanner.TryMatch))
             {
-                token = new AlphaToken
-                {
-                    Column = context.Column,
-                    Line = context.Line,
-                    Offset = context.Offset,
-                    Data = char.ToString(c)
-                };
-
+                token = new AlphaToken(char.ToString(c), context);
                 return true;
             }
 

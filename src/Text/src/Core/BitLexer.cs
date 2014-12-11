@@ -30,14 +30,7 @@ namespace Text.Core
             var context = this.Scanner.GetContext();
             foreach (var character in new[] { '0', '1' }.Where(character => this.Scanner.TryMatch(character)))
             {
-                token = new BitToken
-                {
-                    Line = context.Line,
-                    Column = context.Column,
-                    Offset = context.Offset,
-                    Data = char.ToString(character)
-                };
-
+                token = new BitToken(char.ToString(character), context);
                 return true;
             }
 
