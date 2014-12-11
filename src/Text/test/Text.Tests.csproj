@@ -52,6 +52,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="AlphaLexerTests.cs" />
+    <Compile Include="CharLexerTests.cs" />
     <Compile Include="TextScannerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

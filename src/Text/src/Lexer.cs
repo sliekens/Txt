@@ -16,6 +16,7 @@
         }
 
         public abstract TToken Read();
+        
         public abstract bool TryRead(out TToken token);
     }
 }
