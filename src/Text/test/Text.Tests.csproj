@@ -56,7 +56,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Text\src\Text.csproj">
+    <ProjectReference Include="..\src\Text.csproj">
       <Project>{f889024e-5c62-49ac-ac9f-c17bc1cb9621}</Project>
       <Name>Text</Name>
     </ProjectReference>
