@@ -6,24 +6,17 @@ namespace Text
 {
     public sealed class TextScanner : ITextScanner
     {
-        private const char Cr = '\r';
-        private const char Lf = '\n';
         private int offset = -1;
-        private readonly EndOfLine endOfLine;
         private readonly TextReader textReader;
-        private bool endOfInput = false;
+        private bool endOfInput;
         private int line;
         private char nextCharacter;
 
-        public TextScanner(TextReader textReader, EndOfLine endOfLine = EndOfLine.CrLf)
+        public TextScanner(TextReader textReader)
         {
             Contract.Requires(textReader != null);
-            Contract.Requires(Enum.IsDefined(typeof(EndOfLine), endOfLine));
             this.textReader = textReader;
-            this.endOfLine = endOfLine;
         }
-
-        public int Column { get; private set; }
 
         public bool EndOfInput
         {
@@ -31,11 +24,6 @@ namespace Text
             {
                 return endOfInput;
             }
-        }
-
-        public int Line
-        {
-            get { return line; }
         }
 
         public char NextCharacter
@@ -55,7 +43,7 @@ namespace Text
 
         public ITextContext GetContext()
         {
-            return new TextContext(Column, Line, offset);
+            return new TextContext(offset);
         }
 
         public bool TryMatch(char c)
@@ -87,27 +75,6 @@ namespace Text
                 }
 
                 offset++;
-                if (character == Cr)
-                {
-                    Column = 0;
-                    if (endOfLine == EndOfLine.Cr)
-                    {
-                        this.line++;
-                    }
-                }
-                else if (character == Lf)
-                {
-                    this.line++;
-                    if (endOfLine == EndOfLine.Lf)
-                    {
-                        Column = 0;
-                    }
-                }
-                else
-                {
-                    Column++;
-                }
-
                 this.nextCharacter = (char)character;
                 return true;
             }
