@@ -47,6 +47,8 @@
     <Compile Include="Core\CrLfLexer.cs" />
     <Compile Include="Core\CrLfToken.cs" />
     <Compile Include="Core\CrToken.cs" />
+    <Compile Include="Core\CtlLexer.cs" />
+    <Compile Include="Core\CtlToken.cs" />
     <Compile Include="Core\DigitLexer.cs" />
     <Compile Include="Core\DigitToken.cs" />
     <Compile Include="Core\LfLexer.cs" />
