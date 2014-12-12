@@ -1,8 +1,13 @@
-﻿namespace Text
+﻿using System.Diagnostics;
+
+namespace Text
 {
     public abstract class Token : ITextContext
     {
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly int offset;
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly string data;
 
         protected Token(string data, ITextContext context)
