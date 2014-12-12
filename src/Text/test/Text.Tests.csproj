@@ -57,6 +57,7 @@
     <Compile Include="CrLfLexerTests.cs" />
     <Compile Include="CtlLexerTests.cs" />
     <Compile Include="DigitLexerTests.cs" />
+    <Compile Include="DQuoteLexerTests.cs" />
     <Compile Include="LfLexerTests.cs" />
     <Compile Include="TextScannerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
