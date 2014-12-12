@@ -43,6 +43,8 @@
     <Compile Include="Core\BitToken.cs" />
     <Compile Include="Core\CharLexer.cs" />
     <Compile Include="Core\CharToken.cs" />
+    <Compile Include="Core\CrLexer.cs" />
+    <Compile Include="Core\CrToken.cs" />
     <Compile Include="Core\DigitLexer.cs" />
     <Compile Include="Core\DigitToken.cs" />
     <Compile Include="ILexer.cs" />
