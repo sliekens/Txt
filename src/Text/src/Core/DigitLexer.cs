@@ -25,10 +25,14 @@ namespace Text.Core
         {
             token = default(DigitToken);
             var context = this.Scanner.GetContext();
-            foreach (var digit in new[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' }.Where(digit => this.Scanner.TryMatch(digit)))
+            for (int i = '0'; i <= '9'; i++)
             {
-                token = new DigitToken(char.ToString(digit), context);
-                return true;
+                var c = (char)i;
+                if (this.Scanner.TryMatch(c))
+                {
+                    token = new DigitToken(char.ToString(c), context);
+                    return true;
+                }
             }
 
             return false;
