@@ -55,6 +55,8 @@
     <Compile Include="Core\DQuoteToken.cs" />
     <Compile Include="Core\LfLexer.cs" />
     <Compile Include="Core\LfToken.cs" />
+    <Compile Include="Core\HexDigLexer.cs" />
+    <Compile Include="Core\HexDigToken.cs" />
     <Compile Include="ILexer.cs" />
     <Compile Include="ITextContext.cs" />
     <Compile Include="ITextScanner.cs" />
