@@ -16,19 +16,19 @@
                 return token;
             }
 
-            throw new SyntaxErrorException("Expected CR", context);
+            throw new SyntaxErrorException("Expected 'CR'", context);
         }
 
         public override bool TryRead(out CrToken token)
         {
-            token = default(CrToken);
             var context = this.Scanner.GetContext();
             if (this.Scanner.TryMatch('\r'))
             {
-                token = new CrToken("\r", context);
+                token = new CrToken(context);
                 return true;
             }
 
+            token = default(CrToken);
             return false;
         }
     }
