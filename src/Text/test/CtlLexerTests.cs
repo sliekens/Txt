@@ -23,9 +23,9 @@ namespace Text
         }
 
         [TestMethod]
-        public void FailNul()
+        public void FailAlpha()
         {
-            var text = "\0";
+            var text = "A";
             using (var reader = new StringReader(text))
             using (var scanner = new TextScanner(reader))
             {
