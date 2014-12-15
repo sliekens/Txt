@@ -24,31 +24,32 @@ namespace Text.Core
             var context = this.Scanner.GetContext();
             try
             {
-                return new CrLfToken(context, this.crLexer.Read(), this.lfLexer.Read());
+                return new CrLfToken(this.crLexer.Read(), this.lfLexer.Read(), context);
             }
             catch (SyntaxErrorException syntaxErrorException)
             {
-                throw new SyntaxErrorException("Expected CR LF", syntaxErrorException, context);
+                throw new SyntaxErrorException("Expected 'CR LF'", syntaxErrorException, context);
             }
         }
 
         public override bool TryRead(out CrLfToken token)
         {
-            token = default(CrLfToken);
             var context = this.Scanner.GetContext();
             CrToken crToken;
             if (!this.crLexer.TryRead(out crToken))
             {
+                token = default(CrLfToken);
                 return false;
             }
 
             LfToken lfToken;
             if (!this.lfLexer.TryRead(out lfToken))
             {
+                token = default(CrLfToken);
                 return false;
             }
 
-            token = new CrLfToken(context, crToken, lfToken);
+            token = new CrLfToken(crToken, lfToken, context);
             return true;
         }
     }

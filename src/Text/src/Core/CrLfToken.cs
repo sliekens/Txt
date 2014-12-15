@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Diagnostics.Contracts;
 
 namespace Text.Core
 {
@@ -9,9 +10,12 @@ namespace Text.Core
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly CrToken crToken;
 
-        public CrLfToken(ITextContext context, CrToken crToken, LfToken lfToken)
+        public CrLfToken(CrToken crToken, LfToken lfToken, ITextContext context)
             : base("\r\n", context)
         {
+            Contract.Requires(crToken != null);
+            Contract.Requires(lfToken != null);
+            Contract.Requires(context != null);
             this.crToken = crToken;
             this.lfToken = lfToken;
         }
