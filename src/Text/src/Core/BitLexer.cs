@@ -1,10 +1,5 @@
-﻿using System.Linq;
-
-namespace Text.Core
+﻿namespace Text.Core
 {
-    /// <summary>
-    /// 
-    /// </summary>
     public class BitLexer : Lexer<BitToken>
     {
         public BitLexer(ITextScanner scanner)
@@ -21,19 +16,25 @@ namespace Text.Core
                 return token;
             }
 
-            throw new SyntaxErrorException("Expected BIT", context);
+            throw new SyntaxErrorException("Expected 'BIT'", context);
         }
 
         public override bool TryRead(out BitToken token)
         {
-            token = default(BitToken);
             var context = this.Scanner.GetContext();
-            foreach (var character in new[] { '0', '1' }.Where(character => this.Scanner.TryMatch(character)))
+            if (this.Scanner.TryMatch('0'))
             {
-                token = new BitToken(char.ToString(character), context);
+                token = new BitToken('0', context);
                 return true;
             }
 
+            if (this.Scanner.TryMatch('1'))
+            {
+                token = new BitToken('1', context);
+                return true;
+            }
+
+            token = default(BitToken);
             return false;
         }
     }
