@@ -9,7 +9,6 @@ namespace Text
         private int offset = -1;
         private readonly TextReader textReader;
         private bool endOfInput;
-        private int line;
         private char nextCharacter;
 
         public TextScanner(TextReader textReader)
