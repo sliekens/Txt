@@ -10,6 +10,11 @@ namespace Text
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly string data;
 
+        protected Token(char data, ITextContext context)
+            : this(char.ToString(data), context)
+        {
+        }
+
         protected Token(string data, ITextContext context)
         {
             this.data = data;
