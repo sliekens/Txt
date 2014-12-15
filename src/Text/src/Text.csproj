@@ -65,6 +65,8 @@
     <Compile Include="Core\OctetToken.cs" />
     <Compile Include="Core\SpLexer.cs" />
     <Compile Include="Core\SpToken.cs" />
+    <Compile Include="Core\WSpLexer.cs" />
+    <Compile Include="Core\WSpToken.cs" />
     <Compile Include="ILexer.cs" />
     <Compile Include="ITextContext.cs" />
     <Compile Include="ITextScanner.cs" />
