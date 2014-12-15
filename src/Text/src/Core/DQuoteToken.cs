@@ -3,7 +3,7 @@
     public class DQuoteToken : Token
     {
         public DQuoteToken(ITextContext context)
-            : base("\"", context)
+            : base('\"', context)
         {
         }
     }

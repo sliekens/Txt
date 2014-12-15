@@ -16,12 +16,11 @@
                 return token;
             }
 
-            throw new SyntaxErrorException("Expected DQUOTE", context);
+            throw new SyntaxErrorException("Expected 'DQUOTE'", context);
         }
 
         public override bool TryRead(out DQuoteToken token)
         {
-            token = default(DQuoteToken);
             var context = this.Scanner.GetContext();
             if (this.Scanner.TryMatch('\"'))
             {
@@ -29,6 +28,7 @@
                 return true;
             }
 
+            token = default(DQuoteToken);
             return false;
         }
     }
