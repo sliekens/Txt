@@ -53,6 +53,8 @@
     <Compile Include="Core\DigitToken.cs" />
     <Compile Include="Core\DQuoteLexer.cs" />
     <Compile Include="Core\DQuoteToken.cs" />
+    <Compile Include="Core\HTabLexer.cs" />
+    <Compile Include="Core\HTabToken.cs" />
     <Compile Include="Core\LfLexer.cs" />
     <Compile Include="Core\LfToken.cs" />
     <Compile Include="Core\HexDigLexer.cs" />
