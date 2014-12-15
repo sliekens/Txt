@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
 
 namespace Text
 {
     /// <summary>Provides the interface for types that scan text with 1 character of lookahead and no backtracking.</summary>
+    [ContractClass((typeof(ContractClassForITextScanner)))]
     public interface ITextScanner : ITextContext, IDisposable
     {
         char NextCharacter { get; }
