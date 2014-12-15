@@ -26,12 +26,24 @@ namespace Text.Core
         {
             token = default(AlphaToken);
             var context = this.Scanner.GetContext();
-            var upcase = Enumerable.Range(0x41, 26).Select(i => (char)i);
-            var locase = Enumerable.Range(0x61, 26).Select(i => (char)i);
-            foreach (var c in upcase.Concat(locase).Where(this.Scanner.TryMatch))
+            for (int i = 'A'; i <= 'Z'; i++)
             {
-                token = new AlphaToken(char.ToString(c), context);
-                return true;
+                var c = (char) i;
+                if (this.Scanner.TryMatch(c))
+                {
+                    token = new AlphaToken(c, context);
+                    return true;
+                }
+            }
+
+            for (int i = 'a'; i <= 'z'; i++)
+            {
+                var c = (char)i;
+                if (this.Scanner.TryMatch(c))
+                {
+                    token = new AlphaToken(c, context);
+                    return true;
+                }
             }
 
             return false;
