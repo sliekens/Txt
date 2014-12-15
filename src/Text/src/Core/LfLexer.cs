@@ -18,12 +18,11 @@ namespace Text.Core
                 return token;
             }
 
-            throw new SyntaxErrorException("Expected LF", context);
+            throw new SyntaxErrorException("Expected 'LF'", context);
         }
 
         public override bool TryRead(out LfToken token)
         {
-            token = default(LfToken);
             var context = this.Scanner.GetContext();
             if (this.Scanner.TryMatch('\n'))
             {
@@ -31,6 +30,7 @@ namespace Text.Core
                 return true;
             }
 
+            token = default(LfToken);
             return false;
         }
     }
