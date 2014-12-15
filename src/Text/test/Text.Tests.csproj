@@ -62,6 +62,7 @@
     <Compile Include="HTabLexerTests.cs" />
     <Compile Include="LfLexerTests.cs" />
     <Compile Include="LWspLexerTests.cs" />
+    <Compile Include="OctetLexerTests.cs" />
     <Compile Include="SpLexerTests.cs" />
     <Compile Include="TextScannerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

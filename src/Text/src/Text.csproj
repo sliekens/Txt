@@ -61,6 +61,8 @@
     <Compile Include="Core\HexDigToken.cs" />
     <Compile Include="Core\LWspLexer.cs" />
     <Compile Include="Core\LWspToken.cs" />
+    <Compile Include="Core\OctetLexer.cs" />
+    <Compile Include="Core\OctetToken.cs" />
     <Compile Include="Core\SpLexer.cs" />
     <Compile Include="Core\SpToken.cs" />
     <Compile Include="ILexer.cs" />
