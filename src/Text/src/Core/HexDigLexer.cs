@@ -37,12 +37,24 @@
                 return true;
             }
 
+            // A-F
             for (int i = 'A'; i <= 'F'; i++)
             {
-                var c = (char) i;
+                var c = (char)i;
                 if (this.Scanner.TryMatch(c))
                 {
-                    token = new HexDigToken(char.ToString(c), context);
+                    token = new HexDigToken(c, context);
+                    return true;
+                }
+            }
+
+            // a-f
+            for (int i = 'a'; i <= 'f'; i++)
+            {
+                var c = (char)i;
+                if (this.Scanner.TryMatch(c))
+                {
+                    token = new HexDigToken(c, context);
                     return true;
                 }
             }

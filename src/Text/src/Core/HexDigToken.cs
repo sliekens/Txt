@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Diagnostics.Contracts;
 
 namespace Text.Core
 {
@@ -10,12 +11,14 @@ namespace Text.Core
         public HexDigToken(DigitToken digitToken, ITextContext context)
             : base(digitToken.Data, context)
         {
+            Contract.Requires(digitToken != null);
             this.digitToken = digitToken;
         }
 
-        public HexDigToken(string data, ITextContext context)
+        public HexDigToken(char data, ITextContext context)
             : base(data, context)
         {
+            Contract.Requires((data >= '0' && data <= '9') ||(data >= 'A' && data <= 'F') || (data >= 'a' && data <= 'f'));
         }
 
         public DigitToken DigitToken
