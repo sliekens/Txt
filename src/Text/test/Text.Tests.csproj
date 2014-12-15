@@ -66,6 +66,7 @@
     <Compile Include="SpLexerTests.cs" />
     <Compile Include="TextScannerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VCharLexerTests.cs" />
     <Compile Include="WSpLexerTests.cs" />
   </ItemGroup>
   <ItemGroup>
