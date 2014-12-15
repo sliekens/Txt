@@ -25,12 +25,11 @@ namespace Text.Core
         {
             token = default(DigitToken);
             var context = this.Scanner.GetContext();
-            for (int i = '0'; i <= '9'; i++)
+            for (var c = '0'; c <= '9'; c++)
             {
-                var c = (char)i;
                 if (this.Scanner.TryMatch(c))
                 {
-                    token = new DigitToken(char.ToString(c), context);
+                    token = new DigitToken(c, context);
                     return true;
                 }
             }
