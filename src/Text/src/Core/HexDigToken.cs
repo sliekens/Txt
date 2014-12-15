@@ -12,6 +12,7 @@ namespace Text.Core
             : base(digitToken.Data, context)
         {
             Contract.Requires(digitToken != null);
+            Contract.Requires(context != null);
             this.digitToken = digitToken;
         }
 
@@ -19,6 +20,7 @@ namespace Text.Core
             : base(data, context)
         {
             Contract.Requires((data >= '0' && data <= '9') ||(data >= 'A' && data <= 'F') || (data >= 'a' && data <= 'f'));
+            Contract.Requires(context != null);
         }
 
         public DigitToken DigitToken

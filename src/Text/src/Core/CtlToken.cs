@@ -8,6 +8,7 @@ namespace Text.Core
             : base(data, context)
         {
             Contract.Requires((data >= 0x00 && data <= 0x1F) || data == 0x7F);
+            Contract.Requires(context != null);
         }
     }
 }

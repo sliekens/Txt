@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
 
 namespace Text
 {
@@ -8,18 +9,21 @@ namespace Text
 
         public SyntaxErrorException(ITextContext context)
         {
+            Contract.Requires(context != null);
             this.offset = context.Offset;
         }
 
         public SyntaxErrorException(string message, ITextContext context)
             : base(message)
         {
+            Contract.Requires(context != null);
             this.offset = context.Offset;
         }
 
         public SyntaxErrorException(string message, Exception inner, ITextContext context)
             : base(message, inner)
         {
+            Contract.Requires(context != null);
             this.offset = context.Offset;
         }
 

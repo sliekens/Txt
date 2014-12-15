@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.Contracts;
 
 namespace Text.Core
 {
@@ -12,12 +13,15 @@ namespace Text.Core
         public LWspToken(IList<Tuple<CrLfToken, WSpToken>> data, ITextContext context)
             : this(Linearize(data), context)
         {
-
+            Contract.Requires(data != null);
+            Contract.Requires(context != null);
         }
 
         private LWspToken(IList<Token> data, ITextContext context)
             : base(string.Concat(data), context)
         {
+            Contract.Requires(data != null);
+            Contract.Requires(context != null);
             this.lwsp = data;
         }
 

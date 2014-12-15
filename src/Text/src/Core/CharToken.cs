@@ -9,6 +9,7 @@ namespace Text.Core
             : base(data, context)
         {
             Contract.Requires(data >= 0x01 && data <= 0x7F);
+            Contract.Requires(context != null);
         }
     }
 }

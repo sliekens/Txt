@@ -9,6 +9,7 @@ namespace Text.Core
             : base(data, context)
         {
             Contract.Requires((data >= 'A' && data <= 'Z') || (data >= 'a' && data <= 'z'));
+            Contract.Requires(context != null);
         }
     }
 }

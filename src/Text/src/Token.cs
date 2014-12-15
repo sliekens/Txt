@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Diagnostics.Contracts;
 
 namespace Text
 {
@@ -13,10 +14,13 @@ namespace Text
         protected Token(char data, ITextContext context)
             : this(char.ToString(data), context)
         {
+            Contract.Requires(context != null);
         }
 
         protected Token(string data, ITextContext context)
         {
+            Contract.Requires(data != null);
+            Contract.Requires(context != null);
             this.data = data;
             this.offset = context.Offset;
         }
