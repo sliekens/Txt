@@ -9,7 +9,7 @@ namespace Text.Core
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly IList<Token> lwsp;
 
-        public LWspToken(IList<Tuple<CrLfToken, SpToken>> data, ITextContext context)
+        public LWspToken(IList<Tuple<CrLfToken, WSpToken>> data, ITextContext context)
             : this(Linearize(data), context)
         {
 
@@ -29,7 +29,7 @@ namespace Text.Core
             }
         }
 
-        private static IList<Token> Linearize(IList<Tuple<CrLfToken, SpToken>> data)
+        private static IList<Token> Linearize(IList<Tuple<CrLfToken, WSpToken>> data)
         {
             var tokens = new List<Token>();
             foreach (var tuple in data)

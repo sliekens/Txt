@@ -7,42 +7,42 @@ namespace Text.Core
     public class LWspLexer : Lexer<LWspToken>
     {
         private readonly ILexer<CrLfToken> crLfLexer;
-        private readonly ILexer<SpToken> spLexer;
+        private readonly ILexer<WSpToken> wSpLexer;
 
         public LWspLexer(ITextScanner scanner)
-            : this(scanner, new CrLfLexer(scanner), new SpLexer(scanner))
+            : this(scanner, new CrLfLexer(scanner), new WSpLexer(scanner))
         {
             Contract.Requires(scanner != null);
         }
 
-        public LWspLexer(ITextScanner scanner, ILexer<CrLfToken> crLfLexer, ILexer<SpToken> spLexer)
+        public LWspLexer(ITextScanner scanner, ILexer<CrLfToken> crLfLexer, ILexer<WSpToken> wSpLexer)
             : base(scanner)
         {
             Contract.Requires(scanner != null);
             Contract.Requires(crLfLexer != null);
-            Contract.Requires(spLexer != null);
+            Contract.Requires(wSpLexer != null);
             this.crLfLexer = crLfLexer;
-            this.spLexer = spLexer;
+            this.wSpLexer = wSpLexer;
         }
 
         public override LWspToken Read()
         {
             var context = this.Scanner.GetContext();
-            var data = new List<Tuple<CrLfToken, SpToken>>();
+            var data = new List<Tuple<CrLfToken, WSpToken>>();
             try
             {
                 while (true)
                 {
                     CrLfToken crLfToken;
-                    SpToken spToken;
+                    WSpToken spToken;
                     if (this.crLfLexer.TryRead(out crLfToken))
                     {
-                        spToken = this.spLexer.Read();
-                        data.Add(new Tuple<CrLfToken, SpToken>(crLfToken, spToken));
+                        spToken = this.wSpLexer.Read();
+                        data.Add(new Tuple<CrLfToken, WSpToken>(crLfToken, spToken));
                     }
-                    else if (this.spLexer.TryRead(out spToken))
+                    else if (this.wSpLexer.TryRead(out spToken))
                     {
-                        data.Add(new Tuple<CrLfToken, SpToken>(null, spToken));
+                        data.Add(new Tuple<CrLfToken, WSpToken>(null, spToken));
                     }
                     else
                     {
@@ -59,29 +59,29 @@ namespace Text.Core
         public override bool TryRead(out LWspToken token)
         {
             var context = this.Scanner.GetContext();
-            var data = new List<Tuple<CrLfToken, SpToken>>();
+            var data = new List<Tuple<CrLfToken, WSpToken>>();
             while (true)
             {
                 CrLfToken crLfToken;
-                SpToken spToken;
+                WSpToken spToken;
                 if (this.crLfLexer.TryRead(out crLfToken))
                 {
-                    if (this.spLexer.TryRead(out spToken))
+                    if (this.wSpLexer.TryRead(out spToken))
                     {
-                        data.Add(new Tuple<CrLfToken, SpToken>(crLfToken, spToken));
+                        data.Add(new Tuple<CrLfToken, WSpToken>(crLfToken, spToken));
                     }
                     else
                     {
-                        // Possible BUG: when CRLF is NOT followed by SP, the caller might expect the next 2 characters to be CRLF. This is impossible without backtracking, which is not supported.
+                        // Possible BUG: when CRLF is NOT followed by SP / HTAB, the caller might expect the next 2 characters to be CRLF. This is impossible without backtracking, which is not supported.
                         // For now, let's just set the token to an illegal value and then return 'false' to indicate an error. This allows the caller to use the token data to recover from errors caused by 'LWSP CRLF *(OCTET)' strings.
-                        data.Add(new Tuple<CrLfToken, SpToken>(crLfToken, null));
+                        data.Add(new Tuple<CrLfToken, WSpToken>(crLfToken, null));
                         token = new LWspToken(data, context);
                         return false;
                     }
                 }
-                else if (this.spLexer.TryRead(out spToken))
+                else if (this.wSpLexer.TryRead(out spToken))
                 {
-                    data.Add(new Tuple<CrLfToken, SpToken>(null, spToken));
+                    data.Add(new Tuple<CrLfToken, WSpToken>(null, spToken));
                 }
                 else
                 {
