@@ -3,7 +3,7 @@
     <metadata>
         <id>Text.Scanning</id>
         <version>0.1.0-alpha</version>
-        <title>Text</title>
+        <title>Text Scanning &amp; Parsing Foundation</title>
         <authors>Steven Liekens</authors>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>Base classes for object-oriented recursive descent parsers, designed to be extended with custom grammars and grammar parsers.</description>
