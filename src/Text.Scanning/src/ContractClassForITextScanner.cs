@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
 
-namespace Text
+namespace Text.Scanning
 {
     [ContractClassFor(typeof(ITextScanner))]
     internal abstract class ContractClassForITextScanner : ITextScanner

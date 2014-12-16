@@ -78,6 +78,12 @@
     <Compile Include="VCharLexerTests.cs" />
     <Compile Include="WSpLexerTests.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\src\Text.Scanning.csproj">
+      <Project>{f889024e-5c62-49ac-ac9f-c17bc1cb9621}</Project>
+      <Name>Text.Scanning</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

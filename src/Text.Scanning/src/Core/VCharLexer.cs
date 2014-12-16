@@ -1,7 +1,6 @@
-﻿using System;
-using System.Diagnostics.Contracts;
+﻿using System.Diagnostics.Contracts;
 
-namespace Text.Core
+namespace Text.Scanning.Core
 {
     public class VCharLexer : Lexer<VCharToken>
     {

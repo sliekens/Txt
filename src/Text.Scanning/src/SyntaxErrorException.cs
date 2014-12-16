@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
 
-namespace Text
+namespace Text.Scanning
 {
     public class SyntaxErrorException : Exception, ITextContext
     {

@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Diagnostics.Contracts;
 
-namespace Text.Core
+namespace Text.Scanning.Core
 {
     public class WSpToken : Token
     {

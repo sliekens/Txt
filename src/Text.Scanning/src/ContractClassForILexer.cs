@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
 
-namespace Text
+namespace Text.Scanning
 {
     [ContractClassFor(typeof(ILexer<>))]
     internal abstract class ContractClassForILexer<TToken> : ILexer<TToken> where TToken : Token

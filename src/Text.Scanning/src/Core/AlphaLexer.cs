@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace Text.Core
+﻿namespace Text.Scanning.Core
 {
     /// <summary>A-Z / a-z</summary>
     public class AlphaLexer : Lexer<AlphaToken>

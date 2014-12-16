@@ -1,4 +1,4 @@
-﻿namespace Text
+﻿namespace Text.Scanning
 {
     public abstract class Lexer<TToken> : ILexer<TToken>
         where TToken : Token

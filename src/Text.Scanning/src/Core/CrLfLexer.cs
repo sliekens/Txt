@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Text.Core
+﻿namespace Text.Scanning.Core
 {
     public class CrLfLexer : Lexer<CrLfToken>
     {

@@ -1,4 +1,4 @@
-﻿namespace Text
+﻿namespace Text.Scanning
 {
     public struct TextContext : ITextContext
     {

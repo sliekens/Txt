@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.Contracts;
 
-namespace Text.Core
+namespace Text.Scanning.Core
 {
     /// <summary>A-Z / a-z</summary>
     public class AlphaToken : Token

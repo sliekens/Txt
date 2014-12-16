@@ -1,4 +1,4 @@
-﻿namespace Text.Core
+﻿namespace Text.Scanning.Core
 {
     public class HexDigLexer : Lexer<HexDigToken>
     {

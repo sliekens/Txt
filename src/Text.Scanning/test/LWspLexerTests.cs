@@ -2,7 +2,8 @@
 using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Text.Core;
+using Text.Scanning;
+using Text.Scanning.Core;
 
 namespace Text
 {

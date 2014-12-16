@@ -1,4 +1,4 @@
-﻿namespace Text
+﻿namespace Text.Scanning
 {
     /// <summary>Provides the interface for types that provide contextual information about their source data.</summary>
     public interface ITextContext

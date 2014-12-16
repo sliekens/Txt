@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.Contracts;
 
-namespace Text
+namespace Text.Scanning
 {
     [ContractClass((typeof(ContractClassForILexer<>)))]
     public interface ILexer<TToken>

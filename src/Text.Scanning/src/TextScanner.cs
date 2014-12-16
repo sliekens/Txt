@@ -2,7 +2,7 @@
 using System.Diagnostics.Contracts;
 using System.IO;
 
-namespace Text
+namespace Text.Scanning
 {
     public sealed class TextScanner : ITextScanner
     {

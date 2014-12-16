@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Diagnostics.Contracts;
 
-namespace Text
+namespace Text.Scanning
 {
     public abstract class Token : ITextContext
     {

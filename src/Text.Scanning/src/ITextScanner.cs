@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
 
-namespace Text
+namespace Text.Scanning
 {
     /// <summary>Provides the interface for types that scan text with 1 character of lookahead and no backtracking.</summary>
     [ContractClass((typeof(ContractClassForITextScanner)))]

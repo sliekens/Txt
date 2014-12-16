@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.Contracts;
 
-namespace Text.Core
+namespace Text.Scanning.Core
 {
     /// <summary>\u0001 - \u007F</summary>
     public class CharToken : Token
