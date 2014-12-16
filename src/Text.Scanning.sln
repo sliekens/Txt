@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Text.Scanning", "Text\src\Text.Scanning.csproj", "{F889024E-5C62-49AC-AC9F-C17BC1CB9621}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{00C88FDC-7160-4287-9540-54BE5A1EAD48}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B202ABEB-8ABE-4CFB-91BA-B92F030918A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Text.Scanning.Tests", "Text\test\Text.Scanning.Tests.csproj", "{D2BCCA5A-4F6A-4A7C-8797-CFBA268A00F8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Text.Scanning", "Text.Scanning\src\Text.Scanning.csproj", "{F889024E-5C62-49AC-AC9F-C17BC1CB9621}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Text.Scanning.Tests", "Text.Scanning\test\Text.Scanning.Tests.csproj", "{D2BCCA5A-4F6A-4A7C-8797-CFBA268A00F8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +29,7 @@ Global
 		{D2BCCA5A-4F6A-4A7C-8797-CFBA268A00F8}.DebugCC|Any CPU.ActiveCfg = DebugCC|Any CPU
 		{D2BCCA5A-4F6A-4A7C-8797-CFBA268A00F8}.DebugCC|Any CPU.Build.0 = DebugCC|Any CPU
 		{D2BCCA5A-4F6A-4A7C-8797-CFBA268A00F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2BCCA5A-4F6A-4A7C-8797-CFBA268A00F8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
