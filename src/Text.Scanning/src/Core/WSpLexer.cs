@@ -31,7 +31,7 @@ namespace Text.Scanning.Core
                 return token;
             }
 
-            throw new SyntaxErrorException("Expected 'WSP'", this.Scanner.GetContext());
+            throw new SyntaxErrorException(this.Scanner.GetContext(), "Expected 'WSP'");
         }
 
         public override bool TryRead(out WSpToken token)

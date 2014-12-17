@@ -16,7 +16,7 @@
                 return token;
             }
 
-            throw new SyntaxErrorException("Expected 'CTL'", context);
+            throw new SyntaxErrorException(context, "Expected 'CTL'");
         }
 
         public override bool TryRead(out CtlToken token)

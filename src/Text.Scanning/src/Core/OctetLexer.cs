@@ -18,7 +18,7 @@ namespace Text.Scanning.Core
                 return token;
             }
 
-            throw new SyntaxErrorException("Expected 'OCTET'", this.Scanner.GetContext());
+            throw new SyntaxErrorException(this.Scanner.GetContext(), "Expected 'OCTET'");
         }
 
         public override bool TryRead(out OctetToken token)

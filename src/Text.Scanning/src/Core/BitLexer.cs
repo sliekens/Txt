@@ -16,7 +16,7 @@
                 return token;
             }
 
-            throw new SyntaxErrorException("Expected 'BIT'", context);
+            throw new SyntaxErrorException(context, "Expected 'BIT'");
         }
 
         public override bool TryRead(out BitToken token)

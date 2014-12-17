@@ -16,7 +16,7 @@
                 return token;
             }
 
-            throw new SyntaxErrorException("Expected 'DIGIT'", context);
+            throw new SyntaxErrorException(context, "Expected 'DIGIT'");
         }
 
         public override bool TryRead(out DigitToken token)

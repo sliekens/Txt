@@ -18,7 +18,7 @@ namespace Text.Scanning.Core
                 return token;
             }
 
-            throw new SyntaxErrorException("Expected 'VCHAR'", this.Scanner.GetContext());
+            throw new SyntaxErrorException(this.Scanner.GetContext(), "Expected 'VCHAR'");
         }
 
         public override bool TryRead(out VCharToken token)

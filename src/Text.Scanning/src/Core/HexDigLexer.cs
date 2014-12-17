@@ -24,7 +24,7 @@
                 return token;
             }
 
-            throw new SyntaxErrorException("Expected 'HEXDIG'", context);
+            throw new SyntaxErrorException(context, "Expected 'HEXDIG'");
         }
 
         public override bool TryRead(out HexDigToken token)

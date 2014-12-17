@@ -17,7 +17,7 @@
                 return token;
             }
 
-            throw new SyntaxErrorException("Expected 'ALPHA'", context);
+            throw new SyntaxErrorException(context, "Expected 'ALPHA'");
         }
 
         public override bool TryRead(out AlphaToken token)

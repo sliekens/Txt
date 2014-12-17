@@ -18,7 +18,7 @@ namespace Text.Scanning.Core
                 return token;
             }
 
-            throw new SyntaxErrorException("Expected 'HTAB'", this.Scanner.GetContext());
+            throw new SyntaxErrorException(this.Scanner.GetContext(), "Expected 'HTAB'");
         }
 
         public override bool TryRead(out HTabToken token)

@@ -16,7 +16,7 @@
                 return token;
             }
 
-            throw new SyntaxErrorException("Expected 'CR'", context);
+            throw new SyntaxErrorException(context, "Expected 'CR'");
         }
 
         public override bool TryRead(out CrToken token)

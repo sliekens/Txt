@@ -16,7 +16,7 @@
                 return token;
             }
 
-            throw new SyntaxErrorException("Expected 'CHAR'", context);
+            throw new SyntaxErrorException(context, "Expected 'CHAR'");
         }
 
         public override bool TryRead(out CharToken token)

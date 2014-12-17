@@ -16,7 +16,7 @@
                 return token;
             }
 
-            throw new SyntaxErrorException("Expected 'DQUOTE'", context);
+            throw new SyntaxErrorException(context, "Expected 'DQUOTE'");
         }
 
         public override bool TryRead(out DQuoteToken token)

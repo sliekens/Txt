@@ -26,7 +26,7 @@
             }
             catch (SyntaxErrorException syntaxErrorException)
             {
-                throw new SyntaxErrorException("Expected 'CR LF'", syntaxErrorException, context);
+                throw new SyntaxErrorException(context, "Expected 'CR LF'", syntaxErrorException);
             }
         }
 

@@ -18,7 +18,7 @@ namespace Text.Scanning.Core
                 return token;
             }
 
-            throw new SyntaxErrorException("Expected 'SP'", this.Scanner.GetContext());
+            throw new SyntaxErrorException(this.Scanner.GetContext(), "Expected 'SP'");
         }
 
         public override bool TryRead(out SpToken token)

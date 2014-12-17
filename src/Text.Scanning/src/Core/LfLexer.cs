@@ -16,7 +16,7 @@
                 return token;
             }
 
-            throw new SyntaxErrorException("Expected 'LF'", context);
+            throw new SyntaxErrorException(context, "Expected 'LF'");
         }
 
         public override bool TryRead(out LfToken token)
