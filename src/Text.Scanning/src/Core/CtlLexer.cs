@@ -27,9 +27,8 @@
             var context = this.Scanner.GetContext();
 
             // %x00-1F
-            for (int i = 0x00; i <= 0x1F; i++)
+            for (var c = '\u0000'; c <= '\u001F'; c++)
             {
-                var c = (char)i;
                 if (this.Scanner.TryMatch(c))
                 {
                     token = new CtlToken(c, context);
@@ -38,9 +37,9 @@
             }
 
             // %x7F
-            if (this.Scanner.TryMatch((char)0x7F))
+            if (this.Scanner.TryMatch('\u007F'))
             {
-                token = new CtlToken((char)0x7F, context);
+                token = new CtlToken('\u007F', context);
                 return true;
             }
 
