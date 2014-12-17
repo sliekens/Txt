@@ -17,5 +17,10 @@ namespace Text.Scanning
             Contract.Ensures(Contract.ValueAtReturn(out token) != null && Contract.Result<bool>() == true || Contract.Result<bool>() == false);
             throw new NotImplementedException();
         }
+
+        public void PutBack(TToken token)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

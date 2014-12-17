@@ -9,5 +9,7 @@ namespace Text.Scanning
         TToken Read();
 
         bool TryRead(out TToken token);
+
+        void PutBack(TToken token);
     }
 }

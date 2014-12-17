@@ -18,5 +18,19 @@
         public abstract TToken Read();
         
         public abstract bool TryRead(out TToken token);
+
+        public void PutBack(TToken token)
+        {
+            var data = token.Data;
+            if (data == null)
+            {
+                return;
+            }
+
+            for (int i = data.Length - 1; i >= 0; i--)
+            {
+                this.scanner.PutBack(data[i]);
+            }
+        }
     }
 }
