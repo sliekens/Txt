@@ -24,6 +24,7 @@ namespace Text.Scanning
             this.textReader = textReader;
         }
 
+        /// <inheritdoc />
         public bool EndOfInput
         {
             get
@@ -32,6 +33,7 @@ namespace Text.Scanning
             }
         }
 
+        /// <inheritdoc />
         public char? NextCharacter
         {
             get
@@ -45,6 +47,7 @@ namespace Text.Scanning
             }
         }
 
+        /// <inheritdoc />
         public int Offset
         {
             get
@@ -53,16 +56,19 @@ namespace Text.Scanning
             }
         }
 
+        /// <inheritdoc />
         public void Dispose()
         {
             ((IDisposable)this.textReader).Dispose();
         }
 
+        /// <inheritdoc />
         public ITextContext GetContext()
         {
             return new TextContext(offset);
         }
 
+        /// <inheritdoc />
         public void PutBack(char c)
         {
             if (this.endOfInput)
@@ -78,6 +84,7 @@ namespace Text.Scanning
             this.nextCharacter = c;
         }
 
+        /// <inheritdoc />
         public bool TryMatch(char c)
         {
             if (this.EndOfInput)
@@ -95,6 +102,7 @@ namespace Text.Scanning
             return true;
         }
 
+        /// <inheritdoc />
         public bool Read()
         {
             if (this.endOfInput)
