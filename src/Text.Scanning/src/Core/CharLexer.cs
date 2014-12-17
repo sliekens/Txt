@@ -1,10 +1,13 @@
 ﻿namespace Text.Scanning.Core
 {
+    using System.Diagnostics.Contracts;
+
     public class CharLexer : Lexer<CharToken>
     {
         public CharLexer(ITextScanner scanner)
             : base(scanner)
         {
+            Contract.Requires(scanner != null);
         }
 
         public override CharToken Read()

@@ -1,5 +1,7 @@
 ﻿namespace Text.Scanning.Core
 {
+    using System.Diagnostics.Contracts;
+
     public class CrLfLexer : Lexer<CrLfToken>
     {
         private readonly ILexer<CrToken> crLexer;
@@ -8,11 +10,13 @@
         public CrLfLexer(ITextScanner scanner)
             : this(scanner, new CrLexer(scanner), new LfLexer(scanner))
         {
+            Contract.Requires(scanner != null);
         }
 
         public CrLfLexer(ITextScanner scanner, ILexer<CrToken> crLexer, ILexer<LfToken> lfLexer)
             : base(scanner)
         {
+            Contract.Requires(scanner != null);
             this.crLexer = crLexer;
             this.lfLexer = lfLexer;
         }

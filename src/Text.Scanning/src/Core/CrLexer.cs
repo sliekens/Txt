@@ -1,10 +1,13 @@
 ﻿namespace Text.Scanning.Core
 {
+    using System.Diagnostics.Contracts;
+
     public class CrLexer : Lexer<CrToken>
     {
         public CrLexer(ITextScanner scanner)
             : base(scanner)
         {
+            Contract.Requires(scanner != null);
         }
 
         public override CrToken Read()

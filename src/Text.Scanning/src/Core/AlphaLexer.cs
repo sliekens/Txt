@@ -1,11 +1,14 @@
 ﻿namespace Text.Scanning.Core
 {
+    using System.Diagnostics.Contracts;
+
     /// <summary>A-Z / a-z</summary>
     public class AlphaLexer : Lexer<AlphaToken>
     {
         public AlphaLexer(ITextScanner scanner)
             : base(scanner)
         {
+            Contract.Requires(scanner != null);
         }
 
         public override AlphaToken Read()

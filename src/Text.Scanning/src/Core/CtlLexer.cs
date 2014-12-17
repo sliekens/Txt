@@ -1,10 +1,13 @@
 ﻿namespace Text.Scanning.Core
 {
+    using System.Diagnostics.Contracts;
+
     public class CtlLexer : Lexer<CtlToken>
     {
         public CtlLexer(ITextScanner scanner)
             : base(scanner)
         {
+            Contract.Requires(scanner != null);
         }
 
         public override CtlToken Read()

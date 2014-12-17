@@ -1,5 +1,7 @@
 ﻿namespace Text.Scanning.Core
 {
+    using System.Diagnostics.Contracts;
+
     public class HexDigLexer : Lexer<HexDigToken>
     {
         private readonly ILexer<DigitToken> digitLexer;
@@ -7,11 +9,13 @@
         public HexDigLexer(ITextScanner scanner)
             : this(scanner, new DigitLexer(scanner))
         {
+            Contract.Requires(scanner != null);
         }
 
         public HexDigLexer(ITextScanner scanner, ILexer<DigitToken> digitLexer)
             : base(scanner)
         {
+            Contract.Requires(scanner != null);
             this.digitLexer = digitLexer;
         }
 

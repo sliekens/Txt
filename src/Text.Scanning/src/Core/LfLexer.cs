@@ -1,10 +1,13 @@
 ﻿namespace Text.Scanning.Core
 {
+    using System.Diagnostics.Contracts;
+
     public class LfLexer : Lexer<LfToken>
     {
         public LfLexer(ITextScanner scanner)
             : base(scanner)
         {
+            Contract.Requires(scanner != null);
         }
 
         public override LfToken Read()

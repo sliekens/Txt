@@ -1,10 +1,13 @@
 ﻿namespace Text.Scanning.Core
 {
+    using System.Diagnostics.Contracts;
+
     public class DigitLexer : Lexer<DigitToken>
     {
         public DigitLexer(ITextScanner scanner)
             : base(scanner)
         {
+            Contract.Requires(scanner != null);
         }
 
         public override DigitToken Read()
