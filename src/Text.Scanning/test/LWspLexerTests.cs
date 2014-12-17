@@ -76,8 +76,7 @@ namespace Text
         }
 
         [TestMethod]
-        [ExpectedException(typeof(SyntaxErrorException))]
-        public void FailCrLf()
+        public void IgnoreLastCrLf()
         {
             var text = "\r\n";
             using (var reader = new StringReader(text))
@@ -85,12 +84,13 @@ namespace Text
             {
                 scanner.Read();
                 var lexer = new LWspLexer(scanner);
-                lexer.Read();
+                var token = lexer.Read();
+                Assert.IsFalse(token.LWsp.Any());
             }
         }
 
         [TestMethod]
-        public void FailTryCrLf()
+        public void IgnoreTryLastCrLf()
         {
             var text = "\r\n";
             using (var reader = new StringReader(text))
@@ -99,14 +99,14 @@ namespace Text
                 scanner.Read();
                 var lexer = new LWspLexer(scanner);
                 LWspToken token;
-                if (lexer.TryRead(out token))
+                if (!lexer.TryRead(out token))
                 {
                     Assert.Fail();
                 }
 
                 Assert.IsNotNull(token);
                 Assert.IsNotNull(token.LWsp);
-                Assert.IsInstanceOfType(token.LWsp.Last(), typeof(CrLfToken));
+                Assert.IsFalse(token.LWsp.Any());
             }
         }
     }
