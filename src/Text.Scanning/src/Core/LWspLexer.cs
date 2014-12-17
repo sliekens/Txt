@@ -29,11 +29,18 @@ namespace Text.Scanning.Core
         {
             var context = this.Scanner.GetContext();
             var data = new List<Tuple<CrLfToken, WSpToken>>();
+
+            // Infinite loop: there are multiple break conditions
+            // The program should eventually exit this loop, unless the source data is an infinite stream of linear whitespace
             while (true)
             {
                 CrLfToken crLfToken;
                 WSpToken wSpToken;
-                if (this.crLfLexer.TryRead(out crLfToken))
+                if (this.wSpLexer.TryRead(out wSpToken))
+                {
+                    data.Add(new Tuple<CrLfToken, WSpToken>(null, wSpToken));
+                }
+                else if (this.crLfLexer.TryRead(out crLfToken))
                 {
                     if (this.wSpLexer.TryRead(out wSpToken))
                     {
@@ -42,18 +49,16 @@ namespace Text.Scanning.Core
                     else
                     {
                         this.crLfLexer.PutBack(crLfToken);
-                        return new LWspToken(data, context);
+                        break;
                     }
-                }
-                else if (this.wSpLexer.TryRead(out wSpToken))
-                {
-                    data.Add(new Tuple<CrLfToken, WSpToken>(null, wSpToken));
                 }
                 else
                 {
-                    return new LWspToken(data, context);
+                    break;
                 }
             }
+
+            return new LWspToken(data, context);
         }
 
         public override bool TryRead(out LWspToken token)
