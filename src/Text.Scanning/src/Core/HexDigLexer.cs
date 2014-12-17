@@ -42,9 +42,8 @@
             }
 
             // A-F
-            for (int i = 'A'; i <= 'F'; i++)
+            for (var c = 'A'; c <= 'F'; c++)
             {
-                var c = (char)i;
                 if (this.Scanner.TryMatch(c))
                 {
                     token = new HexDigToken(c, context);
@@ -53,9 +52,8 @@
             }
 
             // a-f
-            for (int i = 'a'; i <= 'f'; i++)
+            for (var c = 'a'; c <= 'f'; c++)
             {
-                var c = (char)i;
                 if (this.Scanner.TryMatch(c))
                 {
                     token = new HexDigToken(c, context);
