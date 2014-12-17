@@ -1,22 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using System.IO;
-using System.Linq;
-
-namespace Text.Scanning
+﻿namespace Text.Scanning
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics.Contracts;
+    using System.IO;
+    using System.Linq;
+
     public sealed class TextScanner : ITextScanner
     {
-        private int offset = -1;
-
-        private readonly TextReader textReader;
-
         private bool endOfInput;
-
         private char nextCharacter;
-
+        private int offset = -1;
         private readonly Stack<char> buffer = new Stack<char>();
+        private readonly TextReader textReader;
 
         public TextScanner(TextReader textReader)
         {
@@ -25,7 +21,7 @@ namespace Text.Scanning
         }
 
         /// <inheritdoc />
-        public bool EndOfInput
+        bool ITextScanner.EndOfInput
         {
             get
             {
@@ -34,7 +30,7 @@ namespace Text.Scanning
         }
 
         /// <inheritdoc />
-        public char? NextCharacter
+        char? ITextScanner.NextCharacter
         {
             get
             {
@@ -48,7 +44,7 @@ namespace Text.Scanning
         }
 
         /// <inheritdoc />
-        public int Offset
+        int ITextContext.Offset
         {
             get
             {
@@ -57,19 +53,19 @@ namespace Text.Scanning
         }
 
         /// <inheritdoc />
-        public void Dispose()
+        void IDisposable.Dispose()
         {
-            ((IDisposable)this.textReader).Dispose();
+            ((IDisposable) this.textReader).Dispose();
         }
 
         /// <inheritdoc />
-        public ITextContext GetContext()
+        ITextContext ITextScanner.GetContext()
         {
-            return new TextContext(offset);
+            return new TextContext(this.offset);
         }
 
         /// <inheritdoc />
-        public void PutBack(char c)
+        void ITextScanner.PutBack(char c)
         {
             if (this.endOfInput)
             {
@@ -85,25 +81,7 @@ namespace Text.Scanning
         }
 
         /// <inheritdoc />
-        public bool TryMatch(char c)
-        {
-            if (this.EndOfInput)
-            {
-                return false;
-            }
-
-            if (this.nextCharacter != c)
-            {
-                return false;
-            }
-
-            this.Read();
-
-            return true;
-        }
-
-        /// <inheritdoc />
-        public bool Read()
+        bool ITextScanner.Read()
         {
             if (this.endOfInput)
             {
@@ -117,9 +95,9 @@ namespace Text.Scanning
             }
             else
             {
-                lock (textReader)
+                lock (this.textReader)
                 {
-                    this.nextCharacter = (char)textReader.Read();
+                    this.nextCharacter = (char) this.textReader.Read();
                     this.offset++;
                 }
             }
@@ -129,6 +107,25 @@ namespace Text.Scanning
                 this.endOfInput = true;
                 return false;
             }
+
+            return true;
+        }
+
+        /// <inheritdoc />
+        bool ITextScanner.TryMatch(char c)
+        {
+            if (this.endOfInput)
+            {
+                return false;
+            }
+
+            if (this.nextCharacter != c)
+            {
+                return false;
+            }
+
+            ITextScanner self = this;
+            self.Read();
 
             return true;
         }

@@ -14,7 +14,7 @@ namespace Text
         {
             var text = "\0";
             using (var reader = new StringReader(text))
-            using (var scanner = new TextScanner(reader))
+            using (ITextScanner scanner = new TextScanner(reader))
             {
                 scanner.Read();
                 var lexer = new OctetLexer(scanner);
@@ -29,7 +29,7 @@ namespace Text
         {
             var text = char.ToString((char)0xFF);
             using (var reader = new StringReader(text))
-            using (var scanner = new TextScanner(reader))
+            using (ITextScanner scanner = new TextScanner(reader))
             {
                 scanner.Read();
                 var lexer = new OctetLexer(scanner);

@@ -16,7 +16,7 @@ namespace Text
         {
             var text = "abcdefghijklmnopqrstuvwxyz";
             using (var reader = new StringReader(text))
-            using (var scanner = new TextScanner(reader))
+            using (ITextScanner scanner = new TextScanner(reader))
             {
                 scanner.Read();
                 var lexer = new AlphaLexer(scanner);
@@ -33,7 +33,7 @@ namespace Text
         {
             var text = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             using (var reader = new StringReader(text))
-            using (var scanner = new TextScanner(reader))
+            using (ITextScanner scanner = new TextScanner(reader))
             {
                 scanner.Read();
                 var lexer = new AlphaLexer(scanner);
@@ -50,7 +50,7 @@ namespace Text
         {
             var text = "%";
             using (var reader = new StringReader(text))
-            using (var scanner = new TextScanner(reader))
+            using (ITextScanner scanner = new TextScanner(reader))
             {
                 scanner.Read();
                 var lexer = new AlphaLexer(scanner);

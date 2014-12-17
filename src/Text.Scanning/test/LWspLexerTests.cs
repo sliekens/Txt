@@ -15,7 +15,7 @@ namespace Text
         {
             var text = " ";
             using (var reader = new StringReader(text))
-            using (var scanner = new TextScanner(reader))
+            using (ITextScanner scanner = new TextScanner(reader))
             {
                 scanner.Read();
                 var lexer = new LWspLexer(scanner);
@@ -31,7 +31,7 @@ namespace Text
         {
             var text = "     ";
             using (var reader = new StringReader(text))
-            using (var scanner = new TextScanner(reader))
+            using (ITextScanner scanner = new TextScanner(reader))
             {
                 scanner.Read();
                 var lexer = new LWspLexer(scanner);
@@ -47,7 +47,7 @@ namespace Text
         {
             var text = "\r\n ";
             using (var reader = new StringReader(text))
-            using (var scanner = new TextScanner(reader))
+            using (ITextScanner scanner = new TextScanner(reader))
             {
                 scanner.Read();
                 var lexer = new LWspLexer(scanner);
@@ -63,7 +63,7 @@ namespace Text
         {
             var text = string.Empty;
             using (var reader = new StringReader(text))
-            using (var scanner = new TextScanner(reader))
+            using (ITextScanner scanner = new TextScanner(reader))
             {
                 scanner.Read();
                 var lexer = new LWspLexer(scanner);
@@ -80,7 +80,7 @@ namespace Text
         {
             var text = "\r\n";
             using (var reader = new StringReader(text))
-            using (var scanner = new TextScanner(reader))
+            using (ITextScanner scanner = new TextScanner(reader))
             {
                 scanner.Read();
                 var lexer = new LWspLexer(scanner);
@@ -94,7 +94,7 @@ namespace Text
         {
             var text = "\r\n";
             using (var reader = new StringReader(text))
-            using (var scanner = new TextScanner(reader))
+            using (ITextScanner scanner = new TextScanner(reader))
             {
                 scanner.Read();
                 var lexer = new LWspLexer(scanner);

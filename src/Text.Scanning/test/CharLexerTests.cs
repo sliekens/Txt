@@ -14,7 +14,7 @@ namespace Text
         {
             var text = char.ToString(Convert.ToChar(0x01));
             using (var reader = new StringReader(text))
-            using (var scanner = new TextScanner(reader))
+            using (ITextScanner scanner = new TextScanner(reader))
             {
                 scanner.Read();
                 var lexer = new CharLexer(scanner);
@@ -28,7 +28,7 @@ namespace Text
         {
             var text = char.ToString(Convert.ToChar(0x7F));
             using (var reader = new StringReader(text))
-            using (var scanner = new TextScanner(reader))
+            using (ITextScanner scanner = new TextScanner(reader))
             {
                 scanner.Read();
                 var lexer = new CharLexer(scanner);
@@ -42,7 +42,7 @@ namespace Text
         {
             var text = char.ToString('\0');
             using (var reader = new StringReader(text))
-            using (var scanner = new TextScanner(reader))
+            using (ITextScanner scanner = new TextScanner(reader))
             {
                 scanner.Read();
                 var lexer = new CharLexer(scanner);

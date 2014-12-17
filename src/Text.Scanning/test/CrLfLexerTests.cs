@@ -14,7 +14,7 @@ namespace Text
         {
             var text = "\r\n";
             using (var reader = new StringReader(text))
-            using (var scanner = new TextScanner(reader))
+            using (ITextScanner scanner = new TextScanner(reader))
             {
                 scanner.Read();
                 var lexer = new CrLfLexer(scanner);
@@ -29,7 +29,7 @@ namespace Text
         {
             var text = "\r";
             using (var reader = new StringReader(text))
-            using (var scanner = new TextScanner(reader))
+            using (ITextScanner scanner = new TextScanner(reader))
             {
                 scanner.Read();
                 var lexer = new CrLfLexer(scanner);
@@ -48,7 +48,7 @@ namespace Text
         {
             var text = "\n";
             using (var reader = new StringReader(text))
-            using (var scanner = new TextScanner(reader))
+            using (ITextScanner scanner = new TextScanner(reader))
             {
                 scanner.Read();
                 var lexer = new CrLfLexer(scanner);

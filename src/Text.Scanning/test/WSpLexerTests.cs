@@ -13,7 +13,7 @@ namespace Text
         {
             var text = " ";
             using (var reader = new StringReader(text))
-            using (var scanner = new TextScanner(reader))
+            using (ITextScanner scanner = new TextScanner(reader))
             {
                 scanner.Read();
                 var lexer = new WSpLexer(scanner);
@@ -30,7 +30,7 @@ namespace Text
         {
             var text = "\t";
             using (var reader = new StringReader(text))
-            using (var scanner = new TextScanner(reader))
+            using (ITextScanner scanner = new TextScanner(reader))
             {
                 scanner.Read();
                 var lexer = new WSpLexer(scanner);

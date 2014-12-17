@@ -14,7 +14,7 @@ namespace Text
         {
             var text = "0123456789ABCDEF";
             using (var reader = new StringReader(text))
-            using (var scanner = new TextScanner(reader))
+            using (ITextScanner scanner = new TextScanner(reader))
             {
                 scanner.Read();
                 var lexer = new HexDigLexer(scanner);

@@ -14,7 +14,7 @@ namespace Text
         {
             var text = "\u0001";
             using (var reader = new StringReader(text))
-            using (var scanner = new TextScanner(reader))
+            using (ITextScanner scanner = new TextScanner(reader))
             {
                 scanner.Read();
                 var lexer = new CtlLexer(scanner);
@@ -28,7 +28,7 @@ namespace Text
         {
             var text = "A";
             using (var reader = new StringReader(text))
-            using (var scanner = new TextScanner(reader))
+            using (ITextScanner scanner = new TextScanner(reader))
             {
                 scanner.Read();
                 var lexer = new CtlLexer(scanner);
