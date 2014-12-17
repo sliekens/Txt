@@ -7,7 +7,7 @@ namespace Text.Scanning
     [ContractClass((typeof(ContractClassForITextScanner)))]
     public interface ITextScanner : ITextContext, IDisposable
     {
-        char NextCharacter { get; }
+        char? NextCharacter { get; }
 
         /// <summary>Gets or sets a value indicating whether the end of the input has been reached.</summary>
         bool EndOfInput { get; }
@@ -19,6 +19,10 @@ namespace Text.Scanning
         /// <summary>Matches the given character and the next available character.</summary>
         bool TryMatch(char c);
 
+
         ITextContext GetContext();
+
+        /// <summary>Prepends the given character to the input stream, effectively rewinding the scanner.</summary>
+        void PutBack(char c);
     }
 }

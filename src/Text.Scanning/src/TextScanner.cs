@@ -1,15 +1,22 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.IO;
+using System.Linq;
 
 namespace Text.Scanning
 {
     public sealed class TextScanner : ITextScanner
     {
         private int offset = -1;
+
         private readonly TextReader textReader;
+
         private bool endOfInput;
+
         private char nextCharacter;
+
+        private readonly Stack<char> buffer = new Stack<char>();
 
         public TextScanner(TextReader textReader)
         {
@@ -21,28 +28,54 @@ namespace Text.Scanning
         {
             get
             {
-                return endOfInput;
+                return this.endOfInput;
             }
         }
 
-        public char NextCharacter
+        public char? NextCharacter
         {
-            get { return nextCharacter; }
+            get
+            {
+                if (this.endOfInput)
+                {
+                    return null;
+                }
+
+                return this.nextCharacter;
+            }
         }
 
         public int Offset
         {
-            get { return offset; }
+            get
+            {
+                return this.offset;
+            }
         }
 
         public void Dispose()
         {
-            ((IDisposable)textReader).Dispose();
+            ((IDisposable)this.textReader).Dispose();
         }
 
         public ITextContext GetContext()
         {
             return new TextContext(offset);
+        }
+
+        public void PutBack(char c)
+        {
+            if (this.endOfInput)
+            {
+                this.endOfInput = false;
+            }
+            else
+            {
+                this.buffer.Push(this.nextCharacter);
+            }
+
+            this.offset--;
+            this.nextCharacter = c;
         }
 
         public bool TryMatch(char c)
@@ -64,19 +97,32 @@ namespace Text.Scanning
 
         public bool Read()
         {
-            lock (textReader)
+            if (this.endOfInput)
             {
-                var character = textReader.Read();
-                if (character == -1)
-                {
-                    this.endOfInput = true;
-                    return false;
-                }
-
-                offset++;
-                this.nextCharacter = (char)character;
-                return true;
+                return false;
             }
+
+            if (this.buffer.Any())
+            {
+                this.nextCharacter = this.buffer.Pop();
+                this.offset++;
+            }
+            else
+            {
+                lock (textReader)
+                {
+                    this.nextCharacter = (char)textReader.Read();
+                    this.offset++;
+                }
+            }
+
+            if (this.nextCharacter == char.MaxValue)
+            {
+                this.endOfInput = true;
+                return false;
+            }
+
+            return true;
         }
     }
 }
