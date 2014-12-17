@@ -22,11 +22,14 @@
 
         public override bool TryRead(out AlphaToken token)
         {
-            token = default(AlphaToken);
             var context = this.Scanner.GetContext();
-            for (int i = 'A'; i <= 'Z'; i++)
+            return this.TryReadLowercase(out token, context) || this.TryReadUppercase(out token, context);
+        }
+
+        private bool TryReadUppercase(out AlphaToken token, ITextContext context)
+        {
+            for (var c = 'A'; c <= 'Z'; c++)
             {
-                var c = (char) i;
                 if (this.Scanner.TryMatch(c))
                 {
                     token = new AlphaToken(c, context);
@@ -34,9 +37,14 @@
                 }
             }
 
-            for (int i = 'a'; i <= 'z'; i++)
+            token = default(AlphaToken);
+            return false;
+        }
+
+        private bool TryReadLowercase(out AlphaToken token, ITextContext context)
+        {
+            for (var c = 'a'; c <= 'z'; c++)
             {
-                var c = (char)i;
                 if (this.Scanner.TryMatch(c))
                 {
                     token = new AlphaToken(c, context);
@@ -44,6 +52,7 @@
                 }
             }
 
+            token = default(AlphaToken);
             return false;
         }
     }
