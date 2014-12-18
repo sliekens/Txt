@@ -47,7 +47,7 @@
             LfToken lfToken;
             if (this.Scanner.EndOfInput || !this.lfLexer.TryRead(out lfToken))
             {
-                // TODO: put back CrToken
+                this.crLexer.PutBack(crToken);
                 token = default(CrLfToken);
                 return false;
             }
