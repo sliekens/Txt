@@ -9,6 +9,9 @@
 
     public sealed class TextScanner : ITextScanner
     {
+        /// <summary>Indicates whether this object has been disposed.</summary>
+        private bool disposed;
+
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private bool endOfInput;
 
@@ -35,6 +38,11 @@
         {
             get
             {
+                if (this.disposed)
+                {
+                    throw new ObjectDisposedException(this.GetType().FullName);
+                }
+
                 return this.endOfInput;
             }
         }
@@ -44,6 +52,11 @@
         {
             get
             {
+                if (this.disposed)
+                {
+                    throw new ObjectDisposedException(this.GetType().FullName);
+                }
+
                 if (this.offset == -1)
                 {
                     return null;
@@ -63,25 +76,47 @@
         {
             get
             {
+                if (this.disposed)
+                {
+                    throw new ObjectDisposedException(this.GetType().FullName);
+                }
+
                 return this.offset;
             }
+        }
+
+        /// <summary>This method calls <see cref="Dispose(bool)" />, specifying <c>true</c> to release all resources.</summary>
+        public void Close()
+        {
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
         /// <inheritdoc />
         void IDisposable.Dispose()
         {
-            ((IDisposable)this.textReader).Dispose();
+            this.Close();
         }
 
         /// <inheritdoc />
         ITextContext ITextScanner.GetContext()
         {
+            if (this.disposed)
+            {
+                throw new ObjectDisposedException(this.GetType().FullName);
+            }
+
             return new TextContext(this.offset);
         }
 
         /// <inheritdoc />
         void ITextScanner.PutBack(char c)
         {
+            if (this.disposed)
+            {
+                throw new ObjectDisposedException(this.GetType().FullName);
+            }
+
             if (this.endOfInput)
             {
                 this.endOfInput = false;
@@ -98,6 +133,11 @@
         /// <inheritdoc />
         bool ITextScanner.Read()
         {
+            if (this.disposed)
+            {
+                throw new ObjectDisposedException(this.GetType().FullName);
+            }
+
             if (this.endOfInput)
             {
                 return false;
@@ -129,6 +169,11 @@
         /// <inheritdoc />
         bool ITextScanner.TryMatch(char c)
         {
+            if (this.disposed)
+            {
+                throw new ObjectDisposedException(this.GetType().FullName);
+            }
+
             if (this.offset == -1)
             {
                 throw new InvalidOperationException("No next character available: call 'Read()' to initialize.");
@@ -148,6 +193,27 @@
             self.Read();
 
             return true;
+        }
+
+        /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
+        /// <param name="disposing">
+        /// <c>true</c> to clean up both managed and unmanaged resources; otherwise, <c>false</c> to clean
+        /// up only unmanaged resources.
+        /// </param>
+        private void Dispose(bool disposing)
+        {
+            if (this.disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                this.textReader.Dispose();
+            }
+
+
+            this.disposed = true;
         }
     }
 }
