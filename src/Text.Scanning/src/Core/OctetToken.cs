@@ -1,7 +1,7 @@
-﻿using System.Diagnostics.Contracts;
-
-namespace Text.Scanning.Core
+﻿namespace Text.Scanning.Core
 {
+    using System.Diagnostics.Contracts;
+
     public class OctetToken : Token
     {
         public OctetToken(char data, ITextContext context)

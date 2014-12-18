@@ -1,14 +1,15 @@
-﻿using System.Diagnostics;
-using System.Diagnostics.Contracts;
-
-namespace Text.Scanning.Core
+﻿namespace Text.Scanning.Core
 {
+    using System.Diagnostics;
+    using System.Diagnostics.Contracts;
+
     public class CrLfToken : Token
     {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private readonly LfToken lfToken;
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly CrToken crToken;
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private readonly LfToken lfToken;
 
         public CrLfToken(CrToken crToken, LfToken lfToken, ITextContext context)
             : base("\r\n", context)

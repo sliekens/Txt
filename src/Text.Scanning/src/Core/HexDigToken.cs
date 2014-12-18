@@ -1,8 +1,8 @@
-﻿using System.Diagnostics;
-using System.Diagnostics.Contracts;
-
-namespace Text.Scanning.Core
+﻿namespace Text.Scanning.Core
 {
+    using System.Diagnostics;
+    using System.Diagnostics.Contracts;
+
     public class HexDigToken : Token
     {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -19,13 +19,17 @@ namespace Text.Scanning.Core
         public HexDigToken(char data, ITextContext context)
             : base(data, context)
         {
-            Contract.Requires((data >= '0' && data <= '9') ||(data >= 'A' && data <= 'F') || (data >= 'a' && data <= 'f'));
+            Contract.Requires((data >= '0' && data <= '9') || (data >= 'A' && data <= 'F') ||
+                              (data >= 'a' && data <= 'f'));
             Contract.Requires(context != null);
         }
 
         public DigitToken DigitToken
         {
-            get { return digitToken; }
+            get
+            {
+                return this.digitToken;
+            }
         }
     }
 }

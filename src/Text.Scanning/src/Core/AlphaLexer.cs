@@ -29,9 +29,9 @@
             return this.TryReadLowercase(out token, context) || this.TryReadUppercase(out token, context);
         }
 
-        private bool TryReadUppercase(out AlphaToken token, ITextContext context)
+        private bool TryReadLowercase(out AlphaToken token, ITextContext context)
         {
-            for (var c = 'A'; c <= 'Z'; c++)
+            for (var c = 'a'; c <= 'z'; c++)
             {
                 if (this.Scanner.TryMatch(c))
                 {
@@ -44,9 +44,9 @@
             return false;
         }
 
-        private bool TryReadLowercase(out AlphaToken token, ITextContext context)
+        private bool TryReadUppercase(out AlphaToken token, ITextContext context)
         {
-            for (var c = 'a'; c <= 'z'; c++)
+            for (var c = 'A'; c <= 'Z'; c++)
             {
                 if (this.Scanner.TryMatch(c))
                 {

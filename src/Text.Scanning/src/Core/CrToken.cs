@@ -1,7 +1,7 @@
-﻿using System.Diagnostics.Contracts;
-
-namespace Text.Scanning.Core
+﻿namespace Text.Scanning.Core
 {
+    using System.Diagnostics.Contracts;
+
     public class CrToken : Token
     {
         public CrToken(ITextContext context)

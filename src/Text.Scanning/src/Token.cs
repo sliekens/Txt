@@ -1,15 +1,15 @@
-﻿using System.Diagnostics;
-using System.Diagnostics.Contracts;
-
-namespace Text.Scanning
+﻿namespace Text.Scanning
 {
+    using System.Diagnostics;
+    using System.Diagnostics.Contracts;
+
     public abstract class Token : ITextContext
     {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private readonly int offset;
+        private readonly string data;
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private readonly string data;
+        private readonly int offset;
 
         protected Token(char data, ITextContext context)
             : this(char.ToString(data), context)
@@ -27,12 +27,10 @@ namespace Text.Scanning
 
         public string Data
         {
-            get { return this.data; }
-        }
-
-        public override string ToString()
-        {
-            return this.Data;
+            get
+            {
+                return this.data;
+            }
         }
 
         /// <summary>Gets the current position, relative to the beginning of the data source.</summary>
@@ -42,6 +40,11 @@ namespace Text.Scanning
             {
                 return this.offset;
             }
+        }
+
+        public override string ToString()
+        {
+            return this.Data;
         }
     }
 }

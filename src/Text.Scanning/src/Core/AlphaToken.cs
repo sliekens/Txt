@@ -1,7 +1,7 @@
-﻿using System.Diagnostics.Contracts;
-
-namespace Text.Scanning.Core
+﻿namespace Text.Scanning.Core
 {
+    using System.Diagnostics.Contracts;
+
     /// <summary>A-Z / a-z</summary>
     public class AlphaToken : Token
     {

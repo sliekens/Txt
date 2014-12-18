@@ -55,7 +55,7 @@
         /// <inheritdoc />
         void IDisposable.Dispose()
         {
-            ((IDisposable) this.textReader).Dispose();
+            ((IDisposable)this.textReader).Dispose();
         }
 
         /// <inheritdoc />
@@ -97,7 +97,7 @@
             {
                 lock (this.textReader)
                 {
-                    this.nextCharacter = (char) this.textReader.Read();
+                    this.nextCharacter = (char)this.textReader.Read();
                     this.offset++;
                 }
             }

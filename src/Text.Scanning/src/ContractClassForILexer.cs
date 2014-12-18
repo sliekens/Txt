@@ -4,7 +4,8 @@
     using System.Diagnostics.Contracts;
 
     [ContractClassFor(typeof(ILexer<>))]
-    internal abstract class ContractClassForILexer<TToken> : ILexer<TToken> where TToken : Token
+    internal abstract class ContractClassForILexer<TToken> : ILexer<TToken>
+        where TToken : Token
     {
         public void PutBack(TToken token)
         {

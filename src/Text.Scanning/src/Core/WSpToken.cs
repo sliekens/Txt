@@ -1,14 +1,15 @@
-﻿using System.Diagnostics;
-using System.Diagnostics.Contracts;
-
-namespace Text.Scanning.Core
+﻿namespace Text.Scanning.Core
 {
+    using System.Diagnostics;
+    using System.Diagnostics.Contracts;
+
     public class WSpToken : Token
     {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private readonly SpToken spToken;
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly HTabToken hTabToken;
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private readonly SpToken spToken;
 
         public WSpToken(SpToken data, ITextContext context)
             : base(data.Data, context)
@@ -26,19 +27,19 @@ namespace Text.Scanning.Core
             this.hTabToken = data;
         }
 
-        public SpToken Sp
-        {
-            get
-            {
-                return this.spToken;
-            }
-        }
-
         public HTabToken HTab
         {
             get
             {
                 return this.hTabToken;
+            }
+        }
+
+        public SpToken Sp
+        {
+            get
+            {
+                return this.spToken;
             }
         }
     }

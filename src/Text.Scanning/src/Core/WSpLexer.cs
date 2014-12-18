@@ -1,11 +1,11 @@
-﻿using System.Diagnostics.Contracts;
-
-namespace Text.Scanning.Core
+﻿namespace Text.Scanning.Core
 {
+    using System.Diagnostics.Contracts;
+
     public class WSpLexer : Lexer<WSpToken>
     {
-        private readonly SpLexer spLexer;
         private readonly HTabLexer hTabLexer;
+        private readonly SpLexer spLexer;
 
         public WSpLexer(ITextScanner scanner)
             : this(scanner, new SpLexer(scanner), new HTabLexer(scanner))
