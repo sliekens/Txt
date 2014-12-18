@@ -25,9 +25,8 @@
         public override bool TryRead(out CharToken token)
         {
             var context = this.Scanner.GetContext();
-            for (var i = 0x01; i <= 0x7F; i++)
+            for (var c = '\u0001'; c <= '\u007F'; c++)
             {
-                var c = (char) i;
                 if (this.Scanner.TryMatch(c))
                 {
                     token = new CharToken(c, context);
