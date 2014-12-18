@@ -23,6 +23,12 @@
 
         public override bool TryRead(out SpToken token)
         {
+            if (this.Scanner.EndOfInput)
+            {
+                token = default(SpToken);
+                return false;
+            }
+
             var context = this.Scanner.GetContext();
             if (this.Scanner.TryMatch('\u0020'))
             {

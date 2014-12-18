@@ -23,6 +23,12 @@
 
         public override bool TryRead(out OctetToken token)
         {
+            if (this.Scanner.EndOfInput)
+            {
+                token = default(OctetToken);
+                return false;
+            }
+
             var context = this.Scanner.GetContext();
             for (var c = '\u0000'; c <= '\u00FF'; c++)
             {

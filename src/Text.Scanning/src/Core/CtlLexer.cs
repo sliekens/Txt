@@ -24,6 +24,12 @@
 
         public override bool TryRead(out CtlToken token)
         {
+            if (this.Scanner.EndOfInput)
+            {
+                token = default(CtlToken);
+                return false;
+            }
+
             var context = this.Scanner.GetContext();
 
             // %x00-1F

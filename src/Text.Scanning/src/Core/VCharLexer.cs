@@ -23,6 +23,12 @@
 
         public override bool TryRead(out VCharToken token)
         {
+            if (this.Scanner.EndOfInput)
+            {
+                token = default(VCharToken);
+                return false;
+            }
+
             var context = this.Scanner.GetContext();
             for (var c = '\u0021'; c < '\u007E'; c++)
             {

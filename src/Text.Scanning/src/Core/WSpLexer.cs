@@ -36,6 +36,12 @@
 
         public override bool TryRead(out WSpToken token)
         {
+            if (this.Scanner.EndOfInput)
+            {
+                token = default(WSpToken);
+                return false;
+            }
+
             var context = this.Scanner.GetContext();
             SpToken spToken;
             HTabToken hTabToken;

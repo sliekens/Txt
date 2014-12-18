@@ -24,6 +24,12 @@
 
         public override bool TryRead(out LfToken token)
         {
+            if (this.Scanner.EndOfInput)
+            {
+                token = default(LfToken);
+                return false;
+            }
+
             var context = this.Scanner.GetContext();
             if (this.Scanner.TryMatch('\n'))
             {

@@ -33,6 +33,12 @@
 
         public override bool TryRead(out HexDigToken token)
         {
+            if (this.Scanner.EndOfInput)
+            {
+                token = default(HexDigToken);
+                return false;
+            }
+
             var context = this.Scanner.GetContext();
             DigitToken digitToken;
             if (this.digitLexer.TryRead(out digitToken))

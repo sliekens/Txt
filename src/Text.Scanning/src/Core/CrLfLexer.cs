@@ -38,15 +38,16 @@
         {
             var context = this.Scanner.GetContext();
             CrToken crToken;
-            if (!this.crLexer.TryRead(out crToken))
+            if (this.Scanner.EndOfInput || !this.crLexer.TryRead(out crToken))
             {
                 token = default(CrLfToken);
                 return false;
             }
 
             LfToken lfToken;
-            if (!this.lfLexer.TryRead(out lfToken))
+            if (this.Scanner.EndOfInput || !this.lfLexer.TryRead(out lfToken))
             {
+                // TODO: put back CrToken
                 token = default(CrLfToken);
                 return false;
             }

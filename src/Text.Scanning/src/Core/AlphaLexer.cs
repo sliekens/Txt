@@ -25,6 +25,12 @@
 
         public override bool TryRead(out AlphaToken token)
         {
+            if (this.Scanner.EndOfInput)
+            {
+                token = default(AlphaToken);
+                return false;
+            }
+
             var context = this.Scanner.GetContext();
             return this.TryReadLowercase(out token, context) || this.TryReadUppercase(out token, context);
         }

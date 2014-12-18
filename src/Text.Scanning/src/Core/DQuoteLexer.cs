@@ -24,6 +24,12 @@
 
         public override bool TryRead(out DQuoteToken token)
         {
+            if (this.Scanner.EndOfInput)
+            {
+                token = default(DQuoteToken);
+                return false;
+            }
+
             var context = this.Scanner.GetContext();
             if (this.Scanner.TryMatch('\"'))
             {

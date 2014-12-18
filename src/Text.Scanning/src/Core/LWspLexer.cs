@@ -30,9 +30,8 @@
             var context = this.Scanner.GetContext();
             var data = new List<Tuple<CrLfToken, WSpToken>>();
 
-            // Infinite loop: there are multiple break conditions
             // The program should eventually exit this loop, unless the source data is an infinite stream of linear whitespace
-            while (true)
+            while (!this.Scanner.EndOfInput)
             {
                 CrLfToken crLfToken;
                 WSpToken wSpToken;
@@ -42,7 +41,7 @@
                 }
                 else if (this.crLfLexer.TryRead(out crLfToken))
                 {
-                    if (this.wSpLexer.TryRead(out wSpToken))
+                    if (!this.Scanner.EndOfInput && this.wSpLexer.TryRead(out wSpToken))
                     {
                         data.Add(new Tuple<CrLfToken, WSpToken>(crLfToken, wSpToken));
                     }
@@ -65,21 +64,22 @@
         {
             var context = this.Scanner.GetContext();
             var data = new List<Tuple<CrLfToken, WSpToken>>();
-            while (true)
+
+            // The program should eventually exit this loop, unless the source data is an infinite stream of linear whitespace
+            while (!this.Scanner.EndOfInput)
             {
                 CrLfToken crLfToken;
                 WSpToken spToken;
                 if (this.crLfLexer.TryRead(out crLfToken))
                 {
-                    if (this.wSpLexer.TryRead(out spToken))
+                    if (!this.Scanner.EndOfInput && this.wSpLexer.TryRead(out spToken))
                     {
                         data.Add(new Tuple<CrLfToken, WSpToken>(crLfToken, spToken));
                     }
                     else
                     {
                         this.crLfLexer.PutBack(crLfToken);
-                        token = new LWspToken(data, context);
-                        return true;
+                        break;
                     }
                 }
                 else if (this.wSpLexer.TryRead(out spToken))
@@ -88,10 +88,12 @@
                 }
                 else
                 {
-                    token = new LWspToken(data, context);
-                    return true;
+                    break;
                 }
             }
+
+            token = new LWspToken(data, context);
+            return true;
         }
     }
 }

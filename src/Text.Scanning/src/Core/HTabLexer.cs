@@ -23,6 +23,12 @@
 
         public override bool TryRead(out HTabToken token)
         {
+            if (this.Scanner.EndOfInput)
+            {
+                token = default(HTabToken);
+                return false;
+            }
+
             var context = this.Scanner.GetContext();
             if (this.Scanner.TryMatch('\t'))
             {

@@ -24,7 +24,12 @@
 
         public override bool TryRead(out DigitToken token)
         {
-            token = default(DigitToken);
+            if (this.Scanner.EndOfInput)
+            {
+                token = default(DigitToken);
+                return false;
+            }
+
             var context = this.Scanner.GetContext();
             for (var c = '0'; c <= '9'; c++)
             {
@@ -35,6 +40,7 @@
                 }
             }
 
+            token = default(DigitToken);
             return false;
         }
     }

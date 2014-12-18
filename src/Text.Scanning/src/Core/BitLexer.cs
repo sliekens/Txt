@@ -24,6 +24,12 @@
 
         public override bool TryRead(out BitToken token)
         {
+            if (this.Scanner.EndOfInput)
+            {
+                token = default(BitToken);
+                return false;
+            }
+
             var context = this.Scanner.GetContext();
             if (this.Scanner.TryMatch('0'))
             {

@@ -24,6 +24,12 @@
 
         public override bool TryRead(out CharToken token)
         {
+            if (this.Scanner.EndOfInput)
+            {
+                token = default(CharToken);
+                return false;
+            }
+
             var context = this.Scanner.GetContext();
             for (var c = '\u0001'; c <= '\u007F'; c++)
             {

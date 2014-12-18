@@ -24,6 +24,12 @@
 
         public override bool TryRead(out CrToken token)
         {
+            if (this.Scanner.EndOfInput)
+            {
+                token = default(CrToken);
+                return false;
+            }
+
             var context = this.Scanner.GetContext();
             if (this.Scanner.TryMatch('\r'))
             {
