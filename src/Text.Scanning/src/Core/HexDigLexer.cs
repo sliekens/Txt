@@ -1,9 +1,11 @@
 ﻿namespace Text.Scanning.Core
 {
+    using System.Diagnostics;
     using System.Diagnostics.Contracts;
 
     public class HexDigLexer : Lexer<HexDigToken>
     {
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly ILexer<DigitToken> digitLexer;
 
         public HexDigLexer(ITextScanner scanner)

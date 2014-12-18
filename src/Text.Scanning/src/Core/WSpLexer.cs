@@ -1,10 +1,14 @@
 ﻿namespace Text.Scanning.Core
 {
+    using System.Diagnostics;
     using System.Diagnostics.Contracts;
 
     public class WSpLexer : Lexer<WSpToken>
     {
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly HTabLexer hTabLexer;
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly SpLexer spLexer;
 
         public WSpLexer(ITextScanner scanner)

@@ -1,10 +1,12 @@
 ﻿namespace Text.Scanning
 {
+    using System.Diagnostics;
     using System.Diagnostics.Contracts;
 
     public abstract class Lexer<TToken> : ILexer<TToken>
         where TToken : Token
     {
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly ITextScanner scanner;
 
         protected Lexer(ITextScanner scanner)

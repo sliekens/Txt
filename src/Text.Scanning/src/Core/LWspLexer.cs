@@ -2,11 +2,15 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Diagnostics.Contracts;
 
     public class LWspLexer : Lexer<LWspToken>
     {
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly ILexer<CrLfToken> crLfLexer;
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly ILexer<WSpToken> wSpLexer;
 
         public LWspLexer(ITextScanner scanner)

@@ -1,10 +1,14 @@
 ﻿namespace Text.Scanning.Core
 {
+    using System.Diagnostics;
     using System.Diagnostics.Contracts;
 
     public class CrLfLexer : Lexer<CrLfToken>
     {
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly ILexer<CrToken> crLexer;
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly ILexer<LfToken> lfLexer;
 
         public CrLfLexer(ITextScanner scanner)
