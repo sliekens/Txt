@@ -2,16 +2,26 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Diagnostics.Contracts;
     using System.IO;
     using System.Linq;
 
     public sealed class TextScanner : ITextScanner
     {
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private bool endOfInput;
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private char nextCharacter;
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private int offset = -1;
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly Stack<char> buffer = new Stack<char>();
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly TextReader textReader;
 
         public TextScanner(TextReader textReader)
@@ -34,6 +44,11 @@
         {
             get
             {
+                if (this.offset == -1)
+                {
+                    return null;
+                }
+
                 if (this.endOfInput)
                 {
                     return null;
