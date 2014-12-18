@@ -24,7 +24,9 @@
         /// <returns><c>true</c> if the next character is available; otherwise, <c>false</c>.</returns>
         bool Read();
 
-        /// <summary>Matches the given character and the next available character.</summary>
+        /// <summary>Compares the given character to the next available character. If there is a match, the character is consumed.</summary>
+        /// <exception cref="T:System.InvalidOperationException">There is no next character available. This occurs when <see cref="Read"/> has never been called, or when <see cref="EndOfInput"/> is <c>true</c>.</exception>
+        /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
         bool TryMatch(char c);
     }
 }

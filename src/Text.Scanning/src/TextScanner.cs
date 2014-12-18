@@ -129,9 +129,14 @@
         /// <inheritdoc />
         bool ITextScanner.TryMatch(char c)
         {
+            if (this.offset == -1)
+            {
+                throw new InvalidOperationException("No next character available: call 'Read()' to initialize.");
+            }
+
             if (this.endOfInput)
             {
-                return false;
+                throw new InvalidOperationException("No next character available: end of input has been reached.");
             }
 
             if (this.nextCharacter != c)
