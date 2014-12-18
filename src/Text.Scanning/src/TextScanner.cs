@@ -7,6 +7,7 @@
     using System.IO;
     using System.Linq;
 
+    /// <summary>Represents a text scanner that gets text from an instance of the <see cref="T:Text.Scanning.TextScanner"/> class.</summary>
     public sealed class TextScanner : ITextScanner
     {
         /// <summary>Indicates whether this object has been disposed.</summary>
@@ -27,6 +28,8 @@
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly TextReader textReader;
 
+        /// <summary>Initializes a new instance of the <see cref="T:Text.Scanning.TextScanner"/> class for the given data source.</summary>
+        /// <param name="textReader">The <see cref="T:System.IO.TextReader"/> to read data from.</param>
         public TextScanner(TextReader textReader)
         {
             Contract.Requires(textReader != null);
