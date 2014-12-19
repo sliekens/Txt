@@ -2,18 +2,19 @@
 {
     public class CtlLexer : Lexer<CtlToken>
     {
+        /// <inheritdoc />
         public override CtlToken Read(ITextScanner scanner)
         {
-            var context = scanner.GetContext();
             CtlToken token;
             if (this.TryRead(scanner, out token))
             {
                 return token;
             }
 
-            throw new SyntaxErrorException(context, "Expected 'CTL'");
+            throw new SyntaxErrorException(scanner.GetContext(), "Expected 'CTL'");
         }
 
+        /// <inheritdoc />
         public override bool TryRead(ITextScanner scanner, out CtlToken token)
         {
             if (scanner.EndOfInput)
