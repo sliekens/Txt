@@ -2,6 +2,7 @@
 {
     public class SpLexer : Lexer<SpToken>
     {
+        /// <inheritdoc />
         public override SpToken Read(ITextScanner scanner)
         {
             SpToken token;
@@ -13,6 +14,7 @@
             throw new SyntaxErrorException(scanner.GetContext(), "Expected 'SP'");
         }
 
+        /// <inheritdoc />
         public override bool TryRead(ITextScanner scanner, out SpToken token)
         {
             if (scanner.EndOfInput)
