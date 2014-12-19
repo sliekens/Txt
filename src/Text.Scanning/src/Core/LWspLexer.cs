@@ -1,6 +1,5 @@
 ﻿namespace Text.Scanning.Core
 {
-    using System;
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
@@ -30,7 +29,7 @@
         public override LWspToken Read(ITextScanner scanner)
         {
             var context = scanner.GetContext();
-            var data = new List<Tuple<CrLfToken, WSpToken>>();
+            var data = new List<LWspToken.CrLfWSpPair>();
 
             // The program should eventually exit this loop, unless the source data is an infinite stream of linear whitespace
             while (!scanner.EndOfInput)
@@ -39,13 +38,13 @@
                 WSpToken wSpToken;
                 if (this.wSpLexer.TryRead(scanner, out wSpToken))
                 {
-                    data.Add(new Tuple<CrLfToken, WSpToken>(null, wSpToken));
+                    data.Add(new LWspToken.CrLfWSpPair(wSpToken));
                 }
                 else if (this.crLfLexer.TryRead(scanner, out crLfToken))
                 {
                     if (!scanner.EndOfInput && this.wSpLexer.TryRead(scanner, out wSpToken))
                     {
-                        data.Add(new Tuple<CrLfToken, WSpToken>(crLfToken, wSpToken));
+                        data.Add(new LWspToken.CrLfWSpPair(crLfToken, wSpToken));
                     }
                     else
                     {
@@ -66,7 +65,7 @@
         public override bool TryRead(ITextScanner scanner, out LWspToken token)
         {
             var context = scanner.GetContext();
-            var data = new List<Tuple<CrLfToken, WSpToken>>();
+            var data = new List<LWspToken.CrLfWSpPair>();
 
             // The program should eventually exit this loop, unless the source data is an infinite stream of linear whitespace
             while (!scanner.EndOfInput)
@@ -77,7 +76,7 @@
                 {
                     if (!scanner.EndOfInput && this.wSpLexer.TryRead(scanner, out spToken))
                     {
-                        data.Add(new Tuple<CrLfToken, WSpToken>(crLfToken, spToken));
+                        data.Add(new LWspToken.CrLfWSpPair(crLfToken, spToken));
                     }
                     else
                     {
@@ -87,7 +86,7 @@
                 }
                 else if (this.wSpLexer.TryRead(scanner, out spToken))
                 {
-                    data.Add(new Tuple<CrLfToken, WSpToken>(null, spToken));
+                    data.Add(new LWspToken.CrLfWSpPair(spToken));
                 }
                 else
                 {

@@ -1,6 +1,5 @@
 ﻿namespace Text.Scanning.Core
 {
-    using System;
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
@@ -17,7 +16,7 @@
         /// </summary>
         /// <param name="data">The collection of 'LWSP' components.</param>
         /// <param name="context">The object that describes the context in which the text appears.</param>
-        public LWspToken(IList<Tuple<CrLfToken, WSpToken>> data, ITextContext context)
+        public LWspToken(IList<CrLfWSpPair> data, ITextContext context)
             : this(Linearize(data), context)
         {
             Contract.Requires(data != null);
@@ -25,7 +24,7 @@
         }
 
         private LWspToken(IList<Token> data, ITextContext context)
-            : base(string.Concat(data), context)
+            : base(string.Concat(data) ?? string.Empty, context)
         {
             Contract.Requires(data != null);
             Contract.Requires(context != null);
@@ -41,25 +40,74 @@
             }
         }
 
-        private static IList<Token> Linearize(IList<Tuple<CrLfToken, WSpToken>> data)
+        [Pure]
+        private static IList<Token> Linearize(IList<CrLfWSpPair> data)
         {
+            Contract.Requires(data != null);
+            Contract.Ensures(Contract.Result<IList<Token>>() != null);
             var tokens = new List<Token>();
-            foreach (var tuple in data)
+            foreach (var pair in data)
             {
-                var crLf = tuple.Item1;
+                if (pair == null)
+                {
+                    continue;
+                }
+
+                var crLf = pair.CrLf;
                 if (crLf != null)
                 {
                     tokens.Add(crLf);
                 }
 
-                var sp = tuple.Item2;
-                if (sp != null)
-                {
-                    tokens.Add(sp);
-                }
+                tokens.Add(pair.Wsp);
             }
 
             return tokens;
+        }
+
+        public class CrLfWSpPair
+        {
+            private readonly CrLfToken crLf;
+            private readonly WSpToken wsp;
+
+            public CrLfWSpPair(WSpToken wsp)
+            {
+                Contract.Requires(wsp != null);
+                this.wsp = wsp;
+            }
+
+            public CrLfWSpPair(CrLfToken crLf, WSpToken wsp)
+            {
+                Contract.Requires(crLf != null);
+                Contract.Requires(wsp != null);
+                Contract.Requires(wsp.Offset == crLf.Offset + 2);
+                this.crLf = crLf;
+                this.wsp = wsp;
+            }
+
+            public CrLfToken CrLf
+            {
+                get
+                {
+                    return this.crLf;
+                }
+            }
+
+            public WSpToken Wsp
+            {
+                get
+                {
+                    Contract.Ensures(Contract.Result<WSpToken>() != null);
+                    return this.wsp;
+                }
+            }
+
+            [ContractInvariantMethod]
+            private void ObjectInvariant()
+            {
+                Contract.Invariant(this.wsp != null);
+                Contract.Invariant(this.crLf == null || this.wsp.Offset == this.crLf.Offset + 2);
+            }
         }
     }
 }
