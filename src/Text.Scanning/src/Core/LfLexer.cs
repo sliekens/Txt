@@ -2,18 +2,19 @@
 {
     public class LfLexer : Lexer<LfToken>
     {
+        /// <inheritdoc />
         public override LfToken Read(ITextScanner scanner)
         {
-            var context = scanner.GetContext();
             LfToken token;
             if (this.TryRead(scanner, out token))
             {
                 return token;
             }
 
-            throw new SyntaxErrorException(context, "Expected 'LF'");
+            throw new SyntaxErrorException(scanner.GetContext(), "Expected 'LF'");
         }
 
+        /// <inheritdoc />
         public override bool TryRead(ITextScanner scanner, out LfToken token)
         {
             if (scanner.EndOfInput)
@@ -23,7 +24,7 @@
             }
 
             var context = scanner.GetContext();
-            if (scanner.TryMatch('\n'))
+            if (scanner.TryMatch('\u000A'))
             {
                 token = new LfToken(context);
                 return true;
