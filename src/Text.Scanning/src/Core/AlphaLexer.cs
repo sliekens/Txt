@@ -1,20 +1,20 @@
 ﻿namespace Text.Scanning.Core
 {
-    /// <summary>A-Z / a-z</summary>
     public class AlphaLexer : Lexer<AlphaToken>
     {
+        /// <inheritdoc />
         public override AlphaToken Read(ITextScanner scanner)
         {
-            var context = scanner.GetContext();
             AlphaToken token;
             if (this.TryRead(scanner, out token))
             {
                 return token;
             }
 
-            throw new SyntaxErrorException(context, "Expected 'ALPHA'");
+            throw new SyntaxErrorException(scanner.GetContext(), "Expected 'ALPHA'");
         }
 
+        /// <inheritdoc />
         public override bool TryRead(ITextScanner scanner, out AlphaToken token)
         {
             if (scanner.EndOfInput)
@@ -24,13 +24,9 @@
             }
 
             var context = scanner.GetContext();
-            return this.TryReadLowercase(scanner, context, out token) ||
-                   this.TryReadUppercase(scanner, context, out token);
-        }
 
-        private bool TryReadLowercase(ITextScanner scanner, ITextContext context, out AlphaToken token)
-        {
-            for (var c = 'a'; c <= 'z'; c++)
+            // A - Z
+            for (var c = '\u0041'; c <= '\u005A'; c++)
             {
                 if (scanner.TryMatch(c))
                 {
@@ -39,13 +35,8 @@
                 }
             }
 
-            token = default(AlphaToken);
-            return false;
-        }
-
-        private bool TryReadUppercase(ITextScanner scanner, ITextContext context, out AlphaToken token)
-        {
-            for (var c = 'A'; c <= 'Z'; c++)
+            // a - z
+            for (var c = '\u0061'; c <= '\u007A'; c++)
             {
                 if (scanner.TryMatch(c))
                 {
