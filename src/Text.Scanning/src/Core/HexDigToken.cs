@@ -38,6 +38,10 @@
             Contract.Requires((data >= '\u0030' && data <= '\u0039') || (data >= '\u0041' && data <= '\u0046') ||
                               (data >= '\u0061' && data <= '\u0066'));
             Contract.Requires(context != null);
+            if (data <= '\u0039')
+            {
+                this.digitToken = new DigitToken(data, context);
+            }
         }
 
         /// <summary>Gets the 'DIGIT' component, or a <c>null</c> reference.</summary>
