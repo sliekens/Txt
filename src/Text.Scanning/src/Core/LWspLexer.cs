@@ -26,6 +26,7 @@
             this.wSpLexer = wSpLexer;
         }
 
+        /// <inheritdoc />
         public override LWspToken Read(ITextScanner scanner)
         {
             var context = scanner.GetContext();
@@ -61,6 +62,7 @@
             return new LWspToken(data, context);
         }
 
+        /// <inheritdoc />
         public override bool TryRead(ITextScanner scanner, out LWspToken token)
         {
             var context = scanner.GetContext();

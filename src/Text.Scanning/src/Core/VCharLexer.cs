@@ -2,6 +2,7 @@
 {
     public class VCharLexer : Lexer<VCharToken>
     {
+        /// <inheritdoc />
         public override VCharToken Read(ITextScanner scanner)
         {
             VCharToken token;
@@ -13,6 +14,7 @@
             throw new SyntaxErrorException(scanner.GetContext(), "Expected 'VCHAR'");
         }
 
+        /// <inheritdoc />
         public override bool TryRead(ITextScanner scanner, out VCharToken token)
         {
             if (scanner.EndOfInput)

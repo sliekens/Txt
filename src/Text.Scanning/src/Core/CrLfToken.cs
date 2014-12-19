@@ -3,7 +3,7 @@
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
 
-    /// <summary>Represents an ordered pair of CR and LF characters. Unicode: U+000D U+000A.</summary>
+    /// <summary>Represents the CRLF rule: 1 CR character followed by 1 LF character. Unicode: U+000D U+000A.</summary>
     public class CrLfToken : Token
     {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -13,8 +13,8 @@
         private readonly LfToken lfToken;
 
         /// <summary>
-        /// Creates a new instance of the <see cref="T:Text.Scanning.Core.CrLfToken" /> class with a specified character
-        /// and context.
+        /// Creates a new instance of the <see cref="T:Text.Scanning.Core.CrLfToken" /> class with the specified
+        /// characters and context.
         /// </summary>
         /// <param name="crToken">The 'CR' component.</param>
         /// <param name="lfToken">The 'LF' component.</param>

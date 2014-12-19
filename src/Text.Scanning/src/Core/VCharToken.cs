@@ -2,14 +2,14 @@
 {
     using System.Diagnostics.Contracts;
 
-    /// <summary>Represents a visible (printing) char. Unicode: U+0021 - U+007E.</summary>
+    /// <summary>Represents the VCHAR rule: 1 visible (printing) character. Unicode: U+0041 - U+005A, U+0061 - U+007A.</summary>
     public class VCharToken : Token
     {
         /// <summary>
         /// Creates a new instance of the <see cref="T:Text.Scanning.Core.VCharToken" /> class with a specified character
         /// and context.
         /// </summary>
-        /// <param name="data">The VCHAR character.</param>
+        /// <param name="data">The 'VCHAR' character.</param>
         /// <param name="context">The object that describes the context in which the text appears.</param>
         public VCharToken(char data, ITextContext context)
             : base(data, context)

@@ -24,6 +24,7 @@
             this.hTabLexer = hTabLexer;
         }
 
+        /// <inheritdoc />
         public override WSpToken Read(ITextScanner scanner)
         {
             WSpToken token;
@@ -35,6 +36,7 @@
             throw new SyntaxErrorException(scanner.GetContext(), "Expected 'WSP'");
         }
 
+        /// <inheritdoc />
         public override bool TryRead(ITextScanner scanner, out WSpToken token)
         {
             if (scanner.EndOfInput)

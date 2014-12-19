@@ -2,6 +2,7 @@
 {
     public class DQuoteLexer : Lexer<DQuoteToken>
     {
+        /// <inheritdoc />
         public override DQuoteToken Read(ITextScanner scanner)
         {
             var context = scanner.GetContext();
@@ -14,6 +15,7 @@
             throw new SyntaxErrorException(context, "Expected 'DQUOTE'");
         }
 
+        /// <inheritdoc />
         public override bool TryRead(ITextScanner scanner, out DQuoteToken token)
         {
             if (scanner.EndOfInput)

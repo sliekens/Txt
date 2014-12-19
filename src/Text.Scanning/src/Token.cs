@@ -42,6 +42,7 @@
             }
         }
 
+        /// <inheritdoc />
         public override string ToString()
         {
             return this.Data;

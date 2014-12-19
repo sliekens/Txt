@@ -19,6 +19,7 @@
             this.digitLexer = digitLexer;
         }
 
+        /// <inheritdoc />
         public override HexDigToken Read(ITextScanner scanner)
         {
             var context = scanner.GetContext();
@@ -31,6 +32,7 @@
             throw new SyntaxErrorException(context, "Expected 'HEXDIG'");
         }
 
+        /// <inheritdoc />
         public override bool TryRead(ITextScanner scanner, out HexDigToken token)
         {
             if (scanner.EndOfInput)

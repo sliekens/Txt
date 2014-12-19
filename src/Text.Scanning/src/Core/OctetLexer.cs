@@ -2,6 +2,7 @@
 {
     public class OctetLexer : Lexer<OctetToken>
     {
+        /// <inheritdoc />
         public override OctetToken Read(ITextScanner scanner)
         {
             OctetToken token;
@@ -13,6 +14,7 @@
             throw new SyntaxErrorException(scanner.GetContext(), "Expected 'OCTET'");
         }
 
+        /// <inheritdoc />
         public override bool TryRead(ITextScanner scanner, out OctetToken token)
         {
             if (scanner.EndOfInput)

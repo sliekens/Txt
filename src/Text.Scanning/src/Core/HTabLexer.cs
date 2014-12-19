@@ -2,6 +2,7 @@
 {
     public class HTabLexer : Lexer<HTabToken>
     {
+        /// <inheritdoc />
         public override HTabToken Read(ITextScanner scanner)
         {
             HTabToken token;
@@ -13,6 +14,7 @@
             throw new SyntaxErrorException(scanner.GetContext(), "Expected 'HTAB'");
         }
 
+        /// <inheritdoc />
         public override bool TryRead(ITextScanner scanner, out HTabToken token)
         {
             if (scanner.EndOfInput)

@@ -2,14 +2,14 @@
 {
     using System.Diagnostics.Contracts;
 
-    /// <summary>Represents any 7-bit US-ASCII character, excluding NUL. Unicode: U+0001 - U+007F.</summary>
+    /// <summary>Represents the CHAR rule: 1 US-ASCII character, excluding NUL. Unicode: U+0001 - U+007F.</summary>
     public class CharToken : Token
     {
         /// <summary>
         /// Creates a new instance of the <see cref="T:Text.Scanning.Core.CharToken" /> class with a specified character
         /// and context.
         /// </summary>
-        /// <param name="data">The CHAR character.</param>
+        /// <param name="data">The character.</param>
         /// <param name="context">The object that describes the context in which the text appears.</param>
         public CharToken(char data, ITextContext context)
             : base(data, context)
