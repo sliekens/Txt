@@ -24,6 +24,7 @@
             this.lfLexer = lfLexer;
         }
 
+        /// <inheritdoc />
         public override CrLfToken Read(ITextScanner scanner)
         {
             var context = scanner.GetContext();
@@ -37,6 +38,7 @@
             }
         }
 
+        /// <inheritdoc />
         public override bool TryRead(ITextScanner scanner, out CrLfToken token)
         {
             var context = scanner.GetContext();
