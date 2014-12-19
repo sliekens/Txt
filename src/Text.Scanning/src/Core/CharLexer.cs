@@ -2,18 +2,19 @@
 {
     public class CharLexer : Lexer<CharToken>
     {
+        /// <inheritdoc />
         public override CharToken Read(ITextScanner scanner)
         {
-            var context = scanner.GetContext();
             CharToken token;
             if (this.TryRead(scanner, out token))
             {
                 return token;
             }
 
-            throw new SyntaxErrorException(context, "Expected 'CHAR'");
+            throw new SyntaxErrorException(scanner.GetContext(), "Expected 'CHAR'");
         }
 
+        /// <inheritdoc />
         public override bool TryRead(ITextScanner scanner, out CharToken token)
         {
             if (scanner.EndOfInput)
