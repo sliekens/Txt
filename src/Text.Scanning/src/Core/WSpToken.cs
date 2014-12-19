@@ -57,5 +57,11 @@
                 return this.spToken;
             }
         }
+
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(this.spToken != null ^ this.hTabToken != null);
+        }
     }
 }
