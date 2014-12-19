@@ -2,18 +2,19 @@
 {
     public class BitLexer : Lexer<BitToken>
     {
+        /// <inheritdoc />
         public override BitToken Read(ITextScanner scanner)
         {
-            var context = scanner.GetContext();
             BitToken token;
             if (this.TryRead(scanner, out token))
             {
                 return token;
             }
 
-            throw new SyntaxErrorException(context, "Expected 'BIT'");
+            throw new SyntaxErrorException(scanner.GetContext(), "Expected 'BIT'");
         }
 
+        /// <inheritdoc />
         public override bool TryRead(ITextScanner scanner, out BitToken token)
         {
             if (scanner.EndOfInput)
@@ -23,15 +24,15 @@
             }
 
             var context = scanner.GetContext();
-            if (scanner.TryMatch('0'))
+            if (scanner.TryMatch('\u0030'))
             {
-                token = new BitToken('0', context);
+                token = new BitToken('\u0030', context);
                 return true;
             }
 
-            if (scanner.TryMatch('1'))
+            if (scanner.TryMatch('\u0031'))
             {
-                token = new BitToken('1', context);
+                token = new BitToken('\u0031', context);
                 return true;
             }
 
