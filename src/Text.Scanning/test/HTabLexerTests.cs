@@ -13,12 +13,12 @@ namespace Text
         public void ReadHTab()
         {
             var text = "\t";
+            var lexer = new HTabLexer();
             using (var reader = new StringReader(text))
             using (ITextScanner scanner = new TextScanner(reader))
             {
                 scanner.Read();
-                var lexer = new HTabLexer(scanner);
-                var token = lexer.Read();
+                var token = lexer.Read(scanner);
                 Assert.IsNotNull(token);
                 Assert.AreEqual(text, token.Data);
             }

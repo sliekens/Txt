@@ -12,12 +12,12 @@ namespace Text
         public void ReadCr()
         {
             var text = "\r";
+            var lexer = new CrLexer();
             using (var reader = new StringReader(text))
             using (ITextScanner scanner = new TextScanner(reader))
             {
                 scanner.Read();
-                var lexer = new CrLexer(scanner);
-                var token = lexer.Read();
+                var token = lexer.Read(scanner);
                 Assert.AreEqual(text, token.Data);
             }
         }
@@ -26,13 +26,13 @@ namespace Text
         public void FailLf()
         {
             var text = "\n";
+            var lexer = new CrLexer();
             using (var reader = new StringReader(text))
             using (ITextScanner scanner = new TextScanner(reader))
             {
                 scanner.Read();
-                var lexer = new CrLexer(scanner);
                 CrToken token;
-                if (lexer.TryRead(out token))
+                if (lexer.TryRead(scanner, out token))
                 {
                     Assert.Fail();
                 }

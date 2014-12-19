@@ -16,8 +16,8 @@ namespace Text
             using (ITextScanner scanner = new TextScanner(reader))
             {
                 scanner.Read();
-                var lexer = new WSpLexer(scanner);
-                var token = lexer.Read();
+                var lexer = new WSpLexer();
+                var token = lexer.Read(scanner);
                 Assert.IsNotNull(token);
                 Assert.IsNotNull(token.Sp);
                 Assert.IsNull(token.HTab);
@@ -33,8 +33,8 @@ namespace Text
             using (ITextScanner scanner = new TextScanner(reader))
             {
                 scanner.Read();
-                var lexer = new WSpLexer(scanner);
-                var token = lexer.Read();
+                var lexer = new WSpLexer();
+                var token = lexer.Read(scanner);
                 Assert.IsNotNull(token);
                 Assert.IsNotNull(token.HTab);
                 Assert.IsNull(token.Sp);

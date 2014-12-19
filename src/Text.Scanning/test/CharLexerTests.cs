@@ -13,12 +13,12 @@ namespace Text
         public void ReadFirstAsciiChar()
         {
             var text = char.ToString(Convert.ToChar(0x01));
+            var lexer = new CharLexer();
             using (var reader = new StringReader(text))
             using (ITextScanner scanner = new TextScanner(reader))
             {
                 scanner.Read();
-                var lexer = new CharLexer(scanner);
-                var token = lexer.Read();
+                var token = lexer.Read(scanner);
                 Assert.AreEqual(text, token.Data);
             }
         }
@@ -27,12 +27,12 @@ namespace Text
         public void ReadLastAsciiChar()
         {
             var text = char.ToString(Convert.ToChar(0x7F));
+            var lexer = new CharLexer();
             using (var reader = new StringReader(text))
             using (ITextScanner scanner = new TextScanner(reader))
             {
                 scanner.Read();
-                var lexer = new CharLexer(scanner);
-                var token = lexer.Read();
+                var token = lexer.Read(scanner);
                 Assert.AreEqual(text, token.Data);
             }
         }
@@ -41,13 +41,13 @@ namespace Text
         public void FailNulChar()
         {
             var text = char.ToString('\0');
+            var lexer = new CharLexer();
             using (var reader = new StringReader(text))
             using (ITextScanner scanner = new TextScanner(reader))
             {
                 scanner.Read();
-                var lexer = new CharLexer(scanner);
                 CharToken token;
-                if (lexer.TryRead(out token))
+                if (lexer.TryRead(scanner, out token))
                 {
                     Assert.Fail();
                 }

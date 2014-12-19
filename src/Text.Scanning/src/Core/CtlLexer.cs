@@ -1,20 +1,12 @@
 ﻿namespace Text.Scanning.Core
 {
-    using System.Diagnostics.Contracts;
-
     public class CtlLexer : Lexer<CtlToken>
     {
-        public CtlLexer(ITextScanner scanner)
-            : base(scanner)
+        public override CtlToken Read(ITextScanner scanner)
         {
-            Contract.Requires(scanner != null);
-        }
-
-        public override CtlToken Read()
-        {
-            var context = this.Scanner.GetContext();
+            var context = scanner.GetContext();
             CtlToken token;
-            if (this.TryRead(out token))
+            if (this.TryRead(scanner, out token))
             {
                 return token;
             }
@@ -22,20 +14,20 @@
             throw new SyntaxErrorException(context, "Expected 'CTL'");
         }
 
-        public override bool TryRead(out CtlToken token)
+        public override bool TryRead(ITextScanner scanner, out CtlToken token)
         {
-            if (this.Scanner.EndOfInput)
+            if (scanner.EndOfInput)
             {
                 token = default(CtlToken);
                 return false;
             }
 
-            var context = this.Scanner.GetContext();
+            var context = scanner.GetContext();
 
             // %x00-1F
             for (var c = '\u0000'; c <= '\u001F'; c++)
             {
-                if (this.Scanner.TryMatch(c))
+                if (scanner.TryMatch(c))
                 {
                     token = new CtlToken(c, context);
                     return true;
@@ -43,7 +35,7 @@
             }
 
             // %x7F
-            if (this.Scanner.TryMatch('\u007F'))
+            if (scanner.TryMatch('\u007F'))
             {
                 token = new CtlToken('\u007F', context);
                 return true;

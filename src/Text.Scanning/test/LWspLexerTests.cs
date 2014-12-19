@@ -18,8 +18,8 @@ namespace Text
             using (ITextScanner scanner = new TextScanner(reader))
             {
                 scanner.Read();
-                var lexer = new LWspLexer(scanner);
-                var token = lexer.Read();
+                var lexer = new LWspLexer();
+                var token = lexer.Read(scanner);
                 Assert.IsNotNull(token);
                 Assert.IsNotNull(token.LWsp);
                 Assert.AreEqual(text, token.Data);
@@ -34,8 +34,8 @@ namespace Text
             using (ITextScanner scanner = new TextScanner(reader))
             {
                 scanner.Read();
-                var lexer = new LWspLexer(scanner);
-                var token = lexer.Read();
+                var lexer = new LWspLexer();
+                var token = lexer.Read(scanner);
                 Assert.IsNotNull(token);
                 Assert.IsNotNull(token.LWsp);
                 Assert.AreEqual(text, token.Data);
@@ -50,8 +50,8 @@ namespace Text
             using (ITextScanner scanner = new TextScanner(reader))
             {
                 scanner.Read();
-                var lexer = new LWspLexer(scanner);
-                var token = lexer.Read();
+                var lexer = new LWspLexer();
+                var token = lexer.Read(scanner);
                 Assert.IsNotNull(token);
                 Assert.IsNotNull(token.LWsp);
                 Assert.AreEqual(text, token.Data);
@@ -66,8 +66,8 @@ namespace Text
             using (ITextScanner scanner = new TextScanner(reader))
             {
                 scanner.Read();
-                var lexer = new LWspLexer(scanner);
-                var token = lexer.Read();
+                var lexer = new LWspLexer();
+                var token = lexer.Read(scanner);
                 Assert.IsNotNull(token);
                 Assert.IsNotNull(token.LWsp);
                 Assert.IsFalse(token.LWsp.Any());
@@ -83,8 +83,8 @@ namespace Text
             using (ITextScanner scanner = new TextScanner(reader))
             {
                 scanner.Read();
-                var lexer = new LWspLexer(scanner);
-                var token = lexer.Read();
+                var lexer = new LWspLexer();
+                var token = lexer.Read(scanner);
                 Assert.IsFalse(token.LWsp.Any());
             }
         }
@@ -97,9 +97,9 @@ namespace Text
             using (ITextScanner scanner = new TextScanner(reader))
             {
                 scanner.Read();
-                var lexer = new LWspLexer(scanner);
+                var lexer = new LWspLexer();
                 LWspToken token;
-                if (!lexer.TryRead(out token))
+                if (!lexer.TryRead(scanner, out token))
                 {
                     Assert.Fail();
                 }

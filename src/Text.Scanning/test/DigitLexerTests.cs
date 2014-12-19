@@ -13,14 +13,14 @@ namespace Text
         public void ReadDigits()
         {
             var text = "0123456789";
+            var lexer = new DigitLexer();
             using (var reader = new StringReader(text))
             using (ITextScanner scanner = new TextScanner(reader))
             {
                 scanner.Read();
-                var lexer = new DigitLexer(scanner);
                 while (!scanner.EndOfInput)
                 {
-                    var token = lexer.Read();
+                    var token = lexer.Read(scanner);
                     Assert.IsNotNull(token);
                     Assert.IsTrue(char.IsDigit(token.Data, 0));
                 }

@@ -1,20 +1,12 @@
 ﻿namespace Text.Scanning.Core
 {
-    using System.Diagnostics.Contracts;
-
     public class DQuoteLexer : Lexer<DQuoteToken>
     {
-        public DQuoteLexer(ITextScanner scanner)
-            : base(scanner)
+        public override DQuoteToken Read(ITextScanner scanner)
         {
-            Contract.Requires(scanner != null);
-        }
-
-        public override DQuoteToken Read()
-        {
-            var context = this.Scanner.GetContext();
+            var context = scanner.GetContext();
             DQuoteToken token;
-            if (this.TryRead(out token))
+            if (this.TryRead(scanner, out token))
             {
                 return token;
             }
@@ -22,16 +14,16 @@
             throw new SyntaxErrorException(context, "Expected 'DQUOTE'");
         }
 
-        public override bool TryRead(out DQuoteToken token)
+        public override bool TryRead(ITextScanner scanner, out DQuoteToken token)
         {
-            if (this.Scanner.EndOfInput)
+            if (scanner.EndOfInput)
             {
                 token = default(DQuoteToken);
                 return false;
             }
 
-            var context = this.Scanner.GetContext();
-            if (this.Scanner.TryMatch('\"'))
+            var context = scanner.GetContext();
+            if (scanner.TryMatch('\"'))
             {
                 token = new DQuoteToken(context);
                 return true;

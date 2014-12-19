@@ -1,20 +1,12 @@
 ﻿namespace Text.Scanning.Core
 {
-    using System.Diagnostics.Contracts;
-
     public class BitLexer : Lexer<BitToken>
     {
-        public BitLexer(ITextScanner scanner)
-            : base(scanner)
+        public override BitToken Read(ITextScanner scanner)
         {
-            Contract.Requires(scanner != null);
-        }
-
-        public override BitToken Read()
-        {
-            var context = this.Scanner.GetContext();
+            var context = scanner.GetContext();
             BitToken token;
-            if (this.TryRead(out token))
+            if (this.TryRead(scanner, out token))
             {
                 return token;
             }
@@ -22,22 +14,22 @@
             throw new SyntaxErrorException(context, "Expected 'BIT'");
         }
 
-        public override bool TryRead(out BitToken token)
+        public override bool TryRead(ITextScanner scanner, out BitToken token)
         {
-            if (this.Scanner.EndOfInput)
+            if (scanner.EndOfInput)
             {
                 token = default(BitToken);
                 return false;
             }
 
-            var context = this.Scanner.GetContext();
-            if (this.Scanner.TryMatch('0'))
+            var context = scanner.GetContext();
+            if (scanner.TryMatch('0'))
             {
                 token = new BitToken('0', context);
                 return true;
             }
 
-            if (this.Scanner.TryMatch('1'))
+            if (scanner.TryMatch('1'))
             {
                 token = new BitToken('1', context);
                 return true;

@@ -13,12 +13,12 @@ namespace Text
         public void ReadNul()
         {
             var text = "\0";
+            var lexer = new OctetLexer();
             using (var reader = new StringReader(text))
             using (ITextScanner scanner = new TextScanner(reader))
             {
                 scanner.Read();
-                var lexer = new OctetLexer(scanner);
-                var token = lexer.Read();
+                var token = lexer.Read(scanner);
                 Assert.IsNotNull(token);
                 Assert.AreEqual(text, token.Data);
             }
@@ -27,13 +27,13 @@ namespace Text
         [TestMethod]
         public void Read255()
         {
-            var text = char.ToString((char)0xFF);
+            var text = "\u00FF";
+            var lexer = new OctetLexer();
             using (var reader = new StringReader(text))
             using (ITextScanner scanner = new TextScanner(reader))
             {
                 scanner.Read();
-                var lexer = new OctetLexer(scanner);
-                var token = lexer.Read();
+                var token = lexer.Read(scanner);
                 Assert.IsNotNull(token);
                 Assert.AreEqual(text, token.Data);
             }

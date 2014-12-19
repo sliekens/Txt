@@ -8,24 +8,22 @@
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly ILexer<DigitToken> digitLexer;
 
-        public HexDigLexer(ITextScanner scanner)
-            : this(scanner, new DigitLexer(scanner))
+        public HexDigLexer()
+            : this(new DigitLexer())
         {
-            Contract.Requires(scanner != null);
         }
 
-        public HexDigLexer(ITextScanner scanner, ILexer<DigitToken> digitLexer)
-            : base(scanner)
+        public HexDigLexer(ILexer<DigitToken> digitLexer)
         {
-            Contract.Requires(scanner != null);
+            Contract.Requires(digitLexer != null);
             this.digitLexer = digitLexer;
         }
 
-        public override HexDigToken Read()
+        public override HexDigToken Read(ITextScanner scanner)
         {
-            var context = this.Scanner.GetContext();
+            var context = scanner.GetContext();
             HexDigToken token;
-            if (this.TryRead(out token))
+            if (this.TryRead(scanner, out token))
             {
                 return token;
             }
@@ -33,17 +31,17 @@
             throw new SyntaxErrorException(context, "Expected 'HEXDIG'");
         }
 
-        public override bool TryRead(out HexDigToken token)
+        public override bool TryRead(ITextScanner scanner, out HexDigToken token)
         {
-            if (this.Scanner.EndOfInput)
+            if (scanner.EndOfInput)
             {
                 token = default(HexDigToken);
                 return false;
             }
 
-            var context = this.Scanner.GetContext();
+            var context = scanner.GetContext();
             DigitToken digitToken;
-            if (this.digitLexer.TryRead(out digitToken))
+            if (this.digitLexer.TryRead(scanner, out digitToken))
             {
                 token = new HexDigToken(digitToken, context);
                 return true;
@@ -52,7 +50,7 @@
             // A-F
             for (var c = 'A'; c <= 'F'; c++)
             {
-                if (this.Scanner.TryMatch(c))
+                if (scanner.TryMatch(c))
                 {
                     token = new HexDigToken(c, context);
                     return true;
@@ -62,7 +60,7 @@
             // a-f
             for (var c = 'a'; c <= 'f'; c++)
             {
-                if (this.Scanner.TryMatch(c))
+                if (scanner.TryMatch(c))
                 {
                     token = new HexDigToken(c, context);
                     return true;
@@ -71,6 +69,12 @@
 
             token = default(HexDigToken);
             return false;
+        }
+
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(this.digitLexer != null);
         }
     }
 }

@@ -13,12 +13,12 @@ namespace Text
         public void ReadDQuote()
         {
             var text = "\"";
+            var lexer = new DQuoteLexer();
             using (var reader = new StringReader(text))
             using (ITextScanner scanner = new TextScanner(reader))
             {
                 scanner.Read();
-                var lexer = new DQuoteLexer(scanner);
-                var token = lexer.Read();
+                var token = lexer.Read(scanner);
                 Assert.IsNotNull(token);
                 Assert.AreEqual(text, token.Data);
             }

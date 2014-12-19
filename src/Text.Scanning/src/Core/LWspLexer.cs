@@ -13,45 +13,42 @@
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly ILexer<WSpToken> wSpLexer;
 
-        public LWspLexer(ITextScanner scanner)
-            : this(scanner, new CrLfLexer(scanner), new WSpLexer(scanner))
+        public LWspLexer()
+            : this(new CrLfLexer(), new WSpLexer())
         {
-            Contract.Requires(scanner != null);
         }
 
-        public LWspLexer(ITextScanner scanner, ILexer<CrLfToken> crLfLexer, ILexer<WSpToken> wSpLexer)
-            : base(scanner)
+        public LWspLexer(ILexer<CrLfToken> crLfLexer, ILexer<WSpToken> wSpLexer)
         {
-            Contract.Requires(scanner != null);
             Contract.Requires(crLfLexer != null);
             Contract.Requires(wSpLexer != null);
             this.crLfLexer = crLfLexer;
             this.wSpLexer = wSpLexer;
         }
 
-        public override LWspToken Read()
+        public override LWspToken Read(ITextScanner scanner)
         {
-            var context = this.Scanner.GetContext();
+            var context = scanner.GetContext();
             var data = new List<Tuple<CrLfToken, WSpToken>>();
 
             // The program should eventually exit this loop, unless the source data is an infinite stream of linear whitespace
-            while (!this.Scanner.EndOfInput)
+            while (!scanner.EndOfInput)
             {
                 CrLfToken crLfToken;
                 WSpToken wSpToken;
-                if (this.wSpLexer.TryRead(out wSpToken))
+                if (this.wSpLexer.TryRead(scanner, out wSpToken))
                 {
                     data.Add(new Tuple<CrLfToken, WSpToken>(null, wSpToken));
                 }
-                else if (this.crLfLexer.TryRead(out crLfToken))
+                else if (this.crLfLexer.TryRead(scanner, out crLfToken))
                 {
-                    if (!this.Scanner.EndOfInput && this.wSpLexer.TryRead(out wSpToken))
+                    if (!scanner.EndOfInput && this.wSpLexer.TryRead(scanner, out wSpToken))
                     {
                         data.Add(new Tuple<CrLfToken, WSpToken>(crLfToken, wSpToken));
                     }
                     else
                     {
-                        this.crLfLexer.PutBack(crLfToken);
+                        this.crLfLexer.PutBack(scanner, crLfToken);
                         break;
                     }
                 }
@@ -64,29 +61,29 @@
             return new LWspToken(data, context);
         }
 
-        public override bool TryRead(out LWspToken token)
+        public override bool TryRead(ITextScanner scanner, out LWspToken token)
         {
-            var context = this.Scanner.GetContext();
+            var context = scanner.GetContext();
             var data = new List<Tuple<CrLfToken, WSpToken>>();
 
             // The program should eventually exit this loop, unless the source data is an infinite stream of linear whitespace
-            while (!this.Scanner.EndOfInput)
+            while (!scanner.EndOfInput)
             {
                 CrLfToken crLfToken;
                 WSpToken spToken;
-                if (this.crLfLexer.TryRead(out crLfToken))
+                if (this.crLfLexer.TryRead(scanner, out crLfToken))
                 {
-                    if (!this.Scanner.EndOfInput && this.wSpLexer.TryRead(out spToken))
+                    if (!scanner.EndOfInput && this.wSpLexer.TryRead(scanner, out spToken))
                     {
                         data.Add(new Tuple<CrLfToken, WSpToken>(crLfToken, spToken));
                     }
                     else
                     {
-                        this.crLfLexer.PutBack(crLfToken);
+                        this.crLfLexer.PutBack(scanner, crLfToken);
                         break;
                     }
                 }
-                else if (this.wSpLexer.TryRead(out spToken))
+                else if (this.wSpLexer.TryRead(scanner, out spToken))
                 {
                     data.Add(new Tuple<CrLfToken, WSpToken>(null, spToken));
                 }
@@ -98,6 +95,13 @@
 
             token = new LWspToken(data, context);
             return true;
+        }
+
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(this.wSpLexer != null);
+            Contract.Invariant(this.crLfLexer != null);
         }
     }
 }

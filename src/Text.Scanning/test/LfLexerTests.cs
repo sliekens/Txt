@@ -13,12 +13,12 @@ namespace Text
         public void ReadLf()
         {
             var text = "\n";
+            var lexer = new LfLexer();
             using (var reader = new StringReader(text))
             using (ITextScanner scanner = new TextScanner(reader))
             {
                 scanner.Read();
-                var lexer = new LfLexer(scanner);
-                var token = lexer.Read();
+                var token = lexer.Read(scanner);
                 Assert.IsNotNull(token);
                 Assert.AreEqual("\n", token.Data);
             }

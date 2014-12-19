@@ -13,12 +13,12 @@ namespace Text
         public void ReadCtl()
         {
             var text = "\u0001";
+            var lexer = new CtlLexer();
             using (var reader = new StringReader(text))
             using (ITextScanner scanner = new TextScanner(reader))
             {
                 scanner.Read();
-                var lexer = new CtlLexer(scanner);
-                var token = lexer.Read();
+                var token = lexer.Read(scanner);
                 Assert.AreEqual(text, token.Data);
             }
         }
@@ -27,13 +27,13 @@ namespace Text
         public void FailAlpha()
         {
             var text = "A";
+            var lexer = new CtlLexer();
             using (var reader = new StringReader(text))
             using (ITextScanner scanner = new TextScanner(reader))
             {
                 scanner.Read();
-                var lexer = new CtlLexer(scanner);
                 CtlToken token;
-                if (lexer.TryRead(out token))
+                if (lexer.TryRead(scanner, out token))
                 {
                     Assert.Fail();
                 }

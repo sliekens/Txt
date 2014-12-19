@@ -1,20 +1,12 @@
 ﻿namespace Text.Scanning.Core
 {
-    using System.Diagnostics.Contracts;
-
     public class LfLexer : Lexer<LfToken>
     {
-        public LfLexer(ITextScanner scanner)
-            : base(scanner)
+        public override LfToken Read(ITextScanner scanner)
         {
-            Contract.Requires(scanner != null);
-        }
-
-        public override LfToken Read()
-        {
-            var context = this.Scanner.GetContext();
+            var context = scanner.GetContext();
             LfToken token;
-            if (this.TryRead(out token))
+            if (this.TryRead(scanner, out token))
             {
                 return token;
             }
@@ -22,16 +14,16 @@
             throw new SyntaxErrorException(context, "Expected 'LF'");
         }
 
-        public override bool TryRead(out LfToken token)
+        public override bool TryRead(ITextScanner scanner, out LfToken token)
         {
-            if (this.Scanner.EndOfInput)
+            if (scanner.EndOfInput)
             {
                 token = default(LfToken);
                 return false;
             }
 
-            var context = this.Scanner.GetContext();
-            if (this.Scanner.TryMatch('\n'))
+            var context = scanner.GetContext();
+            if (scanner.TryMatch('\n'))
             {
                 token = new LfToken(context);
                 return true;

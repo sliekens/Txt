@@ -1,36 +1,28 @@
 ﻿namespace Text.Scanning.Core
 {
-    using System.Diagnostics.Contracts;
-
     public class SpLexer : Lexer<SpToken>
     {
-        public SpLexer(ITextScanner scanner)
-            : base(scanner)
-        {
-            Contract.Requires(scanner != null);
-        }
-
-        public override SpToken Read()
+        public override SpToken Read(ITextScanner scanner)
         {
             SpToken token;
-            if (this.TryRead(out token))
+            if (this.TryRead(scanner, out token))
             {
                 return token;
             }
 
-            throw new SyntaxErrorException(this.Scanner.GetContext(), "Expected 'SP'");
+            throw new SyntaxErrorException(scanner.GetContext(), "Expected 'SP'");
         }
 
-        public override bool TryRead(out SpToken token)
+        public override bool TryRead(ITextScanner scanner, out SpToken token)
         {
-            if (this.Scanner.EndOfInput)
+            if (scanner.EndOfInput)
             {
                 token = default(SpToken);
                 return false;
             }
 
-            var context = this.Scanner.GetContext();
-            if (this.Scanner.TryMatch('\u0020'))
+            var context = scanner.GetContext();
+            if (scanner.TryMatch('\u0020'))
             {
                 token = new SpToken(context);
                 return true;

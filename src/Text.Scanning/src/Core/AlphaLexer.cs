@@ -1,21 +1,13 @@
 ﻿namespace Text.Scanning.Core
 {
-    using System.Diagnostics.Contracts;
-
     /// <summary>A-Z / a-z</summary>
     public class AlphaLexer : Lexer<AlphaToken>
     {
-        public AlphaLexer(ITextScanner scanner)
-            : base(scanner)
+        public override AlphaToken Read(ITextScanner scanner)
         {
-            Contract.Requires(scanner != null);
-        }
-
-        public override AlphaToken Read()
-        {
-            var context = this.Scanner.GetContext();
+            var context = scanner.GetContext();
             AlphaToken token;
-            if (this.TryRead(out token))
+            if (this.TryRead(scanner, out token))
             {
                 return token;
             }
@@ -23,23 +15,24 @@
             throw new SyntaxErrorException(context, "Expected 'ALPHA'");
         }
 
-        public override bool TryRead(out AlphaToken token)
+        public override bool TryRead(ITextScanner scanner, out AlphaToken token)
         {
-            if (this.Scanner.EndOfInput)
+            if (scanner.EndOfInput)
             {
                 token = default(AlphaToken);
                 return false;
             }
 
-            var context = this.Scanner.GetContext();
-            return this.TryReadLowercase(out token, context) || this.TryReadUppercase(out token, context);
+            var context = scanner.GetContext();
+            return this.TryReadLowercase(scanner, context, out token) ||
+                   this.TryReadUppercase(scanner, context, out token);
         }
 
-        private bool TryReadLowercase(out AlphaToken token, ITextContext context)
+        private bool TryReadLowercase(ITextScanner scanner, ITextContext context, out AlphaToken token)
         {
             for (var c = 'a'; c <= 'z'; c++)
             {
-                if (this.Scanner.TryMatch(c))
+                if (scanner.TryMatch(c))
                 {
                     token = new AlphaToken(c, context);
                     return true;
@@ -50,11 +43,11 @@
             return false;
         }
 
-        private bool TryReadUppercase(out AlphaToken token, ITextContext context)
+        private bool TryReadUppercase(ITextScanner scanner, ITextContext context, out AlphaToken token)
         {
             for (var c = 'A'; c <= 'Z'; c++)
             {
-                if (this.Scanner.TryMatch(c))
+                if (scanner.TryMatch(c))
                 {
                     token = new AlphaToken(c, context);
                     return true;

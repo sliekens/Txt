@@ -17,10 +17,10 @@ namespace Text
             using (ITextScanner scanner = new TextScanner(reader))
             {
                 scanner.Read();
-                var lexer = new HexDigLexer(scanner);
+                var lexer = new HexDigLexer();
                 while (!scanner.EndOfInput)
                 {
-                    var token = lexer.Read();
+                    var token = lexer.Read(scanner);
                     Assert.IsNotNull(token);
                     Assert.IsTrue(Uri.IsHexDigit(token.Data[0]));
                 }

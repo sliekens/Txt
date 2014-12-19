@@ -15,14 +15,14 @@ namespace Text
         public void ReadLowerCaseAlphabet()
         {
             var text = "abcdefghijklmnopqrstuvwxyz";
+            var lexer = new AlphaLexer();
             using (var reader = new StringReader(text))
             using (ITextScanner scanner = new TextScanner(reader))
             {
                 scanner.Read();
-                var lexer = new AlphaLexer(scanner);
                 for (int i = 0; i < text.Length; i++)
                 {
-                    var token = lexer.Read();
+                    var token = lexer.Read(scanner);
                     Assert.AreEqual(text.Substring(i, 1), token.Data);
                 }
             }
@@ -32,14 +32,14 @@ namespace Text
         public void ReadUpperCaseAlphabet()
         {
             var text = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            var lexer = new AlphaLexer();
             using (var reader = new StringReader(text))
             using (ITextScanner scanner = new TextScanner(reader))
             {
                 scanner.Read();
-                var lexer = new AlphaLexer(scanner);
                 for (int i = 0; i < text.Length; i++)
                 {
-                    var token = lexer.Read();
+                    var token = lexer.Read(scanner);
                     Assert.AreEqual(text.Substring(i, 1), token.Data);
                 }
             }
@@ -49,13 +49,13 @@ namespace Text
         public void FailSymbol()
         {
             var text = "%";
+            var lexer = new AlphaLexer();
             using (var reader = new StringReader(text))
             using (ITextScanner scanner = new TextScanner(reader))
             {
                 scanner.Read();
-                var lexer = new AlphaLexer(scanner);
                 AlphaToken token;
-                var result = lexer.TryRead(out token);
+                var result = lexer.TryRead(scanner, out token);
                 Assert.IsFalse(result);
                 Assert.IsNull(token);
             }

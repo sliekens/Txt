@@ -1,36 +1,28 @@
 ﻿namespace Text.Scanning.Core
 {
-    using System.Diagnostics.Contracts;
-
     public class HTabLexer : Lexer<HTabToken>
     {
-        public HTabLexer(ITextScanner scanner)
-            : base(scanner)
-        {
-            Contract.Requires(scanner != null);
-        }
-
-        public override HTabToken Read()
+        public override HTabToken Read(ITextScanner scanner)
         {
             HTabToken token;
-            if (this.TryRead(out token))
+            if (this.TryRead(scanner, out token))
             {
                 return token;
             }
 
-            throw new SyntaxErrorException(this.Scanner.GetContext(), "Expected 'HTAB'");
+            throw new SyntaxErrorException(scanner.GetContext(), "Expected 'HTAB'");
         }
 
-        public override bool TryRead(out HTabToken token)
+        public override bool TryRead(ITextScanner scanner, out HTabToken token)
         {
-            if (this.Scanner.EndOfInput)
+            if (scanner.EndOfInput)
             {
                 token = default(HTabToken);
                 return false;
             }
 
-            var context = this.Scanner.GetContext();
-            if (this.Scanner.TryMatch('\t'))
+            var context = scanner.GetContext();
+            if (scanner.TryMatch('\t'))
             {
                 token = new HTabToken(context);
                 return true;

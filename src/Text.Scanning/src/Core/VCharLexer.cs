@@ -1,38 +1,30 @@
 ﻿namespace Text.Scanning.Core
 {
-    using System.Diagnostics.Contracts;
-
     public class VCharLexer : Lexer<VCharToken>
     {
-        public VCharLexer(ITextScanner scanner)
-            : base(scanner)
-        {
-            Contract.Requires(scanner != null);
-        }
-
-        public override VCharToken Read()
+        public override VCharToken Read(ITextScanner scanner)
         {
             VCharToken token;
-            if (this.TryRead(out token))
+            if (this.TryRead(scanner, out token))
             {
                 return token;
             }
 
-            throw new SyntaxErrorException(this.Scanner.GetContext(), "Expected 'VCHAR'");
+            throw new SyntaxErrorException(scanner.GetContext(), "Expected 'VCHAR'");
         }
 
-        public override bool TryRead(out VCharToken token)
+        public override bool TryRead(ITextScanner scanner, out VCharToken token)
         {
-            if (this.Scanner.EndOfInput)
+            if (scanner.EndOfInput)
             {
                 token = default(VCharToken);
                 return false;
             }
 
-            var context = this.Scanner.GetContext();
+            var context = scanner.GetContext();
             for (var c = '\u0021'; c < '\u007E'; c++)
             {
-                if (this.Scanner.TryMatch(c))
+                if (scanner.TryMatch(c))
                 {
                     token = new VCharToken(c, context);
                     return true;

@@ -11,26 +11,25 @@
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly ILexer<LfToken> lfLexer;
 
-        public CrLfLexer(ITextScanner scanner)
-            : this(scanner, new CrLexer(scanner), new LfLexer(scanner))
+        public CrLfLexer()
+            : this(new CrLexer(), new LfLexer())
         {
-            Contract.Requires(scanner != null);
         }
 
-        public CrLfLexer(ITextScanner scanner, ILexer<CrToken> crLexer, ILexer<LfToken> lfLexer)
-            : base(scanner)
+        public CrLfLexer(ILexer<CrToken> crLexer, ILexer<LfToken> lfLexer)
         {
-            Contract.Requires(scanner != null);
+            Contract.Requires(crLexer != null);
+            Contract.Requires(lfLexer != null);
             this.crLexer = crLexer;
             this.lfLexer = lfLexer;
         }
 
-        public override CrLfToken Read()
+        public override CrLfToken Read(ITextScanner scanner)
         {
-            var context = this.Scanner.GetContext();
+            var context = scanner.GetContext();
             try
             {
-                return new CrLfToken(this.crLexer.Read(), this.lfLexer.Read(), context);
+                return new CrLfToken(this.crLexer.Read(scanner), this.lfLexer.Read(scanner), context);
             }
             catch (SyntaxErrorException syntaxErrorException)
             {
@@ -38,26 +37,33 @@
             }
         }
 
-        public override bool TryRead(out CrLfToken token)
+        public override bool TryRead(ITextScanner scanner, out CrLfToken token)
         {
-            var context = this.Scanner.GetContext();
+            var context = scanner.GetContext();
             CrToken crToken;
-            if (this.Scanner.EndOfInput || !this.crLexer.TryRead(out crToken))
+            if (scanner.EndOfInput || !this.crLexer.TryRead(scanner, out crToken))
             {
                 token = default(CrLfToken);
                 return false;
             }
 
             LfToken lfToken;
-            if (this.Scanner.EndOfInput || !this.lfLexer.TryRead(out lfToken))
+            if (scanner.EndOfInput || !this.lfLexer.TryRead(scanner, out lfToken))
             {
-                this.crLexer.PutBack(crToken);
+                this.crLexer.PutBack(scanner, crToken);
                 token = default(CrLfToken);
                 return false;
             }
 
             token = new CrLfToken(crToken, lfToken, context);
             return true;
+        }
+
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(this.crLexer != null);
+            Contract.Invariant(this.lfLexer != null);
         }
     }
 }

@@ -1,20 +1,12 @@
 ﻿namespace Text.Scanning.Core
 {
-    using System.Diagnostics.Contracts;
-
     public class CrLexer : Lexer<CrToken>
     {
-        public CrLexer(ITextScanner scanner)
-            : base(scanner)
+        public override CrToken Read(ITextScanner scanner)
         {
-            Contract.Requires(scanner != null);
-        }
-
-        public override CrToken Read()
-        {
-            var context = this.Scanner.GetContext();
+            var context = scanner.GetContext();
             CrToken token;
-            if (this.TryRead(out token))
+            if (this.TryRead(scanner, out token))
             {
                 return token;
             }
@@ -22,16 +14,16 @@
             throw new SyntaxErrorException(context, "Expected 'CR'");
         }
 
-        public override bool TryRead(out CrToken token)
+        public override bool TryRead(ITextScanner scanner, out CrToken token)
         {
-            if (this.Scanner.EndOfInput)
+            if (scanner.EndOfInput)
             {
                 token = default(CrToken);
                 return false;
             }
 
-            var context = this.Scanner.GetContext();
-            if (this.Scanner.TryMatch('\r'))
+            var context = scanner.GetContext();
+            if (scanner.TryMatch('\r'))
             {
                 token = new CrToken(context);
                 return true;
