@@ -14,7 +14,7 @@
         public CharToken(char data, ITextContext context)
             : base(data, context)
         {
-            Contract.Requires(data >= 0x01 && data <= 0x7F);
+            Contract.Requires(data >= '\u0001' && data <= '\u007F');
             Contract.Requires(context != null);
         }
     }
