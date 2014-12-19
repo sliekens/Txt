@@ -30,7 +30,10 @@
             var context = scanner.GetContext();
             try
             {
-                return new CrLfToken(this.crLexer.Read(scanner), this.lfLexer.Read(scanner), context);
+                var crToken = this.crLexer.Read(scanner);
+                var lfToken = this.lfLexer.Read(scanner);
+                Contract.Assume(lfToken.Offset == crToken.Offset + 1);
+                return new CrLfToken(crToken, lfToken, context);
             }
             catch (SyntaxErrorException syntaxErrorException)
             {
@@ -57,6 +60,7 @@
                 return false;
             }
 
+            Contract.Assume(lfToken.Offset == crToken.Offset + 1);
             token = new CrLfToken(crToken, lfToken, context);
             return true;
         }

@@ -7,11 +7,6 @@
         public virtual void PutBack(ITextScanner scanner, TToken token)
         {
             var data = token.Data;
-            if (data == null)
-            {
-                return;
-            }
-
             for (var i = data.Length - 1; i >= 0; i--)
             {
                 scanner.PutBack(data[i]);

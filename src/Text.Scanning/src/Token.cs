@@ -29,6 +29,7 @@
         {
             get
             {
+                Contract.Ensures(Contract.Result<string>() != null);
                 return this.data;
             }
         }
@@ -47,5 +48,12 @@
         {
             return this.Data;
         }
+
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(this.data != null);
+        }
+
     }
 }

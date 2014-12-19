@@ -132,7 +132,7 @@
                 this.buffer.Push(this.nextCharacter);
             }
 
-            this.offset--;
+            this.offset -= 1;
             this.nextCharacter = c;
         }
 
@@ -149,19 +149,19 @@
                 return false;
             }
 
-            if (this.buffer.Any())
+            if (this.buffer.Count > 0)
             {
                 this.nextCharacter = this.buffer.Pop();
-                this.offset++;
             }
             else
             {
                 lock (this.textReader)
                 {
                     this.nextCharacter = (char)this.textReader.Read();
-                    this.offset++;
                 }
             }
+
+            this.offset++;
 
             if (this.nextCharacter == char.MaxValue)
             {
@@ -221,5 +221,13 @@
 
             this.disposed = true;
         }
+
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(this.textReader != null);
+            Contract.Invariant(this.buffer != null);
+        }
+
     }
 }

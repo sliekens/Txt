@@ -44,6 +44,7 @@
                 {
                     if (!scanner.EndOfInput && this.wSpLexer.TryRead(scanner, out wSpToken))
                     {
+                        Contract.Assume(wSpToken.Offset == crLfToken.Offset + 2);
                         data.Add(new LWspToken.CrLfWSpPair(crLfToken, wSpToken));
                     }
                     else
@@ -71,12 +72,13 @@
             while (!scanner.EndOfInput)
             {
                 CrLfToken crLfToken;
-                WSpToken spToken;
+                WSpToken wSpToken;
                 if (this.crLfLexer.TryRead(scanner, out crLfToken))
                 {
-                    if (!scanner.EndOfInput && this.wSpLexer.TryRead(scanner, out spToken))
+                    if (!scanner.EndOfInput && this.wSpLexer.TryRead(scanner, out wSpToken))
                     {
-                        data.Add(new LWspToken.CrLfWSpPair(crLfToken, spToken));
+                        Contract.Assume(wSpToken.Offset == crLfToken.Offset + 2);
+                        data.Add(new LWspToken.CrLfWSpPair(crLfToken, wSpToken));
                     }
                     else
                     {
@@ -84,9 +86,9 @@
                         break;
                     }
                 }
-                else if (this.wSpLexer.TryRead(scanner, out spToken))
+                else if (this.wSpLexer.TryRead(scanner, out wSpToken))
                 {
-                    data.Add(new LWspToken.CrLfWSpPair(spToken));
+                    data.Add(new LWspToken.CrLfWSpPair(wSpToken));
                 }
                 else
                 {

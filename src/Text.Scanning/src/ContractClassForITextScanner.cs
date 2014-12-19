@@ -10,7 +10,6 @@
         {
             get
             {
-                Contract.Ensures(Contract.Result<bool>() == false || this.NextCharacter == null);
                 throw new NotImplementedException();
             }
         }
@@ -19,7 +18,6 @@
         {
             get
             {
-                Contract.Ensures(Contract.Result<char?>().HasValue || this.EndOfInput);
                 throw new NotImplementedException();
             }
         }
@@ -36,18 +34,23 @@
         public void PutBack(char c)
         {
             Contract.Ensures(this.Offset == Contract.OldValue(this.Offset) - 1);
+            Contract.EnsuresOnThrow<ObjectDisposedException>(this.Offset == Contract.OldValue(this.Offset));
             throw new NotImplementedException();
         }
 
         public bool Read()
         {
-            Contract.Ensures(Contract.Result<bool>() == false || this.Offset == Contract.OldValue(this.Offset) + 1);
+            Contract.Ensures(Contract.Result<bool>() == false ||
+                             Contract.Result<bool>() && this.Offset == Contract.OldValue(this.Offset) + 1);
+            Contract.EnsuresOnThrow<ObjectDisposedException>(this.Offset == Contract.OldValue(this.Offset));
             throw new NotImplementedException();
         }
 
         public bool TryMatch(char c)
         {
-            Contract.Ensures(Contract.Result<bool>() == false || this.Offset == Contract.OldValue(this.Offset) + 1);
+            Contract.Ensures(Contract.Result<bool>() == false ||
+                             Contract.Result<bool>() && this.Offset == Contract.OldValue(this.Offset) + 1);
+            Contract.EnsuresOnThrow<ObjectDisposedException>(this.Offset == Contract.OldValue(this.Offset));
             throw new NotImplementedException();
         }
     }
