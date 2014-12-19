@@ -42,6 +42,7 @@
         /// <inheritdoc />
         bool ITextScanner.EndOfInput
         {
+            [Pure]
             get
             {
                 if (this.disposed)
@@ -56,6 +57,7 @@
         /// <inheritdoc />
         char? ITextScanner.NextCharacter
         {
+            [Pure]
             get
             {
                 if (this.disposed)
@@ -80,6 +82,7 @@
         /// <inheritdoc />
         int ITextContext.Offset
         {
+            [Pure]
             get
             {
                 if (this.disposed)
@@ -105,6 +108,7 @@
         }
 
         /// <inheritdoc />
+        [Pure]
         ITextContext ITextScanner.GetContext()
         {
             if (this.disposed)
@@ -133,6 +137,7 @@
             }
 
             this.offset -= 1;
+            Contract.Assume(((ITextScanner)this).Offset == ((ITextScanner)this).Offset - 1);
             this.nextCharacter = c;
         }
 
@@ -162,7 +167,7 @@
             }
 
             this.offset++;
-
+            Contract.Assume(((ITextScanner)this).Offset == ((ITextScanner)this).Offset + 1);
             if (this.nextCharacter == char.MaxValue)
             {
                 this.endOfInput = true;
@@ -197,7 +202,7 @@
 
             ITextScanner self = this;
             self.Read();
-
+            Contract.Assume(((ITextScanner)this).Offset == ((ITextScanner)this).Offset + 1);
             return true;
         }
 
@@ -218,7 +223,6 @@
                 this.textReader.Dispose();
             }
 
-
             this.disposed = true;
         }
 
@@ -228,6 +232,5 @@
             Contract.Invariant(this.textReader != null);
             Contract.Invariant(this.buffer != null);
         }
-
     }
 }
