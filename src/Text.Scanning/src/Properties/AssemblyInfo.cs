@@ -5,12 +5,12 @@ using System.Resources;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 
-[assembly: AssemblyTitle("Text")]
+[assembly: AssemblyTitle("Text.Scanning")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Text")]
-[assembly: AssemblyCopyright("The MIT License (MIT)")]
+//[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("Text Scanning")]
+[assembly: AssemblyCopyright("\x00a9 Steven Liekens")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: NeutralResourcesLanguage("en")]
