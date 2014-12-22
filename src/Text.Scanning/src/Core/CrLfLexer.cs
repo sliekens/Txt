@@ -37,7 +37,7 @@
             }
             catch (SyntaxErrorException syntaxErrorException)
             {
-                throw new SyntaxErrorException(context, "Expected 'CR LF'", syntaxErrorException);
+                throw new SyntaxErrorException(context, "Expected 'CRLF'", syntaxErrorException);
             }
         }
 
