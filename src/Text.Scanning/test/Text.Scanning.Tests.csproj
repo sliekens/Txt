@@ -61,6 +61,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="AlphaLexerTests.cs" />
+    <Compile Include="BinaryTextReaderTests.cs" />
     <Compile Include="CharLexerTests.cs" />
     <Compile Include="CrLexerTests.cs" />
     <Compile Include="CrLfLexerTests.cs" />

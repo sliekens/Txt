@@ -134,6 +134,7 @@
     <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BinaryTextReader.cs" />
     <Compile Include="ContractClassForILexer.cs" />
     <Compile Include="ContractClassForITextScanner.cs" />
     <Compile Include="Core\AlphaLexer.cs" />
