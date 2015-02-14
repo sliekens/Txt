@@ -148,6 +148,7 @@ namespace Text.Scanning
                 do
                 {
                     read = this.Read(buffer, 0, buffer.Length);
+                    Contract.Assume(buffer.Length >= read);
                     if (read > 0)
                     {
                         textWriter.Write(buffer, 0, read);
@@ -189,6 +190,7 @@ namespace Text.Scanning
         private void ObjectInvariant()
         {
             Contract.Invariant(this.binaryReader != null);
+            Contract.Invariant(this.bufferSize > 0);
         }
 
     }
