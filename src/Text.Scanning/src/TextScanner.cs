@@ -40,7 +40,7 @@
         }
 
         /// <inheritdoc />
-        bool ITextScanner.EndOfInput
+        private bool EndOfInput
         {
             [Pure]
             get
@@ -55,7 +55,17 @@
         }
 
         /// <inheritdoc />
-        char? ITextScanner.NextCharacter
+        bool ITextScanner.EndOfInput
+        {
+            [Pure]
+            get
+            {
+                return this.EndOfInput;
+            }
+        }
+
+        /// <inheritdoc />
+        private char? NextCharacter
         {
             [Pure]
             get
@@ -80,7 +90,17 @@
         }
 
         /// <inheritdoc />
-        int ITextContext.Offset
+        char? ITextScanner.NextCharacter
+        {
+            [Pure]
+            get
+            {
+                return this.NextCharacter;
+            }
+        }
+
+        /// <inheritdoc />
+        public int Offset
         {
             [Pure]
             get
@@ -91,6 +111,16 @@
                 }
 
                 return this.offset;
+            }
+        }
+
+        /// <inheritdoc />
+        int ITextContext.Offset
+        {
+            [Pure]
+            get
+            {
+                return this.Offset;
             }
         }
 
@@ -109,7 +139,7 @@
 
         /// <inheritdoc />
         [Pure]
-        ITextContext ITextScanner.GetContext()
+        private ITextContext GetContext()
         {
             if (this.disposed)
             {
@@ -120,11 +150,23 @@
         }
 
         /// <inheritdoc />
-        void ITextScanner.PutBack(char c)
+        [Pure]
+        ITextContext ITextScanner.GetContext()
+        {
+            return this.GetContext();
+        }
+
+        /// <inheritdoc />
+        private void PutBack(char c)
         {
             if (this.disposed)
             {
                 throw new ObjectDisposedException(this.GetType().FullName);
+            }
+
+            if (this.offset == 0)
+            {
+                throw new InvalidOperationException("Precondition failed: Offset > 0");
             }
 
             if (this.endOfInput)
@@ -137,12 +179,17 @@
             }
 
             this.offset -= 1;
-            Contract.Assume(((ITextScanner)this).Offset == ((ITextScanner)this).Offset - 1);
             this.nextCharacter = c;
         }
 
         /// <inheritdoc />
-        bool ITextScanner.Read()
+        void ITextScanner.PutBack(char c)
+        {
+            this.PutBack(c);
+        }
+
+        /// <inheritdoc />
+        private bool Read()
         {
             if (this.disposed)
             {
@@ -166,8 +213,7 @@
                 }
             }
 
-            this.offset++;
-            Contract.Assume(((ITextScanner)this).Offset == ((ITextScanner)this).Offset + 1);
+            this.offset += 1;
             if (this.nextCharacter == char.MaxValue)
             {
                 this.endOfInput = true;
@@ -178,7 +224,13 @@
         }
 
         /// <inheritdoc />
-        bool ITextScanner.TryMatch(char c)
+        bool ITextScanner.Read()
+        {
+            return this.Read();
+        }
+
+        /// <inheritdoc />
+        private bool TryMatch(char c)
         {
             if (this.disposed)
             {
@@ -200,10 +252,14 @@
                 return false;
             }
 
-            ITextScanner self = this;
-            self.Read();
-            Contract.Assume(((ITextScanner)this).Offset == ((ITextScanner)this).Offset + 1);
+            this.Read();
             return true;
+        }
+
+        /// <inheritdoc />
+        bool ITextScanner.TryMatch(char c)
+        {
+            return this.TryMatch(c);
         }
 
         /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
