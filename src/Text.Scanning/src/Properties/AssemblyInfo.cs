@@ -6,11 +6,11 @@ using System.Resources;
 // associated with an assembly.
 
 [assembly: AssemblyTitle("Text.Scanning")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Base classes for object-oriented recursive descent parsers, designed to be extended with custom grammars and grammar parsers.")]
 [assembly: AssemblyConfiguration("")]
-//[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Steven Liekens")]
 [assembly: AssemblyProduct("Text Scanning")]
-[assembly: AssemblyCopyright("\x00a9 Steven Liekens")]
+[assembly: AssemblyCopyright("The MIT License (MIT)")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: NeutralResourcesLanguage("en")]
@@ -27,4 +27,3 @@ using System.Resources;
 // [assembly: AssemblyVersion("1.0.*")]
 
 [assembly: AssemblyVersion("0.1.0.0")]
-[assembly: AssemblyFileVersion("0.1.0.0")]

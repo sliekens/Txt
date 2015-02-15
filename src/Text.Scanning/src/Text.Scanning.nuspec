@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
     <metadata>
-        <id>Text.Scanning</id>
-        <version>0.1.0-alpha</version>
+        <id>$id$</id>
+        <version>$version$</version>
         <title>Text Scanning &amp; Parsing Foundation</title>
-        <authors>Steven Liekens</authors>
+        <authors>$author$</authors>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
-        <description>Base classes for object-oriented recursive descent parsers, designed to be extended with custom grammars and grammar parsers.</description>
+        <description>$description$</description>
         <releaseNotes />
         <copyright>The MIT License (MIT)</copyright>
 		<references>
@@ -16,8 +16,6 @@
 		</references>
     </metadata>
     <files>
-        <file src=".\bin\Release\Text.Scanning.dll" target="lib\portable-net45+win+wpa\Text.Scanning.dll" />
-        <file src=".\bin\Release\Text.Scanning.XML" target="lib\portable-net45+win+wpa\Text.Scanning.XML" />
-		<file src=".\bin\Release\CodeContracts\Text.Scanning.Contracts.dll" target="lib\portable-net45+win+wpa\CodeContracts\Text.Scanning.Contracts.dll" />
+		<file src="bin\$configuration$\CodeContracts\Text.Scanning.Contracts.dll" target="lib\portable-net45+win+wpa81\CodeContracts\Text.Scanning.Contracts.dll" />
     </files>
 </package>
