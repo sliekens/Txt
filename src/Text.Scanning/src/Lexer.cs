@@ -18,5 +18,12 @@
 
         /// <inheritdoc />
         public abstract bool TryRead(ITextScanner scanner, out TToken token);
+
+        /// <summary>Utility method. Sets a specified token to its default value, and returns <c>false</c>.</summary>
+        protected static bool Default(out TToken token)
+        {
+            token = default(TToken);
+            return false;
+        }
     }
 }
