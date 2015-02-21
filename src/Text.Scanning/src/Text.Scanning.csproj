@@ -179,6 +179,7 @@
     <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Alternative{T1,T2,T3,T4,T5,T6,T7}.cs" />
     <Compile Include="Alternative{T1,T2,T3,T4,T5,T6}.cs" />
     <Compile Include="Alternative{T1,T2,T3,T4,T5}.cs" />
     <Compile Include="Alternative{T1,T2,T3,T4}.cs" />
