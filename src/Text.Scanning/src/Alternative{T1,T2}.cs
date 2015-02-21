@@ -19,7 +19,7 @@ namespace Text.Scanning
         /// <summary>The alternative element.</summary>
         private readonly Element element;
 
-        /// <summary>Initializes a new instance of the <see cref="Alternative{T1,T2}"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="Alternative{T1,T2}"/> class with a specified alternative.</summary>
         /// <param name="element">The alternative element.</param>
         /// <param name="context">The object that describes the context in which the text appears.</param>
         public Alternative(T1 element, ITextContext context)
@@ -29,9 +29,9 @@ namespace Text.Scanning
             this.element = element;
         }
 
-        /// <summary>Initializes a new instance of the <see cref="Alternative{T1,T2}"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="Alternative{T1,T2}"/> class with a specified alternative.</summary>
         /// <param name="element">The alternative element.</param>
-        /// <param name="context">The context.</param>
+        /// <param name="context">The object that describes the context in which the text appears.</param>
         public Alternative(T2 element, ITextContext context)
             : base(element.Data, context)
         {
