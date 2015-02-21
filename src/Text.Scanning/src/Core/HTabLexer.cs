@@ -1,36 +1,36 @@
 ﻿namespace Text.Scanning.Core
 {
-    public class HTabLexer : Lexer<HTabToken>
+    public class HTabLexer : Lexer<HTabElement>
     {
         /// <inheritdoc />
-        public override HTabToken Read(ITextScanner scanner)
+        public override HTabElement Read(ITextScanner scanner)
         {
-            HTabToken token;
-            if (this.TryRead(scanner, out token))
+            HTabElement element;
+            if (this.TryRead(scanner, out element))
             {
-                return token;
+                return element;
             }
 
             throw new SyntaxErrorException(scanner.GetContext(), "Expected 'HTAB'");
         }
 
         /// <inheritdoc />
-        public override bool TryRead(ITextScanner scanner, out HTabToken token)
+        public override bool TryRead(ITextScanner scanner, out HTabElement element)
         {
             if (scanner.EndOfInput)
             {
-                token = default(HTabToken);
+                element = default(HTabElement);
                 return false;
             }
 
             var context = scanner.GetContext();
             if (scanner.TryMatch('\t'))
             {
-                token = new HTabToken(context);
+                element = new HTabElement(context);
                 return true;
             }
 
-            token = default(HTabToken);
+            element = default(HTabElement);
             return false;
         }
     }

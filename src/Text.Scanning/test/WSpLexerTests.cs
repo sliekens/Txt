@@ -17,11 +17,11 @@ namespace Text
             {
                 scanner.Read();
                 var lexer = new WSpLexer();
-                var token = lexer.Read(scanner);
-                Assert.IsNotNull(token);
-                Assert.IsNotNull(token.Sp);
-                Assert.IsNull(token.HTab);
-                Assert.AreEqual(text, token.Data);
+                var element = lexer.Read(scanner);
+                Assert.IsNotNull(element);
+                Assert.IsNotNull(element.Sp);
+                Assert.IsNull(element.HTab);
+                Assert.AreEqual(text, element.Data);
             }
         }
 
@@ -34,11 +34,11 @@ namespace Text
             {
                 scanner.Read();
                 var lexer = new WSpLexer();
-                var token = lexer.Read(scanner);
-                Assert.IsNotNull(token);
-                Assert.IsNotNull(token.HTab);
-                Assert.IsNull(token.Sp);
-                Assert.AreEqual(text, token.Data);
+                var element = lexer.Read(scanner);
+                Assert.IsNotNull(element);
+                Assert.IsNotNull(element.HTab);
+                Assert.IsNull(element.Sp);
+                Assert.AreEqual(text, element.Data);
             }
         }
     }

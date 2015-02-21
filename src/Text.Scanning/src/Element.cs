@@ -3,7 +3,7 @@
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
 
-    public abstract class Token : ITextContext
+    public abstract class Element : ITextContext
     {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly string data;
@@ -11,13 +11,13 @@
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly int offset;
 
-        protected Token(char data, ITextContext context)
+        protected Element(char data, ITextContext context)
             : this(char.ToString(data), context)
         {
             Contract.Requires(context != null);
         }
 
-        protected Token(string data, ITextContext context)
+        protected Element(string data, ITextContext context)
         {
             Contract.Requires(data != null);
             Contract.Requires(context != null);

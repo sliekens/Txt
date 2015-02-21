@@ -5,25 +5,25 @@
     using System.Diagnostics.Contracts;
 
     /// <summary>Represents the LWSP rule: any linear white space. The LWSP rule permits lines containing only white space.</summary>
-    public class LWspToken : Token
+    public class LWspElement : Element
     {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private readonly IList<Token> lwsp;
+        private readonly IList<Element> lwsp;
 
         /// <summary>
-        /// Creates a new instance of the <see cref="T:Text.Scanning.Core.LWspToken" /> class with the specified
+        /// Initializes a new instance of the <see cref="T:Text.Scanning.Core.LWspElement" /> class with the specified
         /// characters and context.
         /// </summary>
         /// <param name="data">The collection of 'LWSP' components.</param>
         /// <param name="context">The object that describes the context in which the text appears.</param>
-        public LWspToken(IList<CrLfWSpPair> data, ITextContext context)
+        public LWspElement(IList<CrLfWSpPair> data, ITextContext context)
             : this(Linearize(data), context)
         {
             Contract.Requires(data != null);
             Contract.Requires(context != null);
         }
 
-        private LWspToken(IList<Token> data, ITextContext context)
+        private LWspElement(IList<Element> data, ITextContext context)
             : base(string.Concat(data) ?? string.Empty, context)
         {
             Contract.Requires(data != null);
@@ -32,7 +32,7 @@
         }
 
         /// <summary>Gets the collection of 'LWSP' components.</summary>
-        public IList<Token> LWsp
+        public IList<Element> LWsp
         {
             get
             {
@@ -41,11 +41,11 @@
         }
 
         [Pure]
-        private static IList<Token> Linearize(IList<CrLfWSpPair> data)
+        private static IList<Element> Linearize(IList<CrLfWSpPair> data)
         {
             Contract.Requires(data != null);
-            Contract.Ensures(Contract.Result<IList<Token>>() != null);
-            var tokens = new List<Token>();
+            Contract.Ensures(Contract.Result<IList<Element>>() != null);
+            var elements = new List<Element>();
             foreach (var pair in data)
             {
                 if (pair == null)
@@ -56,27 +56,27 @@
                 var crLf = pair.CrLf;
                 if (crLf != null)
                 {
-                    tokens.Add(crLf);
+                    elements.Add(crLf);
                 }
 
-                tokens.Add(pair.Wsp);
+                elements.Add(pair.Wsp);
             }
 
-            return tokens;
+            return elements;
         }
 
         public class CrLfWSpPair
         {
-            private readonly CrLfToken crLf;
-            private readonly WSpToken wsp;
+            private readonly CrLfElement crLf;
+            private readonly WSpElement wsp;
 
-            public CrLfWSpPair(WSpToken wsp)
+            public CrLfWSpPair(WSpElement wsp)
             {
                 Contract.Requires(wsp != null);
                 this.wsp = wsp;
             }
 
-            public CrLfWSpPair(CrLfToken crLf, WSpToken wsp)
+            public CrLfWSpPair(CrLfElement crLf, WSpElement wsp)
             {
                 Contract.Requires(crLf != null);
                 Contract.Requires(wsp != null);
@@ -85,7 +85,7 @@
                 this.wsp = wsp;
             }
 
-            public CrLfToken CrLf
+            public CrLfElement CrLf
             {
                 get
                 {
@@ -93,11 +93,11 @@
                 }
             }
 
-            public WSpToken Wsp
+            public WSpElement Wsp
             {
                 get
                 {
-                    Contract.Ensures(Contract.Result<WSpToken>() != null);
+                    Contract.Ensures(Contract.Result<WSpElement>() != null);
                     return this.wsp;
                 }
             }

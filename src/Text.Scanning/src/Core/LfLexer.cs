@@ -1,36 +1,36 @@
 ﻿namespace Text.Scanning.Core
 {
-    public class LfLexer : Lexer<LfToken>
+    public class LfLexer : Lexer<LfElement>
     {
         /// <inheritdoc />
-        public override LfToken Read(ITextScanner scanner)
+        public override LfElement Read(ITextScanner scanner)
         {
-            LfToken token;
-            if (this.TryRead(scanner, out token))
+            LfElement element;
+            if (this.TryRead(scanner, out element))
             {
-                return token;
+                return element;
             }
 
             throw new SyntaxErrorException(scanner.GetContext(), "Expected 'LF'");
         }
 
         /// <inheritdoc />
-        public override bool TryRead(ITextScanner scanner, out LfToken token)
+        public override bool TryRead(ITextScanner scanner, out LfElement element)
         {
             if (scanner.EndOfInput)
             {
-                token = default(LfToken);
+                element = default(LfElement);
                 return false;
             }
 
             var context = scanner.GetContext();
             if (scanner.TryMatch('\u000A'))
             {
-                token = new LfToken(context);
+                element = new LfElement(context);
                 return true;
             }
 
-            token = default(LfToken);
+            element = default(LfElement);
             return false;
         }
     }

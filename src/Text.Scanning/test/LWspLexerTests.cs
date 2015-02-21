@@ -19,10 +19,10 @@ namespace Text
             {
                 scanner.Read();
                 var lexer = new LWspLexer();
-                var token = lexer.Read(scanner);
-                Assert.IsNotNull(token);
-                Assert.IsNotNull(token.LWsp);
-                Assert.AreEqual(text, token.Data);
+                var element = lexer.Read(scanner);
+                Assert.IsNotNull(element);
+                Assert.IsNotNull(element.LWsp);
+                Assert.AreEqual(text, element.Data);
             }
         }
 
@@ -35,10 +35,10 @@ namespace Text
             {
                 scanner.Read();
                 var lexer = new LWspLexer();
-                var token = lexer.Read(scanner);
-                Assert.IsNotNull(token);
-                Assert.IsNotNull(token.LWsp);
-                Assert.AreEqual(text, token.Data);
+                var element = lexer.Read(scanner);
+                Assert.IsNotNull(element);
+                Assert.IsNotNull(element.LWsp);
+                Assert.AreEqual(text, element.Data);
             }
         }
 
@@ -51,10 +51,10 @@ namespace Text
             {
                 scanner.Read();
                 var lexer = new LWspLexer();
-                var token = lexer.Read(scanner);
-                Assert.IsNotNull(token);
-                Assert.IsNotNull(token.LWsp);
-                Assert.AreEqual(text, token.Data);
+                var element = lexer.Read(scanner);
+                Assert.IsNotNull(element);
+                Assert.IsNotNull(element.LWsp);
+                Assert.AreEqual(text, element.Data);
             }
         }
 
@@ -67,11 +67,11 @@ namespace Text
             {
                 scanner.Read();
                 var lexer = new LWspLexer();
-                var token = lexer.Read(scanner);
-                Assert.IsNotNull(token);
-                Assert.IsNotNull(token.LWsp);
-                Assert.IsFalse(token.LWsp.Any());
-                Assert.AreEqual(text, token.Data);
+                var element = lexer.Read(scanner);
+                Assert.IsNotNull(element);
+                Assert.IsNotNull(element.LWsp);
+                Assert.IsFalse(element.LWsp.Any());
+                Assert.AreEqual(text, element.Data);
             }
         }
 
@@ -84,8 +84,8 @@ namespace Text
             {
                 scanner.Read();
                 var lexer = new LWspLexer();
-                var token = lexer.Read(scanner);
-                Assert.IsFalse(token.LWsp.Any());
+                var element = lexer.Read(scanner);
+                Assert.IsFalse(element.LWsp.Any());
             }
         }
 
@@ -98,15 +98,15 @@ namespace Text
             {
                 scanner.Read();
                 var lexer = new LWspLexer();
-                LWspToken token;
-                if (!lexer.TryRead(scanner, out token))
+                LWspElement element;
+                if (!lexer.TryRead(scanner, out element))
                 {
                     Assert.Fail();
                 }
 
-                Assert.IsNotNull(token);
-                Assert.IsNotNull(token.LWsp);
-                Assert.IsFalse(token.LWsp.Any());
+                Assert.IsNotNull(element);
+                Assert.IsNotNull(element.LWsp);
+                Assert.IsFalse(element.LWsp.Any());
             }
         }
     }

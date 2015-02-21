@@ -1,26 +1,26 @@
 ﻿namespace Text.Scanning.Core
 {
-    public class DigitLexer : Lexer<DigitToken>
+    public class DigitLexer : Lexer<DigitElement>
     {
         /// <inheritdoc />
-        public override DigitToken Read(ITextScanner scanner)
+        public override DigitElement Read(ITextScanner scanner)
         {
             var context = scanner.GetContext();
-            DigitToken token;
-            if (this.TryRead(scanner, out token))
+            DigitElement element;
+            if (this.TryRead(scanner, out element))
             {
-                return token;
+                return element;
             }
 
             throw new SyntaxErrorException(context, "Expected 'DIGIT'");
         }
 
         /// <inheritdoc />
-        public override bool TryRead(ITextScanner scanner, out DigitToken token)
+        public override bool TryRead(ITextScanner scanner, out DigitElement element)
         {
             if (scanner.EndOfInput)
             {
-                token = default(DigitToken);
+                element = default(DigitElement);
                 return false;
             }
 
@@ -29,12 +29,12 @@
             {
                 if (scanner.TryMatch(c))
                 {
-                    token = new DigitToken(c, context);
+                    element = new DigitElement(c, context);
                     return true;
                 }
             }
 
-            token = default(DigitToken);
+            element = default(DigitElement);
             return false;
         }
     }

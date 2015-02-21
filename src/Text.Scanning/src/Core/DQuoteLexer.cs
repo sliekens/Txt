@@ -1,37 +1,37 @@
 ﻿namespace Text.Scanning.Core
 {
-    public class DQuoteLexer : Lexer<DQuoteToken>
+    public class DQuoteLexer : Lexer<DQuoteElement>
     {
         /// <inheritdoc />
-        public override DQuoteToken Read(ITextScanner scanner)
+        public override DQuoteElement Read(ITextScanner scanner)
         {
             var context = scanner.GetContext();
-            DQuoteToken token;
-            if (this.TryRead(scanner, out token))
+            DQuoteElement element;
+            if (this.TryRead(scanner, out element))
             {
-                return token;
+                return element;
             }
 
             throw new SyntaxErrorException(context, "Expected 'DQUOTE'");
         }
 
         /// <inheritdoc />
-        public override bool TryRead(ITextScanner scanner, out DQuoteToken token)
+        public override bool TryRead(ITextScanner scanner, out DQuoteElement element)
         {
             if (scanner.EndOfInput)
             {
-                token = default(DQuoteToken);
+                element = default(DQuoteElement);
                 return false;
             }
 
             var context = scanner.GetContext();
             if (scanner.TryMatch('\"'))
             {
-                token = new DQuoteToken(context);
+                element = new DQuoteElement(context);
                 return true;
             }
 
-            token = default(DQuoteToken);
+            element = default(DQuoteElement);
             return false;
         }
     }

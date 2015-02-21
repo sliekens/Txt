@@ -20,9 +20,9 @@ namespace Text
                 var lexer = new HexDigLexer();
                 while (!scanner.EndOfInput)
                 {
-                    var token = lexer.Read(scanner);
-                    Assert.IsNotNull(token);
-                    Assert.IsTrue(Uri.IsHexDigit(token.Data[0]));
+                    var element = lexer.Read(scanner);
+                    Assert.IsNotNull(element);
+                    Assert.IsTrue(Uri.IsHexDigit(element.Data[0]));
                 }
             }
         }

@@ -1,25 +1,25 @@
 ﻿namespace Text.Scanning.Core
 {
-    public class VCharLexer : Lexer<VCharToken>
+    public class VCharLexer : Lexer<VCharElement>
     {
         /// <inheritdoc />
-        public override VCharToken Read(ITextScanner scanner)
+        public override VCharElement Read(ITextScanner scanner)
         {
-            VCharToken token;
-            if (this.TryRead(scanner, out token))
+            VCharElement element;
+            if (this.TryRead(scanner, out element))
             {
-                return token;
+                return element;
             }
 
             throw new SyntaxErrorException(scanner.GetContext(), "Expected 'VCHAR'");
         }
 
         /// <inheritdoc />
-        public override bool TryRead(ITextScanner scanner, out VCharToken token)
+        public override bool TryRead(ITextScanner scanner, out VCharElement element)
         {
             if (scanner.EndOfInput)
             {
-                token = default(VCharToken);
+                element = default(VCharElement);
                 return false;
             }
 
@@ -28,12 +28,12 @@
             {
                 if (scanner.TryMatch(c))
                 {
-                    token = new VCharToken(c, context);
+                    element = new VCharElement(c, context);
                     return true;
                 }
             }
 
-            token = default(VCharToken);
+            element = default(VCharElement);
             return false;
         }
     }

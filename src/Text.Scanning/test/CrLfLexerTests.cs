@@ -18,9 +18,9 @@ namespace Text
             {
                 scanner.Read();
                 var lexer = new CrLfLexer();
-                var token = lexer.Read(scanner);
-                Assert.IsNotNull(token);
-                Assert.AreEqual("\r\n", token.Data);
+                var element = lexer.Read(scanner);
+                Assert.IsNotNull(element);
+                Assert.AreEqual("\r\n", element.Data);
             }
         }
 
@@ -33,13 +33,13 @@ namespace Text
             {
                 scanner.Read();
                 var lexer = new CrLfLexer();
-                CrLfToken token;
-                if (lexer.TryRead(scanner, out token))
+                CrLfElement element;
+                if (lexer.TryRead(scanner, out element))
                 {
                     Assert.Fail();
                 }
 
-                Assert.IsNull(token);
+                Assert.IsNull(element);
             }
         }
 
@@ -52,13 +52,13 @@ namespace Text
             {
                 scanner.Read();
                 var lexer = new CrLfLexer();
-                CrLfToken token;
-                if (lexer.TryRead(scanner, out token))
+                CrLfElement element;
+                if (lexer.TryRead(scanner, out element))
                 {
                     Assert.Fail();
                 }
 
-                Assert.IsNull(token);
+                Assert.IsNull(element);
             }
         }
     }

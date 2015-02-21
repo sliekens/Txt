@@ -4,27 +4,27 @@
     using System.Diagnostics.Contracts;
 
     [ContractClassFor(typeof(ILexer<>))]
-    internal abstract class ContractClassForILexer<TToken> : ILexer<TToken>
-        where TToken : Token
+    internal abstract class ContractClassForILexer<TElement> : ILexer<TElement>
+        where TElement : Element
     {
-        public void PutBack(ITextScanner scanner, TToken token)
+        public void PutBack(ITextScanner scanner, TElement element)
         {
             Contract.Requires(scanner != null);
-            Contract.Requires(token != null);
+            Contract.Requires(element != null);
             throw new NotImplementedException();
         }
 
-        public TToken Read(ITextScanner scanner)
+        public TElement Read(ITextScanner scanner)
         {
             Contract.Requires(scanner != null);
-            Contract.Ensures(Contract.Result<TToken>() != null);
+            Contract.Ensures(Contract.Result<TElement>() != null);
             throw new NotImplementedException();
         }
 
-        public bool TryRead(ITextScanner scanner, out TToken token)
+        public bool TryRead(ITextScanner scanner, out TElement element)
         {
             Contract.Requires(scanner != null);
-            Contract.Ensures(Contract.Result<bool>() && (Contract.ValueAtReturn(out token) != null) ||
+            Contract.Ensures(Contract.Result<bool>() && (Contract.ValueAtReturn(out element) != null) ||
                              Contract.Result<bool>() == false);
             throw new NotImplementedException();
         }

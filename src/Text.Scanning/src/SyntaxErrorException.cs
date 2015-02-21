@@ -5,7 +5,7 @@
 
     /// <summary>
     /// The exception that is thrown when a parsing engine encounters an error. Errors include invalid or unexpected
-    /// tokens, or unexpectedly reaching the end of input.
+    /// symbols, or unexpectedly reaching the end of input.
     /// </summary>
     public class SyntaxErrorException : Exception, ITextContext
     {

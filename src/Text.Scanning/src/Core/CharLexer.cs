@@ -1,25 +1,25 @@
 ﻿namespace Text.Scanning.Core
 {
-    public class CharLexer : Lexer<CharToken>
+    public class CharLexer : Lexer<CharElement>
     {
         /// <inheritdoc />
-        public override CharToken Read(ITextScanner scanner)
+        public override CharElement Read(ITextScanner scanner)
         {
-            CharToken token;
-            if (this.TryRead(scanner, out token))
+            CharElement element;
+            if (this.TryRead(scanner, out element))
             {
-                return token;
+                return element;
             }
 
             throw new SyntaxErrorException(scanner.GetContext(), "Expected 'CHAR'");
         }
 
         /// <inheritdoc />
-        public override bool TryRead(ITextScanner scanner, out CharToken token)
+        public override bool TryRead(ITextScanner scanner, out CharElement element)
         {
             if (scanner.EndOfInput)
             {
-                token = default(CharToken);
+                element = default(CharElement);
                 return false;
             }
 
@@ -28,12 +28,12 @@
             {
                 if (scanner.TryMatch(c))
                 {
-                    token = new CharToken(c, context);
+                    element = new CharElement(c, context);
                     return true;
                 }
             }
 
-            token = default(CharToken);
+            element = default(CharElement);
             return false;
         }
     }

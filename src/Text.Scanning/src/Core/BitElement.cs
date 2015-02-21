@@ -3,15 +3,15 @@
     using System.Diagnostics.Contracts;
 
     /// <summary>Represents the BIT rule: 1 bit. Unicode: U+0030 - U+0031.</summary>
-    public class BitToken : Token
+    public class BitElement : Element
     {
         /// <summary>
-        /// Creates a new instance of the <see cref="T:Text.Scanning.Core.BitToken" /> class with a specified character
+        /// Initializes a new instance of the <see cref="T:Text.Scanning.Core.BitElement" /> class with a specified character
         /// and context.
         /// </summary>
         /// <param name="data">The bit.</param>
         /// <param name="context">The object that describes the context in which the text appears.</param>
-        public BitToken(char data, ITextContext context)
+        public BitElement(char data, ITextContext context)
             : base(data, context)
         {
             Contract.Requires(data == '\u0030' || data == '\u0031');

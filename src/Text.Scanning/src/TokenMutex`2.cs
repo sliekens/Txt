@@ -2,34 +2,34 @@
 
 namespace Text.Scanning
 {
-    public class TokenMutex<T1, T2>
-        where T1 : Token
-        where T2 : Token
+    public class ElementMutex<T1, T2>
+        where T1 : Element
+        where T2 : Element
     {
-        private readonly T1 token1;
-        private readonly T2 token2;
+        private readonly T1 element1;
+        private readonly T2 element2;
 
-        public TokenMutex(T1 token)
+        public ElementMutex(T1 element)
         {
-            Contract.Requires(token != null);
-            token1 = token;
+            Contract.Requires(element != null);
+            this.element1 = element;
         }
 
-        public TokenMutex(T2 token)
+        public ElementMutex(T2 element)
         {
-            Contract.Requires(token != null);
-            token2 = token;
+            Contract.Requires(element != null);
+            this.element2 = element;
         }
 
-        public Token Token
+        public Element Element
         {
-            get { return token1 as Token ?? token2; }
+            get { return this.element1 as Element ?? this.element2; }
         }
 
         [ContractInvariantMethod]
         private void ObjectInvariant()
         {
-            Contract.Invariant(token1 == null || token2 == null);
+            Contract.Invariant(this.element1 == null || this.element2 == null);
         }
     }
 }

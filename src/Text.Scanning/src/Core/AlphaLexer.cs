@@ -1,25 +1,25 @@
 ﻿namespace Text.Scanning.Core
 {
-    public class AlphaLexer : Lexer<AlphaToken>
+    public class AlphaLexer : Lexer<AlphaElement>
     {
         /// <inheritdoc />
-        public override AlphaToken Read(ITextScanner scanner)
+        public override AlphaElement Read(ITextScanner scanner)
         {
-            AlphaToken token;
-            if (this.TryRead(scanner, out token))
+            AlphaElement element;
+            if (this.TryRead(scanner, out element))
             {
-                return token;
+                return element;
             }
 
             throw new SyntaxErrorException(scanner.GetContext(), "Expected 'ALPHA'");
         }
 
         /// <inheritdoc />
-        public override bool TryRead(ITextScanner scanner, out AlphaToken token)
+        public override bool TryRead(ITextScanner scanner, out AlphaElement element)
         {
             if (scanner.EndOfInput)
             {
-                token = default(AlphaToken);
+                element = default(AlphaElement);
                 return false;
             }
 
@@ -30,7 +30,7 @@
             {
                 if (scanner.TryMatch(c))
                 {
-                    token = new AlphaToken(c, context);
+                    element = new AlphaElement(c, context);
                     return true;
                 }
             }
@@ -40,12 +40,12 @@
             {
                 if (scanner.TryMatch(c))
                 {
-                    token = new AlphaToken(c, context);
+                    element = new AlphaElement(c, context);
                     return true;
                 }
             }
 
-            token = default(AlphaToken);
+            element = default(AlphaElement);
             return false;
         }
     }
