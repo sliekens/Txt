@@ -1,11 +1,11 @@
 ﻿namespace Text.Scanning.Core
 {
-    public class AlphaLexer : Lexer<AlphaElement>
+    public class AlphaLexer : Lexer<Alpha>
     {
         /// <inheritdoc />
-        public override AlphaElement Read(ITextScanner scanner)
+        public override Alpha Read(ITextScanner scanner)
         {
-            AlphaElement element;
+            Alpha element;
             if (this.TryRead(scanner, out element))
             {
                 return element;
@@ -15,11 +15,11 @@
         }
 
         /// <inheritdoc />
-        public override bool TryRead(ITextScanner scanner, out AlphaElement element)
+        public override bool TryRead(ITextScanner scanner, out Alpha element)
         {
             if (scanner.EndOfInput)
             {
-                element = default(AlphaElement);
+                element = default(Alpha);
                 return false;
             }
 
@@ -30,7 +30,7 @@
             {
                 if (scanner.TryMatch(c))
                 {
-                    element = new AlphaElement(c, context);
+                    element = new Alpha(c, context);
                     return true;
                 }
             }
@@ -40,12 +40,12 @@
             {
                 if (scanner.TryMatch(c))
                 {
-                    element = new AlphaElement(c, context);
+                    element = new Alpha(c, context);
                     return true;
                 }
             }
 
-            element = default(AlphaElement);
+            element = default(Alpha);
             return false;
         }
     }

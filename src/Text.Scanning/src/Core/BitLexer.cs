@@ -1,11 +1,11 @@
 ﻿namespace Text.Scanning.Core
 {
-    public class BitLexer : Lexer<BitElement>
+    public class BitLexer : Lexer<Bit>
     {
         /// <inheritdoc />
-        public override BitElement Read(ITextScanner scanner)
+        public override Bit Read(ITextScanner scanner)
         {
-            BitElement element;
+            Bit element;
             if (this.TryRead(scanner, out element))
             {
                 return element;
@@ -15,28 +15,28 @@
         }
 
         /// <inheritdoc />
-        public override bool TryRead(ITextScanner scanner, out BitElement element)
+        public override bool TryRead(ITextScanner scanner, out Bit element)
         {
             if (scanner.EndOfInput)
             {
-                element = default(BitElement);
+                element = default(Bit);
                 return false;
             }
 
             var context = scanner.GetContext();
             if (scanner.TryMatch('\u0030'))
             {
-                element = new BitElement('\u0030', context);
+                element = new Bit('\u0030', context);
                 return true;
             }
 
             if (scanner.TryMatch('\u0031'))
             {
-                element = new BitElement('\u0031', context);
+                element = new Bit('\u0031', context);
                 return true;
             }
 
-            element = default(BitElement);
+            element = default(Bit);
             return false;
         }
     }

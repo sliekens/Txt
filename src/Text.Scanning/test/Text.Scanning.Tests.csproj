@@ -62,22 +62,22 @@
   <ItemGroup>
     <Compile Include="AlphaLexerTests.cs" />
     <Compile Include="BinaryTextReaderTests.cs" />
-    <Compile Include="CharLexerTests.cs" />
-    <Compile Include="CrLexerTests.cs" />
-    <Compile Include="CrLfLexerTests.cs" />
-    <Compile Include="CtlLexerTests.cs" />
+    <Compile Include="CharacterLexerTests.cs" />
+    <Compile Include="CarriageReturnLexerTests.cs" />
+    <Compile Include="EndOfLineLexerTests.cs" />
+    <Compile Include="ControlCharacterLexerTests.cs" />
     <Compile Include="DigitLexerTests.cs" />
-    <Compile Include="DQuoteLexerTests.cs" />
-    <Compile Include="HexDigLexerTests.cs" />
-    <Compile Include="HTabLexerTests.cs" />
-    <Compile Include="LfLexerTests.cs" />
-    <Compile Include="LWspLexerTests.cs" />
+    <Compile Include="DoubleQuoteLexerTests.cs" />
+    <Compile Include="HexadecimalDigitLexerTests.cs" />
+    <Compile Include="HorizontalTabLexerTests.cs" />
+    <Compile Include="LineFeedLexerTests.cs" />
+    <Compile Include="LinearWhiteSpaceLexerTests.cs" />
     <Compile Include="OctetLexerTests.cs" />
-    <Compile Include="SpLexerTests.cs" />
+    <Compile Include="SpaceLexerTests.cs" />
     <Compile Include="TextScannerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="VCharLexerTests.cs" />
-    <Compile Include="WSpLexerTests.cs" />
+    <Compile Include="VisibleCharacterLexerTests.cs" />
+    <Compile Include="WhiteSpaceLexerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\src\Text.Scanning.csproj">

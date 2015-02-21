@@ -1,12 +1,12 @@
 ﻿namespace Text.Scanning.Core
 {
-    public class DigitLexer : Lexer<DigitElement>
+    public class DigitLexer : Lexer<Digit>
     {
         /// <inheritdoc />
-        public override DigitElement Read(ITextScanner scanner)
+        public override Digit Read(ITextScanner scanner)
         {
             var context = scanner.GetContext();
-            DigitElement element;
+            Digit element;
             if (this.TryRead(scanner, out element))
             {
                 return element;
@@ -16,11 +16,11 @@
         }
 
         /// <inheritdoc />
-        public override bool TryRead(ITextScanner scanner, out DigitElement element)
+        public override bool TryRead(ITextScanner scanner, out Digit element)
         {
             if (scanner.EndOfInput)
             {
-                element = default(DigitElement);
+                element = default(Digit);
                 return false;
             }
 
@@ -29,12 +29,12 @@
             {
                 if (scanner.TryMatch(c))
                 {
-                    element = new DigitElement(c, context);
+                    element = new Digit(c, context);
                     return true;
                 }
             }
 
-            element = default(DigitElement);
+            element = default(Digit);
             return false;
         }
     }

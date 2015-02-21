@@ -54,7 +54,7 @@ namespace Text
             using (ITextScanner scanner = new TextScanner(reader))
             {
                 scanner.Read();
-                AlphaElement element;
+                Alpha element;
                 var result = lexer.TryRead(scanner, out element);
                 Assert.IsFalse(result);
                 Assert.IsNull(element);

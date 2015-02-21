@@ -1,39 +1,39 @@
 ﻿namespace Text.Scanning.Core
 {
-    public class OctetLexer : Lexer<Octet>
+    public class CharacterLexer : Lexer<Character>
     {
         /// <inheritdoc />
-        public override Octet Read(ITextScanner scanner)
+        public override Character Read(ITextScanner scanner)
         {
-            Octet element;
+            Character element;
             if (this.TryRead(scanner, out element))
             {
                 return element;
             }
 
-            throw new SyntaxErrorException(scanner.GetContext(), "Expected 'OCTET'");
+            throw new SyntaxErrorException(scanner.GetContext(), "Expected 'CHAR'");
         }
 
         /// <inheritdoc />
-        public override bool TryRead(ITextScanner scanner, out Octet element)
+        public override bool TryRead(ITextScanner scanner, out Character element)
         {
             if (scanner.EndOfInput)
             {
-                element = default(Octet);
+                element = default(Character);
                 return false;
             }
 
             var context = scanner.GetContext();
-            for (var c = '\u0000'; c <= '\u00FF'; c++)
+            for (var c = '\u0001'; c <= '\u007F'; c++)
             {
                 if (scanner.TryMatch(c))
                 {
-                    element = new Octet(c, context);
+                    element = new Character(c, context);
                     return true;
                 }
             }
 
-            element = default(Octet);
+            element = default(Character);
             return false;
         }
     }
