@@ -1,10 +1,18 @@
-﻿namespace Text.Scanning
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="ILexer.cs" company="Steven Liekens">
+//   The MIT License (MIT)
+// </copyright>
+// <summary>
+//   Provides the interface for types that process the lexical syntax of a language.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+namespace Text.Scanning
 {
     using System.Diagnostics.Contracts;
 
     /// <summary>Provides the interface for types that process the lexical syntax of a language.</summary>
     /// <typeparam name="TToken">The type of tokens produced by the lexer.</typeparam>
-    [ContractClass((typeof(ContractClassForILexer<>)))]
+    [ContractClass(typeof(ContractClassForILexer<>))]
     public interface ILexer<TToken>
         where TToken : Token
     {
@@ -22,10 +30,8 @@
 
         /// <summary>Reads the next token. A return value indicates whether a token was available.</summary>
         /// <param name="scanner"></param>
-        /// <param name="token">
-        /// When this method returns, contains the next available token, or a <c>null</c> reference, depending
-        /// on whether the return value indicates success.
-        /// </param>
+        /// <param name="token">When this method returns, contains the next available token, or a <c>null</c> reference, depending
+        /// on whether the return value indicates success.</param>
         /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
         bool TryRead(ITextScanner scanner, out TToken token);
     }

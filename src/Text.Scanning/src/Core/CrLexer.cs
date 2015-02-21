@@ -1,5 +1,14 @@
-﻿namespace Text.Scanning.Core
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="CrLexer.cs" company="Steven Liekens">
+//   The MIT License (MIT)
+// </copyright>
+// <summary>
+//   The cr lexer.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+namespace Text.Scanning.Core
 {
+    /// <summary>The cr lexer.</summary>
     public class CrLexer : Lexer<CrToken>
     {
         /// <inheritdoc />

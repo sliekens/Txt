@@ -1,21 +1,36 @@
-﻿namespace Text.Scanning.Core
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="CrLfLexer.cs" company="Steven Liekens">
+//   The MIT License (MIT)
+// </copyright>
+// <summary>
+//   The cr lf lexer.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+namespace Text.Scanning.Core
 {
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
 
+    /// <summary>The cr lf lexer.</summary>
     public class CrLfLexer : Lexer<CrLfToken>
     {
+        /// <summary>The cr lexer.</summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly ILexer<CrToken> crLexer;
 
+        /// <summary>The lf lexer.</summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly ILexer<LfToken> lfLexer;
 
+        /// <summary>Initializes a new instance of the <see cref="CrLfLexer"/> class.</summary>
         public CrLfLexer()
             : this(new CrLexer(), new LfLexer())
         {
         }
 
+        /// <summary>Initializes a new instance of the <see cref="CrLfLexer"/> class.</summary>
+        /// <param name="crLexer">The cr lexer.</param>
+        /// <param name="lfLexer">The lf lexer.</param>
         public CrLfLexer(ILexer<CrToken> crLexer, ILexer<LfToken> lfLexer)
         {
             Contract.Requires(crLexer != null);
@@ -65,6 +80,7 @@
             return true;
         }
 
+        /// <summary>The object invariant.</summary>
         [ContractInvariantMethod]
         private void ObjectInvariant()
         {

@@ -1,22 +1,37 @@
-﻿namespace Text.Scanning.Core
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="LWspLexer.cs" company="Steven Liekens">
+//   The MIT License (MIT)
+// </copyright>
+// <summary>
+//   The l wsp lexer.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+namespace Text.Scanning.Core
 {
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
 
+    /// <summary>The l wsp lexer.</summary>
     public class LWspLexer : Lexer<LWspToken>
     {
+        /// <summary>The cr lf lexer.</summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly ILexer<CrLfToken> crLfLexer;
 
+        /// <summary>The w sp lexer.</summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly ILexer<WSpToken> wSpLexer;
 
+        /// <summary>Initializes a new instance of the <see cref="LWspLexer"/> class.</summary>
         public LWspLexer()
             : this(new CrLfLexer(), new WSpLexer())
         {
         }
 
+        /// <summary>Initializes a new instance of the <see cref="LWspLexer"/> class.</summary>
+        /// <param name="crLfLexer">The cr lf lexer.</param>
+        /// <param name="wSpLexer">The w sp lexer.</param>
         public LWspLexer(ILexer<CrLfToken> crLfLexer, ILexer<WSpToken> wSpLexer)
         {
             Contract.Requires(crLfLexer != null);
@@ -100,6 +115,7 @@
             return true;
         }
 
+        /// <summary>The object invariant.</summary>
         [ContractInvariantMethod]
         private void ObjectInvariant()
         {

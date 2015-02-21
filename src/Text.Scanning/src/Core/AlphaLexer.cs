@@ -1,5 +1,14 @@
-﻿namespace Text.Scanning.Core
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="AlphaLexer.cs" company="Steven Liekens">
+//   The MIT License (MIT)
+// </copyright>
+// <summary>
+//   The alpha lexer.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+namespace Text.Scanning.Core
 {
+    /// <summary>The alpha lexer.</summary>
     public class AlphaLexer : Lexer<AlphaToken>
     {
         /// <inheritdoc />

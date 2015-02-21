@@ -1,4 +1,12 @@
-﻿namespace Text.Scanning
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="ITextContext.cs" company="Steven Liekens">
+//   The MIT License (MIT)
+// </copyright>
+// <summary>
+//   Provides the interface for types that provide contextual information about their source data.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+namespace Text.Scanning
 {
     /// <summary>Provides the interface for types that provide contextual information about their source data.</summary>
     public interface ITextContext
