@@ -1,22 +1,37 @@
-﻿namespace Text.Scanning.Core
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="LinearWhiteSpaceLexer.cs" company="Steven Liekens">
+//   The MIT License (MIT)
+// </copyright>
+// <summary>
+//   
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+namespace Text.Scanning.Core
 {
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
 
+    /// <summary>TODO </summary>
     public class LinearWhiteSpaceLexer : Lexer<LinearWhiteSpace>
     {
+        /// <summary>TODO </summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly ILexer<EndOfLine> crLfLexer;
 
+        /// <summary>TODO </summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly ILexer<WhiteSpace> wSpLexer;
 
+        /// <summary>TODO </summary>
         public LinearWhiteSpaceLexer()
             : this(new EndOfLineLexer(), new WhiteSpaceLexer())
         {
         }
 
+        /// <summary>TODO </summary>
+        /// <param name="crLfLexer">TODO </param>
+        /// <param name="wSpLexer">TODO </param>
         public LinearWhiteSpaceLexer(ILexer<EndOfLine> crLfLexer, ILexer<WhiteSpace> wSpLexer)
         {
             Contract.Requires(crLfLexer != null);
@@ -100,6 +115,7 @@
             return true;
         }
 
+        /// <summary>TODO </summary>
         [ContractInvariantMethod]
         private void ObjectInvariant()
         {

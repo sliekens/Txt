@@ -1,21 +1,36 @@
-﻿namespace Text.Scanning.Core
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="EndOfLineLexer.cs" company="Steven Liekens">
+//   The MIT License (MIT)
+// </copyright>
+// <summary>
+//   
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+namespace Text.Scanning.Core
 {
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
 
+    /// <summary>TODO </summary>
     public class EndOfLineLexer : Lexer<EndOfLine>
     {
+        /// <summary>TODO </summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly ILexer<CarriageReturn> crLexer;
 
+        /// <summary>TODO </summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly ILexer<LineFeed> lfLexer;
 
+        /// <summary>TODO </summary>
         public EndOfLineLexer()
             : this(new CarriageReturnLexer(), new LineFeedLexer())
         {
         }
 
+        /// <summary>TODO </summary>
+        /// <param name="crLexer">TODO </param>
+        /// <param name="lfLexer">TODO </param>
         public EndOfLineLexer(ILexer<CarriageReturn> crLexer, ILexer<LineFeed> lfLexer)
         {
             Contract.Requires(crLexer != null);
@@ -65,6 +80,7 @@
             return true;
         }
 
+        /// <summary>TODO </summary>
         [ContractInvariantMethod]
         private void ObjectInvariant()
         {

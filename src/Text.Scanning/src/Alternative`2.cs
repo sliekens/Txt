@@ -1,26 +1,44 @@
-﻿using System.Diagnostics.Contracts;
-
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Alternative`2.cs" company="Steven Liekens">
+//   The MIT License (MIT)
+// </copyright>
+// <summary>
+//   
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 namespace Text.Scanning
 {
+    using System.Diagnostics.Contracts;
+
+    /// <summary>TODO </summary>
+    /// <typeparam name="T1"></typeparam>
+    /// <typeparam name="T2"></typeparam>
     public class Alternative<T1, T2>
-        where T1 : Element
-        where T2 : Element
+        where T1 : Element where T2 : Element
     {
+        /// <summary>TODO </summary>
         private readonly T1 element1;
+
+        /// <summary>TODO </summary>
         private readonly T2 element2;
 
+        /// <summary>TODO </summary>
+        /// <param name="element">TODO </param>
         public Alternative(T1 element)
         {
             Contract.Requires(element != null);
             this.element1 = element;
         }
 
+        /// <summary>TODO </summary>
+        /// <param name="element">TODO </param>
         public Alternative(T2 element)
         {
             Contract.Requires(element != null);
             this.element2 = element;
         }
 
+        /// <summary>TODO </summary>
         public Element Element
         {
             get
@@ -39,6 +57,7 @@ namespace Text.Scanning
             }
         }
 
+        /// <summary>TODO </summary>
         [ContractInvariantMethod]
         private void ObjectInvariant()
         {

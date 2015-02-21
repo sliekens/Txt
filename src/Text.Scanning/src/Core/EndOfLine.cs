@@ -1,4 +1,12 @@
-﻿namespace Text.Scanning.Core
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="EndOfLine.cs" company="Steven Liekens">
+//   The MIT License (MIT)
+// </copyright>
+// <summary>
+//   
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+namespace Text.Scanning.Core
 {
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
@@ -6,16 +14,16 @@
     /// <summary>Represents the CRLF rule: 1 CR character followed by 1 LF character. Unicode: U+000D U+000A.</summary>
     public class EndOfLine : Element
     {
+        /// <summary>TODO </summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly CarriageReturn carriageReturn;
 
+        /// <summary>TODO </summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly LineFeed lineFeed;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="T:Text.Scanning.Core.EndOfLine" /> class with the specified
-        /// characters and context.
-        /// </summary>
+        /// <summary>Initializes a new instance of the <see cref="T:Text.Scanning.Core.EndOfLine"/> class with the specified
+        /// characters and context.</summary>
         /// <param name="carriageReturn">The 'CR' component.</param>
         /// <param name="lineFeed">The 'LF' component.</param>
         /// <param name="context">The object that describes the context in which the text appears.</param>
@@ -48,6 +56,7 @@
             }
         }
 
+        /// <summary>TODO </summary>
         [ContractInvariantMethod]
         private void ObjectInvariant()
         {

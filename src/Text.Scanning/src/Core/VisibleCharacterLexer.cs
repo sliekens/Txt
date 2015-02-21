@@ -1,5 +1,14 @@
-﻿namespace Text.Scanning.Core
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="VisibleCharacterLexer.cs" company="Steven Liekens">
+//   The MIT License (MIT)
+// </copyright>
+// <summary>
+//   
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+namespace Text.Scanning.Core
 {
+    /// <summary>TODO </summary>
     public class VisibleCharacterLexer : Lexer<VisibleCharacter>
     {
         /// <inheritdoc />

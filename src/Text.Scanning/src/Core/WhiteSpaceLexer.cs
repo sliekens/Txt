@@ -1,21 +1,36 @@
-﻿namespace Text.Scanning.Core
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="WhiteSpaceLexer.cs" company="Steven Liekens">
+//   The MIT License (MIT)
+// </copyright>
+// <summary>
+//   
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+namespace Text.Scanning.Core
 {
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
 
+    /// <summary>TODO </summary>
     public class WhiteSpaceLexer : Lexer<WhiteSpace>
     {
+        /// <summary>TODO </summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly HorizontalTabLexer horizontalTabLexer;
 
+        /// <summary>TODO </summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly SpaceLexer spaceLexer;
 
+        /// <summary>TODO </summary>
         public WhiteSpaceLexer()
             : this(new SpaceLexer(), new HorizontalTabLexer())
         {
         }
 
+        /// <summary>TODO </summary>
+        /// <param name="spaceLexer">TODO </param>
+        /// <param name="horizontalTabLexer">TODO </param>
         public WhiteSpaceLexer(SpaceLexer spaceLexer, HorizontalTabLexer horizontalTabLexer)
         {
             Contract.Requires(spaceLexer != null);
@@ -64,6 +79,7 @@
             return false;
         }
 
+        /// <summary>TODO </summary>
         [ContractInvariantMethod]
         private void ObjectInvariant()
         {

@@ -1,14 +1,20 @@
-﻿namespace Text.Scanning.Core
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Octet.cs" company="Steven Liekens">
+//   The MIT License (MIT)
+// </copyright>
+// <summary>
+//   
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+namespace Text.Scanning.Core
 {
     using System.Diagnostics.Contracts;
 
     /// <summary>Represents the OCTET rule: 8 bits of data. Unicode: U+0000 - U+00FF.</summary>
     public class Octet : Element
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="T:Text.Scanning.Core.Octet" /> class with a specified character
-        /// and context.
-        /// </summary>
+        /// <summary>Initializes a new instance of the <see cref="T:Text.Scanning.Core.Octet"/> class with a specified character
+        /// and context.</summary>
         /// <param name="data">The octet.</param>
         /// <param name="context">The object that describes the context in which the text appears.</param>
         public Octet(char data, ITextContext context)

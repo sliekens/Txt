@@ -1,4 +1,12 @@
-﻿namespace Text.Scanning.Core
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="LinearWhiteSpace.cs" company="Steven Liekens">
+//   The MIT License (MIT)
+// </copyright>
+// <summary>
+//   
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+namespace Text.Scanning.Core
 {
     using System.Collections.Generic;
     using System.Diagnostics;
@@ -7,13 +15,12 @@
     /// <summary>Represents the LWSP rule: any linear white space. The LWSP rule permits lines containing only white space.</summary>
     public class LinearWhiteSpace : Element
     {
+        /// <summary>TODO </summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly IList<Element> lwsp;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="T:Text.Scanning.Core.LinearWhiteSpace" /> class with the specified
-        /// characters and context.
-        /// </summary>
+        /// <summary>Initializes a new instance of the <see cref="T:Text.Scanning.Core.LinearWhiteSpace"/> class with the specified
+        /// characters and context.</summary>
         /// <param name="data">The collection of 'LWSP' components.</param>
         /// <param name="context">The object that describes the context in which the text appears.</param>
         public LinearWhiteSpace(IList<CrLfWSpPair> data, ITextContext context)
@@ -23,6 +30,9 @@
             Contract.Requires(context != null);
         }
 
+        /// <summary>TODO </summary>
+        /// <param name="data">TODO </param>
+        /// <param name="context">TODO </param>
         private LinearWhiteSpace(IList<Element> data, ITextContext context)
             : base(string.Concat(data) ?? string.Empty, context)
         {
@@ -40,6 +50,9 @@
             }
         }
 
+        /// <summary>TODO </summary>
+        /// <param name="data">TODO </param>
+        /// <returns></returns>
         [Pure]
         private static IList<Element> Linearize(IList<CrLfWSpPair> data)
         {
@@ -65,17 +78,26 @@
             return elements;
         }
 
+        /// <summary>TODO </summary>
         public class CrLfWSpPair
         {
+            /// <summary>TODO </summary>
             private readonly EndOfLine crLf;
+
+            /// <summary>TODO </summary>
             private readonly WhiteSpace wsp;
 
+            /// <summary>TODO </summary>
+            /// <param name="wsp">TODO </param>
             public CrLfWSpPair(WhiteSpace wsp)
             {
                 Contract.Requires(wsp != null);
                 this.wsp = wsp;
             }
 
+            /// <summary>TODO </summary>
+            /// <param name="crLf">TODO </param>
+            /// <param name="wsp">TODO </param>
             public CrLfWSpPair(EndOfLine crLf, WhiteSpace wsp)
             {
                 Contract.Requires(crLf != null);
@@ -85,6 +107,7 @@
                 this.wsp = wsp;
             }
 
+            /// <summary>TODO </summary>
             public EndOfLine CrLf
             {
                 get
@@ -93,6 +116,7 @@
                 }
             }
 
+            /// <summary>TODO </summary>
             public WhiteSpace Wsp
             {
                 get
@@ -102,6 +126,7 @@
                 }
             }
 
+            /// <summary>TODO </summary>
             [ContractInvariantMethod]
             private void ObjectInvariant()
             {

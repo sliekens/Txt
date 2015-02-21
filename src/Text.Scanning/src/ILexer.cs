@@ -1,10 +1,18 @@
-﻿namespace Text.Scanning
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="ILexer.cs" company="Steven Liekens">
+//   The MIT License (MIT)
+// </copyright>
+// <summary>
+//   
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+namespace Text.Scanning
 {
     using System.Diagnostics.Contracts;
 
     /// <summary>Provides the interface for types that process the lexical syntax of a language.</summary>
     /// <typeparam name="TElement">The type of elements produced by the lexer.</typeparam>
-    [ContractClass((typeof(ContractClassForILexer<>)))]
+    [ContractClass(typeof(ContractClassForILexer<>))]
     public interface ILexer<TElement>
         where TElement : Element
     {
@@ -22,10 +30,8 @@
 
         /// <summary>Reads the next element. A return value indicates whether a element was available.</summary>
         /// <param name="scanner"></param>
-        /// <param name="element">
-        /// When this method returns, contains the next available element, or a <c>null</c> reference, depending
-        /// on whether the return value indicates success.
-        /// </param>
+        /// <param name="element">When this method returns, contains the next available element, or a <c>null</c> reference, depending
+        /// on whether the return value indicates success.</param>
         /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
         bool TryRead(ITextScanner scanner, out TElement element);
     }
