@@ -20,9 +20,9 @@ namespace Text
                 scanner.Read();
                 while (!scanner.EndOfInput)
                 {
-                    var token = lexer.Read(scanner);
-                    Assert.IsNotNull(token);
-                    Assert.IsTrue(char.IsDigit(token.Data, 0));
+                    var element = lexer.Read(scanner);
+                    Assert.IsNotNull(element);
+                    Assert.IsTrue(char.IsDigit(element.Data, 0));
                 }
             }
         }

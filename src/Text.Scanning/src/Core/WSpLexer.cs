@@ -3,7 +3,7 @@
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
 
-    public class WSpLexer : Lexer<WSpToken>
+    public class WSpLexer : Lexer<WSpElement>
     {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly HTabLexer hTabLexer;
@@ -25,42 +25,42 @@
         }
 
         /// <inheritdoc />
-        public override WSpToken Read(ITextScanner scanner)
+        public override WSpElement Read(ITextScanner scanner)
         {
-            WSpToken token;
-            if (this.TryRead(scanner, out token))
+            WSpElement element;
+            if (this.TryRead(scanner, out element))
             {
-                return token;
+                return element;
             }
 
             throw new SyntaxErrorException(scanner.GetContext(), "Expected 'WSP'");
         }
 
         /// <inheritdoc />
-        public override bool TryRead(ITextScanner scanner, out WSpToken token)
+        public override bool TryRead(ITextScanner scanner, out WSpElement element)
         {
             if (scanner.EndOfInput)
             {
-                token = default(WSpToken);
+                element = default(WSpElement);
                 return false;
             }
 
             var context = scanner.GetContext();
-            SpToken spToken;
-            HTabToken hTabToken;
-            if (this.spLexer.TryRead(scanner, out spToken))
+            SpElement spElement;
+            HTabElement hTabElement;
+            if (this.spLexer.TryRead(scanner, out spElement))
             {
-                token = new WSpToken(spToken, context);
+                element = new WSpElement(spElement, context);
                 return true;
             }
 
-            if (this.hTabLexer.TryRead(scanner, out hTabToken))
+            if (this.hTabLexer.TryRead(scanner, out hTabElement))
             {
-                token = new WSpToken(hTabToken, context);
+                element = new WSpElement(hTabElement, context);
                 return true;
             }
 
-            token = default(WSpToken);
+            element = default(WSpElement);
             return false;
         }
 

@@ -18,9 +18,9 @@ namespace Text
             using (ITextScanner scanner = new TextScanner(reader))
             {
                 scanner.Read();
-                var token = lexer.Read(scanner);
-                Assert.IsNotNull(token);
-                Assert.AreEqual("\n", token.Data);
+                var element = lexer.Read(scanner);
+                Assert.IsNotNull(element);
+                Assert.AreEqual("\n", element.Data);
             }
         }
     }

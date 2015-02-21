@@ -3,49 +3,49 @@
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
 
-    public class HexDigLexer : Lexer<HexDigToken>
+    public class HexDigLexer : Lexer<HexDigElement>
     {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private readonly ILexer<DigitToken> digitLexer;
+        private readonly ILexer<DigitElement> digitLexer;
 
         public HexDigLexer()
             : this(new DigitLexer())
         {
         }
 
-        public HexDigLexer(ILexer<DigitToken> digitLexer)
+        public HexDigLexer(ILexer<DigitElement> digitLexer)
         {
             Contract.Requires(digitLexer != null);
             this.digitLexer = digitLexer;
         }
 
         /// <inheritdoc />
-        public override HexDigToken Read(ITextScanner scanner)
+        public override HexDigElement Read(ITextScanner scanner)
         {
             var context = scanner.GetContext();
-            HexDigToken token;
-            if (this.TryRead(scanner, out token))
+            HexDigElement element;
+            if (this.TryRead(scanner, out element))
             {
-                return token;
+                return element;
             }
 
             throw new SyntaxErrorException(context, "Expected 'HEXDIG'");
         }
 
         /// <inheritdoc />
-        public override bool TryRead(ITextScanner scanner, out HexDigToken token)
+        public override bool TryRead(ITextScanner scanner, out HexDigElement element)
         {
             if (scanner.EndOfInput)
             {
-                token = default(HexDigToken);
+                element = default(HexDigElement);
                 return false;
             }
 
             var context = scanner.GetContext();
-            DigitToken digitToken;
-            if (this.digitLexer.TryRead(scanner, out digitToken))
+            DigitElement digitElement;
+            if (this.digitLexer.TryRead(scanner, out digitElement))
             {
-                token = new HexDigToken(digitToken, context);
+                element = new HexDigElement(digitElement, context);
                 return true;
             }
 
@@ -54,7 +54,7 @@
             {
                 if (scanner.TryMatch(c))
                 {
-                    token = new HexDigToken(c, context);
+                    element = new HexDigElement(c, context);
                     return true;
                 }
             }
@@ -64,12 +64,12 @@
             {
                 if (scanner.TryMatch(c))
                 {
-                    token = new HexDigToken(c, context);
+                    element = new HexDigElement(c, context);
                     return true;
                 }
             }
 
-            token = default(HexDigToken);
+            element = default(HexDigElement);
             return false;
         }
 

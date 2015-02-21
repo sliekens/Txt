@@ -4,64 +4,64 @@
     using System.Diagnostics.Contracts;
 
     /// <summary>Represents the WSP rule: 1 SP character -or- 1 HTAB character. Unicode: U+0020, U+0009.</summary>
-    public class WSpToken : Token
+    public class WSpElement : Element
     {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private readonly HTabToken hTabToken;
+        private readonly HTabElement hTabElement;
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private readonly SpToken spToken;
+        private readonly SpElement spElement;
 
         /// <summary>
-        /// Creates a new instance of the <see cref="T:Text.Scanning.Core.CtlToken" /> class with a specified white space
+        /// Initializes a new instance of the <see cref="T:Text.Scanning.Core.CtlElement" /> class with a specified white space
         /// character and context.
         /// </summary>
         /// <param name="data">The space character.</param>
         /// <param name="context">The object that describes the context in which the text appears.</param>
-        public WSpToken(SpToken data, ITextContext context)
+        public WSpElement(SpElement data, ITextContext context)
             : base(data.Data, context)
         {
             Contract.Requires(data != null);
             Contract.Requires(context != null);
-            this.spToken = data;
+            this.spElement = data;
         }
 
         /// <summary>
-        /// Creates a new instance of the <see cref="T:Text.Scanning.Core.CtlToken" /> class with a specified character
+        /// Initializes a new instance of the <see cref="T:Text.Scanning.Core.CtlElement" /> class with a specified character
         /// and context.
         /// </summary>
         /// <param name="data">The horizontal tab character.</param>
         /// <param name="context">The object that describes the context in which the text appears.</param>
-        public WSpToken(HTabToken data, ITextContext context)
+        public WSpElement(HTabElement data, ITextContext context)
             : base(data.Data, context)
         {
             Contract.Requires(data != null);
             Contract.Requires(context != null);
-            this.hTabToken = data;
+            this.hTabElement = data;
         }
 
         /// <summary>Gets the 'HTAB' component, or a <c>null</c> reference.</summary>
-        public HTabToken HTab
+        public HTabElement HTab
         {
             get
             {
-                return this.hTabToken;
+                return this.hTabElement;
             }
         }
 
         /// <summary>Gets the 'SP' component, or a <c>null</c> reference.</summary>
-        public SpToken Sp
+        public SpElement Sp
         {
             get
             {
-                return this.spToken;
+                return this.spElement;
             }
         }
 
         [ContractInvariantMethod]
         private void ObjectInvariant()
         {
-            Contract.Invariant(this.spToken != null ^ this.hTabToken != null);
+            Contract.Invariant(this.spElement != null ^ this.hTabElement != null);
         }
     }
 }

@@ -3,15 +3,15 @@
     using System.Diagnostics.Contracts;
 
     /// <summary>Represents the CHAR rule: 1 US-ASCII character, excluding NUL. Unicode: U+0001 - U+007F.</summary>
-    public class CharToken : Token
+    public class CharElement : Element
     {
         /// <summary>
-        /// Creates a new instance of the <see cref="T:Text.Scanning.Core.CharToken" /> class with a specified character
+        /// Initializes a new instance of the <see cref="T:Text.Scanning.Core.CharElement" /> class with a specified character
         /// and context.
         /// </summary>
         /// <param name="data">The character.</param>
         /// <param name="context">The object that describes the context in which the text appears.</param>
-        public CharToken(char data, ITextContext context)
+        public CharElement(char data, ITextContext context)
             : base(data, context)
         {
             Contract.Requires(data >= '\u0001' && data <= '\u007F');

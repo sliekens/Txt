@@ -1,25 +1,25 @@
 ﻿namespace Text.Scanning.Core
 {
-    public class CtlLexer : Lexer<CtlToken>
+    public class CtlLexer : Lexer<CtlElement>
     {
         /// <inheritdoc />
-        public override CtlToken Read(ITextScanner scanner)
+        public override CtlElement Read(ITextScanner scanner)
         {
-            CtlToken token;
-            if (this.TryRead(scanner, out token))
+            CtlElement element;
+            if (this.TryRead(scanner, out element))
             {
-                return token;
+                return element;
             }
 
             throw new SyntaxErrorException(scanner.GetContext(), "Expected 'CTL'");
         }
 
         /// <inheritdoc />
-        public override bool TryRead(ITextScanner scanner, out CtlToken token)
+        public override bool TryRead(ITextScanner scanner, out CtlElement element)
         {
             if (scanner.EndOfInput)
             {
-                token = default(CtlToken);
+                element = default(CtlElement);
                 return false;
             }
 
@@ -30,7 +30,7 @@
             {
                 if (scanner.TryMatch(c))
                 {
-                    token = new CtlToken(c, context);
+                    element = new CtlElement(c, context);
                     return true;
                 }
             }
@@ -38,11 +38,11 @@
             // %x7F
             if (scanner.TryMatch('\u007F'))
             {
-                token = new CtlToken('\u007F', context);
+                element = new CtlElement('\u007F', context);
                 return true;
             }
 
-            token = default(CtlToken);
+            element = default(CtlElement);
             return false;
         }
     }

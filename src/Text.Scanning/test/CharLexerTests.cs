@@ -18,8 +18,8 @@ namespace Text
             using (ITextScanner scanner = new TextScanner(reader))
             {
                 scanner.Read();
-                var token = lexer.Read(scanner);
-                Assert.AreEqual(text, token.Data);
+                var element = lexer.Read(scanner);
+                Assert.AreEqual(text, element.Data);
             }
         }
 
@@ -32,8 +32,8 @@ namespace Text
             using (ITextScanner scanner = new TextScanner(reader))
             {
                 scanner.Read();
-                var token = lexer.Read(scanner);
-                Assert.AreEqual(text, token.Data);
+                var element = lexer.Read(scanner);
+                Assert.AreEqual(text, element.Data);
             }
         }
 
@@ -46,13 +46,13 @@ namespace Text
             using (ITextScanner scanner = new TextScanner(reader))
             {
                 scanner.Read();
-                CharToken token;
-                if (lexer.TryRead(scanner, out token))
+                CharElement element;
+                if (lexer.TryRead(scanner, out element))
                 {
                     Assert.Fail();
                 }
 
-                Assert.IsNull(token);
+                Assert.IsNull(element);
             }
         }
     }

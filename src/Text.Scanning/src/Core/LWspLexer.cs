@@ -4,20 +4,20 @@
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
 
-    public class LWspLexer : Lexer<LWspToken>
+    public class LWspLexer : Lexer<LWspElement>
     {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private readonly ILexer<CrLfToken> crLfLexer;
+        private readonly ILexer<CrLfElement> crLfLexer;
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private readonly ILexer<WSpToken> wSpLexer;
+        private readonly ILexer<WSpElement> wSpLexer;
 
         public LWspLexer()
             : this(new CrLfLexer(), new WSpLexer())
         {
         }
 
-        public LWspLexer(ILexer<CrLfToken> crLfLexer, ILexer<WSpToken> wSpLexer)
+        public LWspLexer(ILexer<CrLfElement> crLfLexer, ILexer<WSpElement> wSpLexer)
         {
             Contract.Requires(crLfLexer != null);
             Contract.Requires(wSpLexer != null);
@@ -26,30 +26,30 @@
         }
 
         /// <inheritdoc />
-        public override LWspToken Read(ITextScanner scanner)
+        public override LWspElement Read(ITextScanner scanner)
         {
             var context = scanner.GetContext();
-            var data = new List<LWspToken.CrLfWSpPair>();
+            var data = new List<LWspElement.CrLfWSpPair>();
 
             // The program should eventually exit this loop, unless the source data is an infinite stream of linear whitespace
             while (!scanner.EndOfInput)
             {
-                CrLfToken crLfToken;
-                WSpToken wSpToken;
-                if (this.wSpLexer.TryRead(scanner, out wSpToken))
+                CrLfElement crLfElement;
+                WSpElement wSpElement;
+                if (this.wSpLexer.TryRead(scanner, out wSpElement))
                 {
-                    data.Add(new LWspToken.CrLfWSpPair(wSpToken));
+                    data.Add(new LWspElement.CrLfWSpPair(wSpElement));
                 }
-                else if (this.crLfLexer.TryRead(scanner, out crLfToken))
+                else if (this.crLfLexer.TryRead(scanner, out crLfElement))
                 {
-                    if (!scanner.EndOfInput && this.wSpLexer.TryRead(scanner, out wSpToken))
+                    if (!scanner.EndOfInput && this.wSpLexer.TryRead(scanner, out wSpElement))
                     {
-                        Contract.Assume(wSpToken.Offset == crLfToken.Offset + 2);
-                        data.Add(new LWspToken.CrLfWSpPair(crLfToken, wSpToken));
+                        Contract.Assume(wSpElement.Offset == crLfElement.Offset + 2);
+                        data.Add(new LWspElement.CrLfWSpPair(crLfElement, wSpElement));
                     }
                     else
                     {
-                        this.crLfLexer.PutBack(scanner, crLfToken);
+                        this.crLfLexer.PutBack(scanner, crLfElement);
                         break;
                     }
                 }
@@ -59,36 +59,36 @@
                 }
             }
 
-            return new LWspToken(data, context);
+            return new LWspElement(data, context);
         }
 
         /// <inheritdoc />
-        public override bool TryRead(ITextScanner scanner, out LWspToken token)
+        public override bool TryRead(ITextScanner scanner, out LWspElement element)
         {
             var context = scanner.GetContext();
-            var data = new List<LWspToken.CrLfWSpPair>();
+            var data = new List<LWspElement.CrLfWSpPair>();
 
             // The program should eventually exit this loop, unless the source data is an infinite stream of linear whitespace
             while (!scanner.EndOfInput)
             {
-                CrLfToken crLfToken;
-                WSpToken wSpToken;
-                if (this.crLfLexer.TryRead(scanner, out crLfToken))
+                CrLfElement crLfElement;
+                WSpElement wSpElement;
+                if (this.crLfLexer.TryRead(scanner, out crLfElement))
                 {
-                    if (!scanner.EndOfInput && this.wSpLexer.TryRead(scanner, out wSpToken))
+                    if (!scanner.EndOfInput && this.wSpLexer.TryRead(scanner, out wSpElement))
                     {
-                        Contract.Assume(wSpToken.Offset == crLfToken.Offset + 2);
-                        data.Add(new LWspToken.CrLfWSpPair(crLfToken, wSpToken));
+                        Contract.Assume(wSpElement.Offset == crLfElement.Offset + 2);
+                        data.Add(new LWspElement.CrLfWSpPair(crLfElement, wSpElement));
                     }
                     else
                     {
-                        this.crLfLexer.PutBack(scanner, crLfToken);
+                        this.crLfLexer.PutBack(scanner, crLfElement);
                         break;
                     }
                 }
-                else if (this.wSpLexer.TryRead(scanner, out wSpToken))
+                else if (this.wSpLexer.TryRead(scanner, out wSpElement))
                 {
-                    data.Add(new LWspToken.CrLfWSpPair(wSpToken));
+                    data.Add(new LWspElement.CrLfWSpPair(wSpElement));
                 }
                 else
                 {
@@ -96,7 +96,7 @@
                 }
             }
 
-            token = new LWspToken(data, context);
+            element = new LWspElement(data, context);
             return true;
         }
 

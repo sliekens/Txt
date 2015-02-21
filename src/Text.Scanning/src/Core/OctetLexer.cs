@@ -1,25 +1,25 @@
 ﻿namespace Text.Scanning.Core
 {
-    public class OctetLexer : Lexer<OctetToken>
+    public class OctetLexer : Lexer<OctetElement>
     {
         /// <inheritdoc />
-        public override OctetToken Read(ITextScanner scanner)
+        public override OctetElement Read(ITextScanner scanner)
         {
-            OctetToken token;
-            if (this.TryRead(scanner, out token))
+            OctetElement element;
+            if (this.TryRead(scanner, out element))
             {
-                return token;
+                return element;
             }
 
             throw new SyntaxErrorException(scanner.GetContext(), "Expected 'OCTET'");
         }
 
         /// <inheritdoc />
-        public override bool TryRead(ITextScanner scanner, out OctetToken token)
+        public override bool TryRead(ITextScanner scanner, out OctetElement element)
         {
             if (scanner.EndOfInput)
             {
-                token = default(OctetToken);
+                element = default(OctetElement);
                 return false;
             }
 
@@ -28,12 +28,12 @@
             {
                 if (scanner.TryMatch(c))
                 {
-                    token = new OctetToken(c, context);
+                    element = new OctetElement(c, context);
                     return true;
                 }
             }
 
-            token = default(OctetToken);
+            element = default(OctetElement);
             return false;
         }
     }

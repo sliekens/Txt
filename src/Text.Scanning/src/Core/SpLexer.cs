@@ -1,36 +1,36 @@
 ﻿namespace Text.Scanning.Core
 {
-    public class SpLexer : Lexer<SpToken>
+    public class SpLexer : Lexer<SpElement>
     {
         /// <inheritdoc />
-        public override SpToken Read(ITextScanner scanner)
+        public override SpElement Read(ITextScanner scanner)
         {
-            SpToken token;
-            if (this.TryRead(scanner, out token))
+            SpElement element;
+            if (this.TryRead(scanner, out element))
             {
-                return token;
+                return element;
             }
 
             throw new SyntaxErrorException(scanner.GetContext(), "Expected 'SP'");
         }
 
         /// <inheritdoc />
-        public override bool TryRead(ITextScanner scanner, out SpToken token)
+        public override bool TryRead(ITextScanner scanner, out SpElement element)
         {
             if (scanner.EndOfInput)
             {
-                token = default(SpToken);
+                element = default(SpElement);
                 return false;
             }
 
             var context = scanner.GetContext();
             if (scanner.TryMatch('\u0020'))
             {
-                token = new SpToken(context);
+                element = new SpElement(context);
                 return true;
             }
 
-            token = default(SpToken);
+            element = default(SpElement);
             return false;
         }
     }

@@ -3,20 +3,20 @@
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
 
-    public class CrLfLexer : Lexer<CrLfToken>
+    public class CrLfLexer : Lexer<CrLfElement>
     {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private readonly ILexer<CrToken> crLexer;
+        private readonly ILexer<CrElement> crLexer;
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private readonly ILexer<LfToken> lfLexer;
+        private readonly ILexer<LfElement> lfLexer;
 
         public CrLfLexer()
             : this(new CrLexer(), new LfLexer())
         {
         }
 
-        public CrLfLexer(ILexer<CrToken> crLexer, ILexer<LfToken> lfLexer)
+        public CrLfLexer(ILexer<CrElement> crLexer, ILexer<LfElement> lfLexer)
         {
             Contract.Requires(crLexer != null);
             Contract.Requires(lfLexer != null);
@@ -25,15 +25,15 @@
         }
 
         /// <inheritdoc />
-        public override CrLfToken Read(ITextScanner scanner)
+        public override CrLfElement Read(ITextScanner scanner)
         {
             var context = scanner.GetContext();
             try
             {
-                var crToken = this.crLexer.Read(scanner);
-                var lfToken = this.lfLexer.Read(scanner);
-                Contract.Assume(lfToken.Offset == crToken.Offset + 1);
-                return new CrLfToken(crToken, lfToken, context);
+                var cr = this.crLexer.Read(scanner);
+                var lf = this.lfLexer.Read(scanner);
+                Contract.Assume(lf.Offset == cr.Offset + 1);
+                return new CrLfElement(cr, lf, context);
             }
             catch (SyntaxErrorException syntaxErrorException)
             {
@@ -42,26 +42,26 @@
         }
 
         /// <inheritdoc />
-        public override bool TryRead(ITextScanner scanner, out CrLfToken token)
+        public override bool TryRead(ITextScanner scanner, out CrLfElement element)
         {
             var context = scanner.GetContext();
-            CrToken crToken;
-            if (scanner.EndOfInput || !this.crLexer.TryRead(scanner, out crToken))
+            CrElement crElement;
+            if (scanner.EndOfInput || !this.crLexer.TryRead(scanner, out crElement))
             {
-                token = default(CrLfToken);
+                element = default(CrLfElement);
                 return false;
             }
 
-            LfToken lfToken;
-            if (scanner.EndOfInput || !this.lfLexer.TryRead(scanner, out lfToken))
+            LfElement lfElement;
+            if (scanner.EndOfInput || !this.lfLexer.TryRead(scanner, out lfElement))
             {
-                this.crLexer.PutBack(scanner, crToken);
-                token = default(CrLfToken);
+                this.crLexer.PutBack(scanner, crElement);
+                element = default(CrLfElement);
                 return false;
             }
 
-            Contract.Assume(lfToken.Offset == crToken.Offset + 1);
-            token = new CrLfToken(crToken, lfToken, context);
+            Contract.Assume(lfElement.Offset == crElement.Offset + 1);
+            element = new CrLfElement(crElement, lfElement, context);
             return true;
         }
 

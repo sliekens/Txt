@@ -20,9 +20,9 @@ namespace Text
                 scanner.Read();
                 while (!scanner.EndOfInput)
                 {
-                    var token = lexer.Read(scanner);
-                    Assert.IsNotNull(token);
-                    Assert.IsTrue(char.IsLetter(token.Data[0]));
+                    var element = lexer.Read(scanner);
+                    Assert.IsNotNull(element);
+                    Assert.IsTrue(char.IsLetter(element.Data[0]));
                 }
             }
         }
@@ -36,13 +36,13 @@ namespace Text
             using (ITextScanner scanner = new TextScanner(reader))
             {
                 scanner.Read();
-                VCharToken token;
-                if (lexer.TryRead(scanner, out token))
+                VCharElement element;
+                if (lexer.TryRead(scanner, out element))
                 {
                     Assert.Fail();
                 }
 
-                Assert.IsNull(token);
+                Assert.IsNull(element);
             }
         }
     }

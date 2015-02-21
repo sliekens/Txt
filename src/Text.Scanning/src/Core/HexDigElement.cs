@@ -7,32 +7,32 @@
     /// Represents the HEXDIG rule: 1 hexadecimal digit (case-insensitive). Unicode: U+0030 - U+0039, U+0041 - U+0046,
     /// U+0061 - U+0066.
     /// </summary>
-    public class HexDigToken : Token
+    public class HexDigElement : Element
     {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private readonly DigitToken digitToken;
+        private readonly DigitElement digitElement;
 
         /// <summary>
-        /// Creates a new instance of the <see cref="T:Text.Scanning.Core.HexDigToken" /> class with a specified character
+        /// Initializes a new instance of the <see cref="T:Text.Scanning.Core.HexDigElement" /> class with a specified character
         /// and context.
         /// </summary>
-        /// <param name="digitToken">The digit.</param>
+        /// <param name="digitElement">The digit.</param>
         /// <param name="context">The object that describes the context in which the text appears.</param>
-        public HexDigToken(DigitToken digitToken, ITextContext context)
-            : base(digitToken.Data, context)
+        public HexDigElement(DigitElement digitElement, ITextContext context)
+            : base(digitElement.Data, context)
         {
-            Contract.Requires(digitToken != null);
+            Contract.Requires(digitElement != null);
             Contract.Requires(context != null);
-            this.digitToken = digitToken;
+            this.digitElement = digitElement;
         }
 
         /// <summary>
-        /// Creates a new instance of the <see cref="T:Text.Scanning.Core.HexDigToken" /> class with a specified character
+        /// Initializes a new instance of the <see cref="T:Text.Scanning.Core.HexDigElement" /> class with a specified character
         /// and context.
         /// </summary>
         /// <param name="data">The hexadecimal digit.</param>
         /// <param name="context">The object that describes the context in which the text appears.</param>
-        public HexDigToken(char data, ITextContext context)
+        public HexDigElement(char data, ITextContext context)
             : base(data, context)
         {
             Contract.Requires((data >= '\u0030' && data <= '\u0039') || (data >= '\u0041' && data <= '\u0046') ||
@@ -40,16 +40,16 @@
             Contract.Requires(context != null);
             if (data <= '\u0039')
             {
-                this.digitToken = new DigitToken(data, context);
+                this.digitElement = new DigitElement(data, context);
             }
         }
 
         /// <summary>Gets the 'DIGIT' component, or a <c>null</c> reference.</summary>
-        public DigitToken DigitToken
+        public DigitElement DigitElement
         {
             get
             {
-                return this.digitToken;
+                return this.digitElement;
             }
         }
     }

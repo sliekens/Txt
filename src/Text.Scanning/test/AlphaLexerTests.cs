@@ -22,8 +22,8 @@ namespace Text
                 scanner.Read();
                 for (int i = 0; i < text.Length; i++)
                 {
-                    var token = lexer.Read(scanner);
-                    Assert.AreEqual(text.Substring(i, 1), token.Data);
+                    var element = lexer.Read(scanner);
+                    Assert.AreEqual(text.Substring(i, 1), element.Data);
                 }
             }
         }
@@ -39,8 +39,8 @@ namespace Text
                 scanner.Read();
                 for (int i = 0; i < text.Length; i++)
                 {
-                    var token = lexer.Read(scanner);
-                    Assert.AreEqual(text.Substring(i, 1), token.Data);
+                    var element = lexer.Read(scanner);
+                    Assert.AreEqual(text.Substring(i, 1), element.Data);
                 }
             }
         }
@@ -54,10 +54,10 @@ namespace Text
             using (ITextScanner scanner = new TextScanner(reader))
             {
                 scanner.Read();
-                AlphaToken token;
-                var result = lexer.TryRead(scanner, out token);
+                AlphaElement element;
+                var result = lexer.TryRead(scanner, out element);
                 Assert.IsFalse(result);
-                Assert.IsNull(token);
+                Assert.IsNull(element);
             }
         }
     }

@@ -1,36 +1,36 @@
 ﻿namespace Text.Scanning.Core
 {
-    public class CrLexer : Lexer<CrToken>
+    public class CrLexer : Lexer<CrElement>
     {
         /// <inheritdoc />
-        public override CrToken Read(ITextScanner scanner)
+        public override CrElement Read(ITextScanner scanner)
         {
-            CrToken token;
-            if (this.TryRead(scanner, out token))
+            CrElement element;
+            if (this.TryRead(scanner, out element))
             {
-                return token;
+                return element;
             }
 
             throw new SyntaxErrorException(scanner.GetContext(), "Expected 'CR'");
         }
 
         /// <inheritdoc />
-        public override bool TryRead(ITextScanner scanner, out CrToken token)
+        public override bool TryRead(ITextScanner scanner, out CrElement element)
         {
             if (scanner.EndOfInput)
             {
-                token = default(CrToken);
+                element = default(CrElement);
                 return false;
             }
 
             var context = scanner.GetContext();
             if (scanner.TryMatch('\u000D'))
             {
-                token = new CrToken(context);
+                element = new CrElement(context);
                 return true;
             }
 
-            token = default(CrToken);
+            element = default(CrElement);
             return false;
         }
     }
