@@ -8,6 +8,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace Text.Scanning
 {
+    using System.Diagnostics.CodeAnalysis;
     using System.Diagnostics.Contracts;
 
     /// <summary>Represents a choice of six alternative elements.</summary>
@@ -95,6 +96,13 @@ namespace Text.Scanning
             {
                 return this.element;
             }
+        }
+
+        [ContractInvariantMethod]
+        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented", Justification = "Reviewed. Suppression is OK here.")]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(this.element != null);
         }
     }
 }
