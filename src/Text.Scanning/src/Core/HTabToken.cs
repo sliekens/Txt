@@ -1,19 +1,11 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="HTabToken.cs" company="Steven Liekens">
-//   The MIT License (MIT)
-// </copyright>
-// <summary>
-//   Represents the HTAB rule: 1 horizontal tab. Unicode: U+0009.
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
-namespace Text.Scanning.Core
+﻿namespace Text.Scanning.Core
 {
     using System.Diagnostics.Contracts;
 
     /// <summary>Represents the HTAB rule: 1 horizontal tab. Unicode: U+0009.</summary>
     public class HTabToken : Token
     {
-        /// <summary>Initializes a new instance of the <see cref="HTabToken"/> class. Creates a new instance of the <see cref="T:Text.Scanning.Core.HTabToken"/> class with a specified context.</summary>
+        /// <summary>Creates a new instance of the <see cref="T:Text.Scanning.Core.HTabToken" /> class with a specified context.</summary>
         /// <param name="context">The object that describes the context in which the text appears.</param>
         public HTabToken(ITextContext context)
             : base("\u0009", context)

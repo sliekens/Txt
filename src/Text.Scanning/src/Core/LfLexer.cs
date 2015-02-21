@@ -1,14 +1,5 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="LfLexer.cs" company="Steven Liekens">
-//   The MIT License (MIT)
-// </copyright>
-// <summary>
-//   The lf lexer.
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
-namespace Text.Scanning.Core
+﻿namespace Text.Scanning.Core
 {
-    /// <summary>The lf lexer.</summary>
     public class LfLexer : Lexer<LfToken>
     {
         /// <inheritdoc />

@@ -1,14 +1,5 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="CtlLexer.cs" company="Steven Liekens">
-//   The MIT License (MIT)
-// </copyright>
-// <summary>
-//   The ctl lexer.
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
-namespace Text.Scanning.Core
+﻿namespace Text.Scanning.Core
 {
-    /// <summary>The ctl lexer.</summary>
     public class CtlLexer : Lexer<CtlToken>
     {
         /// <inheritdoc />

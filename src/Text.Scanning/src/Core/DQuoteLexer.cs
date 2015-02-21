@@ -1,14 +1,5 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="DQuoteLexer.cs" company="Steven Liekens">
-//   The MIT License (MIT)
-// </copyright>
-// <summary>
-//   The d quote lexer.
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
-namespace Text.Scanning.Core
+﻿namespace Text.Scanning.Core
 {
-    /// <summary>The d quote lexer.</summary>
     public class DQuoteLexer : Lexer<DQuoteToken>
     {
         /// <inheritdoc />

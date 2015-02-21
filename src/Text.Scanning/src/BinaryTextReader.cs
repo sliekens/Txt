@@ -1,32 +1,17 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="BinaryTextReader.cs" company="Steven Liekens">
-//   The MIT License (MIT)
-// </copyright>
-// <summary>
-//   The binary text reader.
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
+﻿using System;
+using System.Diagnostics.Contracts;
+using System.IO;
+using System.Threading.Tasks;
+
 namespace Text.Scanning
 {
-    using System;
-    using System.Diagnostics.Contracts;
-    using System.IO;
-    using System.Threading.Tasks;
-
-    /// <summary>The binary text reader.</summary>
     public class BinaryTextReader : TextReader
     {
-        /// <summary>The default buffer size.</summary>
         public const int DefaultBufferSize = 4096;
 
-        /// <summary>The binary reader.</summary>
-        private readonly BinaryReader binaryReader;
-
-        /// <summary>The buffer size.</summary>
-        private readonly int bufferSize;
-
-        /// <summary>The disposed.</summary>
         private bool disposed;
+        private readonly BinaryReader binaryReader;
+        private readonly int bufferSize;
 
         /// <summary>Initializes a new instance of the <see cref="BinaryTextReader"/> class that reads from a given instance of the <see cref="BinaryReader"/> class.</summary>
         /// <param name="binaryReader">The binary reader to read from.</param>
@@ -110,8 +95,7 @@ namespace Text.Scanning
                     count -= read;
                     totalRead += read;
                 }
-            }
-            while (count > 0 && read > 0);
+            } while (count > 0 && read > 0);
 
             return totalRead;
         }
@@ -169,8 +153,7 @@ namespace Text.Scanning
                     {
                         textWriter.Write(buffer, 0, read);
                     }
-                }
-                while (read > 0);
+                } while (read > 0);
 
                 return textWriter.ToString();
             }
@@ -203,12 +186,12 @@ namespace Text.Scanning
             this.disposed = true;
         }
 
-        /// <summary>The object invariant.</summary>
         [ContractInvariantMethod]
         private void ObjectInvariant()
         {
             Contract.Invariant(this.binaryReader != null);
             Contract.Invariant(this.bufferSize > 0);
         }
+
     }
 }

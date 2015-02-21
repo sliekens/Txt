@@ -1,19 +1,11 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="TextScanner.cs" company="Steven Liekens">
-//   The MIT License (MIT)
-// </copyright>
-// <summary>
-//   Represents a text scanner that gets text from an instance of the
-//   class.
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
-namespace Text.Scanning
+﻿namespace Text.Scanning
 {
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
     using System.IO;
+    using System.Linq;
 
     /// <summary>
     /// Represents a text scanner that gets text from an instance of the <see cref="T:Text.Scanning.TextScanner" />
@@ -21,80 +13,30 @@ namespace Text.Scanning
     /// </summary>
     public sealed class TextScanner : ITextScanner
     {
-        /// <summary>The buffer.</summary>
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private readonly Stack<char> buffer = new Stack<char>();
-
-        /// <summary>The text reader.</summary>
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private readonly TextReader textReader;
-
         /// <summary>Indicates whether this object has been disposed.</summary>
         private bool disposed;
 
-        /// <summary>The end of input.</summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private bool endOfInput;
 
-        /// <summary>The next character.</summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private char nextCharacter;
 
-        /// <summary>The offset.</summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private int offset = -1;
 
-        /// <summary>Initializes a new instance of the <see cref="T:Text.Scanning.TextScanner"/> class for the given data source.</summary>
-        /// <param name="textReader">The <see cref="T:System.IO.TextReader"/> to read data from.</param>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private readonly Stack<char> buffer = new Stack<char>();
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private readonly TextReader textReader;
+
+        /// <summary>Initializes a new instance of the <see cref="T:Text.Scanning.TextScanner" /> class for the given data source.</summary>
+        /// <param name="textReader">The <see cref="T:System.IO.TextReader" /> to read data from.</param>
         public TextScanner(TextReader textReader)
         {
             Contract.Requires(textReader != null);
             this.textReader = textReader;
-        }
-
-        /// <inheritdoc />
-        public int Offset
-        {
-            [Pure]
-            get
-            {
-                if (this.disposed)
-                {
-                    throw new ObjectDisposedException(this.GetType().FullName);
-                }
-
-                return this.offset;
-            }
-        }
-
-        /// <inheritdoc />
-        bool ITextScanner.EndOfInput
-        {
-            [Pure]
-            get
-            {
-                return this.EndOfInput;
-            }
-        }
-
-        /// <inheritdoc />
-        char? ITextScanner.NextCharacter
-        {
-            [Pure]
-            get
-            {
-                return this.NextCharacter;
-            }
-        }
-
-        /// <inheritdoc />
-        int ITextContext.Offset
-        {
-            [Pure]
-            get
-            {
-                return this.Offset;
-            }
         }
 
         /// <inheritdoc />
@@ -109,6 +51,16 @@ namespace Text.Scanning
                 }
 
                 return this.endOfInput;
+            }
+        }
+
+        /// <inheritdoc />
+        bool ITextScanner.EndOfInput
+        {
+            [Pure]
+            get
+            {
+                return this.EndOfInput;
             }
         }
 
@@ -137,6 +89,41 @@ namespace Text.Scanning
             }
         }
 
+        /// <inheritdoc />
+        char? ITextScanner.NextCharacter
+        {
+            [Pure]
+            get
+            {
+                return this.NextCharacter;
+            }
+        }
+
+        /// <inheritdoc />
+        public int Offset
+        {
+            [Pure]
+            get
+            {
+                if (this.disposed)
+                {
+                    throw new ObjectDisposedException(this.GetType().FullName);
+                }
+
+                return this.offset;
+            }
+        }
+
+        /// <inheritdoc />
+        int ITextContext.Offset
+        {
+            [Pure]
+            get
+            {
+                return this.Offset;
+            }
+        }
+
         /// <summary>This method calls <see cref="Dispose(bool)" />, specifying <c>true</c> to release all resources.</summary>
         public void Close()
         {
@@ -152,49 +139,6 @@ namespace Text.Scanning
 
         /// <inheritdoc />
         [Pure]
-        ITextContext ITextScanner.GetContext()
-        {
-            return this.GetContext();
-        }
-
-        /// <inheritdoc />
-        void ITextScanner.PutBack(char c)
-        {
-            this.PutBack(c);
-        }
-
-        /// <inheritdoc />
-        bool ITextScanner.Read()
-        {
-            return this.Read();
-        }
-
-        /// <inheritdoc />
-        bool ITextScanner.TryMatch(char c)
-        {
-            return this.TryMatch(c);
-        }
-
-        /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
-        /// <param name="disposing"><c>true</c> to clean up both managed and unmanaged resources; otherwise, <c>false</c> to clean up only unmanaged
-        /// resources.</param>
-        private void Dispose(bool disposing)
-        {
-            if (this.disposed)
-            {
-                return;
-            }
-
-            if (disposing)
-            {
-                this.textReader.Dispose();
-            }
-
-            this.disposed = true;
-        }
-
-        /// <inheritdoc />
-        [Pure]
         private ITextContext GetContext()
         {
             if (this.disposed)
@@ -205,12 +149,11 @@ namespace Text.Scanning
             return new TextContext(this.offset);
         }
 
-        /// <summary>The object invariant.</summary>
-        [ContractInvariantMethod]
-        private void ObjectInvariant()
+        /// <inheritdoc />
+        [Pure]
+        ITextContext ITextScanner.GetContext()
         {
-            Contract.Invariant(this.textReader != null);
-            Contract.Invariant(this.buffer != null);
+            return this.GetContext();
         }
 
         /// <inheritdoc />
@@ -237,6 +180,12 @@ namespace Text.Scanning
 
             this.offset -= 1;
             this.nextCharacter = c;
+        }
+
+        /// <inheritdoc />
+        void ITextScanner.PutBack(char c)
+        {
+            this.PutBack(c);
         }
 
         /// <inheritdoc />
@@ -275,6 +224,12 @@ namespace Text.Scanning
         }
 
         /// <inheritdoc />
+        bool ITextScanner.Read()
+        {
+            return this.Read();
+        }
+
+        /// <inheritdoc />
         private bool TryMatch(char c)
         {
             if (this.disposed)
@@ -299,6 +254,39 @@ namespace Text.Scanning
 
             this.Read();
             return true;
+        }
+
+        /// <inheritdoc />
+        bool ITextScanner.TryMatch(char c)
+        {
+            return this.TryMatch(c);
+        }
+
+        /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
+        /// <param name="disposing">
+        /// <c>true</c> to clean up both managed and unmanaged resources; otherwise, <c>false</c> to clean up only unmanaged
+        /// resources.
+        /// </param>
+        private void Dispose(bool disposing)
+        {
+            if (this.disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                this.textReader.Dispose();
+            }
+
+            this.disposed = true;
+        }
+
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(this.textReader != null);
+            Contract.Invariant(this.buffer != null);
         }
     }
 }

@@ -1,14 +1,5 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="HTabLexer.cs" company="Steven Liekens">
-//   The MIT License (MIT)
-// </copyright>
-// <summary>
-//   The h tab lexer.
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
-namespace Text.Scanning.Core
+﻿namespace Text.Scanning.Core
 {
-    /// <summary>The h tab lexer.</summary>
     public class HTabLexer : Lexer<HTabToken>
     {
         /// <inheritdoc />

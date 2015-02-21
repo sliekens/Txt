@@ -1,31 +1,18 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="HexDigLexer.cs" company="Steven Liekens">
-//   The MIT License (MIT)
-// </copyright>
-// <summary>
-//   The hex dig lexer.
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
-namespace Text.Scanning.Core
+﻿namespace Text.Scanning.Core
 {
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
 
-    /// <summary>The hex dig lexer.</summary>
     public class HexDigLexer : Lexer<HexDigToken>
     {
-        /// <summary>The digit lexer.</summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly ILexer<DigitToken> digitLexer;
 
-        /// <summary>Initializes a new instance of the <see cref="HexDigLexer"/> class.</summary>
         public HexDigLexer()
             : this(new DigitLexer())
         {
         }
 
-        /// <summary>Initializes a new instance of the <see cref="HexDigLexer"/> class.</summary>
-        /// <param name="digitLexer">The digit lexer.</param>
         public HexDigLexer(ILexer<DigitToken> digitLexer)
         {
             Contract.Requires(digitLexer != null);
@@ -86,7 +73,6 @@ namespace Text.Scanning.Core
             return false;
         }
 
-        /// <summary>The object invariant.</summary>
         [ContractInvariantMethod]
         private void ObjectInvariant()
         {

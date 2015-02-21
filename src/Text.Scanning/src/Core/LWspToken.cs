@@ -1,12 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="LWspToken.cs" company="Steven Liekens">
-//   The MIT License (MIT)
-// </copyright>
-// <summary>
-//   Represents the LWSP rule: any linear white space. The LWSP rule permits lines containing only white space.
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
-namespace Text.Scanning.Core
+﻿namespace Text.Scanning.Core
 {
     using System.Collections.Generic;
     using System.Diagnostics;
@@ -15,12 +7,13 @@ namespace Text.Scanning.Core
     /// <summary>Represents the LWSP rule: any linear white space. The LWSP rule permits lines containing only white space.</summary>
     public class LWspToken : Token
     {
-        /// <summary>The lwsp.</summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly IList<Token> lwsp;
 
-        /// <summary>Initializes a new instance of the <see cref="LWspToken"/> class. Creates a new instance of the <see cref="T:Text.Scanning.Core.LWspToken"/> class with the specified
-        /// characters and context.</summary>
+        /// <summary>
+        /// Creates a new instance of the <see cref="T:Text.Scanning.Core.LWspToken" /> class with the specified
+        /// characters and context.
+        /// </summary>
         /// <param name="data">The collection of 'LWSP' components.</param>
         /// <param name="context">The object that describes the context in which the text appears.</param>
         public LWspToken(IList<CrLfWSpPair> data, ITextContext context)
@@ -30,9 +23,6 @@ namespace Text.Scanning.Core
             Contract.Requires(context != null);
         }
 
-        /// <summary>Initializes a new instance of the <see cref="LWspToken"/> class.</summary>
-        /// <param name="data">The data.</param>
-        /// <param name="context">The context.</param>
         private LWspToken(IList<Token> data, ITextContext context)
             : base(string.Concat(data) ?? string.Empty, context)
         {
@@ -50,9 +40,6 @@ namespace Text.Scanning.Core
             }
         }
 
-        /// <summary>The linearize.</summary>
-        /// <param name="data">The data.</param>
-        /// <returns>The <see cref="IList"/>.</returns>
         [Pure]
         private static IList<Token> Linearize(IList<CrLfWSpPair> data)
         {
@@ -78,26 +65,17 @@ namespace Text.Scanning.Core
             return tokens;
         }
 
-        /// <summary>The cr lf w sp pair.</summary>
         public class CrLfWSpPair
         {
-            /// <summary>The cr lf.</summary>
             private readonly CrLfToken crLf;
-
-            /// <summary>The wsp.</summary>
             private readonly WSpToken wsp;
 
-            /// <summary>Initializes a new instance of the <see cref="CrLfWSpPair"/> class.</summary>
-            /// <param name="wsp">The wsp.</param>
             public CrLfWSpPair(WSpToken wsp)
             {
                 Contract.Requires(wsp != null);
                 this.wsp = wsp;
             }
 
-            /// <summary>Initializes a new instance of the <see cref="CrLfWSpPair"/> class.</summary>
-            /// <param name="crLf">The cr lf.</param>
-            /// <param name="wsp">The wsp.</param>
             public CrLfWSpPair(CrLfToken crLf, WSpToken wsp)
             {
                 Contract.Requires(crLf != null);
@@ -107,7 +85,6 @@ namespace Text.Scanning.Core
                 this.wsp = wsp;
             }
 
-            /// <summary>Gets the cr lf.</summary>
             public CrLfToken CrLf
             {
                 get
@@ -116,7 +93,6 @@ namespace Text.Scanning.Core
                 }
             }
 
-            /// <summary>Gets the wsp.</summary>
             public WSpToken Wsp
             {
                 get
@@ -126,7 +102,6 @@ namespace Text.Scanning.Core
                 }
             }
 
-            /// <summary>The object invariant.</summary>
             [ContractInvariantMethod]
             private void ObjectInvariant()
             {

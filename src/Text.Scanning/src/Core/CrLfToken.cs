@@ -1,12 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="CrLfToken.cs" company="Steven Liekens">
-//   The MIT License (MIT)
-// </copyright>
-// <summary>
-//   Represents the CRLF rule: 1 CR character followed by 1 LF character. Unicode: U+000D U+000A.
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
-namespace Text.Scanning.Core
+﻿namespace Text.Scanning.Core
 {
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
@@ -14,16 +6,16 @@ namespace Text.Scanning.Core
     /// <summary>Represents the CRLF rule: 1 CR character followed by 1 LF character. Unicode: U+000D U+000A.</summary>
     public class CrLfToken : Token
     {
-        /// <summary>The cr token.</summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly CrToken crToken;
 
-        /// <summary>The lf token.</summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly LfToken lfToken;
 
-        /// <summary>Initializes a new instance of the <see cref="CrLfToken"/> class. Creates a new instance of the <see cref="T:Text.Scanning.Core.CrLfToken"/> class with the specified
-        /// characters and context.</summary>
+        /// <summary>
+        /// Creates a new instance of the <see cref="T:Text.Scanning.Core.CrLfToken" /> class with the specified
+        /// characters and context.
+        /// </summary>
         /// <param name="crToken">The 'CR' component.</param>
         /// <param name="lfToken">The 'LF' component.</param>
         /// <param name="context">The object that describes the context in which the text appears.</param>
@@ -56,7 +48,6 @@ namespace Text.Scanning.Core
             }
         }
 
-        /// <summary>The object invariant.</summary>
         [ContractInvariantMethod]
         private void ObjectInvariant()
         {
