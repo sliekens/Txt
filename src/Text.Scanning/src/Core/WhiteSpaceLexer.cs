@@ -3,7 +3,7 @@
 //   The MIT License (MIT)
 // </copyright>
 // <summary>
-//   
+//   TODO
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 namespace Text.Scanning.Core
@@ -22,16 +22,17 @@ namespace Text.Scanning.Core
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly SpaceLexer spaceLexer;
 
-        /// <summary>TODO </summary>
+        /// <summary>Initializes a new instance of the <see cref="WhiteSpaceLexer"/> class.</summary>
         public WhiteSpaceLexer()
             : this(new SpaceLexer(), new HorizontalTabLexer())
         {
         }
 
-        /// <summary>TODO </summary>
-        /// <param name="spaceLexer">TODO </param>
-        /// <param name="horizontalTabLexer">TODO </param>
+        /// <summary>Initializes a new instance of the <see cref="WhiteSpaceLexer"/> class.</summary>
+        /// <param name="spaceLexer">TODO The space lexer.</param>
+        /// <param name="horizontalTabLexer">TODO The horizontal tab lexer.</param>
         public WhiteSpaceLexer(SpaceLexer spaceLexer, HorizontalTabLexer horizontalTabLexer)
+            : base("WSP")
         {
             Contract.Requires(spaceLexer != null);
             Contract.Requires(horizontalTabLexer != null);

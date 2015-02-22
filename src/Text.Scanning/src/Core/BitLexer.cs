@@ -3,7 +3,7 @@
 //   The MIT License (MIT)
 // </copyright>
 // <summary>
-//   
+//   TODO
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 namespace Text.Scanning.Core
@@ -11,6 +11,12 @@ namespace Text.Scanning.Core
     /// <summary>TODO </summary>
     public class BitLexer : Lexer<Bit>
     {
+        /// <summary>Initializes a new instance of the <see cref="BitLexer"/> class.</summary>
+        public BitLexer()
+            : base("BIT")
+        {
+        }
+
         /// <inheritdoc />
         public override Bit Read(ITextScanner scanner)
         {

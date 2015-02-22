@@ -3,7 +3,7 @@
 //   The MIT License (MIT)
 // </copyright>
 // <summary>
-//   
+//   TODO
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 namespace Text.Scanning.Core
@@ -11,6 +11,12 @@ namespace Text.Scanning.Core
     /// <summary>TODO </summary>
     public class DoubleQuoteLexer : Lexer<DoubleQuote>
     {
+        /// <summary>Initializes a new instance of the <see cref="DoubleQuoteLexer"/> class.</summary>
+        public DoubleQuoteLexer()
+            : base("DQUOTE")
+        {
+        }
+
         /// <inheritdoc />
         public override DoubleQuote Read(ITextScanner scanner)
         {

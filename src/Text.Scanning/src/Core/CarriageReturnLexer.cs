@@ -3,7 +3,7 @@
 //   The MIT License (MIT)
 // </copyright>
 // <summary>
-//   
+//   TODO
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 namespace Text.Scanning.Core
@@ -11,6 +11,12 @@ namespace Text.Scanning.Core
     /// <summary>TODO </summary>
     public class CarriageReturnLexer : Lexer<CarriageReturn>
     {
+        /// <summary>Initializes a new instance of the <see cref="CarriageReturnLexer"/> class.</summary>
+        public CarriageReturnLexer()
+            : base("CR")
+        {
+        }
+
         /// <inheritdoc />
         public override CarriageReturn Read(ITextScanner scanner)
         {

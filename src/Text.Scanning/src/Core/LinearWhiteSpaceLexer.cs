@@ -3,7 +3,7 @@
 //   The MIT License (MIT)
 // </copyright>
 // <summary>
-//   
+//   TODO
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 namespace Text.Scanning.Core
@@ -23,16 +23,17 @@ namespace Text.Scanning.Core
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly ILexer<WhiteSpace> wSpLexer;
 
-        /// <summary>TODO </summary>
+        /// <summary>Initializes a new instance of the <see cref="LinearWhiteSpaceLexer"/> class.</summary>
         public LinearWhiteSpaceLexer()
             : this(new EndOfLineLexer(), new WhiteSpaceLexer())
         {
         }
 
-        /// <summary>TODO </summary>
-        /// <param name="crLfLexer">TODO </param>
-        /// <param name="wSpLexer">TODO </param>
+        /// <summary>Initializes a new instance of the <see cref="LinearWhiteSpaceLexer"/> class.</summary>
+        /// <param name="crLfLexer">TODO The cr lf lexer.</param>
+        /// <param name="wSpLexer">TODO The w sp lexer.</param>
         public LinearWhiteSpaceLexer(ILexer<EndOfLine> crLfLexer, ILexer<WhiteSpace> wSpLexer)
+            : base("LWSP")
         {
             Contract.Requires(crLfLexer != null);
             Contract.Requires(wSpLexer != null);

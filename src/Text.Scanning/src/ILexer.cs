@@ -3,7 +3,7 @@
 //   The MIT License (MIT)
 // </copyright>
 // <summary>
-//   
+//   Provides the interface for types that process the lexical syntax of a language.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 namespace Text.Scanning
@@ -16,6 +16,9 @@ namespace Text.Scanning
     public interface ILexer<TElement>
         where TElement : Element
     {
+        /// <summary>Gets the name of the grammar rule that is represented by the type of <typeparamref name="TElement"/>.</summary>
+        string RuleName { get; }
+
         // TODO: review this method. This method accepts any TElement, in any order, regardless of the source data. This could be bad.
         /// <summary>Puts a element back in the source data.</summary>
         /// <param name="scanner"></param>

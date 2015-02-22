@@ -8,11 +8,31 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace Text.Scanning
 {
+    using System.Diagnostics.Contracts;
+
     /// <summary>TODO </summary>
     /// <typeparam name="TElement"></typeparam>
     public abstract class Lexer<TElement> : ILexer<TElement>
         where TElement : Element
     {
+        private readonly string ruleName;
+
+        protected Lexer(string ruleName)
+        {
+            Contract.Requires(!string.IsNullOrEmpty(ruleName));
+            Contract.Requires(char.IsLetter(ruleName, 0));
+            Contract.Ensures(Contract.ForAll(ruleName.ToCharArray(), c => char.IsLetterOrDigit(c) || c == '-'));
+            this.ruleName = ruleName;
+        }
+
+        public string RuleName
+        {
+            get
+            {
+                return this.ruleName;
+            }
+        }
+
         /// <inheritdoc />
         public virtual void PutBack(ITextScanner scanner, TElement element)
         {
@@ -37,5 +57,12 @@ namespace Text.Scanning
             element = default(TElement);
             return false;
         }
+
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(!string.IsNullOrWhiteSpace(this.ruleName));
+        }
+
     }
 }

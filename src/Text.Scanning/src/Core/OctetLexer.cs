@@ -3,7 +3,7 @@
 //   The MIT License (MIT)
 // </copyright>
 // <summary>
-//   
+//   TODO
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 namespace Text.Scanning.Core
@@ -11,6 +11,12 @@ namespace Text.Scanning.Core
     /// <summary>TODO </summary>
     public class OctetLexer : Lexer<Octet>
     {
+        /// <summary>Initializes a new instance of the <see cref="OctetLexer"/> class.</summary>
+        public OctetLexer()
+            : base("OCTET")
+        {
+        }
+
         /// <inheritdoc />
         public override Octet Read(ITextScanner scanner)
         {

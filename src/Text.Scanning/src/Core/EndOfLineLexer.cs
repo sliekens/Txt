@@ -3,7 +3,7 @@
 //   The MIT License (MIT)
 // </copyright>
 // <summary>
-//   
+//   TODO
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 namespace Text.Scanning.Core
@@ -22,16 +22,17 @@ namespace Text.Scanning.Core
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly ILexer<LineFeed> lfLexer;
 
-        /// <summary>TODO </summary>
+        /// <summary>Initializes a new instance of the <see cref="EndOfLineLexer"/> class.</summary>
         public EndOfLineLexer()
             : this(new CarriageReturnLexer(), new LineFeedLexer())
         {
         }
 
-        /// <summary>TODO </summary>
-        /// <param name="crLexer">TODO </param>
-        /// <param name="lfLexer">TODO </param>
+        /// <summary>Initializes a new instance of the <see cref="EndOfLineLexer"/> class.</summary>
+        /// <param name="crLexer">TODO The cr lexer.</param>
+        /// <param name="lfLexer">TODO The lf lexer.</param>
         public EndOfLineLexer(ILexer<CarriageReturn> crLexer, ILexer<LineFeed> lfLexer)
+            : base("CRLF")
         {
             Contract.Requires(crLexer != null);
             Contract.Requires(lfLexer != null);

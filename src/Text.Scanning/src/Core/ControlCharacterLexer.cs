@@ -3,7 +3,7 @@
 //   The MIT License (MIT)
 // </copyright>
 // <summary>
-//   
+//   TODO
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 namespace Text.Scanning.Core
@@ -11,6 +11,12 @@ namespace Text.Scanning.Core
     /// <summary>TODO </summary>
     public class ControlCharacterLexer : Lexer<ControlCharacter>
     {
+        /// <summary>Initializes a new instance of the <see cref="ControlCharacterLexer"/> class.</summary>
+        public ControlCharacterLexer()
+            : base("CTL")
+        {
+        }
+
         /// <inheritdoc />
         public override ControlCharacter Read(ITextScanner scanner)
         {

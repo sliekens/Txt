@@ -3,7 +3,7 @@
 //   The MIT License (MIT)
 // </copyright>
 // <summary>
-//   
+//   TODO
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 namespace Text.Scanning.Core
@@ -11,6 +11,12 @@ namespace Text.Scanning.Core
     /// <summary>TODO </summary>
     public class SpaceLexer : Lexer<Space>
     {
+        /// <summary>Initializes a new instance of the <see cref="SpaceLexer"/> class.</summary>
+        public SpaceLexer()
+            : base("SP")
+        {
+        }
+
         /// <inheritdoc />
         public override Space Read(ITextScanner scanner)
         {

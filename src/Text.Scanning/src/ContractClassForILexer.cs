@@ -9,18 +9,25 @@
 namespace Text.Scanning
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Diagnostics.Contracts;
 
-    /// <summary>TODO </summary>
-    /// <typeparam name="TElement"></typeparam>
     [ContractClassFor(typeof(ILexer<>))]
+    [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented", Justification = "Reviewed. Suppression is OK here.")]
     internal abstract class ContractClassForILexer<TElement> : ILexer<TElement>
         where TElement : Element
     {
-        /// <summary>TODO </summary>
-        /// <param name="scanner">TODO </param>
-        /// <param name="element">TODO </param>
-        /// <exception cref="NotImplementedException"></exception>
+        public string RuleName
+        {
+            get
+            {
+                Contract.Ensures(!string.IsNullOrEmpty(Contract.Result<string>()));
+                Contract.Ensures(char.IsLetter(Contract.Result<string>(), 0));
+                Contract.Ensures(Contract.ForAll(Contract.Result<string>().ToCharArray(), c => char.IsLetterOrDigit(c) || c == '-'));
+                throw new NotImplementedException();
+            }
+        }
+
         public void PutBack(ITextScanner scanner, TElement element)
         {
             Contract.Requires(scanner != null);
@@ -28,10 +35,6 @@ namespace Text.Scanning
             throw new NotImplementedException();
         }
 
-        /// <summary>TODO </summary>
-        /// <param name="scanner">TODO </param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
         public TElement Read(ITextScanner scanner)
         {
             Contract.Requires(scanner != null);
@@ -39,11 +42,6 @@ namespace Text.Scanning
             throw new NotImplementedException();
         }
 
-        /// <summary>TODO </summary>
-        /// <param name="scanner">TODO </param>
-        /// <param name="element">TODO </param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
         public bool TryRead(ITextScanner scanner, out TElement element)
         {
             Contract.Requires(scanner != null);

@@ -3,7 +3,7 @@
 //   The MIT License (MIT)
 // </copyright>
 // <summary>
-//   
+//   TODO
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 namespace Text.Scanning.Core
@@ -11,6 +11,12 @@ namespace Text.Scanning.Core
     /// <summary>TODO </summary>
     public class HorizontalTabLexer : Lexer<HorizontalTab>
     {
+        /// <summary>Initializes a new instance of the <see cref="HorizontalTabLexer"/> class.</summary>
+        public HorizontalTabLexer()
+            : base("HTAB")
+        {
+        }
+
         /// <inheritdoc />
         public override HorizontalTab Read(ITextScanner scanner)
         {

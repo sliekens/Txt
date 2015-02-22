@@ -3,7 +3,7 @@
 //   The MIT License (MIT)
 // </copyright>
 // <summary>
-//   
+//   TODO
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 namespace Text.Scanning.Core
@@ -11,6 +11,12 @@ namespace Text.Scanning.Core
     /// <summary>TODO </summary>
     public class AlphaLexer : Lexer<Alpha>
     {
+        /// <summary>Initializes a new instance of the <see cref="AlphaLexer"/> class.</summary>
+        public AlphaLexer()
+            : base("ALPHA")
+        {
+        }
+
         /// <inheritdoc />
         public override Alpha Read(ITextScanner scanner)
         {

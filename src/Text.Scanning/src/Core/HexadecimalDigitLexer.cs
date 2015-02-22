@@ -3,7 +3,7 @@
 //   The MIT License (MIT)
 // </copyright>
 // <summary>
-//   
+//   TODO
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 namespace Text.Scanning.Core
@@ -18,15 +18,16 @@ namespace Text.Scanning.Core
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly ILexer<Digit> digitLexer;
 
-        /// <summary>TODO </summary>
+        /// <summary>Initializes a new instance of the <see cref="HexadecimalDigitLexer"/> class.</summary>
         public HexadecimalDigitLexer()
             : this(new DigitLexer())
         {
         }
 
-        /// <summary>TODO </summary>
-        /// <param name="digitLexer">TODO </param>
+        /// <summary>Initializes a new instance of the <see cref="HexadecimalDigitLexer"/> class.</summary>
+        /// <param name="digitLexer">TODO The digit lexer.</param>
         public HexadecimalDigitLexer(ILexer<Digit> digitLexer)
+            : base("HEXDIG")
         {
             Contract.Requires(digitLexer != null);
             this.digitLexer = digitLexer;
