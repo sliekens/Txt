@@ -2,6 +2,7 @@
   <GlobalSettings>
     <CollectionProperty Name="RecognizedWords">
       <Value>lexer</Value>
+      <Value>lexers</Value>
     </CollectionProperty>
   </GlobalSettings>
   <Analyzers>
