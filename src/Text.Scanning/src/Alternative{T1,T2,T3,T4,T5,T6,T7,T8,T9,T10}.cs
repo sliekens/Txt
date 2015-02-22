@@ -45,6 +45,7 @@ namespace Text.Scanning
             : base(element.Data, context)
         {
             Contract.Requires(element != null);
+            Contract.Requires(context != null);
             this.element = element;
         }
 
@@ -55,6 +56,7 @@ namespace Text.Scanning
             : base(element.Data, context)
         {
             Contract.Requires(element != null);
+            Contract.Requires(context != null);
             this.element = element;
         }
 
@@ -65,6 +67,7 @@ namespace Text.Scanning
             : base(element.Data, context)
         {
             Contract.Requires(element != null);
+            Contract.Requires(context != null);
             this.element = element;
         }
 
@@ -75,6 +78,7 @@ namespace Text.Scanning
             : base(element.Data, context)
         {
             Contract.Requires(element != null);
+            Contract.Requires(context != null);
             this.element = element;
         }
 
@@ -85,6 +89,7 @@ namespace Text.Scanning
             : base(element.Data, context)
         {
             Contract.Requires(element != null);
+            Contract.Requires(context != null);
             this.element = element;
         }
 
@@ -95,6 +100,7 @@ namespace Text.Scanning
             : base(element.Data, context)
         {
             Contract.Requires(element != null);
+            Contract.Requires(context != null);
             this.element = element;
         }
 
@@ -105,6 +111,7 @@ namespace Text.Scanning
             : base(element.Data, context)
         {
             Contract.Requires(element != null);
+            Contract.Requires(context != null);
             this.element = element;
         }
 
@@ -115,6 +122,7 @@ namespace Text.Scanning
             : base(element.Data, context)
         {
             Contract.Requires(element != null);
+            Contract.Requires(context != null);
             this.element = element;
         }
 
@@ -125,6 +133,7 @@ namespace Text.Scanning
             : base(element.Data, context)
         {
             Contract.Requires(element != null);
+            Contract.Requires(context != null);
             this.element = element;
         }
 
@@ -135,6 +144,7 @@ namespace Text.Scanning
             : base(element.Data, context)
         {
             Contract.Requires(element != null);
+            Contract.Requires(context != null);
             this.element = element;
         }
 
