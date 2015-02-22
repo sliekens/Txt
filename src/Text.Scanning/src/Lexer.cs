@@ -75,7 +75,7 @@ namespace Text.Scanning
                 throw new ArgumentException("Precondition failed: char.IsLetter(ruleName, 0)");
             }
 
-            if (ruleName.ToCharArray().Any(c => !char.IsLetterOrDigit(c) || c != '-'))
+            if (ruleName.ToCharArray().Any(c => !char.IsLetterOrDigit(c) && c != '-'))
             {
                 throw new ArgumentException(
                     "Precondition failed: ruleName.ToCharArray().All(c => char.IsLetterOrDigit(c) || c == '-')");
@@ -113,7 +113,7 @@ namespace Text.Scanning
             }
 
             throw new SyntaxErrorException(
-                scanner.GetContext(), 
+                scanner.GetContext(),
                 string.Format("Unexpected symbol. Expected element: '{0}'.", this.ruleName));
         }
 
