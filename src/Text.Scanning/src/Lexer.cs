@@ -8,7 +8,9 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace Text.Scanning
 {
+    using System;
     using System.Diagnostics.Contracts;
+    using System.Linq;
 
     /// <summary>TODO </summary>
     /// <typeparam name="TElement"></typeparam>
@@ -17,13 +19,25 @@ namespace Text.Scanning
     {
         private readonly string ruleName;
 
-        protected Lexer(string ruleName)
+    protected Lexer(string ruleName)
+    {
+        if (string.IsNullOrEmpty(ruleName))
         {
-            Contract.Requires(!string.IsNullOrEmpty(ruleName));
-            Contract.Requires(char.IsLetter(ruleName, 0));
-            Contract.Ensures(Contract.ForAll(ruleName.ToCharArray(), c => char.IsLetterOrDigit(c) || c == '-'));
-            this.ruleName = ruleName;
+            throw new ArgumentException("Precondition failed: !string.IsNullOrEmpty(ruleName)", "ruleName");
         }
+
+        if (!char.IsLetter(ruleName, 0))
+        {
+            throw new ArgumentException("Precondition failed: char.IsLetter(ruleName, 0)");
+        }
+
+        if (ruleName.ToCharArray().Any(c => !char.IsLetterOrDigit(c) || c != '-'))
+        {
+            throw new ArgumentException("Precondition failed: ruleName.ToCharArray().All(c => char.IsLetterOrDigit(c) || c == '-')");
+        }
+
+        this.ruleName = ruleName;
+    }
 
         public string RuleName
         {
@@ -66,12 +80,5 @@ namespace Text.Scanning
             element = default(TElement);
             return false;
         }
-
-        [ContractInvariantMethod]
-        private void ObjectInvariant()
-        {
-            Contract.Invariant(!string.IsNullOrWhiteSpace(this.ruleName));
-        }
-
     }
 }

@@ -21,9 +21,6 @@ namespace Text.Scanning
         {
             get
             {
-                Contract.Ensures(!string.IsNullOrEmpty(Contract.Result<string>()));
-                Contract.Ensures(char.IsLetter(Contract.Result<string>(), 0));
-                Contract.Ensures(Contract.ForAll(Contract.Result<string>().ToCharArray(), c => char.IsLetterOrDigit(c) || c == '-'));
                 throw new NotImplementedException();
             }
         }
