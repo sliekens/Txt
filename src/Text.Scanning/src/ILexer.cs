@@ -11,12 +11,13 @@ namespace Text.Scanning
     using System.Diagnostics.Contracts;
 
     /// <summary>Provides the interface for types that process the lexical syntax of a language.</summary>
-    /// <typeparam name="TElement">The type of elements produced by the lexer.</typeparam>
+    /// <typeparam name="TElement">The type of the element that represents the lexer rule.</typeparam>
     [ContractClass(typeof(ContractClassForILexer<>))]
     public interface ILexer<TElement>
         where TElement : Element
     {
-        /// <summary>Gets the name of the grammar rule that is represented by the type of <typeparamref name="TElement"/>.</summary>
+        /// <summary>Gets the name of the lexer rule that is represented by the type of <typeparamref name="TElement"/>.</summary>
+        /// <remarks>Rule names are case insensitive. The names "rulename", "Rulename", "RULENAME", and "rUlENamE" all refer to the same rule.</remarks>
         string RuleName { get; }
 
         // TODO: review this method. This method accepts any TElement, in any order, regardless of the source data. This could be bad.
