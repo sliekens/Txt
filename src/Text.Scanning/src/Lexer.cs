@@ -44,7 +44,16 @@ namespace Text.Scanning
         }
 
         /// <inheritdoc />
-        public abstract TElement Read(ITextScanner scanner);
+        public virtual TElement Read(ITextScanner scanner)
+        {
+            TElement element;
+            if (this.TryRead(scanner, out element))
+            {
+                return element;
+            }
+
+            throw new SyntaxErrorException(scanner.GetContext(), string.Format("Unexpected symbol. Expected element: '{0}'.", this.ruleName));
+        }
 
         /// <inheritdoc />
         public abstract bool TryRead(ITextScanner scanner, out TElement element);
