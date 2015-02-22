@@ -42,43 +42,6 @@ namespace Text.Scanning.Core
         }
 
         /// <inheritdoc />
-        public override LinearWhiteSpace Read(ITextScanner scanner)
-        {
-            var context = scanner.GetContext();
-            var data = new List<LinearWhiteSpace.CrLfWSpPair>();
-
-            // The program should eventually exit this loop, unless the source data is an infinite stream of linear whitespace
-            while (!scanner.EndOfInput)
-            {
-                EndOfLine endOfLine;
-                WhiteSpace whiteSpace;
-                if (this.wSpLexer.TryRead(scanner, out whiteSpace))
-                {
-                    data.Add(new LinearWhiteSpace.CrLfWSpPair(whiteSpace));
-                }
-                else if (this.crLfLexer.TryRead(scanner, out endOfLine))
-                {
-                    if (!scanner.EndOfInput && this.wSpLexer.TryRead(scanner, out whiteSpace))
-                    {
-                        Contract.Assume(whiteSpace.Offset == endOfLine.Offset + 2);
-                        data.Add(new LinearWhiteSpace.CrLfWSpPair(endOfLine, whiteSpace));
-                    }
-                    else
-                    {
-                        this.crLfLexer.PutBack(scanner, endOfLine);
-                        break;
-                    }
-                }
-                else
-                {
-                    break;
-                }
-            }
-
-            return new LinearWhiteSpace(data, context);
-        }
-
-        /// <inheritdoc />
         public override bool TryRead(ITextScanner scanner, out LinearWhiteSpace element)
         {
             var context = scanner.GetContext();

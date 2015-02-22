@@ -18,18 +18,6 @@ namespace Text.Scanning.Core
         }
 
         /// <inheritdoc />
-        public override VisibleCharacter Read(ITextScanner scanner)
-        {
-            VisibleCharacter element;
-            if (this.TryRead(scanner, out element))
-            {
-                return element;
-            }
-
-            throw new SyntaxErrorException(scanner.GetContext(), "Expected 'VCHAR'");
-        }
-
-        /// <inheritdoc />
         public override bool TryRead(ITextScanner scanner, out VisibleCharacter element)
         {
             if (scanner.EndOfInput)

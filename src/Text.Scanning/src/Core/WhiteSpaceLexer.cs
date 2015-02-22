@@ -41,18 +41,6 @@ namespace Text.Scanning.Core
         }
 
         /// <inheritdoc />
-        public override WhiteSpace Read(ITextScanner scanner)
-        {
-            WhiteSpace element;
-            if (this.TryRead(scanner, out element))
-            {
-                return element;
-            }
-
-            throw new SyntaxErrorException(scanner.GetContext(), "Expected 'WSP'");
-        }
-
-        /// <inheritdoc />
         public override bool TryRead(ITextScanner scanner, out WhiteSpace element)
         {
             if (scanner.EndOfInput)

@@ -18,18 +18,6 @@ namespace Text.Scanning.Core
         }
 
         /// <inheritdoc />
-        public override LineFeed Read(ITextScanner scanner)
-        {
-            LineFeed element;
-            if (this.TryRead(scanner, out element))
-            {
-                return element;
-            }
-
-            throw new SyntaxErrorException(scanner.GetContext(), "Expected 'LF'");
-        }
-
-        /// <inheritdoc />
         public override bool TryRead(ITextScanner scanner, out LineFeed element)
         {
             if (scanner.EndOfInput)

@@ -18,18 +18,6 @@ namespace Text.Scanning.Core
         }
 
         /// <inheritdoc />
-        public override Octet Read(ITextScanner scanner)
-        {
-            Octet element;
-            if (this.TryRead(scanner, out element))
-            {
-                return element;
-            }
-
-            throw new SyntaxErrorException(scanner.GetContext(), "Expected 'OCTET'");
-        }
-
-        /// <inheritdoc />
         public override bool TryRead(ITextScanner scanner, out Octet element)
         {
             if (scanner.EndOfInput)

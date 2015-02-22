@@ -18,19 +18,6 @@ namespace Text.Scanning.Core
         }
 
         /// <inheritdoc />
-        public override Digit Read(ITextScanner scanner)
-        {
-            var context = scanner.GetContext();
-            Digit element;
-            if (this.TryRead(scanner, out element))
-            {
-                return element;
-            }
-
-            throw new SyntaxErrorException(context, "Expected 'DIGIT'");
-        }
-
-        /// <inheritdoc />
         public override bool TryRead(ITextScanner scanner, out Digit element)
         {
             if (scanner.EndOfInput)

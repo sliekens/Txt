@@ -18,18 +18,6 @@ namespace Text.Scanning.Core
         }
 
         /// <inheritdoc />
-        public override Bit Read(ITextScanner scanner)
-        {
-            Bit element;
-            if (this.TryRead(scanner, out element))
-            {
-                return element;
-            }
-
-            throw new SyntaxErrorException(scanner.GetContext(), "Expected 'BIT'");
-        }
-
-        /// <inheritdoc />
         public override bool TryRead(ITextScanner scanner, out Bit element)
         {
             if (scanner.EndOfInput)

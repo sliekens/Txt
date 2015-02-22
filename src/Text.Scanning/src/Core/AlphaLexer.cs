@@ -18,18 +18,6 @@ namespace Text.Scanning.Core
         }
 
         /// <inheritdoc />
-        public override Alpha Read(ITextScanner scanner)
-        {
-            Alpha element;
-            if (this.TryRead(scanner, out element))
-            {
-                return element;
-            }
-
-            throw new SyntaxErrorException(scanner.GetContext(), "Expected 'ALPHA'");
-        }
-
-        /// <inheritdoc />
         public override bool TryRead(ITextScanner scanner, out Alpha element)
         {
             if (scanner.EndOfInput)

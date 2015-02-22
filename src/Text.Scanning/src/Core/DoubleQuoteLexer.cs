@@ -18,19 +18,6 @@ namespace Text.Scanning.Core
         }
 
         /// <inheritdoc />
-        public override DoubleQuote Read(ITextScanner scanner)
-        {
-            var context = scanner.GetContext();
-            DoubleQuote element;
-            if (this.TryRead(scanner, out element))
-            {
-                return element;
-            }
-
-            throw new SyntaxErrorException(context, "Expected 'DQUOTE'");
-        }
-
-        /// <inheritdoc />
         public override bool TryRead(ITextScanner scanner, out DoubleQuote element)
         {
             if (scanner.EndOfInput)

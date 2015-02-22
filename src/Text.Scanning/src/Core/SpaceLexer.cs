@@ -18,18 +18,6 @@ namespace Text.Scanning.Core
         }
 
         /// <inheritdoc />
-        public override Space Read(ITextScanner scanner)
-        {
-            Space element;
-            if (this.TryRead(scanner, out element))
-            {
-                return element;
-            }
-
-            throw new SyntaxErrorException(scanner.GetContext(), "Expected 'SP'");
-        }
-
-        /// <inheritdoc />
         public override bool TryRead(ITextScanner scanner, out Space element)
         {
             if (scanner.EndOfInput)

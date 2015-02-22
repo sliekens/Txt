@@ -41,23 +41,6 @@ namespace Text.Scanning.Core
         }
 
         /// <inheritdoc />
-        public override EndOfLine Read(ITextScanner scanner)
-        {
-            var context = scanner.GetContext();
-            try
-            {
-                var cr = this.crLexer.Read(scanner);
-                var lf = this.lfLexer.Read(scanner);
-                Contract.Assume(lf.Offset == cr.Offset + 1);
-                return new EndOfLine(cr, lf, context);
-            }
-            catch (SyntaxErrorException syntaxErrorException)
-            {
-                throw new SyntaxErrorException(context, "Expected 'CRLF'", syntaxErrorException);
-            }
-        }
-
-        /// <inheritdoc />
         public override bool TryRead(ITextScanner scanner, out EndOfLine element)
         {
             var context = scanner.GetContext();

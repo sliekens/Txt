@@ -18,18 +18,6 @@ namespace Text.Scanning.Core
         }
 
         /// <inheritdoc />
-        public override ControlCharacter Read(ITextScanner scanner)
-        {
-            ControlCharacter element;
-            if (this.TryRead(scanner, out element))
-            {
-                return element;
-            }
-
-            throw new SyntaxErrorException(scanner.GetContext(), "Expected 'CTL'");
-        }
-
-        /// <inheritdoc />
         public override bool TryRead(ITextScanner scanner, out ControlCharacter element)
         {
             if (scanner.EndOfInput)

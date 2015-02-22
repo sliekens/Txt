@@ -34,19 +34,6 @@ namespace Text.Scanning.Core
         }
 
         /// <inheritdoc />
-        public override HexadecimalDigit Read(ITextScanner scanner)
-        {
-            var context = scanner.GetContext();
-            HexadecimalDigit element;
-            if (this.TryRead(scanner, out element))
-            {
-                return element;
-            }
-
-            throw new SyntaxErrorException(context, "Expected 'HEXDIG'");
-        }
-
-        /// <inheritdoc />
         public override bool TryRead(ITextScanner scanner, out HexadecimalDigit element)
         {
             if (scanner.EndOfInput)
