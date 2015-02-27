@@ -11,13 +11,13 @@
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly int offset;
 
-        protected Element(char data, ITextContext context)
+        public Element(char data, ITextContext context)
             : this(char.ToString(data), context)
         {
             Contract.Requires(context != null);
         }
 
-        protected Element(string data, ITextContext context)
+        public Element(string data, ITextContext context)
         {
             Contract.Requires(data != null);
             Contract.Requires(context != null);
