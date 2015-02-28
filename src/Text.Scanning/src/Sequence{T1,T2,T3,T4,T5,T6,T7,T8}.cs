@@ -90,7 +90,8 @@ namespace Text.Scanning
                     element4.Data, 
                     element5.Data, 
                     element6.Data, 
-                    element7.Data), 
+                    element7.Data, 
+                    element8.Data), 
                 context)
         {
             Contract.Requires(element1 != null);
