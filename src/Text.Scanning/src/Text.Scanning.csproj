@@ -227,6 +227,7 @@
     <Compile Include="ITextScanner.cs" />
     <Compile Include="Lexer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sequence{T1,T2,T3}.cs" />
     <Compile Include="Sequence{T1,T2}.cs" />
     <Compile Include="SyntaxErrorException.cs" />
     <Compile Include="TextContext.cs" />
