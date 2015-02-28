@@ -52,12 +52,13 @@ namespace Text.Scanning
         /// <param name="element5">The fifth element in the sequence.</param>
         /// <param name="context">The object that describes the context in which the text appears.</param>
         public Sequence(T1 element1, T2 element2, T3 element3, T4 element4, T5 element5, ITextContext context)
-            : base(string.Concat(element1.Data, element2.Data, element3.Data, element4.Data), context)
+            : base(string.Concat(element1.Data, element2.Data, element3.Data, element4.Data, element5.Data), context)
         {
             Contract.Requires(element1 != null);
             Contract.Requires(element2 != null);
             Contract.Requires(element3 != null);
             Contract.Requires(element4 != null);
+            Contract.Requires(element5 != null);
             Contract.Requires(context != null);
             this.element1 = element1;
             this.element2 = element2;
