@@ -54,7 +54,7 @@ namespace Text.Scanning.Core
             LineFeed lineFeed;
             if (scanner.EndOfInput || !this.lfLexer.TryRead(scanner, out lineFeed))
             {
-                this.crLexer.PutBack(scanner, carriageReturn);
+                scanner.PutBack(carriageReturn.Data);
                 element = default(EndOfLine);
                 return false;
             }

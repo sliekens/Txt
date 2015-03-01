@@ -61,7 +61,7 @@ namespace Text.Scanning.Core
                     }
                     else
                     {
-                        this.crLfLexer.PutBack(scanner, endOfLine);
+                        scanner.PutBack(endOfLine.Data);
                         break;
                     }
                 }

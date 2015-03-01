@@ -20,12 +20,6 @@ namespace Text.Scanning
         /// <remarks>Rule names are case insensitive. The names "rulename", "Rulename", "RULENAME", and "rUlENamE" all refer to the same rule.</remarks>
         string RuleName { get; }
 
-        // TODO: review this method. This method accepts any TElement, in any order, regardless of the source data. This could be bad.
-        /// <summary>Puts a element back in the source data.</summary>
-        /// <param name="scanner"></param>
-        /// <param name="element">The element to put back.</param>
-        void PutBack(ITextScanner scanner, TElement element);
-
         /// <summary>Reads the next element.</summary>
         /// <param name="scanner"></param>
         /// <exception cref="T:Text.Scanning.SyntaxErrorException"></exception>
