@@ -59,6 +59,11 @@ namespace Text.Scanning
             throw new NotImplementedException();
         }
 
+        public void PutBack(string s)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>TODO </summary>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>

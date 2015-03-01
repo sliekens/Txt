@@ -37,6 +37,11 @@ namespace Text.Scanning
         /// <exception cref="T:System.ObjectDisposedException">The current text scanner is closed.</exception>
         void PutBack(char c);
 
+        /// <summary>Prepends the given text to the input stream.</summary>
+        /// <param name="s">The text to put back.</param>
+        /// <exception cref="T:System.ObjectDisposedException">The current text scanner is closed.</exception>
+        void PutBack(string s);
+
         /// <summary>Consumes a character and advances the scanner's position to the next character.</summary>
         /// <exception cref="T:System.ObjectDisposedException">The current text scanner is closed.</exception>
         /// <returns><c>true</c> if the next character is available; otherwise, <c>false</c>.</returns>

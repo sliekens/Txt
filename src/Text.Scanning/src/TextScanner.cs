@@ -163,6 +163,15 @@ namespace Text.Scanning
         }
 
         /// <inheritdoc />
+        public void PutBack(string s)
+        {
+            for (int i = s.Length - 1; i >= 0; i--)
+            {
+                this.PutBack(s[i]);
+            }
+        }
+
+        /// <inheritdoc />
         bool ITextScanner.Read()
         {
             return this.Read();
