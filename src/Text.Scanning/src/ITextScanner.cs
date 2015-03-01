@@ -23,13 +23,17 @@ namespace Text.Scanning
         /// <exception cref="T:System.ObjectDisposedException">The current text scanner is closed.</exception>
         char? NextCharacter { get; }
 
-        /// <summary>Gets the current context. Implementers: do not return 'this'. The return value MUST be immutable.</summary>
+        /// <summary>Gets a snapshot of the current context. The return value is immutable.</summary>
         /// <exception cref="T:System.ObjectDisposedException">The current text scanner is closed.</exception>
         /// <returns>The current context.</returns>
+        /// <remarks>
+        /// Notes to inheritors.
+        /// The return value MUST be immutable. You MUST NOT return 'this' from this method, because '(ITextContext)this' is not immutable.
+        /// </remarks>
         ITextContext GetContext();
 
-        /// <summary>Prepends the given character to the input stream, effectively rewinding the scanner.</summary>
-        /// <param name="c"></param>
+        /// <summary>Prepends the given character to the input stream.</summary>
+        /// <param name="c">The character to put back.</param>
         /// <exception cref="T:System.ObjectDisposedException">The current text scanner is closed.</exception>
         void PutBack(char c);
 
@@ -39,7 +43,7 @@ namespace Text.Scanning
         bool Read();
 
         /// <summary>Compares the given character to the next available character. If there is a match, the character is consumed.</summary>
-        /// <param name="c"></param>
+        /// <param name="c">The character to compare to the next available character.</param>
         /// <exception cref="T:System.InvalidOperationException">There is no next character available. This occurs when<see cref="Read"/> has never been called, or when <see cref="EndOfInput"/> is <c>true</c>.</exception>
         /// <exception cref="T:System.ObjectDisposedException">The current text scanner is closed.</exception>
         /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
