@@ -25,13 +25,6 @@ namespace Text.Scanning
             }
         }
 
-        public void PutBack(ITextScanner scanner, TElement element)
-        {
-            Contract.Requires(scanner != null);
-            Contract.Requires(element != null);
-            throw new NotImplementedException();
-        }
-
         public TElement Read(ITextScanner scanner)
         {
             Contract.Requires(scanner != null);

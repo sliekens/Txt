@@ -9,6 +9,7 @@
 namespace Text.Scanning
 {
     using System;
+    using System.Diagnostics.Contracts;
     using System.Linq;
 
     /// <summary>Provides the base class for lexers. A lexer is a class that matches symbols from a data source against a grammar rule to produce grammar elements. Each class that extends the <see cref="Lexer{TElement}"/> class corresponds to a singe grammar rule. For complex grammars with many grammar rules, multiple lexers work together to convert the input text to a parse tree.</summary>
@@ -94,16 +95,6 @@ namespace Text.Scanning
         }
 
         /// <inheritdoc />
-        public virtual void PutBack(ITextScanner scanner, TElement element)
-        {
-            var data = element.Data;
-            for (var i = data.Length - 1; i >= 0; i--)
-            {
-                scanner.PutBack(data[i]);
-            }
-        }
-
-        /// <inheritdoc />
         public virtual TElement Read(ITextScanner scanner)
         {
             TElement element;
@@ -128,6 +119,7 @@ namespace Text.Scanning
         /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
         protected static bool TryReadTerminal(ITextScanner scanner, char c, out Element element)
         {
+            Contract.Requires(scanner != null);
             if (scanner.EndOfInput)
             {
                 element = default(Element);
@@ -153,6 +145,8 @@ namespace Text.Scanning
         /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
         protected static bool TryReadTerminal(ITextScanner scanner, string s, out Element element)
         {
+            Contract.Requires(scanner != null);
+            Contract.Requires(s != null);
             if (scanner.EndOfInput)
             {
                 element = default(Element);
