@@ -120,6 +120,31 @@ namespace Text.Scanning
         /// <inheritdoc />
         public abstract bool TryRead(ITextScanner scanner, out TElement element);
 
+        /// <summary>Utility method. Reads the next specified character. A return value indicates whether the character was available.</summary>
+        /// <param name="scanner"></param>
+        /// <param name="c">The character to read.</param>
+        /// <param name="element">When this method returns, contains the next available element, or a <c>null</c> reference, depending
+        /// on whether the return value indicates success.</param>
+        /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
+        protected static bool TryReadTerminal(ITextScanner scanner, char c, out Element element)
+        {
+            if (scanner.EndOfInput)
+            {
+                element = default(Element);
+                return false;
+            }
+
+            var context = scanner.GetContext();
+            if (scanner.TryMatch(c))
+            {
+                element = new Element(c, context);
+                return true;
+            }
+
+            element = default(Element);
+            return false;
+        }
+
         /// <summary>Utility method. Sets a specified element to its default value, and returns <c>false</c>.</summary>
         /// <param name="element">The element to set to its default value.</param>
         /// <returns>Returns <c>false</c>.</returns>
