@@ -145,6 +145,39 @@ namespace Text.Scanning
             return false;
         }
 
+        /// <summary>Utility method. Reads the next specified characters. A return value indicates whether the characters were available.</summary>
+        /// <param name="scanner"></param>
+        /// <param name="s">The characters to read.</param>
+        /// <param name="element">When this method returns, contains the next available element, or a <c>null</c> reference, depending
+        /// on whether the return value indicates success.</param>
+        /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
+        protected static bool TryReadTerminal(ITextScanner scanner, string s, out Element element)
+        {
+            if (scanner.EndOfInput)
+            {
+                element = default(Element);
+                return false;
+            }
+
+            var context = scanner.GetContext();
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (!scanner.TryMatch(s[i]))
+                {
+                    if (i != 0)
+                    {
+                        scanner.PutBack(s.Substring(0, i));
+                    }
+
+                    element = default(Element);
+                    return false;
+                }
+            }
+
+            element = new Element(s, context);
+            return true;
+        }
+
         /// <summary>Utility method. Sets a specified element to its default value, and returns <c>false</c>.</summary>
         /// <param name="element">The element to set to its default value.</param>
         /// <returns>Returns <c>false</c>.</returns>
