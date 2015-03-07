@@ -11,6 +11,7 @@ namespace Text.Scanning
     using System;
     using System.Diagnostics.Contracts;
     using System.Linq;
+    using System.Text;
 
     /// <summary>Provides the base class for lexers. A lexer is a class that matches symbols from a data source against a grammar rule to produce grammar elements. Each class that extends the <see cref="Lexer{TElement}"/> class corresponds to a singe grammar rule. For complex grammars with many grammar rules, multiple lexers work together to convert the input text to a parse tree.</summary>
     /// <typeparam name="TElement">The type of the element that represents the lexer rule.</typeparam>
@@ -111,7 +112,7 @@ namespace Text.Scanning
         /// <inheritdoc />
         public abstract bool TryRead(ITextScanner scanner, out TElement element);
 
-        /// <summary>Utility method. Reads the next specified character. A return value indicates whether the character was available.</summary>
+        /// <summary>Utility method. Reads the next specified character. The comparison is case-sensitive. A return value indicates whether the character was available.</summary>
         /// <param name="scanner"></param>
         /// <param name="c">The character to read.</param>
         /// <param name="element">When this method returns, contains the next available element, or a <c>null</c> reference, depending
@@ -137,7 +138,7 @@ namespace Text.Scanning
             return false;
         }
 
-        /// <summary>Utility method. Reads the next specified characters. A return value indicates whether the characters were available.</summary>
+        /// <summary>Utility method. Reads the next specified terminal. The comparison is case-insensitive. A return value indicates whether the terminal was available.</summary>
         /// <param name="scanner"></param>
         /// <param name="s">The characters to read.</param>
         /// <param name="element">When this method returns, contains the next available element, or a <c>null</c> reference, depending
@@ -154,13 +155,20 @@ namespace Text.Scanning
             }
 
             var context = scanner.GetContext();
+            var buffer = new StringBuilder(capacity: s.Length);
             for (int i = 0; i < s.Length; i++)
             {
-                if (!scanner.TryMatch(s[i]))
+                var next = s[i];
+                var actual = scanner.NextCharacter.GetValueOrDefault();
+                if (scanner.TryMatch(next, ignoreCase: true))
+                {
+                    buffer.Append(actual);
+                }
+                else
                 {
                     if (i != 0)
                     {
-                        scanner.PutBack(s.Substring(0, i));
+                        scanner.PutBack(buffer.ToString());
                     }
 
                     element = default(Element);
