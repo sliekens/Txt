@@ -180,7 +180,13 @@ namespace Text.Scanning
         /// <inheritdoc />
         bool ITextScanner.TryMatch(char c)
         {
-            return this.TryMatch(c);
+            return this.TryMatch(c, false);
+        }
+
+        /// <inheritdoc />
+        bool ITextScanner.TryMatch(char c, bool ignoreCase)
+        {
+            return this.TryMatch(c, ignoreCase);
         }
 
         /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
@@ -285,6 +291,12 @@ namespace Text.Scanning
         /// <inheritdoc />
         private bool TryMatch(char c)
         {
+            return this.TryMatch(c, false);
+        }
+
+        /// <inheritdoc />
+        private bool TryMatch(char c, bool ignoreCase)
+        {
             if (this.disposed)
             {
                 throw new ObjectDisposedException(this.GetType().FullName);
@@ -300,9 +312,29 @@ namespace Text.Scanning
                 throw new InvalidOperationException("No next character available: end of input has been reached.");
             }
 
-            if (this.nextCharacter != c)
+            if (ignoreCase && char.IsLetter(c))
             {
-                return false;
+                char c2;
+                if (char.IsLower(c))
+                {
+                    c2 = char.ToUpperInvariant(c);
+                }
+                else
+                {
+                    c2 = char.ToLowerInvariant(c);
+                }
+
+                if (this.nextCharacter != c && this.nextCharacter != c2)
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                if (this.nextCharacter != c)
+                {
+                    return false;
+                }
             }
 
             this.Read();

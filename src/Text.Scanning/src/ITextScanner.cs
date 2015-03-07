@@ -53,5 +53,13 @@ namespace Text.Scanning
         /// <exception cref="T:System.ObjectDisposedException">The current text scanner is closed.</exception>
         /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
         bool TryMatch(char c);
+
+        /// <summary>Compares the given character to the next available character. If there is a match, the character is consumed.</summary>
+        /// <param name="c">The character to compare to the next available character.</param>
+        /// <param name="ignoreCase">A value that indicates whether to use a case-insensitive comparison.</param>
+        /// <exception cref="T:System.InvalidOperationException">There is no next character available. This occurs when<see cref="Read"/> has never been called, or when <see cref="EndOfInput"/> is <c>true</c>.</exception>
+        /// <exception cref="T:System.ObjectDisposedException">The current text scanner is closed.</exception>
+        /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
+        bool TryMatch(char c, bool ignoreCase);
     }
 }

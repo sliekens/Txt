@@ -63,5 +63,11 @@ namespace Text.Scanning
             // Contract.Ensures(c != this.NextCharacter || Contract.OldValue(this.Offset) == this.Offset - 1 || this.EndOfInput);
             throw new NotImplementedException();
         }
+
+        public bool TryMatch(char c, bool ignoreCase)
+        {
+            // Contract.Ensures(c != this.NextCharacter || Contract.OldValue(this.Offset) == this.Offset - 1 || this.EndOfInput);
+            throw new NotImplementedException();
+        }
     }
 }
