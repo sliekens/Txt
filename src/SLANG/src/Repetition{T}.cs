@@ -100,5 +100,13 @@ namespace SLANG
                 return this.upperBound;
             }
         }
+
+        [ContractInvariantMethod]
+        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented",
+            Justification = "Reviewed. Suppression is OK here.")]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(this.elements != null);
+        }
     }
 }
