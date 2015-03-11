@@ -3,7 +3,6 @@
 //   The MIT License (MIT)
 // </copyright>
 // <summary>
-//   TODO
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG.Core
@@ -11,26 +10,19 @@ namespace SLANG.Core
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
 
-    /// <summary>TODO </summary>
     public class EndOfLineLexer : Lexer<EndOfLine>
     {
-        /// <summary>TODO </summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly ILexer<CarriageReturn> crLexer;
 
-        /// <summary>TODO </summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly ILexer<LineFeed> lfLexer;
 
-        /// <summary>Initializes a new instance of the <see cref="EndOfLineLexer"/> class.</summary>
         public EndOfLineLexer()
             : this(new CarriageReturnLexer(), new LineFeedLexer())
         {
         }
 
-        /// <summary>Initializes a new instance of the <see cref="EndOfLineLexer"/> class.</summary>
-        /// <param name="crLexer">TODO The cr lexer.</param>
-        /// <param name="lfLexer">TODO The lf lexer.</param>
         public EndOfLineLexer(ILexer<CarriageReturn> crLexer, ILexer<LineFeed> lfLexer)
             : base("CRLF")
         {
@@ -64,7 +56,6 @@ namespace SLANG.Core
             return true;
         }
 
-        /// <summary>TODO </summary>
         [ContractInvariantMethod]
         private void ObjectInvariant()
         {
