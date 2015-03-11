@@ -7,6 +7,7 @@ namespace SLANG
 {
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Diagnostics;
     using System.Diagnostics.CodeAnalysis;
     using System.Diagnostics.Contracts;
 
@@ -17,14 +18,17 @@ namespace SLANG
     {
         [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented",
             Justification = "Reviewed. Suppression is OK here.")]
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly IList<T> elements;
 
         [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented",
             Justification = "Reviewed. Suppression is OK here.")]
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly int lowerBound;
 
         [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented", 
             Justification = "Reviewed. Suppression is OK here.")]
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly int upperBound;
 
         /// <summary>Initializes a new instance of the <see cref="Repetition{T}"/> class with zero or more occurrences.</summary>
