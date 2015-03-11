@@ -21,7 +21,6 @@
                 var lexer = new LinearWhiteSpaceLexer();
                 var element = lexer.Read(scanner);
                 Assert.IsNotNull(element);
-                Assert.IsNotNull(element.LWsp);
                 Assert.AreEqual(text, element.Data);
             }
         }
@@ -37,7 +36,6 @@
                 var lexer = new LinearWhiteSpaceLexer();
                 var element = lexer.Read(scanner);
                 Assert.IsNotNull(element);
-                Assert.IsNotNull(element.LWsp);
                 Assert.AreEqual(text, element.Data);
             }
         }
@@ -53,7 +51,6 @@
                 var lexer = new LinearWhiteSpaceLexer();
                 var element = lexer.Read(scanner);
                 Assert.IsNotNull(element);
-                Assert.IsNotNull(element.LWsp);
                 Assert.AreEqual(text, element.Data);
             }
         }
@@ -69,8 +66,7 @@
                 var lexer = new LinearWhiteSpaceLexer();
                 var element = lexer.Read(scanner);
                 Assert.IsNotNull(element);
-                Assert.IsNotNull(element.LWsp);
-                Assert.IsFalse(element.LWsp.Any());
+                Assert.IsFalse(element.Elements.Any());
                 Assert.AreEqual(text, element.Data);
             }
         }
@@ -85,7 +81,7 @@
                 scanner.Read();
                 var lexer = new LinearWhiteSpaceLexer();
                 var element = lexer.Read(scanner);
-                Assert.IsFalse(element.LWsp.Any());
+                Assert.IsFalse(element.Elements.Any());
             }
         }
 
@@ -105,8 +101,7 @@
                 }
 
                 Assert.IsNotNull(element);
-                Assert.IsNotNull(element.LWsp);
-                Assert.IsFalse(element.LWsp.Any());
+                Assert.IsFalse(element.Elements.Any());
             }
         }
     }
