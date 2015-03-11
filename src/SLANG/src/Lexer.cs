@@ -176,7 +176,7 @@ namespace SLANG
                 }
             }
 
-            element = new Element(s, context);
+            element = new Element(buffer.ToString(), context);
             return true;
         }
 
