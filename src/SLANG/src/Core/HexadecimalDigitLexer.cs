@@ -3,7 +3,6 @@
 //   The MIT License (MIT)
 // </copyright>
 // <summary>
-//   TODO
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG.Core
@@ -11,21 +10,16 @@ namespace SLANG.Core
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
 
-    /// <summary>TODO </summary>
     public class HexadecimalDigitLexer : Lexer<HexadecimalDigit>
     {
-        /// <summary>TODO </summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly ILexer<Digit> digitLexer;
 
-        /// <summary>Initializes a new instance of the <see cref="HexadecimalDigitLexer"/> class.</summary>
         public HexadecimalDigitLexer()
             : this(new DigitLexer())
         {
         }
 
-        /// <summary>Initializes a new instance of the <see cref="HexadecimalDigitLexer"/> class.</summary>
-        /// <param name="digitLexer">TODO The digit lexer.</param>
         public HexadecimalDigitLexer(ILexer<Digit> digitLexer)
             : base("HEXDIG")
         {
@@ -50,22 +44,12 @@ namespace SLANG.Core
                 return true;
             }
 
-            // A-F
-            for (var c = 'A'; c <= 'F'; c++)
+            foreach (var c in new[] { "A", "B", "C", "D", "E", "F" })
             {
-                if (scanner.TryMatch(c))
+                Element letter;
+                if (TryReadTerminal(scanner, c, out letter))
                 {
-                    element = new HexadecimalDigit(c, context);
-                    return true;
-                }
-            }
-
-            // a-f
-            for (var c = 'a'; c <= 'f'; c++)
-            {
-                if (scanner.TryMatch(c))
-                {
-                    element = new HexadecimalDigit(c, context);
+                    element = new HexadecimalDigit(letter, context);
                     return true;
                 }
             }
@@ -74,7 +58,6 @@ namespace SLANG.Core
             return false;
         }
 
-        /// <summary>TODO </summary>
         [ContractInvariantMethod]
         private void ObjectInvariant()
         {
