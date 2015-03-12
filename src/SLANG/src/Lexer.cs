@@ -155,20 +155,23 @@ namespace SLANG
             }
 
             var context = scanner.GetContext();
-            var buffer = new StringBuilder(capacity: s.Length);
+            var buffer = new char[s.Length];
             for (int i = 0; i < s.Length; i++)
             {
                 var next = s[i];
                 var actual = scanner.NextCharacter.GetValueOrDefault();
                 if (!scanner.EndOfInput && scanner.TryMatch(next, ignoreCase: true))
                 {
-                    buffer.Append(actual);
+                    buffer[i] = actual;
                 }
                 else
                 {
                     if (i != 0)
                     {
-                        scanner.PutBack(buffer.ToString());
+                        for (int j = i - 1; j >= 0; j--)
+                        {
+                            scanner.PutBack(buffer[j]);
+                        }
                     }
 
                     element = default(Element);
@@ -176,7 +179,7 @@ namespace SLANG
                 }
             }
 
-            element = new Element(buffer.ToString(), context);
+            element = new Element(new string(buffer), context);
             return true;
         }
 
