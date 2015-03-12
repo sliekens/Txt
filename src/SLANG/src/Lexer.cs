@@ -138,6 +138,50 @@ namespace SLANG
             return false;
         }
 
+        /// <summary>Utility method. Reads the next specified terminal. The comparison is case-sensitive. A return value indicates whether the terminal was available.</summary>
+        /// <param name="scanner"></param>
+        /// <param name="s">The characters to read.</param>
+        /// <param name="element">When this method returns, contains the next available element, or a <c>null</c> reference, depending
+        /// on whether the return value indicates success.</param>
+        /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
+        protected static bool TryReadTerminal(ITextScanner scanner, char[] s, out Element element)
+        {
+            Contract.Requires(scanner != null);
+            Contract.Requires(s != null);
+            if (scanner.EndOfInput)
+            {
+                element = default(Element);
+                return false;
+            }
+
+            var context = scanner.GetContext();
+            if (s.Length == 0)
+            {
+                element = new Element(string.Empty, context);
+                return true;
+            }
+
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (scanner.EndOfInput || !scanner.TryMatch(s[i], ignoreCase: false))
+                {
+                    if (i != 0)
+                    {
+                        for (int j = i - 1; j >= 0; j--)
+                        {
+                            scanner.PutBack(s[j].ToString());
+                        }
+                    }
+
+                    element = default(Element);
+                    return false;
+                }
+            }
+
+            element = new Element(new string(s), context);
+            return true;
+        }
+
         /// <summary>Utility method. Reads the next specified terminal. The comparison is case-insensitive. A return value indicates whether the terminal was available.</summary>
         /// <param name="scanner"></param>
         /// <param name="s">The characters to read.</param>
