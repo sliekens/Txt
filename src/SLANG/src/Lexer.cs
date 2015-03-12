@@ -160,7 +160,7 @@ namespace SLANG
             {
                 var next = s[i];
                 var actual = scanner.NextCharacter.GetValueOrDefault();
-                if (scanner.TryMatch(next, ignoreCase: true))
+                if (!scanner.EndOfInput && scanner.TryMatch(next, ignoreCase: true))
                 {
                     buffer.Append(actual);
                 }
