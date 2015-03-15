@@ -27,22 +27,22 @@ namespace SLANG.Core
             this.digitLexer = digitLexer;
         }
 
-        protected override HexadecimalDigit CreateInstance(Digit element, ITextContext context)
+        protected override HexadecimalDigit CreateInstance1(Digit element, ITextContext context)
         {
             return new HexadecimalDigit(element, context);
         }
 
-        protected override HexadecimalDigit CreateInstance(Element element, ITextContext context)
+        protected override HexadecimalDigit CreateInstance2(Element element, ITextContext context)
         {
             return new HexadecimalDigit(element, context);
         }
 
-        protected override bool TryReadAlternative(ITextScanner scanner, out Digit element)
+        protected override bool TryRead1(ITextScanner scanner, out Digit element)
         {
             return this.digitLexer.TryRead(scanner, out element);
         }
 
-        protected override bool TryReadAlternative(ITextScanner scanner, out Element element)
+        protected override bool TryRead2(ITextScanner scanner, out Element element)
         {
             foreach (var s in new[] { "A", "B", "C", "D", "E", "F" })
             {

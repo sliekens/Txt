@@ -42,58 +42,58 @@
 
             var context = scanner.GetContext();
             T1 alternative1;
-            if (this.TryReadAlternative(scanner, out alternative1))
+            if (this.TryRead1(scanner, out alternative1))
             {
-                element = this.CreateInstance(alternative1, context);
+                element = this.CreateInstance1(alternative1, context);
                 return true;
             }
 
             T2 alternative2;
-            if (this.TryReadAlternative(scanner, out alternative2))
+            if (this.TryRead2(scanner, out alternative2))
             {
-                element = this.CreateInstance(alternative2, context);
+                element = this.CreateInstance2(alternative2, context);
                 return true;
             }
 
             T3 alternative3;
-            if (this.TryReadAlternative(scanner, out alternative3))
+            if (this.TryRead3(scanner, out alternative3))
             {
-                element = this.CreateInstance(alternative3, context);
+                element = this.CreateInstance3(alternative3, context);
                 return true;
             }
 
             T4 alternative4;
-            if (this.TryReadAlternative(scanner, out alternative4))
+            if (this.TryRead4(scanner, out alternative4))
             {
-                element = this.CreateInstance(alternative4, context);
+                element = this.CreateInstance4(alternative4, context);
                 return true;
             }
 
             T5 alternative5;
-            if (this.TryReadAlternative(scanner, out alternative5))
+            if (this.TryRead5(scanner, out alternative5))
             {
-                element = this.CreateInstance(alternative5, context);
+                element = this.CreateInstance5(alternative5, context);
                 return true;
             }
 
             T6 alternative6;
-            if (this.TryReadAlternative(scanner, out alternative6))
+            if (this.TryRead6(scanner, out alternative6))
             {
-                element = this.CreateInstance(alternative6, context);
+                element = this.CreateInstance6(alternative6, context);
                 return true;
             }
 
             T7 alternative7;
-            if (this.TryReadAlternative(scanner, out alternative7))
+            if (this.TryRead7(scanner, out alternative7))
             {
-                element = this.CreateInstance(alternative7, context);
+                element = this.CreateInstance7(alternative7, context);
                 return true;
             }
 
             T8 alternative8;
-            if (this.TryReadAlternative(scanner, out alternative8))
+            if (this.TryRead8(scanner, out alternative8))
             {
-                element = this.CreateInstance(alternative8, context);
+                element = this.CreateInstance8(alternative8, context);
                 return true;
             }
 
@@ -105,49 +105,49 @@
         /// <param name="element">The alternative element.</param>
         /// <param name="context">The object that describes the context in which the text appears.</param>
         /// <returns>An instance of the lexer rule.</returns>
-        protected abstract TAlternative CreateInstance(T1 element, ITextContext context);
+        protected abstract TAlternative CreateInstance1(T1 element, ITextContext context);
 
         /// <summary>Creates a new instance of the lexer rule for the second alternative element.</summary>
         /// <param name="element">The alternative element.</param>
         /// <param name="context">The object that describes the context in which the text appears.</param>
         /// <returns>An instance of the lexer rule.</returns>
-        protected abstract TAlternative CreateInstance(T2 element, ITextContext context);
+        protected abstract TAlternative CreateInstance2(T2 element, ITextContext context);
 
         /// <summary>Creates a new instance of the lexer rule for the third alternative element.</summary>
         /// <param name="element">The alternative element.</param>
         /// <param name="context">The object that describes the context in which the text appears.</param>
         /// <returns>An instance of the lexer rule.</returns>
-        protected abstract TAlternative CreateInstance(T3 element, ITextContext context);
+        protected abstract TAlternative CreateInstance3(T3 element, ITextContext context);
 
         /// <summary>Creates a new instance of the lexer rule for the fourth alternative element.</summary>
         /// <param name="element">The alternative element.</param>
         /// <param name="context">The object that describes the context in which the text appears.</param>
         /// <returns>An instance of the lexer rule.</returns>
-        protected abstract TAlternative CreateInstance(T4 element, ITextContext context);
+        protected abstract TAlternative CreateInstance4(T4 element, ITextContext context);
 
         /// <summary>Creates a new instance of the lexer rule for the fifth alternative element.</summary>
         /// <param name="element">The alternative element.</param>
         /// <param name="context">The object that describes the context in which the text appears.</param>
         /// <returns>An instance of the lexer rule.</returns>
-        protected abstract TAlternative CreateInstance(T5 element, ITextContext context);
+        protected abstract TAlternative CreateInstance5(T5 element, ITextContext context);
 
         /// <summary>Creates a new instance of the lexer rule for the sixth alternative element.</summary>
         /// <param name="element">The alternative element.</param>
         /// <param name="context">The object that describes the context in which the text appears.</param>
         /// <returns>An instance of the lexer rule.</returns>
-        protected abstract TAlternative CreateInstance(T6 element, ITextContext context);
+        protected abstract TAlternative CreateInstance6(T6 element, ITextContext context);
 
         /// <summary>Creates a new instance of the lexer rule for the seventh alternative element.</summary>
         /// <param name="element">The alternative element.</param>
         /// <param name="context">The object that describes the context in which the text appears.</param>
         /// <returns>An instance of the lexer rule.</returns>
-        protected abstract TAlternative CreateInstance(T7 element, ITextContext context);
+        protected abstract TAlternative CreateInstance7(T7 element, ITextContext context);
 
         /// <summary>Creates a new instance of the lexer rule for the eighth alternative element.</summary>
         /// <param name="element">The alternative element.</param>
         /// <param name="context">The object that describes the context in which the text appears.</param>
         /// <returns>An instance of the lexer rule.</returns>
-        protected abstract TAlternative CreateInstance(T8 element, ITextContext context);
+        protected abstract TAlternative CreateInstance8(T8 element, ITextContext context);
 
         /// <summary>Attempts to read the first alternative element. A return value indicates whether the element was available.</summary>
         /// <param name="scanner">The scanner object that provides text symbols as well as contextual information about the text source.</param>
@@ -155,7 +155,7 @@
         /// <exception cref="T:System.InvalidOperationException">The given scanner object is not initialized.</exception>
         /// <exception cref="T:System.ObjectDisposedException">The given text scanner is closed.</exception>
         /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
-        protected abstract bool TryReadAlternative(ITextScanner scanner, out T1 element);
+        protected abstract bool TryRead1(ITextScanner scanner, out T1 element);
 
         /// <summary>Attempts to read the second alternative element. A return value indicates whether the element was available.</summary>
         /// <param name="scanner">The scanner object that provides text symbols as well as contextual information about the text source.</param>
@@ -163,7 +163,7 @@
         /// <exception cref="T:System.InvalidOperationException">The given scanner object is not initialized.</exception>
         /// <exception cref="T:System.ObjectDisposedException">The given text scanner is closed.</exception>
         /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
-        protected abstract bool TryReadAlternative(ITextScanner scanner, out T2 element);
+        protected abstract bool TryRead2(ITextScanner scanner, out T2 element);
 
         /// <summary>Attempts to read the third alternative element. A return value indicates whether the element was available.</summary>
         /// <param name="scanner">The scanner object that provides text symbols as well as contextual information about the text source.</param>
@@ -171,7 +171,7 @@
         /// <exception cref="T:System.InvalidOperationException">The given scanner object is not initialized.</exception>
         /// <exception cref="T:System.ObjectDisposedException">The given text scanner is closed.</exception>
         /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
-        protected abstract bool TryReadAlternative(ITextScanner scanner, out T3 element);
+        protected abstract bool TryRead3(ITextScanner scanner, out T3 element);
 
         /// <summary>Attempts to read the fourth alternative element. A return value indicates whether the element was available.</summary>
         /// <param name="scanner">The scanner object that provides text symbols as well as contextual information about the text source.</param>
@@ -179,7 +179,7 @@
         /// <exception cref="T:System.InvalidOperationException">The given scanner object is not initialized.</exception>
         /// <exception cref="T:System.ObjectDisposedException">The given text scanner is closed.</exception>
         /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
-        protected abstract bool TryReadAlternative(ITextScanner scanner, out T4 element);
+        protected abstract bool TryRead4(ITextScanner scanner, out T4 element);
 
         /// <summary>Attempts to read the fifth alternative element. A return value indicates whether the element was available.</summary>
         /// <param name="scanner">The scanner object that provides text symbols as well as contextual information about the text source.</param>
@@ -187,7 +187,7 @@
         /// <exception cref="T:System.InvalidOperationException">The given scanner object is not initialized.</exception>
         /// <exception cref="T:System.ObjectDisposedException">The given text scanner is closed.</exception>
         /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
-        protected abstract bool TryReadAlternative(ITextScanner scanner, out T5 element);
+        protected abstract bool TryRead5(ITextScanner scanner, out T5 element);
 
         /// <summary>Attempts to read the sixth alternative element. A return value indicates whether the element was available.</summary>
         /// <param name="scanner">The scanner object that provides text symbols as well as contextual information about the text source.</param>
@@ -195,7 +195,7 @@
         /// <exception cref="T:System.InvalidOperationException">The given scanner object is not initialized.</exception>
         /// <exception cref="T:System.ObjectDisposedException">The given text scanner is closed.</exception>
         /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
-        protected abstract bool TryReadAlternative(ITextScanner scanner, out T6 element);
+        protected abstract bool TryRead6(ITextScanner scanner, out T6 element);
 
         /// <summary>Attempts to read the seventh alternative element. A return value indicates whether the element was available.</summary>
         /// <param name="scanner">The scanner object that provides text symbols as well as contextual information about the text source.</param>
@@ -203,7 +203,7 @@
         /// <exception cref="T:System.InvalidOperationException">The given scanner object is not initialized.</exception>
         /// <exception cref="T:System.ObjectDisposedException">The given text scanner is closed.</exception>
         /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
-        protected abstract bool TryReadAlternative(ITextScanner scanner, out T7 element);
+        protected abstract bool TryRead7(ITextScanner scanner, out T7 element);
 
         /// <summary>Attempts to read the eighth alternative element. A return value indicates whether the element was available.</summary>
         /// <param name="scanner">The scanner object that provides text symbols as well as contextual information about the text source.</param>
@@ -211,6 +211,6 @@
         /// <exception cref="T:System.InvalidOperationException">The given scanner object is not initialized.</exception>
         /// <exception cref="T:System.ObjectDisposedException">The given text scanner is closed.</exception>
         /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
-        protected abstract bool TryReadAlternative(ITextScanner scanner, out T8 element);
+        protected abstract bool TryRead8(ITextScanner scanner, out T8 element);
     }
 }
