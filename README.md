@@ -3,9 +3,10 @@ Structured Language (SLANG)
 [![Build status](https://ci.appveyor.com/api/projects/status/01jxm32c7i9769ef?svg=true)](https://ci.appveyor.com/project/StevenLiekens/text-parser)
 
 # About
-This repository contains library classes that deal with structured languages.
 
-Examples of structured languages include...
+SLANG is a collection of code that provides a foundation for structured text parsers with recursive descent.
+
+Examples of structured languages that can be parsed with recursive descent include...
 
 * Programming languages
     * C#, JavaScript, SQL
