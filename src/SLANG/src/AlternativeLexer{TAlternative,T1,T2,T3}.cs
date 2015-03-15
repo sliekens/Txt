@@ -53,6 +53,13 @@ namespace SLANG
                 return true;
             }
 
+            T3 alternative3;
+            if (this.TryReadAlternative(scanner, out alternative3))
+            {
+                element = this.CreateInstance(alternative3, context);
+                return true;
+            }
+
             element = default(TAlternative);
             return false;
         }
