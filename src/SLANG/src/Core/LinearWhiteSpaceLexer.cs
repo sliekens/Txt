@@ -11,7 +11,7 @@ namespace SLANG.Core
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
 
-    public class LinearWhiteSpaceLexer : Lexer<LinearWhiteSpace>
+    public class LinearWhiteSpaceLexer : RepetitionLexer<LinearWhiteSpace, Alternative<WhiteSpace, Sequence<EndOfLine, WhiteSpace>>>
     {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly ILexer<EndOfLine> endOfLineLexer;
@@ -19,14 +19,13 @@ namespace SLANG.Core
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly ILexer<WhiteSpace> whiteSpaceLexer;
 
-        /// <summary>Initializes a new instance of the <see cref="LinearWhiteSpaceLexer"/> class.</summary>
         public LinearWhiteSpaceLexer()
             : this(new EndOfLineLexer(), new WhiteSpaceLexer())
         {
         }
 
         public LinearWhiteSpaceLexer(ILexer<EndOfLine> endOfLineLexer, ILexer<WhiteSpace> whiteSpaceLexer)
-            : base("LWSP")
+            : base("LWSP", 0, int.MaxValue)
         {
             Contract.Requires(endOfLineLexer != null);
             Contract.Requires(whiteSpaceLexer != null);
@@ -34,43 +33,63 @@ namespace SLANG.Core
             this.whiteSpaceLexer = whiteSpaceLexer;
         }
 
-        /// <inheritdoc />
-        public override bool TryRead(ITextScanner scanner, out LinearWhiteSpace element)
+        protected override LinearWhiteSpace CreateInstance(IList<Alternative<WhiteSpace, Sequence<EndOfLine, WhiteSpace>>> elements, int lowerBound, int upperBound, ITextContext context)
         {
-            var context = scanner.GetContext();
-            var data = new List<Alternative<WhiteSpace, Sequence<EndOfLine, WhiteSpace>>>();
+            return new LinearWhiteSpace(elements, context);
+        }
 
-            // The program should eventually exit this loop, unless the source data is an infinite stream of linear whitespace
-            while (!scanner.EndOfInput)
+        protected override bool TryReadOne(ITextScanner scanner, out Alternative<WhiteSpace, Sequence<EndOfLine, WhiteSpace>> element)
+        {
+            if (scanner.EndOfInput)
             {
-                var innerContext = scanner.GetContext();
-                EndOfLine endOfLine;
-                WhiteSpace whiteSpace;
-                if (this.endOfLineLexer.TryRead(scanner, out endOfLine))
-                {
-                    if (this.whiteSpaceLexer.TryRead(scanner, out whiteSpace))
-                    {
-                        var sequence = new Sequence<EndOfLine, WhiteSpace>(endOfLine, whiteSpace, innerContext);
-                        var alternative = new Alternative<WhiteSpace, Sequence<EndOfLine, WhiteSpace>>(sequence, innerContext);
-                        data.Add(alternative);
-                    }
-                    else
-                    {
-                        scanner.PutBack(endOfLine.Data);
-                        break;
-                    }
-                }
-                else if (this.whiteSpaceLexer.TryRead(scanner, out whiteSpace))
-                {
-                    data.Add(new Alternative<WhiteSpace, Sequence<EndOfLine, WhiteSpace>>(whiteSpace, innerContext));
-                }
-                else
-                {
-                    break;
-                }
+                element = default(Alternative<WhiteSpace, Sequence<EndOfLine, WhiteSpace>>);
+                return false;
             }
 
-            element = new LinearWhiteSpace(data, context);
+            var context = scanner.GetContext();
+            WhiteSpace alternative1;
+            if (this.whiteSpaceLexer.TryRead(scanner, out alternative1))
+            {
+                element = new Alternative<WhiteSpace, Sequence<EndOfLine, WhiteSpace>>(alternative1, context);
+                return true;
+            }
+
+            Sequence<EndOfLine, WhiteSpace> alternative2;
+            if (this.TryReadEndOfLineWhiteSpaceSequence(scanner, out alternative2))
+            {
+                element = new Alternative<WhiteSpace, Sequence<EndOfLine, WhiteSpace>>(alternative2, context);
+                return true;
+            }
+
+            element = default(Alternative<WhiteSpace, Sequence<EndOfLine, WhiteSpace>>);
+            return false;
+        }
+
+        private bool TryReadEndOfLineWhiteSpaceSequence(ITextScanner scanner, out Sequence<EndOfLine, WhiteSpace> element)
+        {
+            if (scanner.EndOfInput)
+            {
+                element = default(Sequence<EndOfLine, WhiteSpace>);
+                return false;
+            }
+
+            var context = scanner.GetContext();
+            EndOfLine element1;
+            if (!this.endOfLineLexer.TryRead(scanner, out element1))
+            {
+                element = default(Sequence<EndOfLine, WhiteSpace>);
+                return false;
+            }
+
+            WhiteSpace element2;
+            if (!this.whiteSpaceLexer.TryRead(scanner, out element2))
+            {
+                scanner.PutBack(element1.Data);
+                element = default(Sequence<EndOfLine, WhiteSpace>);
+                return false;
+            }
+
+            element = new Sequence<EndOfLine, WhiteSpace>(element1, element2, context);
             return true;
         }
 
