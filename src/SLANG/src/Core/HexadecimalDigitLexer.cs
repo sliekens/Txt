@@ -37,12 +37,12 @@ namespace SLANG.Core
             return new HexadecimalDigit(element, context);
         }
 
-        protected override bool TryReadAlternative1(ITextScanner scanner, out Digit element)
+        protected override bool TryReadAlternative(ITextScanner scanner, out Digit element)
         {
             return this.digitLexer.TryRead(scanner, out element);
         }
 
-        protected override bool TryReadAlternative2(ITextScanner scanner, out Element element)
+        protected override bool TryReadAlternative(ITextScanner scanner, out Element element)
         {
             foreach (var s in new[] { "A", "B", "C", "D", "E", "F" })
             {
