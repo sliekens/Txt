@@ -2,7 +2,7 @@
 {
     using System;
 
-    /// <summary>Provides the base class for lexers whose lexer rule has is a sequence of two elements.</summary>
+    /// <summary>Provides the base class for lexers whose lexer rule is a sequence of two elements.</summary>
     /// <typeparam name="TSequence">The type of the lexer rule.</typeparam>
     /// <typeparam name="T1">The type of the first element in the sequence.</typeparam>
     /// <typeparam name="T2">The type of the second element in the sequence.</typeparam>
