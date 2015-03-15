@@ -37,12 +37,12 @@ namespace SLANG.Core
             return new EndOfLine(element1, element2, context);
         }
 
-        protected override bool TryRead(ITextScanner scanner, out CarriageReturn element)
+        protected override bool TryRead1(ITextScanner scanner, out CarriageReturn element)
         {
             return this.carriageReturnLexer.TryRead(scanner, out element);
         }
 
-        protected override bool TryRead(ITextScanner scanner, out LineFeed element)
+        protected override bool TryRead2(ITextScanner scanner, out LineFeed element)
         {
             return this.lineFeedLexer.TryRead(scanner, out element);
         }

@@ -42,14 +42,14 @@
 
             var context = scanner.GetContext();
             T1 element1;
-            if (!this.TryRead(scanner, out element1))
+            if (!this.TryRead1(scanner, out element1))
             {
                 element = default(TSequence);
                 return false;
             }
 
             T2 element2;
-            if (!this.TryRead(scanner, out element2))
+            if (!this.TryRead2(scanner, out element2))
             {
                 scanner.PutBack(element1.Data);
                 element = default(TSequence);
@@ -57,7 +57,7 @@
             }
 
             T3 element3;
-            if (!this.TryRead(scanner, out element3))
+            if (!this.TryRead3(scanner, out element3))
             {
                 scanner.PutBack(element2.Data);
                 scanner.PutBack(element1.Data);
@@ -66,7 +66,7 @@
             }
 
             T4 element4;
-            if (!this.TryRead(scanner, out element4))
+            if (!this.TryRead4(scanner, out element4))
             {
                 scanner.PutBack(element3.Data);
                 scanner.PutBack(element2.Data);
@@ -76,7 +76,7 @@
             }
 
             T5 element5;
-            if (!this.TryRead(scanner, out element5))
+            if (!this.TryRead5(scanner, out element5))
             {
                 scanner.PutBack(element4.Data);
                 scanner.PutBack(element3.Data);
@@ -87,7 +87,7 @@
             }
 
             T6 element6;
-            if (!this.TryRead(scanner, out element6))
+            if (!this.TryRead6(scanner, out element6))
             {
                 scanner.PutBack(element5.Data);
                 scanner.PutBack(element4.Data);
@@ -99,7 +99,7 @@
             }
 
             T7 element7;
-            if (!this.TryRead(scanner, out element7))
+            if (!this.TryRead7(scanner, out element7))
             {
                 scanner.PutBack(element6.Data);
                 scanner.PutBack(element5.Data);
@@ -113,7 +113,7 @@
 
 
             T8 element8;
-            if (!this.TryRead(scanner, out element8))
+            if (!this.TryRead8(scanner, out element8))
             {
                 scanner.PutBack(element7.Data);
                 scanner.PutBack(element6.Data);
@@ -167,7 +167,7 @@
         /// <exception cref="T:System.InvalidOperationException">The given scanner object is not initialized.</exception>
         /// <exception cref="T:System.ObjectDisposedException">The given text scanner is closed.</exception>
         /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
-        protected abstract bool TryRead(ITextScanner scanner, out T1 element);
+        protected abstract bool TryRead1(ITextScanner scanner, out T1 element);
 
         /// <summary>Attempts to read the second element of the sequence. A return value indicates whether the element was available.</summary>
         /// <param name="scanner">The scanner object that provides text symbols as well as contextual information about the text source.</param>
@@ -175,7 +175,7 @@
         /// <exception cref="T:System.InvalidOperationException">The given scanner object is not initialized.</exception>
         /// <exception cref="T:System.ObjectDisposedException">The given text scanner is closed.</exception>
         /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
-        protected abstract bool TryRead(ITextScanner scanner, out T2 element);
+        protected abstract bool TryRead2(ITextScanner scanner, out T2 element);
 
         /// <summary>Attempts to read the third element of the sequence. A return value indicates whether the element was available.</summary>
         /// <param name="scanner">The scanner object that provides text symbols as well as contextual information about the text source.</param>
@@ -183,7 +183,7 @@
         /// <exception cref="T:System.InvalidOperationException">The given scanner object is not initialized.</exception>
         /// <exception cref="T:System.ObjectDisposedException">The given text scanner is closed.</exception>
         /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
-        protected abstract bool TryRead(ITextScanner scanner, out T3 element);
+        protected abstract bool TryRead3(ITextScanner scanner, out T3 element);
 
         /// <summary>Attempts to read the fourth element of the sequence. A return value indicates whether the element was available.</summary>
         /// <param name="scanner">The scanner object that provides text symbols as well as contextual information about the text source.</param>
@@ -191,7 +191,7 @@
         /// <exception cref="T:System.InvalidOperationException">The given scanner object is not initialized.</exception>
         /// <exception cref="T:System.ObjectDisposedException">The given text scanner is closed.</exception>
         /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
-        protected abstract bool TryRead(ITextScanner scanner, out T4 element);
+        protected abstract bool TryRead4(ITextScanner scanner, out T4 element);
 
         /// <summary>Attempts to read the fifth element of the sequence. A return value indicates whether the element was available.</summary>
         /// <param name="scanner">The scanner object that provides text symbols as well as contextual information about the text source.</param>
@@ -199,7 +199,7 @@
         /// <exception cref="T:System.InvalidOperationException">The given scanner object is not initialized.</exception>
         /// <exception cref="T:System.ObjectDisposedException">The given text scanner is closed.</exception>
         /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
-        protected abstract bool TryRead(ITextScanner scanner, out T5 element);
+        protected abstract bool TryRead5(ITextScanner scanner, out T5 element);
 
         /// <summary>Attempts to read the sixth element of the sequence. A return value indicates whether the element was available.</summary>
         /// <param name="scanner">The scanner object that provides text symbols as well as contextual information about the text source.</param>
@@ -207,7 +207,7 @@
         /// <exception cref="T:System.InvalidOperationException">The given scanner object is not initialized.</exception>
         /// <exception cref="T:System.ObjectDisposedException">The given text scanner is closed.</exception>
         /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
-        protected abstract bool TryRead(ITextScanner scanner, out T6 element);
+        protected abstract bool TryRead6(ITextScanner scanner, out T6 element);
 
         /// <summary>Attempts to read the seventh element of the sequence. A return value indicates whether the element was available.</summary>
         /// <param name="scanner">The scanner object that provides text symbols as well as contextual information about the text source.</param>
@@ -215,7 +215,7 @@
         /// <exception cref="T:System.InvalidOperationException">The given scanner object is not initialized.</exception>
         /// <exception cref="T:System.ObjectDisposedException">The given text scanner is closed.</exception>
         /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
-        protected abstract bool TryRead(ITextScanner scanner, out T7 element);
+        protected abstract bool TryRead7(ITextScanner scanner, out T7 element);
 
         /// <summary>Attempts to read the eighth element of the sequence. A return value indicates whether the element was available.</summary>
         /// <param name="scanner">The scanner object that provides text symbols as well as contextual information about the text source.</param>
@@ -223,6 +223,6 @@
         /// <exception cref="T:System.InvalidOperationException">The given scanner object is not initialized.</exception>
         /// <exception cref="T:System.ObjectDisposedException">The given text scanner is closed.</exception>
         /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
-        protected abstract bool TryRead(ITextScanner scanner, out T8 element);
+        protected abstract bool TryRead8(ITextScanner scanner, out T8 element);
     }
 }
