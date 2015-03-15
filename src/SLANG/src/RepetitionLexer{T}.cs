@@ -1,9 +1,11 @@
 ﻿namespace SLANG
 {
+    using System;
     using System.Collections.Generic;
 
-    public abstract class RepetitionLexer<T> : Lexer<Repetition<T>>
-        where T : Element
+    public abstract class RepetitionLexer<T, T2> : Lexer<T>
+        where T : Repetition<T2>
+        where T2 : Element
     {
         private readonly int lowerBound;
         private readonly int upperBound;
@@ -15,19 +17,19 @@
             this.upperBound = upperBound;
         }
 
-        public override bool TryRead(ITextScanner scanner, out Repetition<T> element)
+        public override bool TryRead(ITextScanner scanner, out T element)
         {
             if (scanner.EndOfInput && this.lowerBound != 0)
             {
-                element = default(Repetition<T>);
+                element = default(T);
                 return false;
             }
 
             var context = scanner.GetContext();
-            var elements = new List<T>(this.upperBound);
+            var elements = new List<T2>(this.upperBound);
             for (int i = 0; i < this.upperBound; i++)
             {
-                T entry;
+                T2 entry;
                 if (this.TryReadOne(scanner, out entry))
                 {
                     elements.Add(entry);
@@ -48,14 +50,21 @@
                     }
                 }
 
-                element = default(Repetition<T>);
+                element = default(T);
                 return false;
             }
 
-            element = new Repetition<T>(elements, this.lowerBound, this.upperBound, context);
+            element = this.CreateInstance(elements, this.lowerBound, this.upperBound, context);
+            if (element == null)
+            {
+                throw new InvalidOperationException("Postcondition: result != null");
+            }
+
             return true;
         }
 
-        protected abstract bool TryReadOne(ITextScanner scanner, out T element);
+        protected abstract T CreateInstance(IList<T2> elements, int lowerBound, int upperBound, ITextContext context);
+
+        protected abstract bool TryReadOne(ITextScanner scanner, out T2 element);
     }
 }
