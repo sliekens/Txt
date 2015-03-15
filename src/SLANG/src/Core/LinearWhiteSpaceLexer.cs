@@ -38,7 +38,7 @@ namespace SLANG.Core
             return new LinearWhiteSpace(elements, context);
         }
 
-        protected override bool TryRead(ITextScanner scanner, out Alternative<WhiteSpace, Sequence<EndOfLine, WhiteSpace>> element)
+        protected override bool TryRead(ITextScanner scanner, int lowerBound, int upperBound, int current, out Alternative<WhiteSpace, Sequence<EndOfLine, WhiteSpace>> element)
         {
             if (scanner.EndOfInput)
             {
