@@ -3,9 +3,9 @@
     using System;
     using System.Collections.Generic;
 
-    public abstract class RepetitionLexer<T, T2> : Lexer<T>
-        where T : Repetition<T2>
-        where T2 : Element
+    public abstract class RepetitionLexer<TRepetition, TElement> : Lexer<TRepetition>
+        where TRepetition : Repetition<TElement>
+        where TElement : Element
     {
         private readonly int lowerBound;
         private readonly int upperBound;
@@ -17,19 +17,19 @@
             this.upperBound = upperBound;
         }
 
-        public override bool TryRead(ITextScanner scanner, out T element)
+        public override bool TryRead(ITextScanner scanner, out TRepetition element)
         {
             if (scanner.EndOfInput && this.lowerBound != 0)
             {
-                element = default(T);
+                element = default(TRepetition);
                 return false;
             }
 
             var context = scanner.GetContext();
-            var elements = new List<T2>(this.lowerBound);
+            var elements = new List<TElement>(this.lowerBound);
             for (int i = 0; i < this.upperBound; i++)
             {
-                T2 entry;
+                TElement entry;
                 if (this.TryRead(scanner, out entry))
                 {
                     elements.Add(entry);
@@ -50,7 +50,7 @@
                     }
                 }
 
-                element = default(T);
+                element = default(TRepetition);
                 return false;
             }
 
@@ -63,8 +63,8 @@
             return true;
         }
 
-        protected abstract T CreateInstance(IList<T2> elements, int lowerBound, int upperBound, ITextContext context);
+        protected abstract TRepetition CreateInstance(IList<TElement> elements, int lowerBound, int upperBound, ITextContext context);
 
-        protected abstract bool TryRead(ITextScanner scanner, out T2 element);
+        protected abstract bool TryRead(ITextScanner scanner, out TElement element);
     }
 }
