@@ -30,7 +30,7 @@
             for (int i = 0; i < this.upperBound; i++)
             {
                 T2 entry;
-                if (this.TryReadOne(scanner, out entry))
+                if (this.TryRead(scanner, out entry))
                 {
                     elements.Add(entry);
                 }
@@ -65,6 +65,6 @@
 
         protected abstract T CreateInstance(IList<T2> elements, int lowerBound, int upperBound, ITextContext context);
 
-        protected abstract bool TryReadOne(ITextScanner scanner, out T2 element);
+        protected abstract bool TryRead(ITextScanner scanner, out T2 element);
     }
 }
