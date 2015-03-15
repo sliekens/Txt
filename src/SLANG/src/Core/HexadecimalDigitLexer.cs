@@ -10,7 +10,7 @@ namespace SLANG.Core
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
 
-    public class HexadecimalDigitLexer : Lexer<HexadecimalDigit>
+    public class HexadecimalDigitLexer : AlternativeLexer<HexadecimalDigit, Digit, Element>
     {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly ILexer<Digit> digitLexer;
@@ -27,34 +27,32 @@ namespace SLANG.Core
             this.digitLexer = digitLexer;
         }
 
-        /// <inheritdoc />
-        public override bool TryRead(ITextScanner scanner, out HexadecimalDigit element)
+        protected override HexadecimalDigit CreateInstance(Digit element, ITextContext context)
         {
-            if (scanner.EndOfInput)
-            {
-                element = default(HexadecimalDigit);
-                return false;
-            }
+            return new HexadecimalDigit(element, context);
+        }
 
-            var context = scanner.GetContext();
-            Digit digit;
-            if (this.digitLexer.TryRead(scanner, out digit))
-            {
-                element = new HexadecimalDigit(digit, context);
-                return true;
-            }
+        protected override HexadecimalDigit CreateInstance(Element element, ITextContext context)
+        {
+            return new HexadecimalDigit(element, context);
+        }
 
-            foreach (var c in new[] { "A", "B", "C", "D", "E", "F" })
+        protected override bool TryReadAlternative1(ITextScanner scanner, out Digit element)
+        {
+            return this.digitLexer.TryRead(scanner, out element);
+        }
+
+        protected override bool TryReadAlternative2(ITextScanner scanner, out Element element)
+        {
+            foreach (var s in new[] { "A", "B", "C", "D", "E", "F" })
             {
-                Element letter;
-                if (TryReadTerminal(scanner, c, out letter))
+                if (TryReadTerminal(scanner, s, out element))
                 {
-                    element = new HexadecimalDigit(letter, context);
                     return true;
                 }
             }
 
-            element = default(HexadecimalDigit);
+            element = default(Element);
             return false;
         }
 
