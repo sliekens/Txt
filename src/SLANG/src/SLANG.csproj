@@ -239,6 +239,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RepetitionLexer{T}.cs" />
     <Compile Include="Repetition{T}.cs" />
+    <Compile Include="SequenceLexer{TSequence,T1,T2,T3,T4,T5,T6,T7}.cs" />
     <Compile Include="SequenceLexer{TSequence,T1,T2,T3,T4,T5,T6,T7,T8}.cs" />
     <Compile Include="SequenceLexer{TSequence,T1,T2,T3,T4,T5,T6,T7,T8,T9}.cs" />
     <Compile Include="SequenceLexer{TSequence,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10}.cs" />
