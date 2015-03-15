@@ -12,7 +12,7 @@
         [TestMethod]
         public void ReadNul()
         {
-            var text = "\0";
+            var text = "\x00";
             var lexer = new OctetLexer();
             using (var reader = new StringReader(text))
             using (ITextScanner scanner = new TextScanner(reader))
@@ -27,7 +27,7 @@
         [TestMethod]
         public void Read255()
         {
-            var text = "\u00FF";
+            var text = "\xFF";
             var lexer = new OctetLexer();
             using (var reader = new StringReader(text))
             using (ITextScanner scanner = new TextScanner(reader))

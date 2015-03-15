@@ -12,7 +12,7 @@
         [TestMethod]
         public void ReadCtl()
         {
-            var text = "\u0001";
+            var text = "\x01";
             var lexer = new ControlCharacterLexer();
             using (var reader = new StringReader(text))
             using (ITextScanner scanner = new TextScanner(reader))

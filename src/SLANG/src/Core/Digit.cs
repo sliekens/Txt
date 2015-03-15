@@ -20,7 +20,7 @@ namespace SLANG.Core
         public Digit(char data, ITextContext context)
             : base(data, context)
         {
-            Contract.Requires(data >= '\u0030' && data <= '\u0039');
+            Contract.Requires(data >= '\x30' && data <= '\x39');
             Contract.Requires(context != null);
         }
     }

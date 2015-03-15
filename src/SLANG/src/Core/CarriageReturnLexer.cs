@@ -27,7 +27,7 @@ namespace SLANG.Core
             }
 
             var context = scanner.GetContext();
-            if (scanner.TryMatch('\u000D'))
+            if (scanner.TryMatch('\x0D'))
             {
                 element = new CarriageReturn(context);
                 return true;

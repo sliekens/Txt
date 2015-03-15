@@ -29,7 +29,7 @@ namespace SLANG.Core
             var context = scanner.GetContext();
 
             // %x00-1F
-            for (var c = '\u0000'; c <= '\u001F'; c++)
+            for (var c = '\x00'; c <= '\x1F'; c++)
             {
                 if (scanner.TryMatch(c))
                 {
@@ -39,9 +39,9 @@ namespace SLANG.Core
             }
 
             // %x7F
-            if (scanner.TryMatch('\u007F'))
+            if (scanner.TryMatch('\x7F'))
             {
-                element = new ControlCharacter('\u007F', context);
+                element = new ControlCharacter('\x7F', context);
                 return true;
             }
 

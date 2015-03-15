@@ -27,15 +27,15 @@ namespace SLANG.Core
             }
 
             var context = scanner.GetContext();
-            if (scanner.TryMatch('\u0030'))
+            if (scanner.TryMatch('\x30'))
             {
-                element = new Bit('\u0030', context);
+                element = new Bit('\x30', context);
                 return true;
             }
 
-            if (scanner.TryMatch('\u0031'))
+            if (scanner.TryMatch('\x31'))
             {
-                element = new Bit('\u0031', context);
+                element = new Bit('\x31', context);
                 return true;
             }
 

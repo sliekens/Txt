@@ -20,7 +20,7 @@ namespace SLANG.Core
         public Bit(char data, ITextContext context)
             : base(data, context)
         {
-            Contract.Requires(data == '\u0030' || data == '\u0031');
+            Contract.Requires(data == '\x30' || data == '\x31');
             Contract.Requires(context != null);
         }
     }

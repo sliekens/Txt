@@ -20,7 +20,7 @@ namespace SLANG.Core
         public Character(char data, ITextContext context)
             : base(data, context)
         {
-            Contract.Requires(data >= '\u0001' && data <= '\u007F');
+            Contract.Requires(data >= '\x01' && data <= '\x7F');
             Contract.Requires(context != null);
         }
     }

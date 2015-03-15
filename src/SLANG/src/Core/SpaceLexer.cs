@@ -27,7 +27,7 @@ namespace SLANG.Core
             }
 
             var context = scanner.GetContext();
-            if (scanner.TryMatch('\u0020'))
+            if (scanner.TryMatch('\x20'))
             {
                 element = new Space(context);
                 return true;

@@ -27,7 +27,7 @@ namespace SLANG.Core
             }
 
             var context = scanner.GetContext();
-            if (scanner.TryMatch('\u000A'))
+            if (scanner.TryMatch('\x0A'))
             {
                 element = new LineFeed(context);
                 return true;

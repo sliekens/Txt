@@ -16,7 +16,7 @@ namespace SLANG.Core
         /// <summary>Initializes a new instance of the <see cref="T:SLANG.Core.LineFeed"/> class with a specified context.</summary>
         /// <param name="context">The object that describes the context in which the text appears.</param>
         public LineFeed(ITextContext context)
-            : base("\u000A", context)
+            : base("\x0A", context)
         {
             Contract.Requires(context != null);
         }

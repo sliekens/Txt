@@ -27,7 +27,7 @@ namespace SLANG.Core
             }
 
             var context = scanner.GetContext();
-            for (var c = '\u0001'; c <= '\u007F'; c++)
+            for (var c = '\x01'; c <= '\x7F'; c++)
             {
                 if (scanner.TryMatch(c))
                 {

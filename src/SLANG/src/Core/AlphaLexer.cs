@@ -29,7 +29,7 @@ namespace SLANG.Core
             var context = scanner.GetContext();
 
             // A - Z
-            for (var c = '\u0041'; c <= '\u005A'; c++)
+            for (var c = '\x41'; c <= '\x5A'; c++)
             {
                 if (scanner.TryMatch(c))
                 {
@@ -39,7 +39,7 @@ namespace SLANG.Core
             }
 
             // a - z
-            for (var c = '\u0061'; c <= '\u007A'; c++)
+            for (var c = '\x61'; c <= '\x7A'; c++)
             {
                 if (scanner.TryMatch(c))
                 {

@@ -20,7 +20,7 @@ namespace SLANG.Core
         public Alpha(char data, ITextContext context)
             : base(data, context)
         {
-            Contract.Requires((data >= '\u0041' && data <= '\u005A') || (data >= '\u0061' && data <= '\u007A'));
+            Contract.Requires((data >= '\x41' && data <= '\x5A') || (data >= '\x61' && data <= '\x7A'));
             Contract.Requires(context != null);
         }
     }
