@@ -26,7 +26,7 @@
             }
 
             var context = scanner.GetContext();
-            var elements = new List<T2>(this.upperBound);
+            var elements = new List<T2>(this.lowerBound);
             for (int i = 0; i < this.upperBound; i++)
             {
                 T2 entry;
