@@ -179,6 +179,7 @@
     <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AlternativeLexer{TAlternative,T1,T2,T3,T4}.cs" />
     <Compile Include="AlternativeLexer{TAlternative,T1,T2,T3}.cs" />
     <Compile Include="AlternativeLexer{TAlternative,T1,T2}.cs" />
     <Compile Include="Alternative{T1,T2,T3,T4,T5,T6,T7,T8,T9,T10}.cs" />
