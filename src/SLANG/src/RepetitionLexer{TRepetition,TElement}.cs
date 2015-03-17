@@ -65,11 +65,6 @@
             }
 
             element = this.CreateInstance(elements, this.lowerBound, this.upperBound, context);
-            if (element == null)
-            {
-                throw new InvalidOperationException("Postcondition: result != null");
-            }
-
             return true;
         }
 
