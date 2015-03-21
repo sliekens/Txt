@@ -3,41 +3,21 @@
 //   The MIT License (MIT)
 // </copyright>
 // <summary>
-//   TODO
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG.Core
 {
-    /// <summary>TODO </summary>
-    public class OctetLexer : Lexer<Octet>
+    public class OctetLexer : AlternativeLexer<Octet>
     {
         /// <summary>Initializes a new instance of the <see cref="OctetLexer"/> class.</summary>
         public OctetLexer()
-            : base("OCTET")
+            : base("OCTET", '\0', '\xFF')
         {
         }
 
-        /// <inheritdoc />
-        public override bool TryRead(ITextScanner scanner, out Octet element)
+        protected override Octet CreateInstance(char element, ITextContext context)
         {
-            if (scanner.EndOfInput)
-            {
-                element = default(Octet);
-                return false;
-            }
-
-            var context = scanner.GetContext();
-            for (var c = '\x00'; c <= '\xFF'; c++)
-            {
-                if (scanner.TryMatch(c))
-                {
-                    element = new Octet(c, context);
-                    return true;
-                }
-            }
-
-            element = default(Octet);
-            return false;
+            return new Octet(element, context);
         }
     }
 }
