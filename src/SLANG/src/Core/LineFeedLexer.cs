@@ -3,12 +3,10 @@
 //   The MIT License (MIT)
 // </copyright>
 // <summary>
-//   TODO
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG.Core
 {
-    /// <summary>TODO </summary>
     public class LineFeedLexer : Lexer<LineFeed>
     {
         /// <summary>Initializes a new instance of the <see cref="LineFeedLexer"/> class.</summary>

@@ -8,16 +8,10 @@
 namespace SLANG.Core
 {
     using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Diagnostics.Contracts;
 
-    public class LinearWhiteSpaceLexer : RepetitionLexer<LinearWhiteSpace, Alternative<WhiteSpace, Sequence<EndOfLine, WhiteSpace>>>
+    public partial class LinearWhiteSpaceLexer : RepetitionLexer<LinearWhiteSpace, LinearWhiteSpace.MultiLineWhiteSpace>
     {
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private readonly ILexer<EndOfLine> endOfLineLexer;
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private readonly ILexer<WhiteSpace> whiteSpaceLexer;
+        private readonly ILexer<LinearWhiteSpace.MultiLineWhiteSpace> elementLexer;
 
         public LinearWhiteSpaceLexer()
             : this(new EndOfLineLexer(), new WhiteSpaceLexer())
@@ -25,79 +19,95 @@ namespace SLANG.Core
         }
 
         public LinearWhiteSpaceLexer(ILexer<EndOfLine> endOfLineLexer, ILexer<WhiteSpace> whiteSpaceLexer)
-            : base("LWSP", 0, int.MaxValue)
+            : this(new MultiLineWhiteSpaceLexer(whiteSpaceLexer, new MultiLineWhiteSpaceLexer.NewLineWhiteSpaceLexer(endOfLineLexer, whiteSpaceLexer)))
         {
-            Contract.Requires(endOfLineLexer != null);
-            Contract.Requires(whiteSpaceLexer != null);
-            this.endOfLineLexer = endOfLineLexer;
-            this.whiteSpaceLexer = whiteSpaceLexer;
         }
 
-        protected override LinearWhiteSpace CreateInstance(IList<Alternative<WhiteSpace, Sequence<EndOfLine, WhiteSpace>>> elements, int lowerBound, int upperBound, ITextContext context)
+        public LinearWhiteSpaceLexer(ILexer<LinearWhiteSpace.MultiLineWhiteSpace> elementLexer)
+            : base("LWSP", 0, int.MaxValue)
+        {
+            this.elementLexer = elementLexer;
+        }
+
+        protected override LinearWhiteSpace CreateInstance(IList<LinearWhiteSpace.MultiLineWhiteSpace> elements, int lowerBound, int upperBound, ITextContext context)
         {
             return new LinearWhiteSpace(elements, context);
         }
 
-        protected override bool TryRead(ITextScanner scanner, int lowerBound, int upperBound, int current, out Alternative<WhiteSpace, Sequence<EndOfLine, WhiteSpace>> element)
+        protected override bool TryRead(ITextScanner scanner, int lowerBound, int upperBound, int current, out LinearWhiteSpace.MultiLineWhiteSpace element)
         {
-            if (scanner.EndOfInput)
-            {
-                element = default(Alternative<WhiteSpace, Sequence<EndOfLine, WhiteSpace>>);
-                return false;
-            }
-
-            var context = scanner.GetContext();
-            WhiteSpace alternative1;
-            if (this.whiteSpaceLexer.TryRead(scanner, out alternative1))
-            {
-                element = new Alternative<WhiteSpace, Sequence<EndOfLine, WhiteSpace>>(alternative1, 1, context);
-                return true;
-            }
-
-            Sequence<EndOfLine, WhiteSpace> alternative2;
-            if (this.TryReadEndOfLineWhiteSpaceSequence(scanner, out alternative2))
-            {
-                element = new Alternative<WhiteSpace, Sequence<EndOfLine, WhiteSpace>>(alternative2, 2, context);
-                return true;
-            }
-
-            element = default(Alternative<WhiteSpace, Sequence<EndOfLine, WhiteSpace>>);
-            return false;
+            return this.elementLexer.TryRead(scanner, out element);
         }
+    }
 
-        private bool TryReadEndOfLineWhiteSpaceSequence(ITextScanner scanner, out Sequence<EndOfLine, WhiteSpace> element)
+    public partial class LinearWhiteSpaceLexer
+    {
+        public partial class MultiLineWhiteSpaceLexer : AlternativeLexer<LinearWhiteSpace.MultiLineWhiteSpace, WhiteSpace, LinearWhiteSpace.MultiLineWhiteSpace.NewLineWhiteSpace>
         {
-            if (scanner.EndOfInput)
+            private readonly ILexer<WhiteSpace> element1Lexer;
+
+            private readonly ILexer<LinearWhiteSpace.MultiLineWhiteSpace.NewLineWhiteSpace> element2Lexer;
+
+            public MultiLineWhiteSpaceLexer(ILexer<WhiteSpace> element1Lexer, ILexer<LinearWhiteSpace.MultiLineWhiteSpace.NewLineWhiteSpace> element2Lexer)
             {
-                element = default(Sequence<EndOfLine, WhiteSpace>);
-                return false;
+                this.element1Lexer = element1Lexer;
+                this.element2Lexer = element2Lexer;
             }
 
-            var context = scanner.GetContext();
-            EndOfLine element1;
-            if (!this.endOfLineLexer.TryRead(scanner, out element1))
+            protected override LinearWhiteSpace.MultiLineWhiteSpace CreateInstance1(WhiteSpace element, ITextContext context)
             {
-                element = default(Sequence<EndOfLine, WhiteSpace>);
-                return false;
+                return new LinearWhiteSpace.MultiLineWhiteSpace(element, 1, context);
             }
 
-            WhiteSpace element2;
-            if (!this.whiteSpaceLexer.TryRead(scanner, out element2))
+            protected override LinearWhiteSpace.MultiLineWhiteSpace CreateInstance2(LinearWhiteSpace.MultiLineWhiteSpace.NewLineWhiteSpace element, ITextContext context)
             {
-                scanner.PutBack(element1.Data);
-                element = default(Sequence<EndOfLine, WhiteSpace>);
-                return false;
+                return new LinearWhiteSpace.MultiLineWhiteSpace(element, 2, context);
             }
 
-            element = new Sequence<EndOfLine, WhiteSpace>(element1, element2, context);
-            return true;
+            protected override bool TryRead1(ITextScanner scanner, out WhiteSpace element)
+            {
+                return this.element1Lexer.TryRead(scanner, out element);
+            }
+
+            protected override bool TryRead2(ITextScanner scanner, out LinearWhiteSpace.MultiLineWhiteSpace.NewLineWhiteSpace element)
+            {
+                return this.element2Lexer.TryRead(scanner, out element);
+            }
         }
+    }
 
-        [ContractInvariantMethod]
-        private void ObjectInvariant()
+    public partial class LinearWhiteSpaceLexer
+    {
+        public partial class MultiLineWhiteSpaceLexer
         {
-            Contract.Invariant(this.whiteSpaceLexer != null);
-            Contract.Invariant(this.endOfLineLexer != null);
+            public class NewLineWhiteSpaceLexer :
+                SequenceLexer<LinearWhiteSpace.MultiLineWhiteSpace.NewLineWhiteSpace, EndOfLine, WhiteSpace>
+            {
+                private readonly ILexer<EndOfLine> element1Lexer;
+
+                private readonly ILexer<WhiteSpace> element2Lexer;
+
+                public NewLineWhiteSpaceLexer(ILexer<EndOfLine> element1Lexer, ILexer<WhiteSpace> element2Lexer)
+                {
+                    this.element1Lexer = element1Lexer;
+                    this.element2Lexer = element2Lexer;
+                }
+
+                protected override LinearWhiteSpace.MultiLineWhiteSpace.NewLineWhiteSpace CreateInstance(EndOfLine element1, WhiteSpace element2, ITextContext context)
+                {
+                    return new LinearWhiteSpace.MultiLineWhiteSpace.NewLineWhiteSpace(element1, element2, context);
+                }
+
+                protected override bool TryRead1(ITextScanner scanner, out EndOfLine element)
+                {
+                    return this.element1Lexer.TryRead(scanner, out element);
+                }
+
+                protected override bool TryRead2(ITextScanner scanner, out WhiteSpace element)
+                {
+                    return this.element2Lexer.TryRead(scanner, out element);
+                }
+            }
         }
     }
 }
