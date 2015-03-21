@@ -3,12 +3,10 @@
 //   The MIT License (MIT)
 // </copyright>
 // <summary>
-//   TODO
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG.Core
 {
-    /// <summary>TODO </summary>
     public class HorizontalTabLexer : Lexer<HorizontalTab>
     {
         /// <summary>Initializes a new instance of the <see cref="HorizontalTabLexer"/> class.</summary>
@@ -27,7 +25,7 @@ namespace SLANG.Core
             }
 
             var context = scanner.GetContext();
-            if (scanner.TryMatch('\t'))
+            if (scanner.TryMatch('\x09'))
             {
                 element = new HorizontalTab(context);
                 return true;
