@@ -3,50 +3,73 @@
 //   The MIT License (MIT)
 // </copyright>
 // <summary>
-//   TODO
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG.Core
 {
-    /// <summary>TODO </summary>
-    public class ControlCharacterLexer : Lexer<ControlCharacter>
+    public partial class ControlCharacterLexer : AlternativeLexer<ControlCharacter, ControlCharacter.Controls, Element>
     {
-        /// <summary>Initializes a new instance of the <see cref="ControlCharacterLexer"/> class.</summary>
+        private readonly ILexer<ControlCharacter.Controls> element1Lexer;
+
+        private readonly ILexer<Element> element2Lexer;
+
         public ControlCharacterLexer()
-            : base("CTL")
+            : this(new ControlsLexer(), new DeleteLexer())
         {
         }
 
-        /// <inheritdoc />
-        public override bool TryRead(ITextScanner scanner, out ControlCharacter element)
+        public ControlCharacterLexer(ILexer<ControlCharacter.Controls> element1Lexer, ILexer<Element> element2Lexer)
+            : base("CTL")
         {
-            if (scanner.EndOfInput)
+            this.element1Lexer = element1Lexer;
+            this.element2Lexer = element2Lexer;
+        }
+
+        protected override ControlCharacter CreateInstance1(ControlCharacter.Controls element, ITextContext context)
+        {
+            return new ControlCharacter(element, context);
+        }
+
+        protected override ControlCharacter CreateInstance2(Element element, ITextContext context)
+        {
+            return new ControlCharacter(element, context);
+        }
+
+        protected override bool TryRead1(ITextScanner scanner, out ControlCharacter.Controls element)
+        {
+            return this.element1Lexer.TryRead(scanner, out element);
+        }
+
+        protected override bool TryRead2(ITextScanner scanner, out Element element)
+        {
+            return this.element2Lexer.TryRead(scanner, out element);
+        }
+    }
+
+    public partial class ControlCharacterLexer
+    {
+        public class ControlsLexer : AlternativeLexer<ControlCharacter.Controls>
+        {
+            public ControlsLexer()
+                : base('\0', '\x1F')
             {
-                element = default(ControlCharacter);
-                return false;
             }
 
-            var context = scanner.GetContext();
-
-            // %x00-1F
-            for (var c = '\x00'; c <= '\x1F'; c++)
+            protected override ControlCharacter.Controls CreateInstance(char element, ITextContext context)
             {
-                if (scanner.TryMatch(c))
-                {
-                    element = new ControlCharacter(c, context);
-                    return true;
-                }
+                return new ControlCharacter.Controls(element, context);
             }
+        }
+    }
 
-            // %x7F
-            if (scanner.TryMatch('\x7F'))
+    public partial class ControlCharacterLexer
+    {
+        public class DeleteLexer : Lexer<Element>
+        {
+            public override bool TryRead(ITextScanner scanner, out Element element)
             {
-                element = new ControlCharacter('\x7F', context);
-                return true;
+                return TryReadTerminal(scanner, '\x7F', out element);
             }
-
-            element = default(ControlCharacter);
-            return false;
         }
     }
 }
