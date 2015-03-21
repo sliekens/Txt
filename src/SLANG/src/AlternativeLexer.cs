@@ -34,7 +34,7 @@
             }
 
             var context = scanner.GetContext();
-            for (char c = this.lowerBound; c < this.upperBound; c++)
+            for (char c = this.lowerBound; c <= this.upperBound; c++)
             {
                 if (scanner.TryMatch(c, ignoreCase: true))
                 {
