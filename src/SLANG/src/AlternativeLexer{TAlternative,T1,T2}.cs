@@ -19,6 +19,11 @@ namespace SLANG
         where T1 : Element
         where T2 : Element
     {
+        /// <summary>Initializes a new instance of the <see cref="AlternativeLexer{TAlternative,T1,T2}"/> class for an unnamed element.</summary>
+        protected AlternativeLexer()
+        {
+        }
+
         /// <summary>Initializes a new instance of the <see cref="AlternativeLexer{TAlternative,T1,T2}"/> class for a specified rule.</summary>
         /// <param name="ruleName">The name of the lexer rule. Rule names are case insensitive.</param>
         /// <exception cref="ArgumentException">The value of <paramref name="ruleName"/> is a <c>null</c> reference (<c>Nothing</c> in Visual Basic) -or- the value of <paramref name="ruleName"/> does not start with a letter -or- the value of <paramref name="ruleName"/> contains one or more characters that are not letters, digits or hyphens.</exception>
