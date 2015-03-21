@@ -8,20 +8,39 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG.Core
 {
-    using System.Diagnostics.Contracts;
-
     /// <summary>Represents the ALPHA rule: 1 letter of the alphabet (case-insensitive). Unicode: U+0041-U+005A, U+0061-U+007A.</summary>
-    public class Alpha : Element
+    public partial class Alpha : Alternative<Alpha.UpperCase, Alpha.LowerCase>
     {
-        /// <summary>Initializes a new instance of the <see cref="T:SLANG.Core.Alpha"/> class with a specified character and context.</summary>
-        /// <param name="data">The letter.</param>
-        /// <param name="context">The object that describes the context in which the text
-        /// appears.</param>
-        public Alpha(char data, ITextContext context)
-            : base(data, context)
+        public Alpha(UpperCase element, ITextContext context)
+            : base(element, context)
         {
-            Contract.Requires((data >= '\x41' && data <= '\x5A') || (data >= '\x61' && data <= '\x7A'));
-            Contract.Requires(context != null);
+        }
+
+        public Alpha(LowerCase element, ITextContext context)
+            : base(element, context)
+        {
+        }
+    }
+
+    public partial class Alpha
+    {
+        public class UpperCase : Alternative
+        {
+            public UpperCase(char data, ITextContext context)
+                : base(data, '\x41', '\x5A', context)
+            {
+            }
+        }
+    }
+
+    public partial class Alpha
+    {
+        public class LowerCase : Alternative
+        {
+            public LowerCase(char data, ITextContext context)
+                : base(data, '\x61', '\x7A', context)
+            {
+            }
         }
     }
 }

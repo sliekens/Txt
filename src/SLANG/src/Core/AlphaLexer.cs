@@ -3,53 +3,78 @@
 //   The MIT License (MIT)
 // </copyright>
 // <summary>
-//   TODO
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG.Core
 {
-    /// <summary>TODO </summary>
-    public class AlphaLexer : Lexer<Alpha>
+    public partial class AlphaLexer : AlternativeLexer<Alpha, Alpha.UpperCase, Alpha.LowerCase>
     {
-        /// <summary>Initializes a new instance of the <see cref="AlphaLexer"/> class.</summary>
+        private readonly ILexer<Alpha.UpperCase> element1Lexer;
+
+        private readonly ILexer<Alpha.LowerCase> element2Lexer;
+
         public AlphaLexer()
-            : base("ALPHA")
+            : this(new UpperCaseLexer(), new LowerCaseLexer())
         {
         }
 
-        /// <inheritdoc />
-        public override bool TryRead(ITextScanner scanner, out Alpha element)
+        public AlphaLexer(ILexer<Alpha.UpperCase> element1Lexer, ILexer<Alpha.LowerCase> element2Lexer)
+            : base("ALPHA")
         {
-            if (scanner.EndOfInput)
+            this.element1Lexer = element1Lexer;
+            this.element2Lexer = element2Lexer;
+        }
+
+        protected override Alpha CreateInstance1(Alpha.UpperCase element, ITextContext context)
+        {
+            return new Alpha(element, context);
+        }
+
+        protected override Alpha CreateInstance2(Alpha.LowerCase element, ITextContext context)
+        {
+            return new Alpha(element, context);
+        }
+
+        protected override bool TryRead1(ITextScanner scanner, out Alpha.UpperCase element)
+        {
+            return this.element1Lexer.TryRead(scanner, out element);
+        }
+
+        protected override bool TryRead2(ITextScanner scanner, out Alpha.LowerCase element)
+        {
+            return this.element2Lexer.TryRead(scanner, out element);
+        }
+    }
+
+    public partial class AlphaLexer
+    {
+        public class UpperCaseLexer : AlternativeLexer<Alpha.UpperCase>
+        {
+            public UpperCaseLexer()
+                : base('\x41', '\x5A')
             {
-                element = default(Alpha);
-                return false;
             }
 
-            var context = scanner.GetContext();
-
-            // A - Z
-            for (var c = '\x41'; c <= '\x5A'; c++)
+            protected override Alpha.UpperCase CreateInstance(char element, ITextContext context)
             {
-                if (scanner.TryMatch(c))
-                {
-                    element = new Alpha(c, context);
-                    return true;
-                }
+                return new Alpha.UpperCase(element, context);
+            }
+        }
+    }
+
+    public partial class AlphaLexer
+    {
+        public class LowerCaseLexer : AlternativeLexer<Alpha.LowerCase>
+        {
+            public LowerCaseLexer()
+                : base('\x61', '\x7A')
+            {
             }
 
-            // a - z
-            for (var c = '\x61'; c <= '\x7A'; c++)
+            protected override Alpha.LowerCase CreateInstance(char element, ITextContext context)
             {
-                if (scanner.TryMatch(c))
-                {
-                    element = new Alpha(c, context);
-                    return true;
-                }
+                return new Alpha.LowerCase(element, context);
             }
-
-            element = default(Alpha);
-            return false;
         }
     }
 }
