@@ -13,12 +13,22 @@
         private readonly int lowerBound;
         private readonly int upperBound;
 
+        /// <summary>Initializes a new instance of the <see cref="RepetitionLexer{TRepetition,TElement}"/> class for an unnamed element.
+        /// </summary>
+        /// <param name="lowerBound">A number that indicates the minimum number of occurrences.</param>
+        /// <param name="upperBound">A number that indicates the maximum number of occurrences.</param>
+        protected RepetitionLexer(int lowerBound, int upperBound)
+        {
+            this.lowerBound = lowerBound;
+            this.upperBound = upperBound;
+        }
+
         /// <summary>Initializes a new instance of the <see cref="RepetitionLexer{TRepetition,TElement}"/> class for a specified rule.
         /// </summary>
         /// <param name="ruleName">The name of the lexer rule. Rule names are case insensitive.</param>
-        /// <exception cref="ArgumentException">The value of <paramref name="ruleName"/> is a <c>null</c> reference (<c>Nothing</c> in Visual Basic) -or- the value of <paramref name="ruleName"/> does not start with a letter -or- the value of <paramref name="ruleName"/> contains one or more characters that are not letters, digits or hyphens.</exception>
         /// <param name="lowerBound">A number that indicates the minimum number of occurrences.</param>
         /// <param name="upperBound">A number that indicates the maximum number of occurrences.</param>
+        /// <exception cref="ArgumentException">The value of <paramref name="ruleName"/> is a <c>null</c> reference (<c>Nothing</c> in Visual Basic) -or- the value of <paramref name="ruleName"/> does not start with a letter -or- the value of <paramref name="ruleName"/> contains one or more characters that are not letters, digits or hyphens.</exception>
         protected RepetitionLexer(string ruleName, int lowerBound, int upperBound)
             : base(ruleName)
         {
