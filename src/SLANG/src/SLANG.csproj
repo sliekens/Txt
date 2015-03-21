@@ -202,6 +202,7 @@
     <Compile Include="ContractClassForITextScanner.cs" />
     <Compile Include="Core\AlphaLexer.cs" />
     <Compile Include="Core\Alpha.cs" />
+    <Compile Include="AlternativeLexer.cs" />
     <Compile Include="Core\BitLexer.cs" />
     <Compile Include="Core\Bit.cs" />
     <Compile Include="Core\CharacterLexer.cs" />
