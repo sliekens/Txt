@@ -3,13 +3,11 @@
 //   The MIT License (MIT)
 // </copyright>
 // <summary>
-//   TODO
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG.Core
 {
-    /// <summary>TODO </summary>
-    public class BitLexer : Lexer<Bit>
+    public class BitLexer : AlternativeLexer<Bit, Element, Element>
     {
         /// <summary>Initializes a new instance of the <see cref="BitLexer"/> class.</summary>
         public BitLexer()
@@ -17,30 +15,24 @@ namespace SLANG.Core
         {
         }
 
-        /// <inheritdoc />
-        public override bool TryRead(ITextScanner scanner, out Bit element)
+        protected override Bit CreateInstance1(Element element, ITextContext context)
         {
-            if (scanner.EndOfInput)
-            {
-                element = default(Bit);
-                return false;
-            }
+            return new Bit(element, 1, context);
+        }
 
-            var context = scanner.GetContext();
-            if (scanner.TryMatch('\x30'))
-            {
-                element = new Bit('\x30', context);
-                return true;
-            }
+        protected override Bit CreateInstance2(Element element, ITextContext context)
+        {
+            return new Bit(element, 2, context);
+        }
 
-            if (scanner.TryMatch('\x31'))
-            {
-                element = new Bit('\x31', context);
-                return true;
-            }
+        protected override bool TryRead1(ITextScanner scanner, out Element element)
+        {
+            return TryReadTerminal(scanner, "0", out element);
+        }
 
-            element = default(Bit);
-            return false;
+        protected override bool TryRead2(ITextScanner scanner, out Element element)
+        {
+            return TryReadTerminal(scanner, "1", out element);
         }
     }
 }
