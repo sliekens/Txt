@@ -18,7 +18,7 @@ namespace SLANG.Core
         /// <param name="element">The space character.</param>
         /// <param name="context">The object that describes the context in which the text appears.</param>
         public WhiteSpace(Space element, ITextContext context)
-            : base(element, context)
+            : base(element, 1, context)
         {
             Contract.Requires(element != null);
             Contract.Requires(context != null);
@@ -29,7 +29,7 @@ namespace SLANG.Core
         /// <param name="element">The horizontal tab character.</param>
         /// <param name="context">The object that describes the context in which the text appears.</param>
         public WhiteSpace(HorizontalTab element, ITextContext context)
-            : base(element, context)
+            : base(element, 2, context)
         {
             Contract.Requires(element != null);
             Contract.Requires(context != null);

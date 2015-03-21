@@ -50,14 +50,14 @@ namespace SLANG.Core
             WhiteSpace alternative1;
             if (this.whiteSpaceLexer.TryRead(scanner, out alternative1))
             {
-                element = new Alternative<WhiteSpace, Sequence<EndOfLine, WhiteSpace>>(alternative1, context);
+                element = new Alternative<WhiteSpace, Sequence<EndOfLine, WhiteSpace>>(alternative1, 1, context);
                 return true;
             }
 
             Sequence<EndOfLine, WhiteSpace> alternative2;
             if (this.TryReadEndOfLineWhiteSpaceSequence(scanner, out alternative2))
             {
-                element = new Alternative<WhiteSpace, Sequence<EndOfLine, WhiteSpace>>(alternative2, context);
+                element = new Alternative<WhiteSpace, Sequence<EndOfLine, WhiteSpace>>(alternative2, 2, context);
                 return true;
             }
 

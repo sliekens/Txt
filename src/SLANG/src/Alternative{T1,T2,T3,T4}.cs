@@ -8,6 +8,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG
 {
+    using System;
     using System.Diagnostics.CodeAnalysis;
     using System.Diagnostics.Contracts;
 
@@ -24,45 +25,47 @@ namespace SLANG
 
         /// <summary>Initializes a new instance of the <see cref="Alternative{T1,T2,T3,T4}"/> class with a specified alternative.</summary>
         /// <param name="element">The alternative element.</param>
+        /// <param name="alternative">A number that indicates which alternative was matched.</param>
         /// <param name="context">The object that describes the context in which the text appears.</param>
-        public Alternative(T1 element, ITextContext context)
+        public Alternative(Element element, int alternative, ITextContext context)
             : base(element.Data, context)
         {
             Contract.Requires(element != null);
             Contract.Requires(context != null);
-            this.element = element;
-        }
+            switch (alternative)
+            {
+                case 1:
+                    if (false == element is T1)
+                    {
+                        throw new ArgumentException("Precondition: element is T1", "element");
+                    }
 
-        /// <summary>Initializes a new instance of the <see cref="Alternative{T1,T2,T3,T4}"/> class with a specified alternative.</summary>
-        /// <param name="element">The alternative element.</param>
-        /// <param name="context">The object that describes the context in which the text appears.</param>
-        public Alternative(T2 element, ITextContext context)
-            : base(element.Data, context)
-        {
-            Contract.Requires(element != null);
-            Contract.Requires(context != null);
-            this.element = element;
-        }
+                    break;
+                case 2:
+                    if (false == element is T2)
+                    {
+                        throw new ArgumentException("Precondition: element is T2", "element");
+                    }
 
-        /// <summary>Initializes a new instance of the <see cref="Alternative{T1,T2,T3,T4}"/> class with a specified alternative.</summary>
-        /// <param name="element">The alternative element.</param>
-        /// <param name="context">The object that describes the context in which the text appears.</param>
-        public Alternative(T3 element, ITextContext context)
-            : base(element.Data, context)
-        {
-            Contract.Requires(element != null);
-            Contract.Requires(context != null);
-            this.element = element;
-        }
+                    break;
+                case 3:
+                    if (false == element is T3)
+                    {
+                        throw new ArgumentException("Precondition: element is T3", "element");
+                    }
 
-        /// <summary>Initializes a new instance of the <see cref="Alternative{T1,T2,T3,T4}"/> class with a specified alternative.</summary>
-        /// <param name="element">The alternative element.</param>
-        /// <param name="context">The object that describes the context in which the text appears.</param>
-        public Alternative(T4 element, ITextContext context)
-            : base(element.Data, context)
-        {
-            Contract.Requires(element != null);
-            Contract.Requires(context != null);
+                    break;
+                case 4:
+                    if (false == element is T4)
+                    {
+                        throw new ArgumentException("Precondition: element is T4", "element");
+                    }
+
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException("alternative");
+            }
+
             this.element = element;
         }
 

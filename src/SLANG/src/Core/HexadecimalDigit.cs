@@ -21,7 +21,7 @@ namespace SLANG.Core
         /// <param name="element">The hexadecimal digit.</param>
         /// <param name="context">The object that describes the context in which the text appears.</param>
         public HexadecimalDigit(Digit element, ITextContext context)
-            : base(element, context)
+            : base(element, 1, context)
         {
             Contract.Requires(element != null);
             Contract.Requires(context != null);
@@ -32,7 +32,7 @@ namespace SLANG.Core
         /// <param name="element">The hexadecimal digit.</param>
         /// <param name="context">The object that describes the context in which the text appears.</param>
         public HexadecimalDigit(Element element, ITextContext context)
-            : base(element, context)
+            : base(element, 2, context)
         {
             Contract.Requires(element != null);
             Contract.Requires(context != null);
