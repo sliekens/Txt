@@ -13,6 +13,15 @@
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly char upperBound;
 
+        /// <summary>Initializes a new instance of the <see cref="AlternativeLexer{TAlternative}"/> class for an unnamed element.</summary>
+        /// <param name="lowerBound">The lower bound of the range of alternatives.</param>
+        /// <param name="upperBound">The upper bound of the range of alternatives.</param>
+        protected AlternativeLexer(char lowerBound, char upperBound)
+        {
+            this.lowerBound = lowerBound;
+            this.upperBound = upperBound;
+        }
+
         /// <summary>Initializes a new instance of the <see cref="AlternativeLexer{TAlternative}"/> class for a specified rule.</summary>
         /// <param name="ruleName">The name of the lexer rule. Rule names are case insensitive.</param>
         /// <param name="lowerBound">The lower bound of the range of alternatives.</param>
