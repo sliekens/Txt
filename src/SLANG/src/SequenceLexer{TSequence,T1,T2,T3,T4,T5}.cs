@@ -17,10 +17,15 @@
         where T4 : Element
         where T5 : Element
     {
+        /// <summary>Initializes a new instance of the <see cref="SequenceLexer{TSequence,T1,T2,T3,T4,T5}"/> class for an unnamed element.</summary>
+        protected SequenceLexer()
+        {
+        }
+
         /// <summary>Initializes a new instance of the <see cref="SequenceLexer{TSequence,T1,T2,T3,T4,T5}"/> class for a specified rule.</summary>
         /// <param name="ruleName">The name of the lexer rule. Rule names are case insensitive.</param>
         /// <exception cref="ArgumentException">The value of <paramref name="ruleName"/> is a <c>null</c> reference (<c>Nothing</c> in Visual Basic) -or- the value of <paramref name="ruleName"/> does not start with a letter -or- the value of <paramref name="ruleName"/> contains one or more characters that are not letters, digits or hyphens.</exception>
-        public SequenceLexer(string ruleName)
+        protected SequenceLexer(string ruleName)
             : base(ruleName)
         {
         }
