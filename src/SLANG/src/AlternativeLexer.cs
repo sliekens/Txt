@@ -45,7 +45,7 @@
             var context = scanner.GetContext();
             for (char c = this.lowerBound; c <= this.upperBound; c++)
             {
-                if (scanner.TryMatch(c, ignoreCase: true))
+                if (scanner.TryMatch(c, ignoreCase: false))
                 {
                     element = this.CreateInstance(c, context);
                     return true;
