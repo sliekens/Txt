@@ -3,41 +3,21 @@
 //   The MIT License (MIT)
 // </copyright>
 // <summary>
-//   TODO
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG.Core
 {
-    /// <summary>TODO </summary>
-    public class CharacterLexer : Lexer<Character>
+    public class CharacterLexer : AlternativeLexer<Character>
     {
         /// <summary>Initializes a new instance of the <see cref="CharacterLexer"/> class.</summary>
         public CharacterLexer()
-            : base("CHAR")
+            : base("CHAR", '\x01', '\x7F')
         {
         }
 
-        /// <inheritdoc />
-        public override bool TryRead(ITextScanner scanner, out Character element)
+        protected override Character CreateInstance(char element, ITextContext context)
         {
-            if (scanner.EndOfInput)
-            {
-                element = default(Character);
-                return false;
-            }
-
-            var context = scanner.GetContext();
-            for (var c = '\x01'; c <= '\x7F'; c++)
-            {
-                if (scanner.TryMatch(c))
-                {
-                    element = new Character(c, context);
-                    return true;
-                }
-            }
-
-            element = default(Character);
-            return false;
+            return new Character(element, context);
         }
     }
 }
