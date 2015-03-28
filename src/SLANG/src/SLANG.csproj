@@ -240,6 +240,7 @@
     <Compile Include="OptionLexer.cs" />
     <Compile Include="Option{T}.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PushbackInputStream.cs" />
     <Compile Include="RepetitionLexer{TRepetition,TElement}.cs" />
     <Compile Include="Repetition{T}.cs" />
     <Compile Include="SequenceLexer{TSequence,T1,T2,T3}.cs" />

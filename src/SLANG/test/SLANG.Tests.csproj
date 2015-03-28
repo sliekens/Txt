@@ -73,6 +73,7 @@
     <Compile Include="LineFeedLexerTests.cs" />
     <Compile Include="LinearWhiteSpaceLexerTests.cs" />
     <Compile Include="OctetLexerTests.cs" />
+    <Compile Include="PushbackInputStreamTests.cs" />
     <Compile Include="SpaceLexerTests.cs" />
     <Compile Include="TextScannerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
