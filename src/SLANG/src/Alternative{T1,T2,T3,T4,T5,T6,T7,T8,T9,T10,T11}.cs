@@ -4,7 +4,7 @@
     using System.Diagnostics.CodeAnalysis;
     using System.Diagnostics.Contracts;
 
-    /// <summary>Represents a choice of ten alternative elements.</summary>
+    /// <summary>Represents a choice of eleven alternative elements.</summary>
     /// <typeparam name="T1">The type of the first alternative element.</typeparam>
     /// <typeparam name="T2">The type of the second alternative element.</typeparam>
     /// <typeparam name="T3">The type of the third alternative element.</typeparam>
@@ -15,7 +15,8 @@
     /// <typeparam name="T8">The type of the eighth alternative element.</typeparam>
     /// <typeparam name="T9">The type of the ninth alternative element.</typeparam>
     /// <typeparam name="T10">The type of the tenth alternative element.</typeparam>
-    public class Alternative<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : Element
+    /// <typeparam name="T11">The type of the eleventh alternative element.</typeparam>
+    public class Alternative<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : Element
         where T1 : Element
         where T2 : Element
         where T3 : Element
@@ -26,11 +27,15 @@
         where T8 : Element
         where T9 : Element
         where T10 : Element
+        where T11 : Element
     {
         /// <summary>The alternative element.</summary>
         private readonly Element element;
 
-        /// <summary>Initializes a new instance of the <see cref="Alternative{T1,T2,T3,T4,T5,T6,T7,T8,T9,T10}"/> class with a specified alternative.</summary>
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="Alternative{T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11}" /> class with a
+        ///     specified alternative.
+        /// </summary>
         /// <param name="element">The alternative element.</param>
         /// <param name="alternative">A number that indicates which alternative was matched.</param>
         /// <param name="context">The object that describes the context in which the text appears.</param>
@@ -111,6 +116,13 @@
                     }
 
                     break;
+                case 11:
+                    if (false == element is T11)
+                    {
+                        throw new ArgumentException("Precondition: element is T11", "element");
+                    }
+
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException("alternative");
             }
@@ -128,7 +140,7 @@
         }
 
         [ContractInvariantMethod]
-        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented", 
+        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented",
             Justification = "Reviewed. Suppression is OK here.")]
         private void ObjectInvariant()
         {

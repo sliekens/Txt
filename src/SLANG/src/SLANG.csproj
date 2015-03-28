@@ -180,6 +180,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Alternative.cs" />
+    <Compile Include="AlternativeLexer{TAlternative,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15,T16,T17,T18,T19,T20}.cs" />
+    <Compile Include="AlternativeLexer{TAlternative,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15,T16,T17,T18,T19}.cs" />
+    <Compile Include="AlternativeLexer{TAlternative,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15,T16,T17,T18}.cs" />
+    <Compile Include="AlternativeLexer{TAlternative,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15,T16,T17}.cs" />
+    <Compile Include="AlternativeLexer{TAlternative,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15,T16}.cs" />
+    <Compile Include="AlternativeLexer{TAlternative,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15}.cs" />
+    <Compile Include="AlternativeLexer{TAlternative,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14}.cs" />
+    <Compile Include="AlternativeLexer{TAlternative,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13}.cs" />
+    <Compile Include="AlternativeLexer{TAlternative,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12}.cs" />
+    <Compile Include="AlternativeLexer{TAlternative,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11}.cs" />
     <Compile Include="AlternativeLexer{TAlternative,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10}.cs" />
     <Compile Include="AlternativeLexer{TAlternative,T1,T2,T3,T4,T5,T6,T7,T8,T9}.cs" />
     <Compile Include="AlternativeLexer{TAlternative,T1,T2,T3,T4,T5,T6,T7,T8}.cs" />
@@ -189,6 +199,16 @@
     <Compile Include="AlternativeLexer{TAlternative,T1,T2,T3,T4}.cs" />
     <Compile Include="AlternativeLexer{TAlternative,T1,T2,T3}.cs" />
     <Compile Include="AlternativeLexer{TAlternative,T1,T2}.cs" />
+    <Compile Include="Alternative{T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15,T16,T17,T18,T19,T20}.cs" />
+    <Compile Include="Alternative{T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15,T16,T17,T18,T19}.cs" />
+    <Compile Include="Alternative{T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15,T16,T17,T18}.cs" />
+    <Compile Include="Alternative{T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15,T16,T17}.cs" />
+    <Compile Include="Alternative{T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15,T16}.cs" />
+    <Compile Include="Alternative{T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15}.cs" />
+    <Compile Include="Alternative{T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14}.cs" />
+    <Compile Include="Alternative{T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13}.cs" />
+    <Compile Include="Alternative{T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12}.cs" />
+    <Compile Include="Alternative{T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11}.cs" />
     <Compile Include="Alternative{T1,T2,T3,T4,T5,T6,T7,T8,T9,T10}.cs" />
     <Compile Include="Alternative{T1,T2,T3,T4,T5,T6,T7,T8,T9}.cs" />
     <Compile Include="Alternative{T1,T2,T3,T4,T5,T6,T7,T8}.cs" />
