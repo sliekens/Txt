@@ -7,18 +7,18 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{00C88FDC
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B202ABEB-8ABE-4CFB-91BA-B92F030918A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SLANG", "SLANG\src\SLANG.csproj", "{F889024E-5C62-49AC-AC9F-C17BC1CB9621}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SLANG", "src\SLANG.csproj", "{F889024E-5C62-49AC-AC9F-C17BC1CB9621}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SLANG.Tests", "SLANG\test\SLANG.Tests.csproj", "{D2BCCA5A-4F6A-4A7C-8797-CFBA268A00F8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SLANG.Tests", "test\SLANG.Tests.csproj", "{D2BCCA5A-4F6A-4A7C-8797-CFBA268A00F8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AA8D3C75-8A06-4DE3-90DE-EFA40C5F7952}"
 	ProjectSection(SolutionItems) = preProject
 		Core.abnf = Core.abnf
-		..\LICENSE = ..\LICENSE
-		..\nuspec.xsd = ..\nuspec.xsd
-		..\README.md = ..\README.md
+		..\..\LICENSE = ..\..\LICENSE
+		..\..\nuspec.xsd = ..\..\nuspec.xsd
+		..\..\README.md = ..\..\README.md
 		RFC5234.abnf = RFC5234.abnf
-		SLANG\src\SLANG.nuspec = SLANG\src\SLANG.nuspec
+		src\SLANG.nuspec = src\SLANG.nuspec
 	EndProjectSection
 EndProject
 Global
