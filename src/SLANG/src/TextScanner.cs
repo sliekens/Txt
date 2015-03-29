@@ -168,14 +168,15 @@ namespace SLANG
                 throw new ArgumentNullException("s", "Precondition: s != null");
             }
 
-            if (s.Length == 0)
-            {
-                throw new ArgumentException("Precondition: s.Length != 0", "s");
-            }
-
             if (this.offset < s.Length)
             {
                 throw new InvalidOperationException("Precondition failed: Offset >= s.Length");
+            }
+
+            // Special case: pushback string may be empty (no-op)
+            if (s.Length == 0)
+            {
+                return;
             }
 
             var firstcharacter = s[0];
