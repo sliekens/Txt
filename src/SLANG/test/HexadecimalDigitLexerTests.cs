@@ -14,8 +14,9 @@
         public void ReadHexDigs()
         {
             var text = "0123456789ABCDEF";
-            using (var reader = new StringReader(text))
-            using (ITextScanner scanner = new TextScanner(reader))
+            using (var inputStream = text.AsStream())
+            using (var pushbackInputStream = new PushbackInputStream(inputStream))
+            using (ITextScanner scanner = new TextScanner(pushbackInputStream))
             {
                 scanner.Read();
                 var lexer = new HexadecimalDigitLexer();

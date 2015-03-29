@@ -13,6 +13,8 @@ namespace SLANG
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
     using System.IO;
+    using System.Text;
+    using System.Threading;
 
     /// <summary>
     /// Represents a text scanner that gets text from an instance of the <see cref="T:SLANG.TextScanner" />
@@ -20,35 +22,26 @@ namespace SLANG
     /// </summary>
     public sealed class TextScanner : ITextScanner
     {
-        /// <summary>TODO </summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private readonly Stack<char> buffer = new Stack<char>();
-
-        /// <summary>TODO </summary>
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private readonly TextReader textReader;
+        private readonly PushbackInputStream inputStream;
 
         /// <summary>Indicates whether this object has been disposed.</summary>
         private bool disposed;
 
-        /// <summary>TODO </summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private bool endOfInput;
 
-        /// <summary>TODO </summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private char nextCharacter;
 
-        /// <summary>TODO </summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private int offset = -1;
 
         /// <summary>Initializes a new instance of the <see cref="T:SLANG.TextScanner"/> class for the given data source.</summary>
-        /// <param name="textReader">The <see cref="T:System.IO.TextReader"/> to read data from.</param>
-        public TextScanner(TextReader textReader)
+        /// <param name="inputStream">The <see cref="PushbackInputStream"/> to read data from.</param>
+        public TextScanner(PushbackInputStream inputStream)
         {
-            Contract.Requires(textReader != null);
-            this.textReader = textReader;
+            this.inputStream = inputStream;
         }
 
         /// <inheritdoc />
@@ -165,10 +158,60 @@ namespace SLANG
         /// <inheritdoc />
         public void PutBack(string s)
         {
-            for (int i = s.Length - 1; i >= 0; i--)
+            if (this.disposed)
             {
-                this.PutBack(s[i]);
+                throw new ObjectDisposedException(this.GetType().FullName);
             }
+
+            if (s == null)
+            {
+                throw new ArgumentNullException("s", "Precondition: s != null");
+            }
+
+            if (s.Length == 0)
+            {
+                throw new ArgumentException("Precondition: s.Length != 0", "s");
+            }
+
+            if (this.offset < s.Length)
+            {
+                throw new InvalidOperationException("Precondition failed: Offset >= s.Length");
+            }
+
+            var firstcharacter = s[0];
+
+            // Common case: pushback string may contain only 1 character
+            if (s.Length == 1)
+            {
+                this.PutBack(firstcharacter);
+                return;
+            }
+
+            // Special case: pushback string may contain many characters
+            var pushbackCharArray = s.ToCharArray(1, s.Length - 1);
+            if (this.endOfInput)
+            {
+                this.endOfInput = false;
+            }
+            else
+            {
+                Array.Resize(ref pushbackCharArray, pushbackCharArray.Length + 1);
+                pushbackCharArray[pushbackCharArray.Length - 1] = this.nextCharacter;
+            }
+
+            if (this.inputStream.CanSeek)
+            {
+                var pushbackLength = Encoding.UTF8.GetByteCount(pushbackCharArray);
+                this.inputStream.Seek(pushbackLength, 0);
+            }
+            else
+            {
+                var pushbackBuffer = Encoding.UTF8.GetBytes(pushbackCharArray);
+                this.inputStream.Unread(pushbackBuffer, 0, pushbackBuffer.Length);   
+            }
+
+            this.offset -= s.Length;
+            this.nextCharacter = firstcharacter;
         }
 
         /// <inheritdoc />
@@ -201,7 +244,7 @@ namespace SLANG
 
             if (disposing)
             {
-                this.textReader.Dispose();
+                this.inputStream.Dispose();
             }
 
             this.disposed = true;
@@ -219,12 +262,10 @@ namespace SLANG
             return new TextContext(this.offset);
         }
 
-        /// <summary>TODO </summary>
         [ContractInvariantMethod]
         private void ObjectInvariant()
         {
-            Contract.Invariant(this.textReader != null);
-            Contract.Invariant(this.buffer != null);
+            Contract.Invariant(this.inputStream != null);
         }
 
         /// <inheritdoc />
@@ -246,7 +287,14 @@ namespace SLANG
             }
             else
             {
-                this.buffer.Push(this.nextCharacter);
+                if (this.inputStream.CanSeek)
+                {
+                    this.inputStream.Seek(-1, SeekOrigin.Current);
+                }
+                else
+                {
+                    this.inputStream.UnreadByte(Convert.ToByte(this.nextCharacter));
+                }
             }
 
             this.offset -= 1;
@@ -266,16 +314,9 @@ namespace SLANG
                 return false;
             }
 
-            if (this.buffer.Count > 0)
+            lock (this.inputStream)
             {
-                this.nextCharacter = this.buffer.Pop();
-            }
-            else
-            {
-                lock (this.textReader)
-                {
-                    this.nextCharacter = (char)this.textReader.Read();
-                }
+                this.nextCharacter = (char)this.inputStream.ReadByte();
             }
 
             this.offset += 1;

@@ -14,8 +14,9 @@
         {
             var text = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             var lexer = new VisibleCharacterLexer();
-            using (var reader = new StringReader(text))
-            using (ITextScanner scanner = new TextScanner(reader))
+            using (var inputStream = text.AsStream())
+            using (var pushbackInputStream = new PushbackInputStream(inputStream))
+            using (ITextScanner scanner = new TextScanner(pushbackInputStream))
             {
                 scanner.Read();
                 while (!scanner.EndOfInput)
@@ -32,8 +33,9 @@
         {
             var text = "\t";
             var lexer = new VisibleCharacterLexer();
-            using (var reader = new StringReader(text))
-            using (ITextScanner scanner = new TextScanner(reader))
+            using (var inputStream = text.AsStream())
+            using (var pushbackInputStream = new PushbackInputStream(inputStream))
+            using (ITextScanner scanner = new TextScanner(pushbackInputStream))
             {
                 scanner.Read();
                 VisibleCharacter element;

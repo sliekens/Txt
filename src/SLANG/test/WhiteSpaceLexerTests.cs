@@ -11,8 +11,9 @@
         public void ReadSpace()
         {
             var text = " ";
-            using (var reader = new StringReader(text))
-            using (ITextScanner scanner = new TextScanner(reader))
+            using (var inputStream = text.AsStream())
+            using (var pushbackInputStream = new PushbackInputStream(inputStream))
+            using (ITextScanner scanner = new TextScanner(pushbackInputStream))
             {
                 scanner.Read();
                 var lexer = new WhiteSpaceLexer();
@@ -28,8 +29,9 @@
         public void ReadHorizontalTab()
         {
             var text = "\t";
-            using (var reader = new StringReader(text))
-            using (ITextScanner scanner = new TextScanner(reader))
+            using (var inputStream = text.AsStream())
+            using (var pushbackInputStream = new PushbackInputStream(inputStream))
+            using (ITextScanner scanner = new TextScanner(pushbackInputStream))
             {
                 scanner.Read();
                 var lexer = new WhiteSpaceLexer();

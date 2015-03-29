@@ -14,8 +14,9 @@
         {
             var text = "\r";
             var lexer = new CarriageReturnLexer();
-            using (var reader = new StringReader(text))
-            using (ITextScanner scanner = new TextScanner(reader))
+            using (var inputStream = text.AsStream())
+            using (var pushbackInputStream = new PushbackInputStream(inputStream))
+            using (ITextScanner scanner = new TextScanner(pushbackInputStream))
             {
                 scanner.Read();
                 var element = lexer.Read(scanner);
@@ -28,8 +29,9 @@
         {
             var text = "\n";
             var lexer = new CarriageReturnLexer();
-            using (var reader = new StringReader(text))
-            using (ITextScanner scanner = new TextScanner(reader))
+            using (var inputStream = text.AsStream())
+            using (var pushbackInputStream = new PushbackInputStream(inputStream))
+            using (ITextScanner scanner = new TextScanner(pushbackInputStream))
             {
                 scanner.Read();
                 CarriageReturn element;

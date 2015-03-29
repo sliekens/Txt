@@ -14,8 +14,9 @@
         public void ReadSp()
         {
             var text = " ";
-            using (var reader = new StringReader(text))
-            using (ITextScanner scanner = new TextScanner(reader))
+            using (var inputStream = text.AsStream())
+            using (var pushbackInputStream = new PushbackInputStream(inputStream))
+            using (ITextScanner scanner = new TextScanner(pushbackInputStream))
             {
                 scanner.Read();
                 var lexer = new LinearWhiteSpaceLexer();
@@ -29,8 +30,9 @@
         public void Read5Sp()
         {
             var text = "     ";
-            using (var reader = new StringReader(text))
-            using (ITextScanner scanner = new TextScanner(reader))
+            using (var inputStream = text.AsStream())
+            using (var pushbackInputStream = new PushbackInputStream(inputStream))
+            using (ITextScanner scanner = new TextScanner(pushbackInputStream))
             {
                 scanner.Read();
                 var lexer = new LinearWhiteSpaceLexer();
@@ -44,8 +46,9 @@
         public void ReadCrLfSp()
         {
             var text = "\r\n ";
-            using (var reader = new StringReader(text))
-            using (ITextScanner scanner = new TextScanner(reader))
+            using (var inputStream = text.AsStream())
+            using (var pushbackInputStream = new PushbackInputStream(inputStream))
+            using (ITextScanner scanner = new TextScanner(pushbackInputStream))
             {
                 scanner.Read();
                 var lexer = new LinearWhiteSpaceLexer();
@@ -59,8 +62,9 @@
         public void ReadEmptyString()
         {
             var text = string.Empty;
-            using (var reader = new StringReader(text))
-            using (ITextScanner scanner = new TextScanner(reader))
+            using (var inputStream = text.AsStream())
+            using (var pushbackInputStream = new PushbackInputStream(inputStream))
+            using (ITextScanner scanner = new TextScanner(pushbackInputStream))
             {
                 scanner.Read();
                 var lexer = new LinearWhiteSpaceLexer();
@@ -75,8 +79,9 @@
         public void IgnoreLastCrLf()
         {
             var text = "\r\n";
-            using (var reader = new StringReader(text))
-            using (ITextScanner scanner = new TextScanner(reader))
+            using (var inputStream = text.AsStream())
+            using (var pushbackInputStream = new PushbackInputStream(inputStream))
+            using (ITextScanner scanner = new TextScanner(pushbackInputStream))
             {
                 scanner.Read();
                 var lexer = new LinearWhiteSpaceLexer();
@@ -89,8 +94,9 @@
         public void IgnoreTryLastCrLf()
         {
             var text = "\r\n";
-            using (var reader = new StringReader(text))
-            using (ITextScanner scanner = new TextScanner(reader))
+            using (var inputStream = text.AsStream())
+            using (var pushbackInputStream = new PushbackInputStream(inputStream))
+            using (ITextScanner scanner = new TextScanner(pushbackInputStream))
             {
                 scanner.Read();
                 var lexer = new LinearWhiteSpaceLexer();

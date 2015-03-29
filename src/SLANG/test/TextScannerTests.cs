@@ -10,8 +10,9 @@
         [TestMethod]
         public void ReadEmptyString()
         {
-            using (StringReader reader = new StringReader(string.Empty))
-            using (ITextScanner scanner = new TextScanner(reader))
+            using (var inputStream = string.Empty.AsStream())
+            using (var pushbackInputStream = new PushbackInputStream(inputStream))
+            using (ITextScanner scanner = new TextScanner(pushbackInputStream))
             {
                 Assert.IsFalse(scanner.Read());
                 Assert.IsTrue(scanner.EndOfInput);
@@ -23,8 +24,9 @@
         {
             var text = "Hello World!";
             var characters = text.ToCharArray();
-            using (StringReader reader = new StringReader(text))
-            using (ITextScanner scanner = new TextScanner(reader))
+            using (var inputStream = text.AsStream())
+            using (var pushbackInputStream = new PushbackInputStream(inputStream))
+            using (ITextScanner scanner = new TextScanner(pushbackInputStream))
             {
                 foreach (var character in characters)
                 {

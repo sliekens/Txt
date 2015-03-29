@@ -117,6 +117,11 @@
             this.pushbackStack.TrimExcess();
         }
 
+        public void UnreadByte(byte b)
+        {
+            this.Unread(new[] { b }, 0, 1);
+        }
+
         public void Unread(byte[] buffer, int offset, int count)
         {
             if (buffer == null)

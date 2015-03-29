@@ -15,8 +15,9 @@
         {
             var text = char.ToString(Convert.ToChar(0x01));
             var lexer = new CharacterLexer();
-            using (var reader = new StringReader(text))
-            using (ITextScanner scanner = new TextScanner(reader))
+            using (var inputStream = text.AsStream())
+            using (var pushbackInputStream = new PushbackInputStream(inputStream))
+            using (ITextScanner scanner = new TextScanner(pushbackInputStream))
             {
                 scanner.Read();
                 var element = lexer.Read(scanner);
@@ -29,8 +30,9 @@
         {
             var text = char.ToString(Convert.ToChar(0x7F));
             var lexer = new CharacterLexer();
-            using (var reader = new StringReader(text))
-            using (ITextScanner scanner = new TextScanner(reader))
+            using (var inputStream = text.AsStream())
+            using (var pushbackInputStream = new PushbackInputStream(inputStream))
+            using (ITextScanner scanner = new TextScanner(pushbackInputStream))
             {
                 scanner.Read();
                 var element = lexer.Read(scanner);
@@ -43,8 +45,9 @@
         {
             var text = char.ToString('\0');
             var lexer = new CharacterLexer();
-            using (var reader = new StringReader(text))
-            using (ITextScanner scanner = new TextScanner(reader))
+            using (var inputStream = text.AsStream())
+            using (var pushbackInputStream = new PushbackInputStream(inputStream))
+            using (ITextScanner scanner = new TextScanner(pushbackInputStream))
             {
                 scanner.Read();
                 Character element;

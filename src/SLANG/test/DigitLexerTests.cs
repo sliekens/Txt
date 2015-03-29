@@ -14,8 +14,9 @@
         {
             var text = "0123456789";
             var lexer = new DigitLexer();
-            using (var reader = new StringReader(text))
-            using (ITextScanner scanner = new TextScanner(reader))
+            using (var inputStream = text.AsStream())
+            using (var pushbackInputStream = new PushbackInputStream(inputStream))
+            using (ITextScanner scanner = new TextScanner(pushbackInputStream))
             {
                 scanner.Read();
                 while (!scanner.EndOfInput)
