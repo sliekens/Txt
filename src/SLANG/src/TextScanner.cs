@@ -203,12 +203,12 @@ namespace SLANG
             if (this.inputStream.CanSeek)
             {
                 var pushbackLength = Encoding.UTF8.GetByteCount(pushbackCharArray);
-                this.inputStream.Seek(pushbackLength, SeekOrigin.Current);
+                this.inputStream.Seek(-pushbackLength, SeekOrigin.Current);
             }
             else
             {
                 var pushbackBuffer = Encoding.UTF8.GetBytes(pushbackCharArray);
-                this.inputStream.Unread(pushbackBuffer, 0, pushbackBuffer.Length);   
+                this.inputStream.Unread(pushbackBuffer, 0, pushbackBuffer.Length);
             }
 
             this.offset -= s.Length;
