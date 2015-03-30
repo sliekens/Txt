@@ -35,8 +35,11 @@
         where T13 : Element
         where T14 : Element
     {
-        /// <summary>The alternative element.</summary>
+        /// <summary>The matched alternative element.</summary>
         private readonly Element element;
+
+        /// <summary>The ordinal position of the matched alternative.</summary>
+        private readonly int ordinal;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="Alternative{T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14}" /> class with a
@@ -155,14 +158,24 @@
             }
 
             this.element = element;
+            this.ordinal = alternative;
         }
 
-        /// <summary>Gets the alternative element.</summary>
+        /// <summary>Gets the matched alternative element.</summary>
         public Element Element
         {
             get
             {
                 return this.element;
+            }
+        }
+
+        /// <summary>Gets the ordinal position of the matched alternative.</summary>
+        public int Ordinal
+        {
+            get
+            {
+                return this.ordinal;
             }
         }
 

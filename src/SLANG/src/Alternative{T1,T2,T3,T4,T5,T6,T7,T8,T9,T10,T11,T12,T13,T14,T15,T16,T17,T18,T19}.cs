@@ -45,8 +45,11 @@
         where T18 : Element
         where T19 : Element
     {
-        /// <summary>The alternative element.</summary>
+        /// <summary>The matched alternative element.</summary>
         private readonly Element element;
+
+        /// <summary>The ordinal position of the matched alternative.</summary>
+        private readonly int ordinal;
 
         /// <summary>
         ///     Initializes a new instance of the
@@ -201,14 +204,25 @@
             }
 
             this.element = element;
+            this.ordinal = alternative;
         }
 
-        /// <summary>Gets the alternative element.</summary>
+        /// <summary>Gets the matched alternative element.</summary>
         public Element Element
         {
             get
             {
                 return this.element;
+            }
+        }
+
+
+        /// <summary>Gets the ordinal position of the matched alternative.</summary>
+        public int Ordinal
+        {
+            get
+            {
+                return this.ordinal;
             }
         }
 
