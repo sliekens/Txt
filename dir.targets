@@ -1,0 +1,23 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Target Name="CreatePackage" AfterTargets="AfterBuild">
+	<ItemGroup>
+		<ProjectFileWithNuspec Include="$(MSBuildProjectFile)" />
+		<ProjectFileWithNuspec Remove="%(ProjectFileWithNuspec.Identity)" Condition="!Exists('@(ProjectFileWithNuspec->'%(Filename).nuspec')')" />
+	</ItemGroup>
+    <PropertyGroup>
+      <NuGetPackProperties Condition=" '$(NuGetPackProperties)' != '' ">$(NuGetPackProperties);</NuGetPackProperties>
+      <NuGetPackProperties>$(NuGetPackProperties)Configuration=$(Configuration)</NuGetPackProperties>
+      <NuGetPackProperties>$(NuGetPackProperties);Platform=$(Platform)</NuGetPackProperties>
+      <NuGetPackProperties>$(NuGetPackProperties);TargetPath=$(TargetPath)</NuGetPackProperties>
+      <NuGetPackProperties>$(NuGetPackProperties);OutDir=$(OutDir)$(AssemblyName)$(TargetExt)</NuGetPackProperties>
+      <NuGetPackParameters>$(NuGetPackParameters) -Properties &quot;$(NuGetPackProperties)&quot;</NuGetPackParameters>
+      <NuGetPackParameters>$(NuGetPackParameters) -OutputDirectory &quot;$(OutDir.Trim('\\'))&quot;</NuGetPackParameters>
+    </PropertyGroup>
+    <Exec Command="$(NuGetToolPath) pack %(ProjectFileWithNuspec.Fullpath) $(NuGetPackParameters)" Condition=" '@(ProjectFileWithNuspec)' != '' " />
+  </Target>
+  
+    <Target Name="BeforeRecursiveBuild" />
+    <Target Name="AfterRecursiveBuild" />
+    <Target Name="BeforeRecursiveClean" />
+    <Target Name="AfterRecursiveClean" />
+</Project>
