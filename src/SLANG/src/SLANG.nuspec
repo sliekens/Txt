@@ -10,15 +10,6 @@
     <licenseUrl>https://raw.githubusercontent.com/StevenLiekens/SLANG/master/LICENSE</licenseUrl>
     <copyright>The MIT License (MIT)</copyright>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <references>
-      <group>
-        <reference file="$id$.dll" />
-      </group>
-    </references>
     <tags>slang, text, parsing, parser, abnf</tags>
   </metadata>
-  <files>
-    <file src="bin\$configuration$\CodeContracts\$id$.Contracts.dll"
-          target="lib\portable-net45+win+wpa81\CodeContracts\$id$.Contracts.dll" />
-  </files>
 </package>
