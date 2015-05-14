@@ -1,6 +1,6 @@
 ﻿namespace SLANG
 {
-    using System.Diagnostics.Contracts;
+    using System;
 
     /// <summary>Represents a choice of a range of alternative elements.</summary>
     public class Alternative : Element
@@ -13,8 +13,16 @@
         public Alternative(char data, char lowerBound, char upperBound, ITextContext context)
             : base(data, context)
         {
-            Contract.Requires(data >= lowerBound && data <= upperBound);
-            Contract.Requires(context != null);
+            // TODO: should use copy ctor
+            if (data < lowerBound)
+            {
+                throw new ArgumentOutOfRangeException("data", data, "Precondition: data >= lowerBound");
+            }
+
+            if (data > upperBound)
+            {
+                throw new ArgumentOutOfRangeException("data", data, "Precondition: data <= upperBound");
+            }
         }
     }
 }

@@ -8,8 +8,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG.Core
 {
-    using System.Diagnostics.Contracts;
-
     /// <summary>Represents the CRLF rule: 1 CR character followed by 1 LF character. Unicode: U+000D U+000A.</summary>
     public class EndOfLine : Sequence<CarriageReturn, LineFeed>
     {
@@ -21,9 +19,6 @@ namespace SLANG.Core
         public EndOfLine(CarriageReturn element1, LineFeed element2, ITextContext context)
             : base(element1, element2, context)
         {
-            Contract.Requires(element1 != null);
-            Contract.Requires(element2 != null);
-            Contract.Requires(context != null);
         }
     }
 }

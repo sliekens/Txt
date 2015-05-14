@@ -8,8 +8,9 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG
 {
+    using System;
+    using System.Diagnostics;
     using System.Diagnostics.CodeAnalysis;
-    using System.Diagnostics.Contracts;
 
     /// <summary>Represents a sequence of three elements.</summary>
     /// <typeparam name="T1">The type of the first element in the sequence.</typeparam>
@@ -20,15 +21,15 @@ namespace SLANG
         where T2 : Element
         where T3 : Element
     {
-        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented", 
+        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented",
             Justification = "Reviewed. Suppression is OK here.")]
         private readonly T1 element1;
 
-        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented", 
+        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented",
             Justification = "Reviewed. Suppression is OK here.")]
         private readonly T2 element2;
 
-        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented", 
+        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented",
             Justification = "Reviewed. Suppression is OK here.")]
         private readonly T3 element3;
 
@@ -38,12 +39,23 @@ namespace SLANG
         /// <param name="element3">The third element in the sequence.</param>
         /// <param name="context">The object that describes the context in which the text appears.</param>
         public Sequence(T1 element1, T2 element2, T3 element3, ITextContext context)
-            : base(string.Concat(element1.Data, element2.Data, element3.Data), context)
+            : base(string.Concat(element1, element2, element3), context)
         {
-            Contract.Requires(element1 != null);
-            Contract.Requires(element2 != null);
-            Contract.Requires(element3 != null);
-            Contract.Requires(context != null);
+            if (element1 == null)
+            {
+                throw new ArgumentNullException("element1", "Precondition: element1 != null");
+            }
+
+            if (element2 == null)
+            {
+                throw new ArgumentNullException("element2", "Precondition: element2 != null");
+            }
+
+            if (element3 == null)
+            {
+                throw new ArgumentNullException("element3", "Precondition: element3 != null");
+            }
+
             this.element1 = element1;
             this.element2 = element2;
             this.element3 = element3;
@@ -54,6 +66,7 @@ namespace SLANG
         {
             get
             {
+                Debug.Assert(this.element1 != null, "this.element1 != null");
                 return this.element1;
             }
         }
@@ -63,6 +76,7 @@ namespace SLANG
         {
             get
             {
+                Debug.Assert(this.element2 != null, "this.element2 != null");
                 return this.element2;
             }
         }
@@ -72,18 +86,9 @@ namespace SLANG
         {
             get
             {
+                Debug.Assert(this.element3 != null, "this.element3 != null");
                 return this.element3;
             }
-        }
-
-        [ContractInvariantMethod]
-        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented", 
-            Justification = "Reviewed. Suppression is OK here.")]
-        private void ObjectInvariant()
-        {
-            Contract.Invariant(this.element1 != null);
-            Contract.Invariant(this.element2 != null);
-            Contract.Invariant(this.element3 != null);
         }
     }
 }

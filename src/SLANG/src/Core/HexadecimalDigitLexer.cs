@@ -7,8 +7,8 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG.Core
 {
+    using System;
     using System.Diagnostics;
-    using System.Diagnostics.Contracts;
 
     public class HexadecimalDigitLexer : AlternativeLexer<HexadecimalDigit, Digit, Element, Element, Element, Element, Element, Element>
     {
@@ -23,13 +23,17 @@ namespace SLANG.Core
         public HexadecimalDigitLexer(ILexer<Digit> digitLexer)
             : base("HEXDIG")
         {   
-            Contract.Requires(digitLexer != null);
+            if (digitLexer == null)
+            {
+                throw new ArgumentNullException("digitLexer", "Precondition: digitLexer != null");
+            }
+
             this.digitLexer = digitLexer;
         }
 
         protected override HexadecimalDigit CreateInstance1(Digit element, ITextContext context)
         {
-            return new HexadecimalDigit(element, context);
+            return new HexadecimalDigit(element, 1, context);
         }
 
         protected override HexadecimalDigit CreateInstance2(Element element, ITextContext context)
@@ -95,12 +99,6 @@ namespace SLANG.Core
         protected override bool TryRead7(ITextScanner scanner, out Element element)
         {
             return TryReadTerminal(scanner, "F", out element);
-        }
-
-        [ContractInvariantMethod]
-        private void ObjectInvariant()
-        {
-            Contract.Invariant(this.digitLexer != null);
         }
     }
 }

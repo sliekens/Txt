@@ -8,8 +8,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG.Core
 {
-    using System.Diagnostics.Contracts;
-
     /// <summary>Represents the CHAR rule: 1 US-ASCII character, excluding NUL. Unicode: U+0001 - U+007F.</summary>
     public class Character : Alternative
     {
@@ -20,8 +18,6 @@ namespace SLANG.Core
         public Character(char data, ITextContext context)
             : base(data, '\x01', '\x7F', context)
         {
-            Contract.Requires(data >= '\x01' && data <= '\x7F');
-            Contract.Requires(context != null);
         }
     }
 }

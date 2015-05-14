@@ -8,8 +8,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG.Core
 {
-    using System.Diagnostics.Contracts;
-
     /// <summary>Represents the LF rule: 1 line feed. Unicode: U+000A.</summary>
     public class LineFeed : Element
     {
@@ -18,7 +16,6 @@ namespace SLANG.Core
         public LineFeed(ITextContext context)
             : base("\x0A", context)
         {
-            Contract.Requires(context != null);
         }
     }
 }

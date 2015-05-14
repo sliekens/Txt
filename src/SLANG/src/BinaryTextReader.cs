@@ -9,23 +9,18 @@
 namespace SLANG
 {
     using System;
-    using System.Diagnostics.Contracts;
+    using System.Diagnostics;
     using System.IO;
     using System.Threading.Tasks;
 
-    /// <summary>TODO </summary>
     public class BinaryTextReader : TextReader
     {
-        /// <summary>TODO </summary>
         public const int DefaultBufferSize = 4096;
 
-        /// <summary>TODO </summary>
         private readonly BinaryReader binaryReader;
 
-        /// <summary>TODO </summary>
         private readonly int bufferSize;
 
-        /// <summary>TODO </summary>
         private bool disposed;
 
         /// <summary>Initializes a new instance of the <see cref="BinaryTextReader"/> class that reads from a given instance of the <see cref="BinaryReader"/> class.</summary>
@@ -33,7 +28,10 @@ namespace SLANG
         public BinaryTextReader(BinaryReader binaryReader)
             : this(binaryReader, DefaultBufferSize)
         {
-            Contract.Requires(binaryReader != null);
+            if (binaryReader == null)
+            {
+                throw new ArgumentNullException("binaryReader", "Precondition: binaryReader != null");
+            }
         }
 
         /// <summary>Initializes a new instance of the <see cref="BinaryTextReader"/> class that reads from a given instance of the <see cref="BinaryReader"/> class, using a specified buffer size.</summary>
@@ -41,8 +39,16 @@ namespace SLANG
         /// <param name="bufferSize">The size of the internal buffer.</param>
         public BinaryTextReader(BinaryReader binaryReader, int bufferSize)
         {
-            Contract.Requires(binaryReader != null);
-            Contract.Requires(bufferSize > 0);
+            if (binaryReader == null)
+            {
+                throw new ArgumentNullException("binaryReader", "Precondition: binaryReader != null");
+            }
+
+            if (bufferSize <= 0)
+            {
+                throw new ArgumentOutOfRangeException("bufferSize", bufferSize, "Precondition: bufferSize > 0");
+            }
+
             this.binaryReader = binaryReader;
             this.bufferSize = bufferSize;
         }
@@ -164,7 +170,6 @@ namespace SLANG
                 do
                 {
                     read = this.Read(buffer, 0, buffer.Length);
-                    Contract.Assume(buffer.Length >= read);
                     if (read > 0)
                     {
                         textWriter.Write(buffer, 0, read);
@@ -201,14 +206,6 @@ namespace SLANG
             }
 
             this.disposed = true;
-        }
-
-        /// <summary>TODO </summary>
-        [ContractInvariantMethod]
-        private void ObjectInvariant()
-        {
-            Contract.Invariant(this.binaryReader != null);
-            Contract.Invariant(this.bufferSize > 0);
         }
     }
 }

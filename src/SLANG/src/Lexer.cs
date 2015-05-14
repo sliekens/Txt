@@ -9,9 +9,7 @@
 namespace SLANG
 {
     using System;
-    using System.Diagnostics.Contracts;
     using System.Linq;
-    using System.Text;
 
     /// <summary>Provides the base class for lexers. A lexer is a class that matches symbols from a data source against a grammar rule to produce grammar elements. Each class that extends the <see cref="Lexer{TElement}"/> class corresponds to a singe grammar rule. For complex grammars with many grammar rules, multiple lexers work together to convert the input text to a parse tree.</summary>
     /// <typeparam name="TElement">The type of the element that represents the lexer rule.</typeparam>
@@ -125,7 +123,11 @@ namespace SLANG
         /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
         protected static bool TryReadTerminal(ITextScanner scanner, char c, out Element element)
         {
-            Contract.Requires(scanner != null);
+            if (scanner == null)
+            {
+                throw new ArgumentNullException("scanner", "Precondition: scanner != null");
+            }
+
             if (scanner.EndOfInput)
             {
                 element = default(Element);
@@ -151,8 +153,16 @@ namespace SLANG
         /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
         protected static bool TryReadTerminal(ITextScanner scanner, char[] s, out Element element)
         {
-            Contract.Requires(scanner != null);
-            Contract.Requires(s != null);
+            if (scanner == null)
+            {
+                throw new ArgumentNullException("scanner", "Precondition: scanner != null");
+            }
+
+            if (s == null)
+            {
+                throw new ArgumentNullException("s", "Precondition: s != null");
+            }
+
             if (scanner.EndOfInput)
             {
                 element = default(Element);
@@ -195,8 +205,16 @@ namespace SLANG
         /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
         protected static bool TryReadTerminal(ITextScanner scanner, string s, out Element element)
         {
-            Contract.Requires(scanner != null);
-            Contract.Requires(s != null);
+            if (scanner == null)
+            {
+                throw new ArgumentNullException("scanner", "Precondition: scanner != null");
+            }
+
+            if (s == null)
+            {
+                throw new ArgumentNullException("s", "Precondition: s != null");
+            }
+
             if (scanner.EndOfInput)
             {
                 element = default(Element);

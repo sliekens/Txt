@@ -17,12 +17,12 @@ namespace SLANG.Core
 
         protected override Bit CreateInstance1(Element element, ITextContext context)
         {
-            return new Bit(element, 1, context);
+            return new Bit(element, 1);
         }
 
         protected override Bit CreateInstance2(Element element, ITextContext context)
         {
-            return new Bit(element, 2, context);
+            return new Bit(element, 2);
         }
 
         protected override bool TryRead1(ITextScanner scanner, out Element element)

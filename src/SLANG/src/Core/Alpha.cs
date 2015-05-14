@@ -12,12 +12,12 @@ namespace SLANG.Core
     public partial class Alpha : Alternative<Alpha.UpperCase, Alpha.LowerCase>
     {
         public Alpha(UpperCase element, ITextContext context)
-            : base(element, 1, context)
+            : base(element, 1)
         {
         }
 
         public Alpha(LowerCase element, ITextContext context)
-            : base(element, 2, context)
+            : base(element, 2)
         {
         }
     }

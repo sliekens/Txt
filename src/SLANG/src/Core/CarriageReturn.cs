@@ -8,8 +8,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG.Core
 {
-    using System.Diagnostics.Contracts;
-
     /// <summary>Represents the CR rule: 1 carriage return. Unicode: U+000D.</summary>
     public class CarriageReturn : Element
     {
@@ -18,7 +16,7 @@ namespace SLANG.Core
         public CarriageReturn(ITextContext context)
             : base('\x0D', context)
         {
-            Contract.Requires(context != null);
+            // TODO: should use copy ctor
         }
     }
 }

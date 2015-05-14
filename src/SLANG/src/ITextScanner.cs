@@ -9,10 +9,8 @@
 namespace SLANG
 {
     using System;
-    using System.Diagnostics.Contracts;
 
     /// <summary>Provides the interface for types that scan text with 1 character of lookahead and unlimited backtracking.</summary>
-    [ContractClass(typeof(ContractClassForITextScanner))]
     public interface ITextScanner : ITextContext, IDisposable
     {
         /// <summary>Gets or sets a value indicating whether the end of the input has been reached.</summary>

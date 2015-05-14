@@ -78,8 +78,6 @@
     <Compile Include="Alternative{T1,T2,T3,T4}.cs" />
     <Compile Include="Alternative{T1,T2,T3}.cs" />
     <Compile Include="BinaryTextReader.cs" />
-    <Compile Include="ContractClassForILexer.cs" />
-    <Compile Include="ContractClassForITextScanner.cs" />
     <Compile Include="Core\AlphaLexer.cs" />
     <Compile Include="Core\Alpha.cs" />
     <Compile Include="AlternativeLexer.cs" />

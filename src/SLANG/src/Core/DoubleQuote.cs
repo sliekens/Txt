@@ -8,8 +8,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG.Core
 {
-    using System.Diagnostics.Contracts;
-
     /// <summary>Represents the DQUOTE rule: 1 quotation mark. Unicode: U+0022.</summary>
     public class DoubleQuote : Element
     {
@@ -18,7 +16,6 @@ namespace SLANG.Core
         public DoubleQuote(ITextContext context)
             : base('\x22', context)
         {
-            Contract.Requires(context != null);
         }
     }
 }

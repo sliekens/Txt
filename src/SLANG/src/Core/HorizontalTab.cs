@@ -8,8 +8,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG.Core
 {
-    using System.Diagnostics.Contracts;
-
     /// <summary>Represents the HTAB rule: 1 horizontal tab. Unicode: U+0009.</summary>
     public class HorizontalTab : Element
     {
@@ -18,7 +16,6 @@ namespace SLANG.Core
         public HorizontalTab(ITextContext context)
             : base("\x09", context)
         {
-            Contract.Requires(context != null);
         }
     }
 }

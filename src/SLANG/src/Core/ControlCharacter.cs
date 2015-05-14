@@ -8,7 +8,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG.Core
 {
-    using System.Diagnostics.Contracts;
+    using System;
 
     /// <summary>Represents the CTL rule: 1 control character. Unicode: U+0000 - U+001F, U+007F.</summary>
     public partial class ControlCharacter : Alternative<ControlCharacter.Controls, Element>
@@ -16,23 +16,21 @@ namespace SLANG.Core
         /// <summary>Initializes a new instance of the <see cref="T:SLANG.Core.ControlCharacter"/> class with a specified character
         /// and context.</summary>
         /// <param name="element">The control character.</param>
-        /// <param name="context">The object that describes the context in which the text appears.</param>
-        public ControlCharacter(Controls element, ITextContext context)
-            : base(element, 1, context)
+        public ControlCharacter(Controls element)
+            : base(element, 1)
         {
-            Contract.Requires(element != null);
-            Contract.Requires(context != null);
         }
 
         /// <summary>Initializes a new instance of the <see cref="T:SLANG.Core.ControlCharacter"/> class with a specified character
         /// and context.</summary>
         /// <param name="element">The control character.</param>
-        /// <param name="context">The object that describes the context in which the text appears.</param>
-        public ControlCharacter(Element element, ITextContext context)
-            : base(element, 2, context)
+        public ControlCharacter(Element element)
+            : base(element, 2)
         {
-            Contract.Requires(element != null);
-            Contract.Requires(context != null);
+            if (element.Data != "\x7F")
+            {
+                throw new ArgumentOutOfRangeException("element", element, "Precondition: element.Data == \"\\x7F\"");
+            }
         }
     }
 

@@ -8,11 +8,8 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG
 {
-    using System.Diagnostics.Contracts;
-
     /// <summary>Provides the interface for types that process the lexical syntax of a language.</summary>
     /// <typeparam name="TElement">The type of the element that represents the lexer rule.</typeparam>
-    [ContractClass(typeof(ContractClassForILexer<>))]
     public interface ILexer<TElement>
         where TElement : Element
     {

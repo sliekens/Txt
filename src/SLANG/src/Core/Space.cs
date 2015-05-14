@@ -8,8 +8,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG.Core
 {
-    using System.Diagnostics.Contracts;
-
     /// <summary>Represents the SP rule: 1 space. Unicode: U+0020.</summary>
     public class Space : Element
     {
@@ -18,7 +16,6 @@ namespace SLANG.Core
         public Space(ITextContext context)
             : base('\x20', context)
         {
-            Contract.Requires(context != null);
         }
     }
 }

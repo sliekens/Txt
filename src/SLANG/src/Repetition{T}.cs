@@ -5,11 +5,12 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG
 {
+    using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Diagnostics;
     using System.Diagnostics.CodeAnalysis;
-    using System.Diagnostics.Contracts;
+    using System.Linq;
 
     /// <summary>Represents repeating elements.</summary>
     /// <typeparam name="T">The type of the repeating element.</typeparam>
@@ -26,7 +27,7 @@ namespace SLANG
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly int lowerBound;
 
-        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented", 
+        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented",
             Justification = "Reviewed. Suppression is OK here.")]
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly int upperBound;
@@ -37,9 +38,16 @@ namespace SLANG
         public Repetition(IList<T> elements, ITextContext context)
             : base(string.Concat(elements), context)
         {
-            Contract.Requires(elements != null);
-            Contract.Requires(Contract.ForAll(elements, element => element != null));
-            Contract.Requires(context != null);
+            if (elements == null)
+            {
+                throw new ArgumentNullException("elements", "Precondition: elements != null");
+            }
+
+            if (elements.Any(element => element == null))
+            {
+                throw new ArgumentException("Precondition: elements.All(element => element != null)", "elements");
+            }
+
             this.lowerBound = 0;
             this.upperBound = int.MaxValue;
             this.elements = new ReadOnlyCollection<T>(elements);
@@ -52,10 +60,21 @@ namespace SLANG
         public Repetition(IList<T> elements, int lowerBound, ITextContext context)
             : base(string.Concat(elements), context)
         {
-            Contract.Requires(elements != null);
-            Contract.Requires(Contract.ForAll(elements, element => element != null));
-            Contract.Requires(elements.Count >= lowerBound);
-            Contract.Requires(context != null);
+            if (elements == null)
+            {
+                throw new ArgumentNullException("elements", "Precondition: elements != null");
+            }
+            
+            if (elements.Any(element => element == null))
+            {
+                throw new ArgumentException("Precondition: elements.All(element => element != null)", "elements");
+            }
+
+            if (elements.Count < lowerBound)
+            {
+                throw new ArgumentException("Precondition: elements.Count >= lowerBound", "elements");
+            }
+
             this.lowerBound = lowerBound;
             this.upperBound = int.MaxValue;
             this.elements = new ReadOnlyCollection<T>(elements);
@@ -69,10 +88,26 @@ namespace SLANG
         public Repetition(IList<T> elements, int lowerBound, int upperBound, ITextContext context)
             : base(string.Concat(elements), context)
         {
-            Contract.Requires(elements != null);
-            Contract.Requires(Contract.ForAll(elements, element => element != null));
-            Contract.Requires(elements.Count >= lowerBound || elements.Count <= upperBound);
-            Contract.Requires(context != null);
+            if (elements == null)
+            {
+                throw new ArgumentNullException("elements", "Precondition: elements != null");
+            }
+
+            if (elements.Any(element => element == null))
+            {
+                throw new ArgumentException("Precondition: elements.All(element => element != null)", "elements");
+            }
+
+            if (elements.Count < lowerBound)
+            {
+                throw new ArgumentException("Precondition: elements.Count >= lowerBound", "elements");
+            }
+
+            if (elements.Count > upperBound)
+            {
+                throw new ArgumentException("Precondition: elements.Count <= upperBound", "elements");
+            }
+
             this.lowerBound = lowerBound;
             this.upperBound = upperBound;
             this.elements = new ReadOnlyCollection<T>(elements);
@@ -83,6 +118,9 @@ namespace SLANG
         {
             get
             {
+                Debug.Assert(this.elements != null);
+                Debug.Assert(this.elements.Count >= this.lowerBound);
+                Debug.Assert(this.elements.Count <= this.upperBound);
                 return this.elements;
             }
         }
@@ -103,14 +141,6 @@ namespace SLANG
             {
                 return this.upperBound;
             }
-        }
-
-        [ContractInvariantMethod]
-        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented",
-            Justification = "Reviewed. Suppression is OK here.")]
-        private void ObjectInvariant()
-        {
-            Contract.Invariant(this.elements != null);
         }
     }
 }

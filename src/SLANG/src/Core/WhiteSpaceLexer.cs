@@ -7,8 +7,8 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG.Core
 {
+    using System;
     using System.Diagnostics;
-    using System.Diagnostics.Contracts;
 
     public class WhiteSpaceLexer : AlternativeLexer<WhiteSpace, Space, HorizontalTab>
     {
@@ -26,18 +26,28 @@ namespace SLANG.Core
         public WhiteSpaceLexer(SpaceLexer element1Lexer, HorizontalTabLexer element2Lexer)
             : base("WSP")
         {
+            if (element1Lexer == null)
+            {
+                throw new ArgumentNullException("element1Lexer", "Precondition: element1Lexer != null");
+            }
+
+            if (element2Lexer == null)
+            {
+                throw new ArgumentNullException("element2Lexer", "Precondition: element2Lexer != null");
+            }
+
             this.element1Lexer = element1Lexer;
             this.element2Lexer = element2Lexer;
         }
 
         protected override WhiteSpace CreateInstance1(Space element, ITextContext context)
         {
-            return new WhiteSpace(element, context);
+            return new WhiteSpace(element);
         }
 
         protected override WhiteSpace CreateInstance2(HorizontalTab element, ITextContext context)
         {
-            return new WhiteSpace(element, context);
+            return new WhiteSpace(element);
         }
 
         protected override bool TryRead1(ITextScanner scanner, out Space element)
@@ -48,13 +58,6 @@ namespace SLANG.Core
         protected override bool TryRead2(ITextScanner scanner, out HorizontalTab element)
         {
             return this.element2Lexer.TryRead(scanner, out element);
-        }
-
-        [ContractInvariantMethod]
-        private void ObjectInvariant()
-        {
-            Contract.Invariant(this.element1Lexer != null);
-            Contract.Invariant(this.element2Lexer != null);
         }
     }
 }

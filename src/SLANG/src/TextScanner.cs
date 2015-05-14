@@ -9,12 +9,9 @@
 namespace SLANG
 {
     using System;
-    using System.Collections.Generic;
     using System.Diagnostics;
-    using System.Diagnostics.Contracts;
     using System.IO;
     using System.Text;
-    using System.Threading;
 
     /// <summary>
     /// Represents a text scanner that gets text from an instance of the <see cref="T:SLANG.TextScanner" />
@@ -41,13 +38,17 @@ namespace SLANG
         /// <param name="inputStream">The <see cref="PushbackInputStream"/> to read data from.</param>
         public TextScanner(PushbackInputStream inputStream)
         {
+            if (inputStream == null)
+            {
+                throw new ArgumentNullException("inputStream", "Precondition: inputStream != null");
+            }
+
             this.inputStream = inputStream;
         }
 
         /// <inheritdoc />
         public int Offset
         {
-            [Pure]
             get
             {
                 if (this.disposed)
@@ -62,7 +63,6 @@ namespace SLANG
         /// <inheritdoc />
         bool ITextScanner.EndOfInput
         {
-            [Pure]
             get
             {
                 return this.EndOfInput;
@@ -72,7 +72,6 @@ namespace SLANG
         /// <inheritdoc />
         char? ITextScanner.NextCharacter
         {
-            [Pure]
             get
             {
                 return this.NextCharacter;
@@ -82,7 +81,6 @@ namespace SLANG
         /// <inheritdoc />
         int ITextContext.Offset
         {
-            [Pure]
             get
             {
                 return this.Offset;
@@ -92,7 +90,6 @@ namespace SLANG
         /// <inheritdoc />
         private bool EndOfInput
         {
-            [Pure]
             get
             {
                 if (this.disposed)
@@ -107,7 +104,6 @@ namespace SLANG
         /// <inheritdoc />
         private char? NextCharacter
         {
-            [Pure]
             get
             {
                 if (this.disposed)
@@ -143,7 +139,6 @@ namespace SLANG
         }
 
         /// <inheritdoc />
-        [Pure]
         ITextContext ITextScanner.GetContext()
         {
             return this.GetContext();
@@ -252,7 +247,6 @@ namespace SLANG
         }
 
         /// <inheritdoc />
-        [Pure]
         private ITextContext GetContext()
         {
             if (this.disposed)
@@ -261,12 +255,6 @@ namespace SLANG
             }
 
             return new TextContext(this.offset);
-        }
-
-        [ContractInvariantMethod]
-        private void ObjectInvariant()
-        {
-            Contract.Invariant(this.inputStream != null);
         }
 
         /// <inheritdoc />

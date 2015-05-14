@@ -9,8 +9,8 @@
 namespace SLANG
 {
     using System;
+    using System.Diagnostics;
     using System.Diagnostics.CodeAnalysis;
-    using System.Diagnostics.Contracts;
 
     /// <summary>Represents a choice of six alternative elements.</summary>
     /// <typeparam name="T1">The type of the first alternative element.</typeparam>
@@ -40,8 +40,6 @@ namespace SLANG
         public Alternative(Element element, int alternative, ITextContext context)
             : base(element.Data, context)
         {
-            Contract.Requires(element != null);
-            Contract.Requires(context != null);
             switch (alternative)
             {
                 case 1:
@@ -87,7 +85,7 @@ namespace SLANG
 
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException("alternative");
+                    throw new ArgumentOutOfRangeException("alternative", alternative, "Precondition: 1 <= alternative <= 6");
             }
 
             this.element = element;
@@ -99,6 +97,7 @@ namespace SLANG
         {
             get
             {
+                Debug.Assert(this.element != null, "this.element != null");
                 return this.element;
             }
         }
@@ -110,13 +109,6 @@ namespace SLANG
             {
                 return this.ordinal;
             }
-        }
-
-        [ContractInvariantMethod]
-        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented", Justification = "Reviewed. Suppression is OK here.")]
-        private void ObjectInvariant()
-        {
-            Contract.Invariant(this.element != null);
         }
     }
 }

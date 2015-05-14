@@ -2,7 +2,6 @@
 {
     using System;
     using System.Diagnostics;
-    using System.Diagnostics.Contracts;
 
     public class Element : ITextContext
     {
@@ -24,15 +23,28 @@
         }
 
         public Element(char data, ITextContext context)
-            : this(char.ToString(data), context)
         {
-            Contract.Requires(context != null);
+            if (context == null)
+            {
+                throw new ArgumentNullException("context", "Precondition: context != null");
+            }
+
+            this.data = char.ToString(data);
+            this.offset = context.Offset;
         }
 
         public Element(string data, ITextContext context)
         {
-            Contract.Requires(data != null);
-            Contract.Requires(context != null);
+            if (data == null)
+            {
+                throw new ArgumentNullException("data", "Precondition: data != null");
+            }
+
+            if (context == null)
+            {
+                throw new ArgumentNullException("context", "Precondition: context != null");
+            }
+
             this.data = data;
             this.offset = context.Offset;
         }
@@ -41,7 +53,7 @@
         {
             get
             {
-                Contract.Ensures(Contract.Result<string>() != null);
+                Debug.Assert(this.data != null);
                 return this.data;
             }
         }
@@ -59,12 +71,6 @@
         public override string ToString()
         {
             return this.Data;
-        }
-
-        [ContractInvariantMethod]
-        private void ObjectInvariant()
-        {
-            Contract.Invariant(this.data != null);
         }
     }
 }

@@ -8,8 +8,9 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG
 {
+    using System;
+    using System.Diagnostics;
     using System.Diagnostics.CodeAnalysis;
-    using System.Diagnostics.Contracts;
 
     /// <summary>Represents a sequence of nine elements.</summary>
     /// <typeparam name="T1">The type of the first element in the sequence.</typeparam>
@@ -92,27 +93,62 @@ namespace SLANG
             ITextContext context)
             : base(
                 string.Concat(
-                    element1.Data, 
-                    element2.Data, 
-                    element3.Data, 
-                    element4.Data, 
-                    element5.Data, 
-                    element6.Data, 
-                    element7.Data, 
-                    element8.Data, 
-                    element9.Data), 
+                    element1, 
+                    element2, 
+                    element3, 
+                    element4, 
+                    element5, 
+                    element6, 
+                    element7, 
+                    element8, 
+                    element9), 
                 context)
         {
-            Contract.Requires(element1 != null);
-            Contract.Requires(element2 != null);
-            Contract.Requires(element3 != null);
-            Contract.Requires(element4 != null);
-            Contract.Requires(element5 != null);
-            Contract.Requires(element6 != null);
-            Contract.Requires(element7 != null);
-            Contract.Requires(element8 != null);
-            Contract.Requires(element9 != null);
-            Contract.Requires(context != null);
+            if (element1 == null)
+            {
+                throw new ArgumentNullException("element1", "Precondition: element1 != null");
+            }
+
+            if (element2 == null)
+            {
+                throw new ArgumentNullException("element2", "Precondition: element2 != null");
+            }
+
+            if (element3 == null)
+            {
+                throw new ArgumentNullException("element3", "Precondition: element3 != null");
+            }
+
+            if (element4 == null)
+            {
+                throw new ArgumentNullException("element4", "Precondition: element4 != null");
+            }
+
+            if (element5 == null)
+            {
+                throw new ArgumentNullException("element5", "Precondition: element5 != null");
+            }
+
+            if (element6 == null)
+            {
+                throw new ArgumentNullException("element6", "Precondition: element6 != null");
+            }
+
+            if (element7 == null)
+            {
+                throw new ArgumentNullException("element7", "Precondition: element7 != null");
+            }
+
+            if (element8 == null)
+            {
+                throw new ArgumentNullException("element8", "Precondition: element8 != null");
+            }
+
+            if (element9 == null)
+            {
+                throw new ArgumentNullException("element9", "Precondition: element9 != null");
+            }
+
             this.element1 = element1;
             this.element2 = element2;
             this.element3 = element3;
@@ -129,6 +165,7 @@ namespace SLANG
         {
             get
             {
+                Debug.Assert(this.element1 != null, "this.element1 != null");
                 return this.element1;
             }
         }
@@ -138,6 +175,7 @@ namespace SLANG
         {
             get
             {
+                Debug.Assert(this.element2 != null, "this.element2 != null");
                 return this.element2;
             }
         }
@@ -147,6 +185,7 @@ namespace SLANG
         {
             get
             {
+                Debug.Assert(this.element3 != null, "this.element3 != null");
                 return this.element3;
             }
         }
@@ -156,6 +195,7 @@ namespace SLANG
         {
             get
             {
+                Debug.Assert(this.element4 != null, "this.element4 != null");
                 return this.element4;
             }
         }
@@ -165,6 +205,7 @@ namespace SLANG
         {
             get
             {
+                Debug.Assert(this.element5 != null, "this.element5 != null");
                 return this.element5;
             }
         }
@@ -174,6 +215,7 @@ namespace SLANG
         {
             get
             {
+                Debug.Assert(this.element6 != null, "this.element6 != null");
                 return this.element6;
             }
         }
@@ -183,6 +225,7 @@ namespace SLANG
         {
             get
             {
+                Debug.Assert(this.element7 != null, "this.element7 != null");
                 return this.element7;
             }
         }
@@ -192,33 +235,18 @@ namespace SLANG
         {
             get
             {
+                Debug.Assert(this.element8 != null, "this.element8 != null");
                 return this.element8;
             }
         }
-
         /// <summary>Gets the ninth element in the sequence.</summary>
         public T9 Element9
         {
             get
             {
+                Debug.Assert(this.element9 != null, "this.element9 != null");
                 return this.element9;
             }
-        }
-
-        [ContractInvariantMethod]
-        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented", 
-            Justification = "Reviewed. Suppression is OK here.")]
-        private void ObjectInvariant()
-        {
-            Contract.Invariant(this.element1 != null);
-            Contract.Invariant(this.element2 != null);
-            Contract.Invariant(this.element3 != null);
-            Contract.Invariant(this.element4 != null);
-            Contract.Invariant(this.element5 != null);
-            Contract.Invariant(this.element6 != null);
-            Contract.Invariant(this.element7 != null);
-            Contract.Invariant(this.element8 != null);
-            Contract.Invariant(this.element9 != null);
         }
     }
 }

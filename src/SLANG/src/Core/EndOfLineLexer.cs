@@ -7,8 +7,8 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG.Core
 {
+    using System;
     using System.Diagnostics;
-    using System.Diagnostics.Contracts;
 
     public class EndOfLineLexer : SequenceLexer<EndOfLine, CarriageReturn, LineFeed>
     {
@@ -26,8 +26,16 @@ namespace SLANG.Core
         public EndOfLineLexer(ILexer<CarriageReturn> carriageReturnLexer, ILexer<LineFeed> lineFeedLexer)
             : base("CRLF")
         {
-            Contract.Requires(carriageReturnLexer != null);
-            Contract.Requires(lineFeedLexer != null);
+            if (carriageReturnLexer == null)
+            {
+                throw new ArgumentNullException("carriageReturnLexer", "Precondition: carriageReturnLexer != null");
+            }
+
+            if (lineFeedLexer == null)
+            {
+                throw new ArgumentNullException("lineFeedLexer", "Precondition: lineFeedLexer != null");
+            }
+
             this.carriageReturnLexer = carriageReturnLexer;
             this.lineFeedLexer = lineFeedLexer;
         }
@@ -45,13 +53,6 @@ namespace SLANG.Core
         protected override bool TryRead2(ITextScanner scanner, out LineFeed element)
         {
             return this.lineFeedLexer.TryRead(scanner, out element);
-        }
-
-        [ContractInvariantMethod]
-        private void ObjectInvariant()
-        {
-            Contract.Invariant(this.carriageReturnLexer != null);
-            Contract.Invariant(this.lineFeedLexer != null);
         }
     }
 }

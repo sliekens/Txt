@@ -9,7 +9,6 @@
 namespace SLANG
 {
     using System;
-    using System.Diagnostics.Contracts;
 
     /// <summary>
     /// The exception that is thrown when a parsing engine encounters an error. Errors include invalid or unexpected
@@ -25,7 +24,11 @@ namespace SLANG
         /// <param name="context">The <see cref="ITextContext"/> that describes the location of the error.</param>
         public SyntaxErrorException(ITextContext context)
         {
-            Contract.Requires(context != null);
+            if (context == null)
+            {
+                throw new ArgumentNullException("context", "Precondition: context != null");
+            }
+
             this.offset = context.Offset;
         }
 
@@ -36,7 +39,11 @@ namespace SLANG
         public SyntaxErrorException(ITextContext context, string message)
             : base(message)
         {
-            Contract.Requires(context != null);
+            if (context == null)
+            {
+                throw new ArgumentNullException("context", "Precondition: context != null");
+            }
+
             this.offset = context.Offset;
         }
 
@@ -49,7 +56,11 @@ namespace SLANG
         public SyntaxErrorException(ITextContext context, string message, Exception inner)
             : base(message, inner)
         {
-            Contract.Requires(context != null);
+            if (context == null)
+            {
+                throw new ArgumentNullException("context", "Precondition: context != null");
+            }
+
             this.offset = context.Offset;
         }
 
