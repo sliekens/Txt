@@ -18,21 +18,15 @@ namespace SLANG.Core
         /// <inheritdoc />
         public override bool TryRead(ITextScanner scanner, out CarriageReturn element)
         {
-            if (scanner.EndOfInput)
+            Element carriageReturn;
+            if (!TryReadTerminal(scanner, '\x0D', out carriageReturn))
             {
                 element = default(CarriageReturn);
                 return false;
             }
 
-            var context = scanner.GetContext();
-            if (scanner.TryMatch('\x0D'))
-            {
-                element = new CarriageReturn(context);
-                return true;
-            }
-
-            element = default(CarriageReturn);
-            return false;
+            element = new CarriageReturn(carriageReturn);
+            return true;
         }
     }
 }
