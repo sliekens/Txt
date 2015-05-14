@@ -68,7 +68,7 @@
         }
 
         /// <inheritdoc />
-        public override string ToString()
+        public override sealed string ToString()
         {
             return this.Data;
         }
