@@ -3,12 +3,11 @@
 //   The MIT License (MIT)
 // </copyright>
 // <summary>
-//   TODO
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG.Core
 {
-    /// <summary>TODO </summary>
+    /// <summary></summary>
     public class DoubleQuoteLexer : Lexer<DoubleQuote>
     {
         /// <summary>Initializes a new instance of the <see cref="DoubleQuoteLexer"/> class.</summary>
@@ -20,21 +19,15 @@ namespace SLANG.Core
         /// <inheritdoc />
         public override bool TryRead(ITextScanner scanner, out DoubleQuote element)
         {
-            if (scanner.EndOfInput)
+            Element terminal;
+            if (!TryReadTerminal(scanner, '\x22', out terminal))
             {
                 element = default(DoubleQuote);
                 return false;
             }
 
-            var context = scanner.GetContext();
-            if (scanner.TryMatch('\"'))
-            {
-                element = new DoubleQuote(context);
-                return true;
-            }
-
-            element = default(DoubleQuote);
-            return false;
+            element = new DoubleQuote(terminal);
+            return true;
         }
     }
 }

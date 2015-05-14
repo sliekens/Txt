@@ -3,7 +3,6 @@
 //   The MIT License (MIT)
 // </copyright>
 // <summary>
-//   
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG.Core
@@ -12,9 +11,9 @@ namespace SLANG.Core
     public class DoubleQuote : Element
     {
         /// <summary>Initializes a new instance of the <see cref="T:SLANG.Core.DoubleQuote"/> class with a specified context.</summary>
-        /// <param name="context">The object that describes the context in which the text appears.</param>
-        public DoubleQuote(ITextContext context)
-            : base('\x22', context)
+        /// <param name="element">The double quote element.</param>
+        public DoubleQuote(Element element)
+            : base(element)
         {
         }
     }
