@@ -18,21 +18,15 @@ namespace SLANG.Core
         /// <inheritdoc />
         public override bool TryRead(ITextScanner scanner, out LineFeed element)
         {
-            if (scanner.EndOfInput)
+            Element terminal;
+            if (!TryReadTerminal(scanner, '\x0A', out terminal))
             {
                 element = default(LineFeed);
                 return false;
             }
 
-            var context = scanner.GetContext();
-            if (scanner.TryMatch('\x0A'))
-            {
-                element = new LineFeed(context);
-                return true;
-            }
-
-            element = default(LineFeed);
-            return false;
+            element = new LineFeed(terminal);
+            return true;
         }
     }
 }
