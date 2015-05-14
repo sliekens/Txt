@@ -66,11 +66,6 @@ namespace SLANG.Core
                 : base('\x41', '\x5A')
             {
             }
-
-            protected override Alpha.UpperCase CreateInstance(Element element)
-            {
-                return new Alpha.UpperCase(element);
-            }
         }
     }
 
@@ -81,11 +76,6 @@ namespace SLANG.Core
             public LowerCaseLexer()
                 : base('\x61', '\x7A')
             {
-            }
-
-            protected override Alpha.LowerCase CreateInstance(Element element)
-            {
-                return new Alpha.LowerCase(element);
             }
         }
     }

@@ -14,10 +14,5 @@ namespace SLANG.Core
             : base("CHAR", '\x01', '\x7F')
         {
         }
-
-        protected override Character CreateInstance(Element element)
-        {
-            return new Character(element);
-        }
     }
 }

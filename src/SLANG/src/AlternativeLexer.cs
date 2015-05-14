@@ -1,5 +1,6 @@
 ﻿namespace SLANG
 {
+    using System;
     using System.Diagnostics;
 
     /// <summary>Provides the base class for lexers whose lexer rule has a range of alternatives.</summary>
@@ -53,6 +54,9 @@
         /// <summary>Creates a new instance of the lexer rule for a given alternative element.</summary>
         /// <param name="element">The alternative element.</param>
         /// <returns>An instance of the lexer rule.</returns>
-        protected abstract TAlternative CreateInstance(Element element);
+        protected virtual TAlternative CreateInstance(Element element)
+        {
+            return (TAlternative)Activator.CreateInstance(typeof(TAlternative), element);
+        }
     }
 }

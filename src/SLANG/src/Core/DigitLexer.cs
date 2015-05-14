@@ -14,11 +14,5 @@ namespace SLANG.Core
             : base("DIGIT", '\x30', '\x39')
         {
         }
-
-        /// <inheritdoc />
-        protected override Digit CreateInstance(Element element)
-        {
-            return new Digit(element);
-        }
     }
 }

@@ -14,10 +14,5 @@ namespace SLANG.Core
             : base("OCTET", '\0', '\xFF')
         {
         }
-
-        protected override Octet CreateInstance(Element element)
-        {
-            return new Octet(element);
-        }
     }
 }

@@ -14,10 +14,5 @@ namespace SLANG.Core
             : base("VCHAR", '\x21', '\x7E')
         {
         }
-
-        protected override VisibleCharacter CreateInstance(Element element)
-        {
-            return new VisibleCharacter(element);
-        }
     }
 }

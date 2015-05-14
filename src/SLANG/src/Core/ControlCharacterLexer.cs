@@ -54,11 +54,6 @@ namespace SLANG.Core
                 : base('\0', '\x1F')
             {
             }
-
-            protected override ControlCharacter.Controls CreateInstance(Element element)
-            {
-                return new ControlCharacter.Controls(element);
-            }
         }
     }
 
