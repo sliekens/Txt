@@ -23,7 +23,7 @@
                 throw new ArgumentException("Precondition: lowerBound < upperBound");
             }
 
-            for (char c = lowerBound; c < upperBound; c++)
+            for (char c = lowerBound; c <= upperBound; c++)
             {
                 if (element.Data == char.ToString(c))
                 {
