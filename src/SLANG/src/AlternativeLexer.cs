@@ -36,12 +36,6 @@
         /// <inheritdoc />
         public override bool TryRead(ITextScanner scanner, out TAlternative element)
         {
-            if (scanner.EndOfInput)
-            {
-                element = default(TAlternative);
-                return false;
-            }
-
             var context = scanner.GetContext();
             for (char c = this.lowerBound; c <= this.upperBound; c++)
             {
