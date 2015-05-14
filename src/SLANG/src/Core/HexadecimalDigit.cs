@@ -20,9 +20,8 @@ namespace SLANG.Core
         /// and context.</summary>
         /// <param name="element">The hexadecimal digit.</param>
         /// <param name="alternative">A number that indicates which alternative was matched.</param>
-        /// <param name="context">The object that describes the context in which the text appears.</param>
-        public HexadecimalDigit(Element element, int alternative, ITextContext context)
-            : base(element, alternative, context)
+        public HexadecimalDigit(Element element, int alternative)
+            : base(element, alternative)
         {
             switch (alternative)
             {

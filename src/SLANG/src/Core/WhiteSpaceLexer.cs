@@ -40,16 +40,6 @@ namespace SLANG.Core
             this.element2Lexer = element2Lexer;
         }
 
-        protected override WhiteSpace CreateInstance1(Space element, ITextContext context)
-        {
-            return new WhiteSpace(element);
-        }
-
-        protected override WhiteSpace CreateInstance2(HorizontalTab element, ITextContext context)
-        {
-            return new WhiteSpace(element);
-        }
-
         protected override bool TryRead1(ITextScanner scanner, out Space element)
         {
             return this.element1Lexer.TryRead(scanner, out element);

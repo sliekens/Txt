@@ -25,16 +25,6 @@ namespace SLANG.Core
             this.element2Lexer = element2Lexer;
         }
 
-        protected override ControlCharacter CreateInstance1(ControlCharacter.Controls element, ITextContext context)
-        {
-            return new ControlCharacter(element);
-        }
-
-        protected override ControlCharacter CreateInstance2(Element element, ITextContext context)
-        {
-            return new ControlCharacter(element);
-        }
-
         protected override bool TryRead1(ITextScanner scanner, out ControlCharacter.Controls element)
         {
             return this.element1Lexer.TryRead(scanner, out element);

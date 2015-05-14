@@ -41,18 +41,17 @@ namespace SLANG
                 return false;
             }
 
-            var context = scanner.GetContext();
             T1 alternative1;
             if (this.TryRead1(scanner, out alternative1))
             {
-                element = this.CreateInstance1(alternative1, context);
+                element = this.CreateInstance1(alternative1);
                 return true;
             }
 
             T2 alternative2;
             if (this.TryRead2(scanner, out alternative2))
             {
-                element = this.CreateInstance2(alternative2, context);
+                element = this.CreateInstance2(alternative2);
                 return true;
             }
 
@@ -62,15 +61,19 @@ namespace SLANG
 
         /// <summary>Creates a new instance of the lexer rule for the first alternative element.</summary>
         /// <param name="element">The alternative element.</param>
-        /// <param name="context">The object that describes the context in which the text appears.</param>
         /// <returns>An instance of the lexer rule.</returns>
-        protected abstract TAlternative CreateInstance1(T1 element, ITextContext context);
+        protected virtual TAlternative CreateInstance1(T1 element)
+        {
+            return (TAlternative)Activator.CreateInstance(typeof(TAlternative), element);
+        }
 
         /// <summary>Creates a new instance of the lexer rule for the second alternative element.</summary>
         /// <param name="element">The alternative element.</param>
-        /// <param name="context">The object that describes the context in which the text appears.</param>
         /// <returns>An instance of the lexer rule.</returns>
-        protected abstract TAlternative CreateInstance2(T2 element, ITextContext context);
+        protected virtual TAlternative CreateInstance2(T2 element)
+        {
+            return (TAlternative)Activator.CreateInstance(typeof(TAlternative), element);
+        }
 
         /// <summary>Attempts to read the first alternative element. A return value indicates whether the element was available.</summary>
         /// <param name="scanner">The scanner object that provides text symbols as well as contextual information about the text source.</param>

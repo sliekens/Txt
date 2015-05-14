@@ -37,12 +37,12 @@ namespace SLANG.Core
             this.element2Lexer = element2Lexer;
         }
 
-        protected override Alpha CreateInstance1(Alpha.UpperCase element, ITextContext context)
+        protected override Alpha CreateInstance1(Alpha.UpperCase element)
         {
             return new Alpha(element);
         }
 
-        protected override Alpha CreateInstance2(Alpha.LowerCase element, ITextContext context)
+        protected override Alpha CreateInstance2(Alpha.LowerCase element)
         {
             return new Alpha(element);
         }

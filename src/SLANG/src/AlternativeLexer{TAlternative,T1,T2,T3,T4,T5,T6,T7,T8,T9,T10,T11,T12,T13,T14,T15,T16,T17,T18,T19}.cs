@@ -81,137 +81,136 @@
                 return false;
             }
 
-            var context = scanner.GetContext();
             T1 alternative1;
             if (this.TryRead1(scanner, out alternative1))
             {
-                element = this.CreateInstance1(alternative1, context);
+                element = this.CreateInstance1(alternative1);
                 return true;
             }
 
             T2 alternative2;
             if (this.TryRead2(scanner, out alternative2))
             {
-                element = this.CreateInstance2(alternative2, context);
+                element = this.CreateInstance2(alternative2);
                 return true;
             }
 
             T3 alternative3;
             if (this.TryRead3(scanner, out alternative3))
             {
-                element = this.CreateInstance3(alternative3, context);
+                element = this.CreateInstance3(alternative3);
                 return true;
             }
 
             T4 alternative4;
             if (this.TryRead4(scanner, out alternative4))
             {
-                element = this.CreateInstance4(alternative4, context);
+                element = this.CreateInstance4(alternative4);
                 return true;
             }
 
             T5 alternative5;
             if (this.TryRead5(scanner, out alternative5))
             {
-                element = this.CreateInstance5(alternative5, context);
+                element = this.CreateInstance5(alternative5);
                 return true;
             }
 
             T6 alternative6;
             if (this.TryRead6(scanner, out alternative6))
             {
-                element = this.CreateInstance6(alternative6, context);
+                element = this.CreateInstance6(alternative6);
                 return true;
             }
 
             T7 alternative7;
             if (this.TryRead7(scanner, out alternative7))
             {
-                element = this.CreateInstance7(alternative7, context);
+                element = this.CreateInstance7(alternative7);
                 return true;
             }
 
             T8 alternative8;
             if (this.TryRead8(scanner, out alternative8))
             {
-                element = this.CreateInstance8(alternative8, context);
+                element = this.CreateInstance8(alternative8);
                 return true;
             }
 
             T9 alternative9;
             if (this.TryRead9(scanner, out alternative9))
             {
-                element = this.CreateInstance9(alternative9, context);
+                element = this.CreateInstance9(alternative9);
                 return true;
             }
 
             T10 alternative10;
             if (this.TryRead10(scanner, out alternative10))
             {
-                element = this.CreateInstance10(alternative10, context);
+                element = this.CreateInstance10(alternative10);
                 return true;
             }
 
             T11 alternative11;
             if (this.TryRead11(scanner, out alternative11))
             {
-                element = this.CreateInstance11(alternative11, context);
+                element = this.CreateInstance11(alternative11);
                 return true;
             }
 
             T12 alternative12;
             if (this.TryRead12(scanner, out alternative12))
             {
-                element = this.CreateInstance12(alternative12, context);
+                element = this.CreateInstance12(alternative12);
                 return true;
             }
 
             T13 alternative13;
             if (this.TryRead13(scanner, out alternative13))
             {
-                element = this.CreateInstance13(alternative13, context);
+                element = this.CreateInstance13(alternative13);
                 return true;
             }
 
             T14 alternative14;
             if (this.TryRead14(scanner, out alternative14))
             {
-                element = this.CreateInstance14(alternative14, context);
+                element = this.CreateInstance14(alternative14);
                 return true;
             }
 
             T15 alternative15;
             if (this.TryRead15(scanner, out alternative15))
             {
-                element = this.CreateInstance15(alternative15, context);
+                element = this.CreateInstance15(alternative15);
                 return true;
             }
 
             T16 alternative16;
             if (this.TryRead16(scanner, out alternative16))
             {
-                element = this.CreateInstance16(alternative16, context);
+                element = this.CreateInstance16(alternative16);
                 return true;
             }
 
             T17 alternative17;
             if (this.TryRead17(scanner, out alternative17))
             {
-                element = this.CreateInstance17(alternative17, context);
+                element = this.CreateInstance17(alternative17);
                 return true;
             }
 
             T18 alternative18;
             if (this.TryRead18(scanner, out alternative18))
             {
-                element = this.CreateInstance18(alternative18, context);
+                element = this.CreateInstance18(alternative18);
                 return true;
             }
 
             T19 alternative19;
             if (this.TryRead19(scanner, out alternative19))
             {
-                element = this.CreateInstance19(alternative19, context);
+                element = this.CreateInstance19(alternative19);
                 return true;
             }
 
@@ -221,117 +220,155 @@
 
         /// <summary>Creates a new instance of the lexer rule for the first alternative element.</summary>
         /// <param name="element">The alternative element.</param>
-        /// <param name="context">The object that describes the context in which the text appears.</param>
         /// <returns>An instance of the lexer rule.</returns>
-        protected abstract TAlternative CreateInstance1(T1 element, ITextContext context);
+        protected virtual TAlternative CreateInstance1(T1 element)
+        {
+            return (TAlternative)Activator.CreateInstance(typeof(TAlternative), element);
+        }
 
         /// <summary>Creates a new instance of the lexer rule for the tenth alternative element.</summary>
         /// <param name="element">The alternative element.</param>
-        /// <param name="context">The object that describes the context in which the text appears.</param>
         /// <returns>An instance of the lexer rule.</returns>
-        protected abstract TAlternative CreateInstance10(T10 element, ITextContext context);
+        protected virtual TAlternative CreateInstance10(T10 element)
+        {
+            return (TAlternative)Activator.CreateInstance(typeof(TAlternative), element);
+        }
 
         /// <summary>Creates a new instance of the lexer rule for the eleventh alternative element.</summary>
         /// <param name="element">The alternative element.</param>
-        /// <param name="context">The object that describes the context in which the text appears.</param>
         /// <returns>An instance of the lexer rule.</returns>
-        protected abstract TAlternative CreateInstance11(T11 element, ITextContext context);
+        protected virtual TAlternative CreateInstance11(T11 element)
+        {
+            return (TAlternative)Activator.CreateInstance(typeof(TAlternative), element);
+        }
 
         /// <summary>Creates a new instance of the lexer rule for the twelfth alternative element.</summary>
         /// <param name="element">The alternative element.</param>
-        /// <param name="context">The object that describes the context in which the text appears.</param>
         /// <returns>An instance of the lexer rule.</returns>
-        protected abstract TAlternative CreateInstance12(T12 element, ITextContext context);
+        protected virtual TAlternative CreateInstance12(T12 element)
+        {
+            return (TAlternative)Activator.CreateInstance(typeof(TAlternative), element);
+        }
 
         /// <summary>Creates a new instance of the lexer rule for the thirteenth alternative element.</summary>
         /// <param name="element">The alternative element.</param>
-        /// <param name="context">The object that describes the context in which the text appears.</param>
         /// <returns>An instance of the lexer rule.</returns>
-        protected abstract TAlternative CreateInstance13(T13 element, ITextContext context);
+        protected virtual TAlternative CreateInstance13(T13 element)
+        {
+            return (TAlternative)Activator.CreateInstance(typeof(TAlternative), element);
+        }
 
         /// <summary>Creates a new instance of the lexer rule for the fourteenth alternative element.</summary>
         /// <param name="element">The alternative element.</param>
-        /// <param name="context">The object that describes the context in which the text appears.</param>
         /// <returns>An instance of the lexer rule.</returns>
-        protected abstract TAlternative CreateInstance14(T14 element, ITextContext context);
+        protected virtual TAlternative CreateInstance14(T14 element)
+        {
+            return (TAlternative)Activator.CreateInstance(typeof(TAlternative), element);
+        }
 
         /// <summary>Creates a new instance of the lexer rule for the fifteenth alternative element.</summary>
         /// <param name="element">The alternative element.</param>
-        /// <param name="context">The object that describes the context in which the text appears.</param>
         /// <returns>An instance of the lexer rule.</returns>
-        protected abstract TAlternative CreateInstance15(T15 element, ITextContext context);
+        protected virtual TAlternative CreateInstance15(T15 element)
+        {
+            return (TAlternative)Activator.CreateInstance(typeof(TAlternative), element);
+        }
 
         /// <summary>Creates a new instance of the lexer rule for the sixteenth alternative element.</summary>
         /// <param name="element">The alternative element.</param>
-        /// <param name="context">The object that describes the context in which the text appears.</param>
         /// <returns>An instance of the lexer rule.</returns>
-        protected abstract TAlternative CreateInstance16(T16 element, ITextContext context);
+        protected virtual TAlternative CreateInstance16(T16 element)
+        {
+            return (TAlternative)Activator.CreateInstance(typeof(TAlternative), element);
+        }
 
         /// <summary>Creates a new instance of the lexer rule for the seventeenth alternative element.</summary>
         /// <param name="element">The alternative element.</param>
-        /// <param name="context">The object that describes the context in which the text appears.</param>
         /// <returns>An instance of the lexer rule.</returns>
-        protected abstract TAlternative CreateInstance17(T17 element, ITextContext context);
+        protected virtual TAlternative CreateInstance17(T17 element)
+        {
+            return (TAlternative)Activator.CreateInstance(typeof(TAlternative), element);
+        }
 
         /// <summary>Creates a new instance of the lexer rule for the eighteenth alternative element.</summary>
         /// <param name="element">The alternative element.</param>
-        /// <param name="context">The object that describes the context in which the text appears.</param>
         /// <returns>An instance of the lexer rule.</returns>
-        protected abstract TAlternative CreateInstance18(T18 element, ITextContext context);
+        protected virtual TAlternative CreateInstance18(T18 element)
+        {
+            return (TAlternative)Activator.CreateInstance(typeof(TAlternative), element);
+        }
 
         /// <summary>Creates a new instance of the lexer rule for the nineteenth alternative element.</summary>
         /// <param name="element">The alternative element.</param>
-        /// <param name="context">The object that describes the context in which the text appears.</param>
         /// <returns>An instance of the lexer rule.</returns>
-        protected abstract TAlternative CreateInstance19(T19 element, ITextContext context);
+        protected virtual TAlternative CreateInstance19(T19 element)
+        {
+            return (TAlternative)Activator.CreateInstance(typeof(TAlternative), element);
+        }
 
         /// <summary>Creates a new instance of the lexer rule for the second alternative element.</summary>
         /// <param name="element">The alternative element.</param>
-        /// <param name="context">The object that describes the context in which the text appears.</param>
         /// <returns>An instance of the lexer rule.</returns>
-        protected abstract TAlternative CreateInstance2(T2 element, ITextContext context);
+        protected virtual TAlternative CreateInstance2(T2 element)
+        {
+            return (TAlternative)Activator.CreateInstance(typeof(TAlternative), element);
+        }
 
         /// <summary>Creates a new instance of the lexer rule for the third alternative element.</summary>
         /// <param name="element">The alternative element.</param>
-        /// <param name="context">The object that describes the context in which the text appears.</param>
         /// <returns>An instance of the lexer rule.</returns>
-        protected abstract TAlternative CreateInstance3(T3 element, ITextContext context);
+        protected virtual TAlternative CreateInstance3(T3 element)
+        {
+            return (TAlternative)Activator.CreateInstance(typeof(TAlternative), element);
+        }
 
         /// <summary>Creates a new instance of the lexer rule for the fourth alternative element.</summary>
         /// <param name="element">The alternative element.</param>
-        /// <param name="context">The object that describes the context in which the text appears.</param>
         /// <returns>An instance of the lexer rule.</returns>
-        protected abstract TAlternative CreateInstance4(T4 element, ITextContext context);
+        protected virtual TAlternative CreateInstance4(T4 element)
+        {
+            return (TAlternative)Activator.CreateInstance(typeof(TAlternative), element);
+        }
 
         /// <summary>Creates a new instance of the lexer rule for the fifth alternative element.</summary>
         /// <param name="element">The alternative element.</param>
-        /// <param name="context">The object that describes the context in which the text appears.</param>
         /// <returns>An instance of the lexer rule.</returns>
-        protected abstract TAlternative CreateInstance5(T5 element, ITextContext context);
+        protected virtual TAlternative CreateInstance5(T5 element)
+        {
+            return (TAlternative)Activator.CreateInstance(typeof(TAlternative), element);
+        }
 
         /// <summary>Creates a new instance of the lexer rule for the sixth alternative element.</summary>
         /// <param name="element">The alternative element.</param>
-        /// <param name="context">The object that describes the context in which the text appears.</param>
         /// <returns>An instance of the lexer rule.</returns>
-        protected abstract TAlternative CreateInstance6(T6 element, ITextContext context);
+        protected virtual TAlternative CreateInstance6(T6 element)
+        {
+            return (TAlternative)Activator.CreateInstance(typeof(TAlternative), element);
+        }
 
         /// <summary>Creates a new instance of the lexer rule for the seventh alternative element.</summary>
         /// <param name="element">The alternative element.</param>
-        /// <param name="context">The object that describes the context in which the text appears.</param>
         /// <returns>An instance of the lexer rule.</returns>
-        protected abstract TAlternative CreateInstance7(T7 element, ITextContext context);
+        protected virtual TAlternative CreateInstance7(T7 element)
+        {
+            return (TAlternative)Activator.CreateInstance(typeof(TAlternative), element);
+        }
 
         /// <summary>Creates a new instance of the lexer rule for the eighth alternative element.</summary>
         /// <param name="element">The alternative element.</param>
-        /// <param name="context">The object that describes the context in which the text appears.</param>
         /// <returns>An instance of the lexer rule.</returns>
-        protected abstract TAlternative CreateInstance8(T8 element, ITextContext context);
+        protected virtual TAlternative CreateInstance8(T8 element)
+        {
+            return (TAlternative)Activator.CreateInstance(typeof(TAlternative), element);
+        }
 
         /// <summary>Creates a new instance of the lexer rule for the ninth alternative element.</summary>
         /// <param name="element">The alternative element.</param>
-        /// <param name="context">The object that describes the context in which the text appears.</param>
         /// <returns>An instance of the lexer rule.</returns>
-        protected abstract TAlternative CreateInstance9(T9 element, ITextContext context);
+        protected virtual TAlternative CreateInstance9(T9 element)
+        {
+            return (TAlternative)Activator.CreateInstance(typeof(TAlternative), element);
+        }
 
         /// <summary>Attempts to read the first alternative element. A return value indicates whether the element was available.</summary>
         /// <param name="scanner">

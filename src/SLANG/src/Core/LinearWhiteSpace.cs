@@ -23,8 +23,13 @@ namespace SLANG.Core
     {
         public partial class MultiLineWhiteSpace : Alternative<WhiteSpace, MultiLineWhiteSpace.NewLineWhiteSpace>
         {
-            public MultiLineWhiteSpace(Element element, int alternative, ITextContext context)
-                : base(element, alternative)
+            public MultiLineWhiteSpace(WhiteSpace element)
+                : base(element, 1)
+            {
+                
+            }
+            public MultiLineWhiteSpace(NewLineWhiteSpace element)
+                : base(element, 2)
             {
             }
         }

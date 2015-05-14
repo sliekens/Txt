@@ -31,39 +31,39 @@ namespace SLANG.Core
             this.digitLexer = digitLexer;
         }
 
-        protected override HexadecimalDigit CreateInstance1(Digit element, ITextContext context)
+        protected override HexadecimalDigit CreateInstance1(Digit element)
         {
-            return new HexadecimalDigit(element, 1, context);
+            return new HexadecimalDigit(element, 1);
         }
 
-        protected override HexadecimalDigit CreateInstance2(Element element, ITextContext context)
+        protected override HexadecimalDigit CreateInstance2(Element element)
         {
-            return new HexadecimalDigit(element, 2, context);
+            return new HexadecimalDigit(element, 2);
         }
 
-        protected override HexadecimalDigit CreateInstance3(Element element, ITextContext context)
+        protected override HexadecimalDigit CreateInstance3(Element element)
         {
-            return new HexadecimalDigit(element, 3, context);
+            return new HexadecimalDigit(element, 3);
         }
 
-        protected override HexadecimalDigit CreateInstance4(Element element, ITextContext context)
+        protected override HexadecimalDigit CreateInstance4(Element element)
         {
-            return new HexadecimalDigit(element, 4, context);
+            return new HexadecimalDigit(element, 4);
         }
 
-        protected override HexadecimalDigit CreateInstance5(Element element, ITextContext context)
+        protected override HexadecimalDigit CreateInstance5(Element element)
         {
-            return new HexadecimalDigit(element, 5, context);
+            return new HexadecimalDigit(element, 5);
         }
 
-        protected override HexadecimalDigit CreateInstance6(Element element, ITextContext context)
+        protected override HexadecimalDigit CreateInstance6(Element element)
         {
-            return new HexadecimalDigit(element, 6, context);
+            return new HexadecimalDigit(element, 6);
         }
 
-        protected override HexadecimalDigit CreateInstance7(Element element, ITextContext context)
+        protected override HexadecimalDigit CreateInstance7(Element element)
         {
-            return new HexadecimalDigit(element, 7, context);
+            return new HexadecimalDigit(element, 7);
         }
 
         protected override bool TryRead1(ITextScanner scanner, out Digit element)

@@ -54,16 +54,6 @@ namespace SLANG.Core
                 this.element2Lexer = element2Lexer;
             }
 
-            protected override LinearWhiteSpace.MultiLineWhiteSpace CreateInstance1(WhiteSpace element, ITextContext context)
-            {
-                return new LinearWhiteSpace.MultiLineWhiteSpace(element, 1, context);
-            }
-
-            protected override LinearWhiteSpace.MultiLineWhiteSpace CreateInstance2(LinearWhiteSpace.MultiLineWhiteSpace.NewLineWhiteSpace element, ITextContext context)
-            {
-                return new LinearWhiteSpace.MultiLineWhiteSpace(element, 2, context);
-            }
-
             protected override bool TryRead1(ITextScanner scanner, out WhiteSpace element)
             {
                 return this.element1Lexer.TryRead(scanner, out element);
