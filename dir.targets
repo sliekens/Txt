@@ -13,7 +13,10 @@
       <NuGetPackParameters>$(NuGetPackParameters) -Properties &quot;$(NuGetPackProperties)&quot;</NuGetPackParameters>
       <NuGetPackParameters>$(NuGetPackParameters) -OutputDirectory &quot;$(OutDir.Trim('\\'))&quot;</NuGetPackParameters>
     </PropertyGroup>
-    <Exec Command="$(NuGetToolPath) pack %(ProjectFileWithNuspec.Fullpath) $(NuGetPackParameters)" Condition=" '@(ProjectFileWithNuspec)' != '' " />
+    <Exec Command="$(NuGetToolPath) pack %(ProjectFileWithNuspec.Fullpath) $(NuGetPackParameters)" Condition=" '@(ProjectFileWithNuspec)' != '' " ContinueOnError="true">
+		<Output TaskParameter="ExitCode" PropertyName="ERRORLEVEL" />
+	</Exec>
+	<Warning Text="'$(NuGetToolPath)' is not recognized as an internal or external command, operable program or batch file." Condition=" '$(ERRORLEVEL)' == '9009' " />
   </Target>
   
     <Target Name="BeforeRecursiveBuild" />
