@@ -9,7 +9,7 @@
     <ProjectGuid>{B46CBD79-65A0-4E91-B206-D30ECCEAB873}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SLANG.Tests</RootNamespace>
+    <RootNamespace>SLANG</RootNamespace>
     <AssemblyName>SLANG.Tests</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
