@@ -38,8 +38,8 @@ namespace SLANG.Core
     {
         public class Controls : Alternative
         {
-            public Controls(char data, ITextContext context)
-                : base(data, '\0', '\x1F', context)
+            public Controls(Element element)
+                : base(element, '\0', '\x1F')
             {
             }
         }

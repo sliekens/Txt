@@ -13,10 +13,9 @@ namespace SLANG.Core
     {
         /// <summary>Initializes a new instance of the <see cref="T:SLANG.Core.Character"/> class with a specified character
         /// and context.</summary>
-        /// <param name="data">The character.</param>
-        /// <param name="context">The object that describes the context in which the text appears.</param>
-        public Character(char data, ITextContext context)
-            : base(data, '\x01', '\x7F', context)
+        /// <param name="element">The character.</param>
+        public Character(Element element)
+            : base(element, '\x01', '\x7F')
         {
         }
     }

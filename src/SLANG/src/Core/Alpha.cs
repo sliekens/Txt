@@ -26,8 +26,8 @@ namespace SLANG.Core
     {
         public class UpperCase : Alternative
         {
-            public UpperCase(char data, ITextContext context)
-                : base(data, '\x41', '\x5A', context)
+            public UpperCase(Element element)
+                : base(element, '\x41', '\x5A')
             {
             }
         }
@@ -37,8 +37,8 @@ namespace SLANG.Core
     {
         public class LowerCase : Alternative
         {
-            public LowerCase(char data, ITextContext context)
-                : base(data, '\x61', '\x7A', context)
+            public LowerCase(Element element)
+                : base(element, '\x61', '\x7A')
             {
             }
         }

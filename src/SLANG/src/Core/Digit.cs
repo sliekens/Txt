@@ -13,10 +13,9 @@ namespace SLANG.Core
     {
         /// <summary>Initializes a new instance of the <see cref="T:SLANG.Core.Digit"/> class with a specified character
         /// and context.</summary>
-        /// <param name="data">The digit.</param>
-        /// <param name="context">The object that describes the context in which the text appears.</param>
-        public Digit(char data, ITextContext context)
-            : base(data, '\x30', '\x39', context)
+        /// <param name="element">The digit.</param>
+        public Digit(Element element)
+            : base(element, '\x30', '\x39')
         {
         }
     }

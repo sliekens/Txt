@@ -1,28 +1,37 @@
 ﻿namespace SLANG
 {
     using System;
+    using System.Linq;
 
     /// <summary>Represents a choice of a range of alternative elements.</summary>
     public class Alternative : Element
     {
         /// <summary>Initializes a new instance of the <see cref="Alternative"/> class with a specified alternative.</summary>
-        /// <param name="data">The alternative element.</param>
+        /// <param name="element">The alternative element.</param>
         /// <param name="lowerBound">The lower bound of the range of alternatives.</param>
         /// <param name="upperBound">The upper bound of the range of alternatives.</param>
-        /// <param name="context">The object that describes the context in which the text appears.</param>
-        public Alternative(char data, char lowerBound, char upperBound, ITextContext context)
-            : base(data, context)
+        public Alternative(Element element, char lowerBound, char upperBound)
+            : base(element)
         {
-            // TODO: should use copy ctor
-            if (data < lowerBound)
+            if (element.Data.Length != 1)
             {
-                throw new ArgumentOutOfRangeException("data", data, "Precondition: data >= lowerBound");
+                throw new ArgumentOutOfRangeException("element", "Precondition: element.Data.Length == 1");
             }
 
-            if (data > upperBound)
+            if (lowerBound >= upperBound)
             {
-                throw new ArgumentOutOfRangeException("data", data, "Precondition: data <= upperBound");
+                throw new ArgumentException("Precondition: lowerBound < upperBound");
             }
+
+            for (char c = lowerBound; c < upperBound; c++)
+            {
+                if (element.Data == char.ToString(c))
+                {
+                    return;
+                }
+            }
+
+            throw new ArgumentOutOfRangeException("element", "Precondition: lowerBound <= element.Data <= upperBound");
         }
     }
 }

@@ -45,9 +45,10 @@
             var context = scanner.GetContext();
             for (char c = this.lowerBound; c <= this.upperBound; c++)
             {
-                if (scanner.TryMatch(c, ignoreCase: false))
+                Element terminal;
+                if (TryReadTerminal(scanner, c, out terminal))
                 {
-                    element = this.CreateInstance(c, context);
+                    element = this.CreateInstance(terminal, context);
                     return true;
                 }
             }
@@ -60,6 +61,6 @@
         /// <param name="element">The alternative element.</param>
         /// <param name="context">The object that describes the context in which the text appears.</param>
         /// <returns>An instance of the lexer rule.</returns>
-        protected abstract TAlternative CreateInstance(char element, ITextContext context);
+        protected abstract TAlternative CreateInstance(Element element, ITextContext context);
     }
 }

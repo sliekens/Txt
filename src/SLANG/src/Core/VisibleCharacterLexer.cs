@@ -15,9 +15,9 @@ namespace SLANG.Core
         {
         }
 
-        protected override VisibleCharacter CreateInstance(char element, ITextContext context)
+        protected override VisibleCharacter CreateInstance(Element element, ITextContext context)
         {
-            return new VisibleCharacter(element, context);
+            return new VisibleCharacter(element);
         }
     }
 }

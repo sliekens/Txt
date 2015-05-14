@@ -15,9 +15,9 @@ namespace SLANG.Core
         {
         }
 
-        protected override Octet CreateInstance(char element, ITextContext context)
+        protected override Octet CreateInstance(Element element, ITextContext context)
         {
-            return new Octet(element, context);
+            return new Octet(element);
         }
     }
 }
