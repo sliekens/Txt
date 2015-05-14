@@ -18,21 +18,15 @@ namespace SLANG.Core
         /// <inheritdoc />
         public override bool TryRead(ITextScanner scanner, out HorizontalTab element)
         {
-            if (scanner.EndOfInput)
+            Element terminal;
+            if (!TryReadTerminal(scanner, '\x09', out terminal))
             {
                 element = default(HorizontalTab);
                 return false;
             }
 
-            var context = scanner.GetContext();
-            if (scanner.TryMatch('\x09'))
-            {
-                element = new HorizontalTab(context);
-                return true;
-            }
-
-            element = default(HorizontalTab);
-            return false;
+            element = new HorizontalTab(terminal);
+            return true;
         }
     }
 }

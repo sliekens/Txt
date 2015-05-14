@@ -8,14 +8,20 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG.Core
 {
+    using System;
+
     /// <summary>Represents the HTAB rule: 1 horizontal tab. Unicode: U+0009.</summary>
     public class HorizontalTab : Element
     {
         /// <summary>Initializes a new instance of the <see cref="T:SLANG.Core.HorizontalTab"/> class with a specified context.</summary>
-        /// <param name="context">The object that describes the context in which the text appears.</param>
-        public HorizontalTab(ITextContext context)
-            : base("\x09", context)
+        /// <param name="element">The horizontal tab element.</param>
+        public HorizontalTab(Element element)
+            : base(element)
         {
+            if (element.Data != "\x09")
+            {
+                throw new ArgumentOutOfRangeException("element", element, "Precondition: element.Data == \"\\x09\"");
+            }
         }
     }
 }
