@@ -15,7 +15,7 @@ namespace SLANG.Core
         {
         }
 
-        protected override Character CreateInstance(Element element, ITextContext context)
+        protected override Character CreateInstance(Element element)
         {
             return new Character(element);
         }

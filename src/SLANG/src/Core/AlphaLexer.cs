@@ -67,7 +67,7 @@ namespace SLANG.Core
             {
             }
 
-            protected override Alpha.UpperCase CreateInstance(Element element, ITextContext context)
+            protected override Alpha.UpperCase CreateInstance(Element element)
             {
                 return new Alpha.UpperCase(element);
             }
@@ -83,7 +83,7 @@ namespace SLANG.Core
             {
             }
 
-            protected override Alpha.LowerCase CreateInstance(Element element, ITextContext context)
+            protected override Alpha.LowerCase CreateInstance(Element element)
             {
                 return new Alpha.LowerCase(element);
             }

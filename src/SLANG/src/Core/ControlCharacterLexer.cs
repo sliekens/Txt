@@ -55,7 +55,7 @@ namespace SLANG.Core
             {
             }
 
-            protected override ControlCharacter.Controls CreateInstance(Element element, ITextContext context)
+            protected override ControlCharacter.Controls CreateInstance(Element element)
             {
                 return new ControlCharacter.Controls(element);
             }

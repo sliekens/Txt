@@ -36,13 +36,12 @@
         /// <inheritdoc />
         public override bool TryRead(ITextScanner scanner, out TAlternative element)
         {
-            var context = scanner.GetContext();
             for (char c = this.lowerBound; c <= this.upperBound; c++)
             {
                 Element terminal;
                 if (TryReadTerminal(scanner, c, out terminal))
                 {
-                    element = this.CreateInstance(terminal, context);
+                    element = this.CreateInstance(terminal);
                     return true;
                 }
             }
@@ -53,8 +52,7 @@
 
         /// <summary>Creates a new instance of the lexer rule for a given alternative element.</summary>
         /// <param name="element">The alternative element.</param>
-        /// <param name="context">The object that describes the context in which the text appears.</param>
         /// <returns>An instance of the lexer rule.</returns>
-        protected abstract TAlternative CreateInstance(Element element, ITextContext context);
+        protected abstract TAlternative CreateInstance(Element element);
     }
 }

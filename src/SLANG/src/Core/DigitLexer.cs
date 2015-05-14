@@ -16,7 +16,7 @@ namespace SLANG.Core
         }
 
         /// <inheritdoc />
-        protected override Digit CreateInstance(Element element, ITextContext context)
+        protected override Digit CreateInstance(Element element)
         {
             return new Digit(element);
         }
