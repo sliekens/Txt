@@ -2,7 +2,6 @@
 {
     using System;
     using System.Diagnostics;
-    using System.Diagnostics.CodeAnalysis;
 
     /// <summary>Represents a choice of ten alternative elements.</summary>
     /// <typeparam name="T1">The type of the first alternative element.</typeparam>
@@ -36,9 +35,8 @@
         /// <summary>Initializes a new instance of the <see cref="Alternative{T1,T2,T3,T4,T5,T6,T7,T8,T9,T10}"/> class with a specified alternative.</summary>
         /// <param name="element">The alternative element.</param>
         /// <param name="alternative">A number that indicates which alternative was matched.</param>
-        /// <param name="context">The object that describes the context in which the text appears.</param>
-        public Alternative(Element element, int alternative, ITextContext context)
-            : base(element.Data, context)
+        public Alternative(Element element, int alternative)
+            : base(element)
         {
             switch (alternative)
             {

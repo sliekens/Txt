@@ -58,9 +58,8 @@
         /// </summary>
         /// <param name="element">The alternative element.</param>
         /// <param name="alternative">A number that indicates which alternative was matched.</param>
-        /// <param name="context">The object that describes the context in which the text appears.</param>
-        public Alternative(Element element, int alternative, ITextContext context)
-            : base(element.Data, context)
+        public Alternative(Element element, int alternative)
+            : base(element)
         {
             switch (alternative)
             {
