@@ -15,15 +15,5 @@ namespace SLANG.Core
             : base(serviceLocator, "CRLF")
         {
         }
-
-        protected override bool TryRead1(ITextScanner scanner, out CarriageReturn element)
-        {
-            return this.Services.GetInstance<ILexer<CarriageReturn>>().TryRead(scanner, out element);
-        }
-
-        protected override bool TryRead2(ITextScanner scanner, out LineFeed element)
-        {
-            return this.Services.GetInstance<ILexer<LineFeed>>().TryRead(scanner, out element);
-        }
     }
 }
