@@ -40,11 +40,6 @@ namespace SLANG.Core
             this.lineFeedLexer = lineFeedLexer;
         }
 
-        protected override EndOfLine CreateInstance(CarriageReturn element1, LineFeed element2, ITextContext context)
-        {
-            return new EndOfLine(element1, element2, context);
-        }
-
         protected override bool TryRead1(ITextScanner scanner, out CarriageReturn element)
         {
             return this.carriageReturnLexer.TryRead(scanner, out element);

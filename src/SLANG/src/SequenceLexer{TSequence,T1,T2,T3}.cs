@@ -74,11 +74,14 @@
         /// <param name="element3">The third element in the sequence.</param>
         /// <param name="context">The object that describes the context in which the text appears.</param>
         /// <returns>An instance of the lexer rule.</returns>
-        protected abstract TSequence CreateInstance(
+        protected virtual TSequence CreateInstance(
             T1 element1,
             T2 element2,
             T3 element3,
-            ITextContext context);
+            ITextContext context)
+        {
+            return (TSequence)Activator.CreateInstance(typeof(TSequence), element1, element2, element3, context);
+        }
 
         /// <summary>Attempts to read the first element of the sequence. A return value indicates whether the element was available.</summary>
         /// <param name="scanner">The scanner object that provides text symbols as well as contextual information about the text source.</param>

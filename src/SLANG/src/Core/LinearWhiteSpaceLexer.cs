@@ -83,11 +83,6 @@ namespace SLANG.Core
                     this.element2Lexer = element2Lexer;
                 }
 
-                protected override LinearWhiteSpace.MultiLineWhiteSpace.NewLineWhiteSpace CreateInstance(EndOfLine element1, WhiteSpace element2, ITextContext context)
-                {
-                    return new LinearWhiteSpace.MultiLineWhiteSpace.NewLineWhiteSpace(element1, element2, context);
-                }
-
                 protected override bool TryRead1(ITextScanner scanner, out EndOfLine element)
                 {
                     return this.element1Lexer.TryRead(scanner, out element);
