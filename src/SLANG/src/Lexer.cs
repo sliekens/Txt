@@ -118,7 +118,8 @@ namespace SLANG
             }
         }
 
-        bool ILexer.TryRead(ITextScanner scanner, out Element element)
+        /// <inheritdoc />
+        public bool TryReadElement(ITextScanner scanner, out Element element)
         {
             // This intermediary variable is required to match the type of the output parameter
             TElement t;
@@ -132,6 +133,7 @@ namespace SLANG
             return false;
         }
 
+        /// <inheritdoc />
         public Element ReadElement(ITextScanner scanner)
         {
             return this.Read(scanner);

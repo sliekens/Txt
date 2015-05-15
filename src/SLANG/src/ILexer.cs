@@ -21,7 +21,7 @@ namespace SLANG
         /// <exception cref="T:System.InvalidOperationException">The given scanner object is not initialized.</exception>
         /// <exception cref="T:System.ObjectDisposedException">The given text scanner is closed.</exception>
         /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
-        bool TryRead(ITextScanner scanner, out Element element);
+        bool TryReadElement(ITextScanner scanner, out Element element);
 
         /// <summary>Reads the next element.</summary>
         /// <param name="scanner">The scanner object that provides text symbols as well as contextual information about the text source.</param>
