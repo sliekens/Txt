@@ -8,15 +8,18 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG
 {
-    /// <summary>Provides the interface for types that process the lexical syntax of a language.</summary>
-    /// <typeparam name="TElement">The type of the element that represents the lexer rule.</typeparam>
-    public interface ILexer<TElement>
-        where TElement : Element
+    public interface ILexer
     {
         /// <summary>Gets the name of the lexer rule that is represented by the type of <typeparamref name="TElement"/>.</summary>
         /// <remarks>Rule names are case insensitive. The names "rulename", "Rulename", "RULENAME", and "rUlENamE" all refer to the same rule.</remarks>
         string RuleName { get; }
+    }
 
+    /// <summary>Provides the interface for types that process the lexical syntax of a language.</summary>
+    /// <typeparam name="TElement">The type of the element that represents the lexer rule.</typeparam>
+    public interface ILexer<TElement> : ILexer
+        where TElement : Element
+    {
         /// <summary>Reads the next element.</summary>
         /// <param name="scanner">The scanner object that provides text symbols as well as contextual information about the text source.</param>
         /// <exception cref="T:System.InvalidOperationException">The given scanner object is not initialized.</exception>
