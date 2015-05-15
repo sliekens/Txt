@@ -118,6 +118,20 @@ namespace SLANG
             }
         }
 
+        public bool TryRead(ITextScanner scanner, out Element element)
+        {
+            // This variable of the generic type is required to work around ambiguous overloads
+            TElement t;
+            if (this.TryRead(scanner, out t))
+            {
+                element = t;
+                return true;
+            }
+
+            element = default(Element);
+            return false;
+        }
+
         /// <summary>The object that retrieves instances of <see cref="ILexer{TElement}"/> by type and optional rule name.</summary>
         protected IServiceLocator Services
         {
