@@ -109,7 +109,7 @@ namespace SLANG
 
             throw new SyntaxErrorException(
                 scanner.GetContext(),
-                string.Format("Unexpected symbol. Expected element: '{0}'.", this.ruleName));
+                string.Format("Unexpected symbol. Expected element: '{0}'.", this.ruleName ?? typeof(TElement).FullName));
         }
 
         /// <inheritdoc />
