@@ -30,16 +30,24 @@ namespace SLANG.Core
 
     public partial class ControlCharacterLexer
     {
-        public class DeleteLexer : Lexer<Element>
+        public class DeleteLexer : Lexer<ControlCharacter.Delete>
         {
             public DeleteLexer(IServiceLocator serviceLocator)
                 : base(serviceLocator)
             {
             }
 
-            public override bool TryRead(ITextScanner scanner, out Element element)
+            public override bool TryRead(ITextScanner scanner, out ControlCharacter.Delete element)
             {
-                return TryReadTerminal(scanner, '\x7F', out element);
+                Element terminal;
+                if (!TryReadTerminal(scanner, '\x7F', out terminal))
+                {
+                    element = default(ControlCharacter.Delete);
+                    return false;
+                }
+
+                element = new ControlCharacter.Delete(terminal);
+                return true;
             }
         }
     }
