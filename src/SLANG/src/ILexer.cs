@@ -10,7 +10,7 @@ namespace SLANG
 {
     public interface ILexer
     {
-        /// <summary>Gets the name of the lexer rule that is represented by the type of <typeparamref name="TElement"/>.</summary>
+        /// <summary>Gets the name of the current lexer rule.</summary>
         /// <remarks>Rule names are case insensitive. The names "rulename", "Rulename", "RULENAME", and "rUlENamE" all refer to the same rule.</remarks>
         string RuleName { get; }
     }
