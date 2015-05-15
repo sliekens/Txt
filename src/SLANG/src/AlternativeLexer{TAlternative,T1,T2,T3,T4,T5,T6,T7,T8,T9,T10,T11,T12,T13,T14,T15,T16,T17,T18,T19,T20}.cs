@@ -2,6 +2,8 @@
 {
     using System;
 
+    using Microsoft.Practices.ServiceLocation;
+
     /// <summary>Provides the base class for lexers whose lexer rule has twenty alternatives.</summary>
     /// <typeparam name="TAlternative">The type of the lexer rule.</typeparam>
     /// <typeparam name="T1">The type of the first alternative element.</typeparam>
@@ -54,7 +56,9 @@
         ///     <see cref="AlternativeLexer{TAlternative,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15,T16,T17,T18,T19,T20}" />
         ///     class for an unnamed element.
         /// </summary>
-        protected AlternativeLexer()
+        /// <param name="serviceLocator">The object that retrieves instances of <see cref="ILexer{TElement}"/> by type and optional rule name.</param>
+        protected AlternativeLexer(IServiceLocator serviceLocator)
+            : base(serviceLocator)
         {
         }
 
@@ -63,14 +67,15 @@
         ///     <see cref="AlternativeLexer{TAlternative,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15,T16,T17,T18,T19,T20}" />
         ///     class for a specified rule.
         /// </summary>
+        /// <param name="serviceLocator">The object that retrieves instances of <see cref="ILexer{TElement}"/> by type and optional rule name.</param>
         /// <param name="ruleName">The name of the lexer rule. Rule names are case insensitive.</param>
         /// <exception cref="ArgumentException">
         ///     The value of <paramref name="ruleName" /> is a <c>null</c> reference (
         ///     <c>Nothing</c> in Visual Basic) -or- the value of <paramref name="ruleName" /> does not start with a letter -or-
         ///     the value of <paramref name="ruleName" /> contains one or more characters that are not letters, digits or hyphens.
         /// </exception>
-        protected AlternativeLexer(string ruleName)
-            : base(ruleName)
+        protected AlternativeLexer(IServiceLocator serviceLocator, string ruleName)
+            : base(serviceLocator, ruleName)
         {
         }
 
@@ -399,7 +404,10 @@
         /// <exception cref="T:System.InvalidOperationException">The given scanner object is not initialized.</exception>
         /// <exception cref="T:System.ObjectDisposedException">The given text scanner is closed.</exception>
         /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
-        protected abstract bool TryRead1(ITextScanner scanner, out T1 element);
+        protected virtual bool TryRead1(ITextScanner scanner, out T1 element)
+        {
+            return this.Services.GetInstance<ILexer<T1>>().TryRead(scanner, out element);
+        }
 
         /// <summary>Attempts to read the tenth alternative element. A return value indicates whether the element was available.</summary>
         /// <param name="scanner">
@@ -413,7 +421,10 @@
         /// <exception cref="T:System.InvalidOperationException">The given scanner object is not initialized.</exception>
         /// <exception cref="T:System.ObjectDisposedException">The given text scanner is closed.</exception>
         /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
-        protected abstract bool TryRead10(ITextScanner scanner, out T10 element);
+        protected virtual bool TryRead10(ITextScanner scanner, out T10 element)
+        {
+            return this.Services.GetInstance<ILexer<T10>>().TryRead(scanner, out element);
+        }
 
         /// <summary>Attempts to read the eleventh alternative element. A return value indicates whether the element was available.</summary>
         /// <param name="scanner">
@@ -427,7 +438,10 @@
         /// <exception cref="T:System.InvalidOperationException">The given scanner object is not initialized.</exception>
         /// <exception cref="T:System.ObjectDisposedException">The given text scanner is closed.</exception>
         /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
-        protected abstract bool TryRead11(ITextScanner scanner, out T11 element);
+        protected virtual bool TryRead11(ITextScanner scanner, out T11 element)
+        {
+            return this.Services.GetInstance<ILexer<T11>>().TryRead(scanner, out element);
+        }
 
         /// <summary>Attempts to read the twelfth alternative element. A return value indicates whether the element was available.</summary>
         /// <param name="scanner">
@@ -441,7 +455,10 @@
         /// <exception cref="T:System.InvalidOperationException">The given scanner object is not initialized.</exception>
         /// <exception cref="T:System.ObjectDisposedException">The given text scanner is closed.</exception>
         /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
-        protected abstract bool TryRead12(ITextScanner scanner, out T12 element);
+        protected virtual bool TryRead12(ITextScanner scanner, out T12 element)
+        {
+            return this.Services.GetInstance<ILexer<T12>>().TryRead(scanner, out element);
+        }
 
         /// <summary>
         ///     Attempts to read the thirteenth alternative element. A return value indicates whether the element was
@@ -458,7 +475,10 @@
         /// <exception cref="T:System.InvalidOperationException">The given scanner object is not initialized.</exception>
         /// <exception cref="T:System.ObjectDisposedException">The given text scanner is closed.</exception>
         /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
-        protected abstract bool TryRead13(ITextScanner scanner, out T13 element);
+        protected virtual bool TryRead13(ITextScanner scanner, out T13 element)
+        {
+            return this.Services.GetInstance<ILexer<T13>>().TryRead(scanner, out element);
+        }
 
         /// <summary>
         ///     Attempts to read the fourteenth alternative element. A return value indicates whether the element was
@@ -475,7 +495,10 @@
         /// <exception cref="T:System.InvalidOperationException">The given scanner object is not initialized.</exception>
         /// <exception cref="T:System.ObjectDisposedException">The given text scanner is closed.</exception>
         /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
-        protected abstract bool TryRead14(ITextScanner scanner, out T14 element);
+        protected virtual bool TryRead14(ITextScanner scanner, out T14 element)
+        {
+            return this.Services.GetInstance<ILexer<T14>>().TryRead(scanner, out element);
+        }
 
         /// <summary>
         ///     Attempts to read the fifteenth alternative element. A return value indicates whether the element was
@@ -492,7 +515,10 @@
         /// <exception cref="T:System.InvalidOperationException">The given scanner object is not initialized.</exception>
         /// <exception cref="T:System.ObjectDisposedException">The given text scanner is closed.</exception>
         /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
-        protected abstract bool TryRead15(ITextScanner scanner, out T15 element);
+        protected virtual bool TryRead15(ITextScanner scanner, out T15 element)
+        {
+            return this.Services.GetInstance<ILexer<T15>>().TryRead(scanner, out element);
+        }
 
         /// <summary>
         ///     Attempts to read the sixteenth alternative element. A return value indicates whether the element was
@@ -509,7 +535,10 @@
         /// <exception cref="T:System.InvalidOperationException">The given scanner object is not initialized.</exception>
         /// <exception cref="T:System.ObjectDisposedException">The given text scanner is closed.</exception>
         /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
-        protected abstract bool TryRead16(ITextScanner scanner, out T16 element);
+        protected virtual bool TryRead16(ITextScanner scanner, out T16 element)
+        {
+            return this.Services.GetInstance<ILexer<T16>>().TryRead(scanner, out element);
+        }
 
         /// <summary>
         ///     Attempts to read the seventeenth alternative element. A return value indicates whether the element was
@@ -526,7 +555,10 @@
         /// <exception cref="T:System.InvalidOperationException">The given scanner object is not initialized.</exception>
         /// <exception cref="T:System.ObjectDisposedException">The given text scanner is closed.</exception>
         /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
-        protected abstract bool TryRead17(ITextScanner scanner, out T17 element);
+        protected virtual bool TryRead17(ITextScanner scanner, out T17 element)
+        {
+            return this.Services.GetInstance<ILexer<T17>>().TryRead(scanner, out element);
+        }
 
         /// <summary>
         ///     Attempts to read the eighteenth alternative element. A return value indicates whether the element was
@@ -543,7 +575,10 @@
         /// <exception cref="T:System.InvalidOperationException">The given scanner object is not initialized.</exception>
         /// <exception cref="T:System.ObjectDisposedException">The given text scanner is closed.</exception>
         /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
-        protected abstract bool TryRead18(ITextScanner scanner, out T18 element);
+        protected virtual bool TryRead18(ITextScanner scanner, out T18 element)
+        {
+            return this.Services.GetInstance<ILexer<T18>>().TryRead(scanner, out element);
+        }
 
         /// <summary>
         ///     Attempts to read the nineteenth alternative element. A return value indicates whether the element was
@@ -560,7 +595,10 @@
         /// <exception cref="T:System.InvalidOperationException">The given scanner object is not initialized.</exception>
         /// <exception cref="T:System.ObjectDisposedException">The given text scanner is closed.</exception>
         /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
-        protected abstract bool TryRead19(ITextScanner scanner, out T19 element);
+        protected virtual bool TryRead19(ITextScanner scanner, out T19 element)
+        {
+            return this.Services.GetInstance<ILexer<T19>>().TryRead(scanner, out element);
+        }
 
         /// <summary>Attempts to read the second alternative element. A return value indicates whether the element was available.</summary>
         /// <param name="scanner">
@@ -574,7 +612,10 @@
         /// <exception cref="T:System.InvalidOperationException">The given scanner object is not initialized.</exception>
         /// <exception cref="T:System.ObjectDisposedException">The given text scanner is closed.</exception>
         /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
-        protected abstract bool TryRead2(ITextScanner scanner, out T2 element);
+        protected virtual bool TryRead2(ITextScanner scanner, out T2 element)
+        {
+            return this.Services.GetInstance<ILexer<T2>>().TryRead(scanner, out element);
+        }
 
         /// <summary>
         ///     Attempts to read the twentieth alternative element. A return value indicates whether the element was
@@ -591,7 +632,10 @@
         /// <exception cref="T:System.InvalidOperationException">The given scanner object is not initialized.</exception>
         /// <exception cref="T:System.ObjectDisposedException">The given text scanner is closed.</exception>
         /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
-        protected abstract bool TryRead20(ITextScanner scanner, out T20 element);
+        protected virtual bool TryRead20(ITextScanner scanner, out T20 element)
+        {
+            return this.Services.GetInstance<ILexer<T20>>().TryRead(scanner, out element);
+        }
 
         /// <summary>Attempts to read the third alternative element. A return value indicates whether the element was available.</summary>
         /// <param name="scanner">
@@ -605,7 +649,10 @@
         /// <exception cref="T:System.InvalidOperationException">The given scanner object is not initialized.</exception>
         /// <exception cref="T:System.ObjectDisposedException">The given text scanner is closed.</exception>
         /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
-        protected abstract bool TryRead3(ITextScanner scanner, out T3 element);
+        protected virtual bool TryRead3(ITextScanner scanner, out T3 element)
+        {
+            return this.Services.GetInstance<ILexer<T3>>().TryRead(scanner, out element);
+        }
 
         /// <summary>Attempts to read the fourth alternative element. A return value indicates whether the element was available.</summary>
         /// <param name="scanner">
@@ -619,7 +666,10 @@
         /// <exception cref="T:System.InvalidOperationException">The given scanner object is not initialized.</exception>
         /// <exception cref="T:System.ObjectDisposedException">The given text scanner is closed.</exception>
         /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
-        protected abstract bool TryRead4(ITextScanner scanner, out T4 element);
+        protected virtual bool TryRead4(ITextScanner scanner, out T4 element)
+        {
+            return this.Services.GetInstance<ILexer<T4>>().TryRead(scanner, out element);
+        }
 
         /// <summary>Attempts to read the fifth alternative element. A return value indicates whether the element was available.</summary>
         /// <param name="scanner">
@@ -633,7 +683,10 @@
         /// <exception cref="T:System.InvalidOperationException">The given scanner object is not initialized.</exception>
         /// <exception cref="T:System.ObjectDisposedException">The given text scanner is closed.</exception>
         /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
-        protected abstract bool TryRead5(ITextScanner scanner, out T5 element);
+        protected virtual bool TryRead5(ITextScanner scanner, out T5 element)
+        {
+            return this.Services.GetInstance<ILexer<T5>>().TryRead(scanner, out element);
+        }
 
         /// <summary>Attempts to read the sixth alternative element. A return value indicates whether the element was available.</summary>
         /// <param name="scanner">
@@ -647,7 +700,10 @@
         /// <exception cref="T:System.InvalidOperationException">The given scanner object is not initialized.</exception>
         /// <exception cref="T:System.ObjectDisposedException">The given text scanner is closed.</exception>
         /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
-        protected abstract bool TryRead6(ITextScanner scanner, out T6 element);
+        protected virtual bool TryRead6(ITextScanner scanner, out T6 element)
+        {
+            return this.Services.GetInstance<ILexer<T6>>().TryRead(scanner, out element);
+        }
 
         /// <summary>Attempts to read the seventh alternative element. A return value indicates whether the element was available.</summary>
         /// <param name="scanner">
@@ -661,7 +717,10 @@
         /// <exception cref="T:System.InvalidOperationException">The given scanner object is not initialized.</exception>
         /// <exception cref="T:System.ObjectDisposedException">The given text scanner is closed.</exception>
         /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
-        protected abstract bool TryRead7(ITextScanner scanner, out T7 element);
+        protected virtual bool TryRead7(ITextScanner scanner, out T7 element)
+        {
+            return this.Services.GetInstance<ILexer<T7>>().TryRead(scanner, out element);
+        }
 
         /// <summary>Attempts to read the eighth alternative element. A return value indicates whether the element was available.</summary>
         /// <param name="scanner">
@@ -675,7 +734,10 @@
         /// <exception cref="T:System.InvalidOperationException">The given scanner object is not initialized.</exception>
         /// <exception cref="T:System.ObjectDisposedException">The given text scanner is closed.</exception>
         /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
-        protected abstract bool TryRead8(ITextScanner scanner, out T8 element);
+        protected virtual bool TryRead8(ITextScanner scanner, out T8 element)
+        {
+            return this.Services.GetInstance<ILexer<T8>>().TryRead(scanner, out element);
+        }
 
         /// <summary>Attempts to read the ninth alternative element. A return value indicates whether the element was available.</summary>
         /// <param name="scanner">
@@ -689,6 +751,9 @@
         /// <exception cref="T:System.InvalidOperationException">The given scanner object is not initialized.</exception>
         /// <exception cref="T:System.ObjectDisposedException">The given text scanner is closed.</exception>
         /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
-        protected abstract bool TryRead9(ITextScanner scanner, out T9 element);
+        protected virtual bool TryRead9(ITextScanner scanner, out T9 element)
+        {
+            return this.Services.GetInstance<ILexer<T9>>().TryRead(scanner, out element);
+        }
     }
 }

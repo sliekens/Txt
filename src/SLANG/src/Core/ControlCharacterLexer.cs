@@ -7,32 +7,13 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG.Core
 {
-    public partial class ControlCharacterLexer : AlternativeLexer<ControlCharacter, ControlCharacter.Controls, Element>
+    using Microsoft.Practices.ServiceLocation;
+
+    public partial class ControlCharacterLexer : AlternativeLexer<ControlCharacter, ControlCharacter.Controls, ControlCharacter.Delete>
     {
-        private readonly ILexer<ControlCharacter.Controls> element1Lexer;
-
-        private readonly ILexer<Element> element2Lexer;
-
-        public ControlCharacterLexer()
-            : this(new ControlsLexer(), new DeleteLexer())
+        public ControlCharacterLexer(IServiceLocator serviceLocator)
+            : base(serviceLocator, "CTL")
         {
-        }
-
-        public ControlCharacterLexer(ILexer<ControlCharacter.Controls> element1Lexer, ILexer<Element> element2Lexer)
-            : base("CTL")
-        {
-            this.element1Lexer = element1Lexer;
-            this.element2Lexer = element2Lexer;
-        }
-
-        protected override bool TryRead1(ITextScanner scanner, out ControlCharacter.Controls element)
-        {
-            return this.element1Lexer.TryRead(scanner, out element);
-        }
-
-        protected override bool TryRead2(ITextScanner scanner, out Element element)
-        {
-            return this.element2Lexer.TryRead(scanner, out element);
         }
     }
 
@@ -40,8 +21,8 @@ namespace SLANG.Core
     {
         public class ControlsLexer : AlternativeLexer<ControlCharacter.Controls>
         {
-            public ControlsLexer()
-                : base('\0', '\x1F')
+            public ControlsLexer(IServiceLocator serviceLocator)
+                : base(serviceLocator, '\0', '\x1F')
             {
             }
         }
@@ -51,6 +32,11 @@ namespace SLANG.Core
     {
         public class DeleteLexer : Lexer<Element>
         {
+            public DeleteLexer(IServiceLocator serviceLocator)
+                : base(serviceLocator)
+            {
+            }
+
             public override bool TryRead(ITextScanner scanner, out Element element)
             {
                 return TryReadTerminal(scanner, '\x7F', out element);

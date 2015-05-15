@@ -2,6 +2,8 @@
 {
     using System;
 
+    using Microsoft.Practices.ServiceLocation;
+
     /// <summary>Provides the base class for lexers whose lexer rule is a sequence of four elements.</summary>
     /// <typeparam name="TSequence">The type of the lexer rule.</typeparam>
     /// <typeparam name="T1">The type of the first element in the sequence.</typeparam>
@@ -16,15 +18,18 @@
         where T4 : Element
     {
         /// <summary>Initializes a new instance of the <see cref="SequenceLexer{TSequence,T1,T2,T3,T4}"/> class for an unnamed element.</summary>
-        protected SequenceLexer()
+        /// <param name="serviceLocator">The object that retrieves instances of <see cref="ILexer{TElement}"/> by type and optional rule name.</param>
+        protected SequenceLexer(IServiceLocator serviceLocator)
+            : base(serviceLocator)
         {
         }
 
         /// <summary>Initializes a new instance of the <see cref="SequenceLexer{TSequence,T1,T2,T3,T4}"/> class for a specified rule.</summary>
+        /// <param name="serviceLocator">The object that retrieves instances of <see cref="ILexer{TElement}"/> by type and optional rule name.</param>
         /// <param name="ruleName">The name of the lexer rule. Rule names are case insensitive.</param>
         /// <exception cref="ArgumentException">The value of <paramref name="ruleName"/> is a <c>null</c> reference (<c>Nothing</c> in Visual Basic) -or- the value of <paramref name="ruleName"/> does not start with a letter -or- the value of <paramref name="ruleName"/> contains one or more characters that are not letters, digits or hyphens.</exception>
-        protected SequenceLexer(string ruleName)
-            : base(ruleName)
+        protected SequenceLexer(IServiceLocator serviceLocator, string ruleName)
+            : base(serviceLocator, ruleName)
         {
         }
 
@@ -104,7 +109,10 @@
         /// <exception cref="T:System.InvalidOperationException">The given scanner object is not initialized.</exception>
         /// <exception cref="T:System.ObjectDisposedException">The given text scanner is closed.</exception>
         /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
-        protected abstract bool TryRead1(ITextScanner scanner, out T1 element);
+        protected virtual bool TryRead1(ITextScanner scanner, out T1 element)
+        {
+            return this.Services.GetInstance<ILexer<T1>>().TryRead(scanner, out element);
+        }
 
         /// <summary>Attempts to read the second element of the sequence. A return value indicates whether the element was available.</summary>
         /// <param name="scanner">The scanner object that provides text symbols as well as contextual information about the text source.</param>
@@ -112,7 +120,10 @@
         /// <exception cref="T:System.InvalidOperationException">The given scanner object is not initialized.</exception>
         /// <exception cref="T:System.ObjectDisposedException">The given text scanner is closed.</exception>
         /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
-        protected abstract bool TryRead2(ITextScanner scanner, out T2 element);
+        protected virtual bool TryRead2(ITextScanner scanner, out T2 element)
+        {
+            return this.Services.GetInstance<ILexer<T2>>().TryRead(scanner, out element);
+        }
 
         /// <summary>Attempts to read the third element of the sequence. A return value indicates whether the element was available.</summary>
         /// <param name="scanner">The scanner object that provides text symbols as well as contextual information about the text source.</param>
@@ -120,7 +131,10 @@
         /// <exception cref="T:System.InvalidOperationException">The given scanner object is not initialized.</exception>
         /// <exception cref="T:System.ObjectDisposedException">The given text scanner is closed.</exception>
         /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
-        protected abstract bool TryRead3(ITextScanner scanner, out T3 element);
+        protected virtual bool TryRead3(ITextScanner scanner, out T3 element)
+        {
+            return this.Services.GetInstance<ILexer<T3>>().TryRead(scanner, out element);
+        }
 
         /// <summary>Attempts to read the fourth element of the sequence. A return value indicates whether the element was available.</summary>
         /// <param name="scanner">The scanner object that provides text symbols as well as contextual information about the text source.</param>
@@ -128,6 +142,9 @@
         /// <exception cref="T:System.InvalidOperationException">The given scanner object is not initialized.</exception>
         /// <exception cref="T:System.ObjectDisposedException">The given text scanner is closed.</exception>
         /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
-        protected abstract bool TryRead4(ITextScanner scanner, out T4 element);
+        protected virtual bool TryRead4(ITextScanner scanner, out T4 element)
+        {
+            return this.Services.GetInstance<ILexer<T4>>().TryRead(scanner, out element);
+        }
     }
 }

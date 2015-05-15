@@ -9,7 +9,10 @@
 namespace SLANG
 {
     using System;
+    using System.Diagnostics;
     using System.Linq;
+
+    using Microsoft.Practices.ServiceLocation;
 
     /// <summary>Provides the base class for lexers. A lexer is a class that matches symbols from a data source against a grammar rule to produce grammar elements. Each class that extends the <see cref="Lexer{TElement}"/> class corresponds to a singe grammar rule. For complex grammars with many grammar rules, multiple lexers work together to convert the input text to a parse tree.</summary>
     /// <typeparam name="TElement">The type of the element that represents the lexer rule.</typeparam>
@@ -60,16 +63,32 @@ namespace SLANG
         /// <summary>The name of the lexer rule.</summary>
         private readonly string ruleName;
 
+        /// <summary>The object that retrieves instances of <see cref="ILexer{TElement}"/> by type and optional rule name.</summary>
+        private readonly IServiceLocator serviceLocator;
+
         /// <summary>Initializes a new instance of the <see cref="Lexer{TElement}"/> class for an unnamed element.</summary>
-        protected Lexer()
+        /// <param name="serviceLocator">The object that retrieves instances of <see cref="ILexer{TElement}"/> by type and optional rule name.</param>
+        protected Lexer(IServiceLocator serviceLocator)
         {
+            if (serviceLocator == null)
+            {
+                throw new ArgumentNullException("serviceLocator", "Precondition: serviceLocator != null");
+            }
+
+            this.serviceLocator = serviceLocator;
         }
 
         /// <summary>Initializes a new instance of the <see cref="Lexer{TElement}"/> class for a specified rule.</summary>
+        /// <param name="serviceLocator">The object that retrieves instances of <see cref="ILexer{TElement}"/> by type and optional rule name.</param>
         /// <param name="ruleName">The name of the lexer rule. Rule names are case insensitive.</param>
         /// <exception cref="ArgumentException">The value of <paramref name="ruleName"/> is a <c>null</c> reference (<c>Nothing</c> in Visual Basic) -or- the value of <paramref name="ruleName"/> does not start with a letter -or- the value of <paramref name="ruleName"/> contains one or more characters that are not letters, digits or hyphens.</exception>
-        protected Lexer(string ruleName)
+        protected Lexer(IServiceLocator serviceLocator, string ruleName)
         {
+            if (serviceLocator == null)
+            {
+                throw new ArgumentNullException("serviceLocator", "Precondition: serviceLocator != null");
+            }
+
             if (string.IsNullOrEmpty(ruleName))
             {
                 throw new ArgumentException("Precondition failed: !string.IsNullOrEmpty(ruleName)", "ruleName");
@@ -87,6 +106,7 @@ namespace SLANG
             }
 
             this.ruleName = ruleName;
+            this.serviceLocator = serviceLocator;
         }
 
         /// <inheritdoc />
@@ -95,6 +115,16 @@ namespace SLANG
             get
             {
                 return this.ruleName;
+            }
+        }
+
+        /// <summary>The object that retrieves instances of <see cref="ILexer{TElement}"/> by type and optional rule name.</summary>
+        protected IServiceLocator Services
+        {
+            get
+            {
+                Debug.Assert(this.serviceLocator != null, "this.serviceLocator != null");
+                return this.serviceLocator;
             }
         }
 

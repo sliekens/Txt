@@ -1,45 +1,59 @@
 ﻿namespace SLANG.Core
 {
-    using System.IO;
+    using Microsoft.Practices.ServiceLocation;
 
     using Xunit;
 
-    public class BitLexerTests
+    public partial class BitLexerTests
     {
-        private readonly BitLexer lexer = new BitLexer();
-        
-        [Fact]
-        public void CanReadZero()
+    }
+
+    public partial class BitLexerTests
+    {
+        public class ZeroLexerTests
         {
-            var input = "0";
-            using (ITextScanner textScanner = new TextScanner(new PushbackInputStream(input.ToMemoryStream())))
+            private readonly BitLexer.ZeroLexer lexer = new BitLexer.ZeroLexer(ServiceLocator.Current);
+
+            static ZeroLexerTests()
             {
-                Assert.True(textScanner.Read());
-                var bit = this.lexer.Read(textScanner);
-                Assert.Equal(input, bit.Data);
+                ServiceLocator.SetLocatorProvider(() => new FakeServiceLocator());
+            }
+
+            [Fact]
+            public void CanReadZero()
+            {
+                var input = "0";
+                using (ITextScanner textScanner = new TextScanner(new PushbackInputStream(input.ToMemoryStream())))
+                {
+                    Assert.True(textScanner.Read());
+                    var bit = this.lexer.Read(textScanner);
+                    Assert.Equal(input, bit.Data);
+                }
             }
         }
+    }
 
-        [Fact]
-        public void CanReadOne()
+    public partial class BitLexerTests
+    {
+        public class OneLexerTests
         {
-            var input = "1";
-            using (ITextScanner textScanner = new TextScanner(new PushbackInputStream(input.ToMemoryStream())))
+            private readonly BitLexer.OneLexer lexer = new BitLexer.OneLexer(ServiceLocator.Current);
+
+            static OneLexerTests()
             {
-                Assert.True(textScanner.Read());
-                var bit = this.lexer.Read(textScanner);
-                Assert.Equal(input, bit.Data);
+                ServiceLocator.SetLocatorProvider(() => new FakeServiceLocator());
             }
-        }
 
-        [Fact]
-        public void CannotReadNegativeOne()
-        {
-            var input = "-1";
-            using (ITextScanner textScanner = new TextScanner(new PushbackInputStream(input.ToMemoryStream())))
+            [Fact]
+            public void CanReadOne()
             {
-                Assert.True(textScanner.Read());
-                Assert.Throws<SyntaxErrorException>(() => this.lexer.Read(textScanner));
+                var input = "1";
+                using (ITextScanner textScanner = new TextScanner(new PushbackInputStream(input.ToMemoryStream())))
+                {
+                    Assert.True(textScanner.Read());
+                    var bit = this.lexer.Read(textScanner);
+                    Assert.Equal(input, bit.Data);
+                }
             }
         }
     }

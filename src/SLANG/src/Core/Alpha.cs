@@ -9,14 +9,14 @@
 namespace SLANG.Core
 {
     /// <summary>Represents the ALPHA rule: 1 letter of the alphabet (case-insensitive). Unicode: U+0041-U+005A, U+0061-U+007A.</summary>
-    public partial class Alpha : Alternative<Alpha.UpperCase, Alpha.LowerCase>
+    public partial class Alpha : Alternative<Alpha.Uppercase, Alpha.Lowercase>
     {
-        public Alpha(UpperCase element)
+        public Alpha(Uppercase element)
             : base(element, 1)
         {
         }
 
-        public Alpha(LowerCase element)
+        public Alpha(Lowercase element)
             : base(element, 2)
         {
         }
@@ -24,9 +24,9 @@ namespace SLANG.Core
 
     public partial class Alpha
     {
-        public class UpperCase : Alternative
+        public class Uppercase : Alternative
         {
-            public UpperCase(Element element)
+            public Uppercase(Element element)
                 : base(element, '\x41', '\x5A')
             {
             }
@@ -35,9 +35,9 @@ namespace SLANG.Core
 
     public partial class Alpha
     {
-        public class LowerCase : Alternative
+        public class Lowercase : Alternative
         {
-            public LowerCase(Element element)
+            public Lowercase(Element element)
                 : base(element, '\x61', '\x7A')
             {
             }

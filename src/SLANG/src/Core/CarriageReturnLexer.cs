@@ -7,11 +7,13 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG.Core
 {
+    using Microsoft.Practices.ServiceLocation;
+
     public class CarriageReturnLexer : Lexer<CarriageReturn>
     {
         /// <summary>Initializes a new instance of the <see cref="CarriageReturnLexer"/> class.</summary>
-        public CarriageReturnLexer()
-            : base("CR")
+        public CarriageReturnLexer(IServiceLocator serviceLocator)
+            : base(serviceLocator, "CR")
         {
         }
 

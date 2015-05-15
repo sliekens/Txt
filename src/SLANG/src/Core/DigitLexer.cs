@@ -7,11 +7,13 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG.Core
 {
+    using Microsoft.Practices.ServiceLocation;
+
     public class DigitLexer : AlternativeLexer<Digit>
     {
         /// <summary>Initializes a new instance of the <see cref="DigitLexer"/> class.</summary>
-        public DigitLexer()
-            : base("DIGIT", '\x30', '\x39')
+        public DigitLexer(IServiceLocator serviceLocator)
+            : base(serviceLocator, "DIGIT", '\x30', '\x39')
         {
         }
     }

@@ -14,63 +14,144 @@ namespace SLANG.Core
     /// Represents the HEXDIG rule: 1 hexadecimal digit (case-insensitive). Unicode: U+0030 - U+0039, U+0041 - U+0046,
     /// U+0061 - U+0066.
     /// </summary>
-    public class HexadecimalDigit : Alternative<Digit, Element, Element, Element, Element, Element, Element>
+    public partial class HexadecimalDigit : Alternative<Digit, HexadecimalDigit.A, HexadecimalDigit.B, HexadecimalDigit.C, HexadecimalDigit.D, HexadecimalDigit.E, HexadecimalDigit.F>
     {
-        /// <summary>Initializes a new instance of the <see cref="T:SLANG.Core.HexadecimalDigit"/> class with a specified character
-        /// and context.</summary>
-        /// <param name="element">The hexadecimal digit.</param>
-        /// <param name="alternative">A number that indicates which alternative was matched.</param>
-        public HexadecimalDigit(Element element, int alternative)
-            : base(element, alternative)
+        /// <summary>Initializes a new instance of the <see cref="HexadecimalDigit"/> class with a specified digit.</summary>
+        /// <param name="digit">The hexadecimal digit.</param>
+        public HexadecimalDigit(Digit digit)
+            : base(digit, 1)
         {
-            switch (alternative)
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="HexadecimalDigit"/> class with a specified digit.</summary>
+        /// <param name="digit">The hexadecimal digit.</param>
+        public HexadecimalDigit(A digit)
+            : base(digit, 2)
+        {
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="HexadecimalDigit"/> class with a specified digit.</summary>
+        /// <param name="digit">The hexadecimal digit.</param>
+        public HexadecimalDigit(B digit)
+            : base(digit, 3)
+        {
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="HexadecimalDigit"/> class with a specified digit.</summary>
+        /// <param name="digit">The hexadecimal digit.</param>
+        public HexadecimalDigit(C digit)
+            : base(digit, 4)
+        {
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="HexadecimalDigit"/> class with a specified digit.</summary>
+        /// <param name="digit">The hexadecimal digit.</param>
+        public HexadecimalDigit(D digit)
+            : base(digit, 5)
+        {
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="HexadecimalDigit"/> class with a specified digit.</summary>
+        /// <param name="digit">The hexadecimal digit.</param>
+        public HexadecimalDigit(E digit)
+            : base(digit, 6)
+        {
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="HexadecimalDigit"/> class with a specified digit.</summary>
+        /// <param name="digit">The hexadecimal digit.</param>
+        public HexadecimalDigit(F digit)
+            : base(digit, 7)
+        {
+        }
+    }
+
+    public partial class HexadecimalDigit
+    {
+        public class A : Element
+        {
+            public A(Element element)
+                : base(element)
             {
-                case 1:
-                    break;
-                case 2:
-                    if (element.Data != "A")
-                    {
-                        throw new ArgumentOutOfRangeException("element", element, "Precondition: element.Data == \"A\"");
-                    }
+                if (!string.Equals(element.Data, "A", StringComparison.OrdinalIgnoreCase))
+                {
+                    throw new ArgumentOutOfRangeException("element", element, "Precondition: string.Equals(element.Data, \"A\", StringComparison.OrdinalIgnoreCase)");
+                }
+            }
+        }
+    }
 
-                    break;
-                case 3:
-                    if (element.Data != "B")
-                    {
-                        throw new ArgumentOutOfRangeException("element", element, "Precondition: element.Data == \"B\"");
-                    }
+    public partial class HexadecimalDigit
+    {
+        public class B : Element
+        {
+            public B(Element element)
+                : base(element)
+            {
+                if (!string.Equals(element.Data, "B", StringComparison.OrdinalIgnoreCase))
+                {
+                    throw new ArgumentOutOfRangeException("element", element, "Precondition: string.Equals(element.Data, \"B\", StringComparison.OrdinalIgnoreCase)");
+                }
+            }
+        }
+    }
 
-                    break;
-                case 4:
-                    if (element.Data != "C")
-                    {
-                        throw new ArgumentOutOfRangeException("element", element, "Precondition: element.Data == \"C\"");
-                    }
+    public partial class HexadecimalDigit
+    {
+        public class C : Element
+        {
+            public C(Element element)
+                : base(element)
+            {
+                if (!string.Equals(element.Data, "C", StringComparison.OrdinalIgnoreCase))
+                {
+                    throw new ArgumentOutOfRangeException("element", element, "Precondition: string.Equals(element.Data, \"C\", StringComparison.OrdinalIgnoreCase)");
+                }
+            }
+        }
+    }
 
-                    break;
-                case 5:
-                    if (element.Data != "D")
-                    {
-                        throw new ArgumentOutOfRangeException("element", element, "Precondition: element.Data == \"D\"");
-                    }
+    public partial class HexadecimalDigit
+    {
+        public class D : Element
+        {
+            public D(Element element)
+                : base(element)
+            {
+                if (!string.Equals(element.Data, "D", StringComparison.OrdinalIgnoreCase))
+                {
+                    throw new ArgumentOutOfRangeException("element", element, "Precondition: string.Equals(element.Data, \"D\", StringComparison.OrdinalIgnoreCase)");
+                }
+            }
+        }
+    }
 
-                    break;
-                case 6:
-                    if (element.Data != "E")
-                    {
-                        throw new ArgumentOutOfRangeException("element", element, "Precondition: element.Data == \"E\"");
-                    }
+    public partial class HexadecimalDigit
+    {
+        public class E : Element
+        {
+            public E(Element element)
+                : base(element)
+            {
+                if (!string.Equals(element.Data, "E", StringComparison.OrdinalIgnoreCase))
+                {
+                    throw new ArgumentOutOfRangeException("element", element, "Precondition: string.Equals(element.Data, \"E\", StringComparison.OrdinalIgnoreCase)");
+                }
+            }
+        }
+    }
 
-                    break;
-                case 7:
-                    if (element.Data != "F")
-                    {
-                        throw new ArgumentOutOfRangeException("element", element, "Precondition: element.Data == \"F\"");
-                    }
-
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException("alternative", alternative, "Precondition: 1 <= alternative <= 7");
+    public partial class HexadecimalDigit
+    {
+        public class F : Element
+        {
+            public F(Element element)
+                : base(element)
+            {
+                if (!string.Equals(element.Data, "F", StringComparison.OrdinalIgnoreCase))
+                {
+                    throw new ArgumentOutOfRangeException("element", element, "Precondition: string.Equals(element.Data, \"F\", StringComparison.OrdinalIgnoreCase)");
+                }
             }
         }
     }
