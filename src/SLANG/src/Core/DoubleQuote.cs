@@ -7,6 +7,8 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG.Core
 {
+    using System;
+
     /// <summary>Represents the DQUOTE rule: 1 quotation mark. Unicode: U+0022.</summary>
     public class DoubleQuote : Element
     {
@@ -15,6 +17,10 @@ namespace SLANG.Core
         public DoubleQuote(Element element)
             : base(element)
         {
+            if (element.Data != "\x22")
+            {
+                throw new ArgumentOutOfRangeException("element", element, "Precondition: element.Data == \"\\x22\"");
+            }
         }
     }
 }
