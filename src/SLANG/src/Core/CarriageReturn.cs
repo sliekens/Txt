@@ -8,6 +8,8 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG.Core
 {
+    using System;
+
     /// <summary>Represents the CR rule: 1 carriage return. Unicode: U+000D.</summary>
     public class CarriageReturn : Element
     {
@@ -16,6 +18,10 @@ namespace SLANG.Core
         public CarriageReturn(Element element)
             : base(element)
         {
+            if (element.Data != "\x0D")
+            {
+                throw new ArgumentOutOfRangeException("element", element, "Precondition: element.Data == \"\\x0D\"");
+            }
         }
     }
 }
