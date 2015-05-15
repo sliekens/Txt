@@ -118,9 +118,9 @@ namespace SLANG
             }
         }
 
-        public bool TryRead(ITextScanner scanner, out Element element)
+        bool ILexer.TryRead(ITextScanner scanner, out Element element)
         {
-            // This variable of the generic type is required to work around ambiguous overloads
+            // This intermediary variable is required to match the type of the output parameter
             TElement t;
             if (this.TryRead(scanner, out t))
             {
@@ -130,6 +130,11 @@ namespace SLANG
 
             element = default(Element);
             return false;
+        }
+
+        public Element ReadElement(ITextScanner scanner)
+        {
+            return this.Read(scanner);
         }
 
         /// <summary>The object that retrieves instances of <see cref="ILexer{TElement}"/> by type and optional rule name.</summary>
