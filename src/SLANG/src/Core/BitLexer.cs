@@ -7,7 +7,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG.Core
 {
-    public class BitLexer : AlternativeLexer<Bit, Element, Element>
+    public class BitLexer : AlternativeLexer<Bit, Bit.Zero, Bit.One>
     {
         /// <summary>Initializes a new instance of the <see cref="BitLexer"/> class.</summary>
         public BitLexer()
@@ -15,24 +15,30 @@ namespace SLANG.Core
         {
         }
 
-        protected override Bit CreateInstance1(Element element)
+        protected override bool TryRead1(ITextScanner scanner, out Bit.Zero element)
         {
-            return new Bit(element, 1);
+            Element terminal;
+            if (!TryReadTerminal(scanner, "0", out terminal))
+            {
+                element = default(Bit.Zero);
+                return false;
+            }
+
+            element = new Bit.Zero(terminal);
+            return true;
         }
 
-        protected override Bit CreateInstance2(Element element)
+        protected override bool TryRead2(ITextScanner scanner, out Bit.One element)
         {
-            return new Bit(element, 2);
-        }
+            Element terminal;
+            if (!TryReadTerminal(scanner, "1", out terminal))
+            {
+                element = default(Bit.One);
+                return false;
+            }
 
-        protected override bool TryRead1(ITextScanner scanner, out Element element)
-        {
-            return TryReadTerminal(scanner, "0", out element);
-        }
-
-        protected override bool TryRead2(ITextScanner scanner, out Element element)
-        {
-            return TryReadTerminal(scanner, "1", out element);
+            element = new Bit.One(terminal);
+            return true;
         }
     }
 }

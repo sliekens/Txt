@@ -10,34 +10,46 @@ namespace SLANG.Core
 {
     using System;
 
-    /// <summary>Represents the BIT rule: 0 or 1. Unicode: U+0030 / U+0031.</summary>
-    public class Bit : Alternative<Element, Element>
+    /// <summary>Represents the BIT rule: "0" / "1"</summary>
+    public partial class Bit : Alternative<Bit.Zero, Bit.One>
     {
-        /// <summary>Initializes a new instance of the <see cref="T:SLANG.Core.Bit"/> class with a specified character
-        /// and context.</summary>
-        /// <param name="element">The bit.</param>
-        /// <param name="alternative">A number that indicates which alternative was matched.</param>
-        public Bit(Element element, int alternative)
-            : base(element, alternative)
+        public Bit(Zero bit)
+            : base(bit, 1)
         {
-            switch (alternative)
+        }
+
+        public Bit(One bit)
+            : base(bit, 2)
+        {
+        }
+    }
+
+    public partial class Bit
+    {
+        public class Zero : Element
+        {
+            public Zero(Element element)
+                : base(element)
             {
-                case 1:
-                    if (element.Data != "0")
-                    {
-                        throw new ArgumentOutOfRangeException("element", element, "Precondition: element.Data == \"1\"");
-                    }
+                if (element.Data != "0")
+                {
+                    throw new ArgumentOutOfRangeException("element", element, "Precondition: element.Data == \"0\"");
+                }
+            }
+        }
+    }
 
-                    break;
-                case 2:
-                    if (element.Data != "1")
-                    {
-                        throw new ArgumentOutOfRangeException("element", element, "Precondition: element.Data == \"2\"");
-                    }
-
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException("alternative", alternative, "Precondition: 1 <= alternative <= 2");
+    public partial class Bit
+    {
+        public class One : Element
+        {
+            public One(Element element)
+                : base(element)
+            {
+                if (element.Data != "1")
+                {
+                    throw new ArgumentOutOfRangeException("element", element, "Precondition: element.Data == \"1\"");
+                }
             }
         }
     }
