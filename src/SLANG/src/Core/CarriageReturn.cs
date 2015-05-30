@@ -18,10 +18,6 @@ namespace SLANG.Core
         public CarriageReturn(Element element)
             : base(element)
         {
-            if (element.Data != "\x0D")
-            {
-                throw new ArgumentOutOfRangeException("element", element, "Precondition: element.Data == \"\\x0D\"");
-            }
         }
     }
 }

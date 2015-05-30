@@ -18,10 +18,6 @@ namespace SLANG.Core
         public Space(Element element)
             : base(element)
         {
-            if (element.Data != "\x20")
-            {
-                throw new ArgumentOutOfRangeException("element", "Precondition: element.Data == \"\\x20\"");
-            }
         }
     }
 }

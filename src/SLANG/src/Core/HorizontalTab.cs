@@ -18,10 +18,6 @@ namespace SLANG.Core
         public HorizontalTab(Element element)
             : base(element)
         {
-            if (element.Data != "\x09")
-            {
-                throw new ArgumentOutOfRangeException("element", element, "Precondition: element.Data == \"\\x09\"");
-            }
         }
     }
 }

@@ -18,10 +18,6 @@ namespace SLANG.Core
         public LineFeed(Element element)
             : base(element)
         {
-            if (element.Data != "\x0A")
-            {
-                throw new ArgumentOutOfRangeException("element", element, "Precondition: element.Data == \"\\x0A\"");
-            }
         }
     }
 }

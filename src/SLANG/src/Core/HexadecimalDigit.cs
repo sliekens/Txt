@@ -73,10 +73,6 @@ namespace SLANG.Core
             public A(Element element)
                 : base(element)
             {
-                if (!string.Equals(element.Data, "A", StringComparison.OrdinalIgnoreCase))
-                {
-                    throw new ArgumentOutOfRangeException("element", element, "Precondition: string.Equals(element.Data, \"A\", StringComparison.OrdinalIgnoreCase)");
-                }
             }
         }
     }
@@ -88,10 +84,6 @@ namespace SLANG.Core
             public B(Element element)
                 : base(element)
             {
-                if (!string.Equals(element.Data, "B", StringComparison.OrdinalIgnoreCase))
-                {
-                    throw new ArgumentOutOfRangeException("element", element, "Precondition: string.Equals(element.Data, \"B\", StringComparison.OrdinalIgnoreCase)");
-                }
             }
         }
     }
@@ -103,10 +95,6 @@ namespace SLANG.Core
             public C(Element element)
                 : base(element)
             {
-                if (!string.Equals(element.Data, "C", StringComparison.OrdinalIgnoreCase))
-                {
-                    throw new ArgumentOutOfRangeException("element", element, "Precondition: string.Equals(element.Data, \"C\", StringComparison.OrdinalIgnoreCase)");
-                }
             }
         }
     }
@@ -118,10 +106,6 @@ namespace SLANG.Core
             public D(Element element)
                 : base(element)
             {
-                if (!string.Equals(element.Data, "D", StringComparison.OrdinalIgnoreCase))
-                {
-                    throw new ArgumentOutOfRangeException("element", element, "Precondition: string.Equals(element.Data, \"D\", StringComparison.OrdinalIgnoreCase)");
-                }
             }
         }
     }
@@ -133,10 +117,6 @@ namespace SLANG.Core
             public E(Element element)
                 : base(element)
             {
-                if (!string.Equals(element.Data, "E", StringComparison.OrdinalIgnoreCase))
-                {
-                    throw new ArgumentOutOfRangeException("element", element, "Precondition: string.Equals(element.Data, \"E\", StringComparison.OrdinalIgnoreCase)");
-                }
             }
         }
     }
@@ -148,10 +128,6 @@ namespace SLANG.Core
             public F(Element element)
                 : base(element)
             {
-                if (!string.Equals(element.Data, "F", StringComparison.OrdinalIgnoreCase))
-                {
-                    throw new ArgumentOutOfRangeException("element", element, "Precondition: string.Equals(element.Data, \"F\", StringComparison.OrdinalIgnoreCase)");
-                }
             }
         }
     }

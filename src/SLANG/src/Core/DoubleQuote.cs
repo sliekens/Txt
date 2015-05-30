@@ -17,10 +17,6 @@ namespace SLANG.Core
         public DoubleQuote(Element element)
             : base(element)
         {
-            if (element.Data != "\x22")
-            {
-                throw new ArgumentOutOfRangeException("element", element, "Precondition: element.Data == \"\\x22\"");
-            }
         }
     }
 }
