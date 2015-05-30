@@ -27,6 +27,7 @@
             var octetLexer = new OctetLexer(new OctetValueRangeLexer());
             using (var scanner = new TextScanner(new PushbackInputStream(input.ToMemoryStream())))
             {
+                scanner.Read();
                 var octet = octetLexer.Read(scanner);
                 Assert.NotNull(octet);
                 Assert.Equal(input, octet.Data);

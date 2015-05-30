@@ -9,9 +9,10 @@
         {
             var input = "0";
             var bitLexer = new BitLexer(new BitAlternativeLexer(new ZeroTerminalLexer(), new OneTerminalLexer()));
-            using (ITextScanner textScanner = new TextScanner(new PushbackInputStream(input.ToMemoryStream())))
+            using (var scanner = new TextScanner(new PushbackInputStream(input.ToMemoryStream())))
             {
-                var bit = bitLexer.Read(textScanner);
+                scanner.Read();
+                var bit = bitLexer.Read(scanner);
                 Assert.Equal(input, bit.Data);
             }
         }
@@ -21,9 +22,10 @@
         {
             var input = "1";
             var bitLexer = new BitLexer(new BitAlternativeLexer(new ZeroTerminalLexer(), new OneTerminalLexer()));
-            using (ITextScanner textScanner = new TextScanner(new PushbackInputStream(input.ToMemoryStream())))
+            using (var scanner = new TextScanner(new PushbackInputStream(input.ToMemoryStream())))
             {
-                var bit = bitLexer.Read(textScanner);
+                scanner.Read();
+                var bit = bitLexer.Read(scanner);
                 Assert.Equal(input, bit.Data);
             }
         }
@@ -33,10 +35,10 @@
         {
             var input = "-1";
             var bitLexer = new BitLexer(new BitAlternativeLexer(new ZeroTerminalLexer(), new OneTerminalLexer()));
-            using (ITextScanner textScanner = new TextScanner(new PushbackInputStream(input.ToMemoryStream())))
+            using (var scanner = new TextScanner(new PushbackInputStream(input.ToMemoryStream())))
             {
-                Assert.True(textScanner.Read());
-                Assert.Throws<SyntaxErrorException>(() => bitLexer.Read(textScanner));
+                scanner.Read();
+                Assert.Throws<SyntaxErrorException>(() => bitLexer.Read(scanner));
             }
         }
     }

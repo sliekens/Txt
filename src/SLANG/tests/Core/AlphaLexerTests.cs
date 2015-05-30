@@ -34,9 +34,10 @@
         public void CanReadLowercaseAsciiLetters(string letter)
         {
             var alphaLexer = new AlphaLexer(new AlphaAlternativeLexer(new UpperCaseValueRangeLexer(), new LowerCaseValueRangeLexer()));
-            using (ITextScanner textScanner = new TextScanner(new PushbackInputStream(letter.ToMemoryStream())))
+            using (var scanner = new TextScanner(new PushbackInputStream(letter.ToMemoryStream())))
             {
-                var alpha = alphaLexer.Read(textScanner);
+                scanner.Read();
+                var alpha = alphaLexer.Read(scanner);
                 Assert.Equal(letter, alpha.Data);
             }
         }
@@ -71,9 +72,10 @@
         public void CanReadUppercaseAsciiLetters(string letter)
         {
             var alphaLexer = new AlphaLexer(new AlphaAlternativeLexer(new UpperCaseValueRangeLexer(), new LowerCaseValueRangeLexer()));
-            using (ITextScanner textScanner = new TextScanner(new PushbackInputStream(letter.ToMemoryStream())))
+            using (var scanner = new TextScanner(new PushbackInputStream(letter.ToMemoryStream())))
             {
-                var alpha = alphaLexer.Read(textScanner);
+                scanner.Read();
+                var alpha = alphaLexer.Read(scanner);
                 Assert.Equal(letter, alpha.Data);
             }
         }

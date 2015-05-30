@@ -15,13 +15,14 @@
         [InlineData("\x37")]
         [InlineData("\x38")]
         [InlineData("\x39")]
-        public void CanReadDigit(string digit)
+        public void ReadSuccess(string input)
         {
             var digitLexer = new DigitLexer(new DigitValueRangeLexer());
-            using (ITextScanner textScanner = new TextScanner(new PushbackInputStream(digit.ToMemoryStream())))
+            using (var scanner = new TextScanner(new PushbackInputStream(input.ToMemoryStream())))
             {
-                var alpha = digitLexer.Read(textScanner);
-                Assert.Equal(digit, alpha.Data);
+                scanner.Read();
+                var digit = digitLexer.Read(scanner);
+                Assert.Equal(input, digit.Data);
             }
         }
     }

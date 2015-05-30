@@ -14,6 +14,7 @@
             var controlCharacterLexer = new ControlCharacterLexer(new ControlCharacterAlternativeLexer(new ControlsValueRangeLexer(), new DeleteTerminalLexer()));
             using (var scanner = new TextScanner(new PushbackInputStream(input.ToMemoryStream())))
             {
+                scanner.Read();
                 var controlCharacter = controlCharacterLexer.Read(scanner);
                 Assert.NotNull(controlCharacter);
                 Assert.Equal(input, controlCharacter.Data);

@@ -271,11 +271,7 @@ namespace SLANG
 
             if (this.offset == -1)
             {
-                // Read once to move to the first position
-                if (!this.Read())
-                {
-                    return false;
-                }
+                throw new InvalidOperationException("No next character available: call 'Read()' to initialize.");
             }
 
             if (this.endOfInput)
@@ -301,12 +297,7 @@ namespace SLANG
 
             if (this.offset == -1)
             {
-                // Read once to move to the first position
-                if (!this.Read())
-                {
-                    match = default(char);
-                    return false;
-                }
+                throw new InvalidOperationException("No next character available: call 'Read()' to initialize.");
             }
 
             if (this.endOfInput)

@@ -11,6 +11,7 @@
             var lineFeedLexer = new LineFeedLexer(new LineFeedTerminalLexer());
             using (var scanner = new TextScanner(new PushbackInputStream(input.ToMemoryStream())))
             {
+                scanner.Read();
                 var lineFeed = lineFeedLexer.Read(scanner);
                 Assert.NotNull(lineFeed);
                 Assert.Equal(input, lineFeed.Data);

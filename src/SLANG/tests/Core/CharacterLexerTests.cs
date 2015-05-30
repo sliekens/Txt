@@ -17,9 +17,10 @@
         public void ReadSuccess(string c)
         {
             var lexer = new CharacterLexer(new CharacterValueRangeLexer());
-            using (var textScanner = new TextScanner(new PushbackInputStream(c.ToMemoryStream())))
+            using (var scanner = new TextScanner(new PushbackInputStream(c.ToMemoryStream())))
             {
-                var character = lexer.Read(textScanner);
+                scanner.Read();
+                var character = lexer.Read(scanner);
                 Assert.NotNull(character);
                 Assert.Equal(c, character.Data);
             }

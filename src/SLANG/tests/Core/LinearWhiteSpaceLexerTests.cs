@@ -31,6 +31,7 @@
             var lexer = new LinearWhiteSpaceLexer(linearWhiteSpaceRepetitionLexer);
             using (var scanner = new TextScanner(new PushbackInputStream(input.ToMemoryStream())))
             {
+                scanner.Read();
                 var linearWhiteSpace = lexer.Read(scanner);
                 Assert.NotNull(lineFeedLexer);
                 Assert.Equal(input, linearWhiteSpace.Data);

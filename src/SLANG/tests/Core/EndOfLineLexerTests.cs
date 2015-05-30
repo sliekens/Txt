@@ -11,6 +11,7 @@
             var endOfLineLexer = new EndOfLineLexer(new EndOfLineSequenceLexer(new CarriageReturnLexer(new CarriageReturnTerminalLexer()), new LineFeedLexer(new LineFeedTerminalLexer())));
             using (var scanner = new TextScanner(new PushbackInputStream(input.ToMemoryStream())))
             {
+                scanner.Read();
                 var endOfLine = endOfLineLexer.Read(scanner);
                 Assert.NotNull(endOfLine);
                 Assert.Equal(input, endOfLine.Data);

@@ -11,6 +11,7 @@
             var carriageReturnLexer = new CarriageReturnLexer(new CarriageReturnTerminalLexer());
             using (var scanner = new TextScanner(new PushbackInputStream(input.ToMemoryStream())))
             {
+                scanner.Read();
                 var carriageReturn = carriageReturnLexer.Read(scanner);
                 Assert.NotNull(carriageReturn);
                 Assert.Equal(input, carriageReturn.Data);
