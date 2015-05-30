@@ -136,7 +136,9 @@
     <Compile Include="Sequence{T1,T2,T3,T4}.cs" />
     <Compile Include="Sequence{T1,T2,T3}.cs" />
     <Compile Include="Sequence{T1,T2}.cs" />
+    <Compile Include="StringLexer.cs" />
     <Compile Include="SyntaxErrorException.cs" />
+    <Compile Include="TerminalsLexer.cs" />
     <Compile Include="TextContext.cs" />
     <Compile Include="TextScanner.cs" />
     <Compile Include="Element.cs" />

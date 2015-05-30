@@ -142,6 +142,7 @@ namespace SLANG
         /// <param name="element">When this method returns, contains the next available element, or a <c>null</c> reference, depending
         /// on whether the return value indicates success.</param>
         /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
+        [Obsolete("Obsolete: use class TerminalsLexer instead")]
         protected static bool TryReadTerminal(ITextScanner scanner, char c, out Element element)
         {
             if (scanner == null)
@@ -172,6 +173,7 @@ namespace SLANG
         /// <param name="element">When this method returns, contains the next available element, or a <c>null</c> reference, depending
         /// on whether the return value indicates success.</param>
         /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
+        [Obsolete("Obsolete: use class TerminalsLexer instead")]
         protected static bool TryReadTerminal(ITextScanner scanner, char[] s, out Element element)
         {
             if (scanner == null)
@@ -224,6 +226,7 @@ namespace SLANG
         /// <param name="element">When this method returns, contains the next available element, or a <c>null</c> reference, depending
         /// on whether the return value indicates success.</param>
         /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
+        [Obsolete("Obsolete: use class StringLexer instead")]
         protected static bool TryReadTerminal(ITextScanner scanner, string s, out Element element)
         {
             if (scanner == null)
