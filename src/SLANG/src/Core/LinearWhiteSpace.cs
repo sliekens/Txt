@@ -8,44 +8,12 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG.Core
 {
-    using System.Collections.Generic;
-
     /// <summary>Represents the LWSP rule: any linear white space. The LWSP rule permits lines containing only white space.</summary>
-    public partial class LinearWhiteSpace : Repetition<LinearWhiteSpace.MultiLineWhiteSpace>
+    public class LinearWhiteSpace : Repetition
     {
-        public LinearWhiteSpace(IList<MultiLineWhiteSpace> elements, ITextContext context)
-            : base(elements, context)
+        public LinearWhiteSpace(Repetition element)
+            : base(element)
         {
-        }
-    }
-
-    public partial class LinearWhiteSpace
-    {
-        public partial class MultiLineWhiteSpace : Alternative<WhiteSpace, MultiLineWhiteSpace.NewLineWhiteSpace>
-        {
-            public MultiLineWhiteSpace(WhiteSpace element)
-                : base(element, 1)
-            {
-                
-            }
-            public MultiLineWhiteSpace(NewLineWhiteSpace element)
-                : base(element, 2)
-            {
-            }
-        }
-    }
-
-    public partial class LinearWhiteSpace
-    {
-        public partial class MultiLineWhiteSpace
-        {
-            public class NewLineWhiteSpace : Sequence<EndOfLine, WhiteSpace>
-            {
-                public NewLineWhiteSpace(EndOfLine element1, WhiteSpace element2, ITextContext context)
-                    : base(element1, element2, context)
-                {
-                }
-            }
         }
     }
 }

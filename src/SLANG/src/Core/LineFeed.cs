@@ -8,8 +8,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG.Core
 {
-    using System;
-
     /// <summary>Represents the LF rule: 1 line feed. Unicode: U+000A.</summary>
     public class LineFeed : Element
     {

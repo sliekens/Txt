@@ -8,41 +8,33 @@
 namespace SLANG.Core
 {
     using System;
-    using System.Diagnostics;
 
-    public class WhiteSpaceLexer : AlternativeLexer<WhiteSpace, Space, HorizontalTab>
+    public class WhiteSpaceLexer : Lexer<WhiteSpace>
     {
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private readonly SpaceLexer element1Lexer;
+        private readonly ILexer<Alternative> whiteSpaceAlternativeLexer;
 
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private readonly HorizontalTabLexer element2Lexer;
-
-        public WhiteSpaceLexer(SpaceLexer element1Lexer, HorizontalTabLexer element2Lexer)
+        public WhiteSpaceLexer(ILexer<Alternative> whiteSpaceAlternativeLexer)
             : base("WSP")
         {
-            if (element1Lexer == null)
+            if (whiteSpaceAlternativeLexer == null)
             {
-                throw new ArgumentNullException("element1Lexer", "Precondition: element1Lexer != null");
+                throw new ArgumentNullException("whiteSpaceAlternativeLexer", "Precondition: whiteSpaceAlternativeLexer != null");
             }
 
-            if (element2Lexer == null)
+            this.whiteSpaceAlternativeLexer = whiteSpaceAlternativeLexer;
+        }
+
+        public override bool TryRead(ITextScanner scanner, out WhiteSpace element)
+        {
+            Element terminal;
+            if (this.whiteSpaceAlternativeLexer.TryReadElement(scanner, out terminal))
             {
-                throw new ArgumentNullException("element2Lexer", "Precondition: element2Lexer != null");
+                element = new WhiteSpace(terminal);
+                return true;
             }
 
-            this.element1Lexer = element1Lexer;
-            this.element2Lexer = element2Lexer;
-        }
-
-        protected override bool TryRead1(ITextScanner scanner, out Space element)
-        {
-            return this.element1Lexer.TryRead(scanner, out element);
-        }
-
-        protected override bool TryRead2(ITextScanner scanner, out HorizontalTab element)
-        {
-            return this.element2Lexer.TryRead(scanner, out element);
+            element = default(WhiteSpace);
+            return false;
         }
     }
 }

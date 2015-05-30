@@ -8,8 +8,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG.Core
 {
-    using System;
-
     /// <summary>Represents the CR rule: 1 carriage return. Unicode: U+000D.</summary>
     public class CarriageReturn : Element
     {

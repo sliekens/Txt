@@ -9,11 +9,11 @@ namespace SLANG.Core
 {
     using System;
 
-    public partial class SpaceLexer : Lexer<Space>
+    public class SpaceLexer : Lexer<Space>
     {
-        private readonly ILexer<Element> spaceTerminalLexer;
+        private readonly ILexer spaceTerminalLexer;
 
-        public SpaceLexer(ILexer<Element> spaceTerminalLexer)
+        public SpaceLexer(ILexer spaceTerminalLexer)
             : base("SP")
         {
             if (spaceTerminalLexer == null)
@@ -28,7 +28,7 @@ namespace SLANG.Core
         public override bool TryRead(ITextScanner scanner, out Space element)
         {
             Element terminal;
-            if (this.spaceTerminalLexer.TryRead(scanner, out terminal))
+            if (this.spaceTerminalLexer.TryReadElement(scanner, out terminal))
             {
                 element = new Space(terminal);
                 return true;
@@ -36,17 +36,6 @@ namespace SLANG.Core
 
             element = default(Space);
             return false;
-        }
-    }
-
-    public partial class SpaceLexer
-    {
-        public class SpaceTerminalLexer : TerminalsLexer
-        {
-            public SpaceTerminalLexer()
-                : base('\x20')
-            {
-            }
         }
     }
 }

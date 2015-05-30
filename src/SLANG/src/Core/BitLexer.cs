@@ -9,75 +9,32 @@ namespace SLANG.Core
 {
     using System;
 
-    public partial class BitLexer : AlternativeLexer<Bit, Bit.Zero, Bit.One>
+    public class BitLexer : Lexer<Bit>
     {
-        private readonly ILexer<Element> zeroBitTerminalLexer;
+        private readonly ILexer<Alternative> bitAlternativeLexer;
 
-        private readonly ILexer<Element> oneBitTerminalLexer;
-
-        public BitLexer(ILexer<Element> zeroBitTerminalLexer, ILexer<Element> oneBitTerminalLexer)
+        public BitLexer(ILexer<Alternative> bitAlternativeLexer)
             : base("BIT")
         {
-            if (zeroBitTerminalLexer == null)
+            if (bitAlternativeLexer == null)
             {
-                throw new ArgumentNullException("zeroBitTerminalLexer", "Precondition: zeroBitTerminalLexer != null");
+                throw new ArgumentNullException("bitAlternativeLexer", "Precondition: bitAlternativeLexer != null");
             }
 
-            if (oneBitTerminalLexer == null)
-            {
-                throw new ArgumentNullException("oneBitTerminalLexer", "Precondition: oneBitTerminalLexer != null");
-            }
-
-            this.zeroBitTerminalLexer = zeroBitTerminalLexer;
-            this.oneBitTerminalLexer = oneBitTerminalLexer;
+            this.bitAlternativeLexer = bitAlternativeLexer;
         }
 
-        protected override bool TryRead1(ITextScanner scanner, out Bit.Zero element)
+        public override bool TryRead(ITextScanner scanner, out Bit element)
         {
-            Element value;
-            if (this.zeroBitTerminalLexer.TryRead(scanner, out value))
+            Element terminal;
+            if (this.bitAlternativeLexer.TryReadElement(scanner, out terminal))
             {
-                element = new Bit.Zero(value);
+                element = new Bit(terminal);
                 return true;
             }
 
-            element = default(Bit.Zero);
+            element = default(Bit);
             return false;
-        }
-
-        protected override bool TryRead2(ITextScanner scanner, out Bit.One element)
-        {
-            Element value;
-            if (this.oneBitTerminalLexer.TryRead(scanner, out value))
-            {
-                element = new Bit.One(value);
-                return true;
-            }
-
-            element = default(Bit.One);
-            return false;
-        }
-    }
-
-    public partial class BitLexer
-    {
-        public class ZeroBitTerminalLexer : StringLexer
-        {
-            public ZeroBitTerminalLexer()
-                : base("0")
-            {
-            }
-        }
-    }
-
-    public partial class BitLexer
-    {
-        public class OneBitTerminalLexer : StringLexer
-        {
-            public OneBitTerminalLexer()
-                : base("1")
-            {
-            }
         }
     }
 }

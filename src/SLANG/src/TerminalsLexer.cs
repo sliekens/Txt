@@ -4,7 +4,7 @@
     using System.Diagnostics;
 
     /// <summary>Represents a lexer that reads terminal values (sometimes called characters).</summary>
-    public class TerminalsLexer : Lexer<Element>
+    public abstract class TerminalsLexer : Lexer<Element>
     {
         private readonly char[] terminals;
 

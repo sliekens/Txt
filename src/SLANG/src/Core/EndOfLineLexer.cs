@@ -8,41 +8,33 @@
 namespace SLANG.Core
 {
     using System;
-    using System.Diagnostics;
 
-    public class EndOfLineLexer : SequenceLexer<EndOfLine, CarriageReturn, LineFeed>
+    public class EndOfLineLexer : Lexer<EndOfLine>
     {
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private readonly ILexer<CarriageReturn> carriageReturnLexer;
+        private readonly ILexer<Sequence> endOfLineSequenceLexer;
 
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private readonly ILexer<LineFeed> lineFeedLexer;
-
-        public EndOfLineLexer(ILexer<CarriageReturn> carriageReturnLexer, ILexer<LineFeed> lineFeedLexer)
+        public EndOfLineLexer(ILexer<Sequence> endOfLineSequenceLexer)
             : base("CRLF")
         {
-            if (carriageReturnLexer == null)
+            if (endOfLineSequenceLexer == null)
             {
-                throw new ArgumentNullException("carriageReturnLexer", "Precondition: carriageReturnLexer != null");
+                throw new ArgumentNullException("endOfLineSequenceLexer", "Precondition: endOfLineSequenceLexer != null");
             }
 
-            if (lineFeedLexer == null)
+            this.endOfLineSequenceLexer = endOfLineSequenceLexer;
+        }
+
+        public override bool TryRead(ITextScanner scanner, out EndOfLine element)
+        {
+            Sequence sequence;
+            if (this.endOfLineSequenceLexer.TryRead(scanner, out sequence))
             {
-                throw new ArgumentNullException("lineFeedLexer", "Precondition: lineFeedLexer != null");
+                element = new EndOfLine(sequence);
+                return true;
             }
 
-            this.carriageReturnLexer = carriageReturnLexer;
-            this.lineFeedLexer = lineFeedLexer;
-        }
-
-        protected override bool TryRead1(ITextScanner scanner, out CarriageReturn element)
-        {
-            return this.carriageReturnLexer.TryRead(scanner, out element);
-        }
-
-        protected override bool TryRead2(ITextScanner scanner, out LineFeed element)
-        {
-            return this.lineFeedLexer.TryRead(scanner, out element);
+            element = default(EndOfLine);
+            return false;
         }
     }
 }

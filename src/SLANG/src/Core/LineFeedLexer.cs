@@ -9,11 +9,11 @@ namespace SLANG.Core
 {
     using System;
 
-    public partial class LineFeedLexer : Lexer<LineFeed>
+    public class LineFeedLexer : Lexer<LineFeed>
     {
-        private readonly ILexer<Element> lineFeedTerminalLexer;
+        private readonly ILexer lineFeedTerminalLexer;
 
-        public LineFeedLexer(ILexer<Element> lineFeedTerminalLexer)
+        public LineFeedLexer(ILexer lineFeedTerminalLexer)
             : base("LF")
         {
             if (lineFeedTerminalLexer == null)
@@ -28,7 +28,7 @@ namespace SLANG.Core
         public override bool TryRead(ITextScanner scanner, out LineFeed element)
         {
             Element terminal;
-            if (this.lineFeedTerminalLexer.TryRead(scanner, out terminal))
+            if (this.lineFeedTerminalLexer.TryReadElement(scanner, out terminal))
             {
                 element = new LineFeed(terminal);
                 return true;
@@ -36,17 +36,6 @@ namespace SLANG.Core
 
             element = default(LineFeed);
             return false;
-        }
-    }
-
-    public partial class LineFeedLexer
-    {
-        public class LineFeedTerminalLexer : TerminalsLexer
-        {
-            public LineFeedTerminalLexer()
-                : base('\x0A')
-            {
-            }
         }
     }
 }

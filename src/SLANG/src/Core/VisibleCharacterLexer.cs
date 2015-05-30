@@ -9,12 +9,12 @@ namespace SLANG.Core
 {
     using System;
 
-    public partial class VisibleCharacterLexer : Lexer<VisibleCharacter>
+    public class VisibleCharacterLexer : Lexer<VisibleCharacter>
     {
-        private readonly ILexer<Element> visibleCharacterValueRangeLexer;
+        private readonly ILexer visibleCharacterValueRangeLexer;
 
         /// <summary>Initializes a new instance of the <see cref="VisibleCharacterLexer"/> class.</summary>
-        public VisibleCharacterLexer(ILexer<Element> visibleCharacterValueRangeLexer)
+        public VisibleCharacterLexer(ILexer visibleCharacterValueRangeLexer)
             : base("VCHAR")
         {
             if (visibleCharacterValueRangeLexer == null)
@@ -28,7 +28,7 @@ namespace SLANG.Core
         public override bool TryRead(ITextScanner scanner, out VisibleCharacter element)
         {
             Element value;
-            if (this.visibleCharacterValueRangeLexer.TryRead(scanner, out value))
+            if (this.visibleCharacterValueRangeLexer.TryReadElement(scanner, out value))
             {
                 element = new VisibleCharacter(value);
                 return true;
@@ -36,17 +36,6 @@ namespace SLANG.Core
 
             element = default(VisibleCharacter);
             return false;
-        }
-    }
-
-    public partial class VisibleCharacterLexer
-    {
-        public class VisibleCharacterValueRangeLexer : ValueRangeLexer
-        {
-            public VisibleCharacterValueRangeLexer()
-                : base('\x21', '\x7E')
-            {
-            }
         }
     }
 }

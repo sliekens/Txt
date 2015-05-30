@@ -9,27 +9,26 @@ namespace SLANG.Core
 {
     using System;
 
-    public partial class CarriageReturnLexer : Lexer<CarriageReturn>
+    public class CarriageReturnLexer : Lexer<CarriageReturn>
     {
-        private readonly ILexer<Element> carriageReturnTerminaLexer;
+        private readonly ILexer carriageReturnTerminalLexer;
 
-        /// <summary>Initializes a new instance of the <see cref="CarriageReturnLexer"/> class.</summary>
-        public CarriageReturnLexer(ILexer<Element> carriageReturnTerminaLexer)
+        public CarriageReturnLexer(ILexer carriageReturnTerminalLexer)
             : base("CR")
         {
-            if (carriageReturnTerminaLexer == null)
+            if (carriageReturnTerminalLexer == null)
             {
-                throw new ArgumentNullException("carriageReturnTerminaLexer", "Precondition: carriageReturnTerminaLexer != null");
+                throw new ArgumentNullException("carriageReturnTerminalLexer", "Precondition: carriageReturnTerminalLexer != null");
             }
 
-            this.carriageReturnTerminaLexer = carriageReturnTerminaLexer;
+            this.carriageReturnTerminalLexer = carriageReturnTerminalLexer;
         }
 
         /// <inheritdoc />
         public override bool TryRead(ITextScanner scanner, out CarriageReturn element)
         {
             Element value;
-            if (this.carriageReturnTerminaLexer.TryRead(scanner, out value))
+            if (this.carriageReturnTerminalLexer.TryReadElement(scanner, out value))
             {
                 element = new CarriageReturn(value);
                 return true;
@@ -37,17 +36,6 @@ namespace SLANG.Core
 
             element = default(CarriageReturn);
             return false;
-        }
-    }
-
-    public partial class CarriageReturnLexer
-    {
-        public class CarriageReturnTerminalLexer : TerminalsLexer
-        {
-            public CarriageReturnTerminalLexer()
-                : base('\x0D')
-            {
-            }
         }
     }
 }

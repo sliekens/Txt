@@ -1,12 +1,10 @@
 ﻿namespace SLANG.Core
 {
-    using System.IO;
-
     using Xunit;
 
     public class BitLexerTests
     {
-        private readonly BitLexer lexer = new BitLexer(new BitLexer.ZeroBitTerminalLexer(), new BitLexer.OneBitTerminalLexer());
+        private readonly BitLexer lexer = new BitLexer(new BitAlternativeLexer(new ZeroTerminalLexer(), new OneTerminalLexer()));
         
         [Fact]
         public void CanReadZero()

@@ -7,8 +7,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG.Core
 {
-    using System;
-
     /// <summary>Represents the DQUOTE rule: 1 quotation mark. Unicode: U+0022.</summary>
     public class DoubleQuote : Element
     {

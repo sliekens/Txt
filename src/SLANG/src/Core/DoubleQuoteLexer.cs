@@ -9,11 +9,11 @@ namespace SLANG.Core
 {
     using System;
 
-    public partial class DoubleQuoteLexer : Lexer<DoubleQuote>
+    public class DoubleQuoteLexer : Lexer<DoubleQuote>
     {
-        private readonly ILexer<Element> doubleQuoteTerminalLexer;
+        private readonly ILexer doubleQuoteTerminalLexer;
 
-        public DoubleQuoteLexer(ILexer<Element> doubleQuoteTerminalLexer)
+        public DoubleQuoteLexer(ILexer doubleQuoteTerminalLexer)
             : base("DQUOTE")
         {
             if (doubleQuoteTerminalLexer == null)
@@ -28,7 +28,7 @@ namespace SLANG.Core
         public override bool TryRead(ITextScanner scanner, out DoubleQuote element)
         {
             Element terminal;
-            if (this.doubleQuoteTerminalLexer.TryRead(scanner, out terminal))
+            if (this.doubleQuoteTerminalLexer.TryReadElement(scanner, out terminal))
             {
                 element = new DoubleQuote(terminal);
                 return true;
@@ -38,16 +38,4 @@ namespace SLANG.Core
             return false;
         }
     }
-
-    public partial class DoubleQuoteLexer
-    {
-        public class DoubleQuoteTerminalLexer : TerminalsLexer
-        {
-            public DoubleQuoteTerminalLexer()
-                : base('\x22')
-            {
-            }
-        }
-    }
-
 }

@@ -8,8 +8,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG.Core
 {
-    using System;
-
     /// <summary>Represents the HTAB rule: 1 horizontal tab. Unicode: U+0009.</summary>
     public class HorizontalTab : Element
     {
