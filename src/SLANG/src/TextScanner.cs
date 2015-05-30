@@ -61,34 +61,7 @@ namespace SLANG
         }
 
         /// <inheritdoc />
-        bool ITextScanner.EndOfInput
-        {
-            get
-            {
-                return this.EndOfInput;
-            }
-        }
-
-        /// <inheritdoc />
-        char? ITextScanner.NextCharacter
-        {
-            get
-            {
-                return this.NextCharacter;
-            }
-        }
-
-        /// <inheritdoc />
-        int ITextContext.Offset
-        {
-            get
-            {
-                return this.Offset;
-            }
-        }
-
-        /// <inheritdoc />
-        private bool EndOfInput
+        public bool EndOfInput
         {
             get
             {
@@ -102,7 +75,7 @@ namespace SLANG
         }
 
         /// <inheritdoc />
-        private char? NextCharacter
+        public char? NextCharacter
         {
             get
             {
@@ -136,18 +109,6 @@ namespace SLANG
         void IDisposable.Dispose()
         {
             this.Close();
-        }
-
-        /// <inheritdoc />
-        ITextContext ITextScanner.GetContext()
-        {
-            return this.GetContext();
-        }
-
-        /// <inheritdoc />
-        void ITextScanner.PutBack(char c)
-        {
-            this.PutBack(c);
         }
 
         /// <inheritdoc />
@@ -210,24 +171,6 @@ namespace SLANG
             this.nextCharacter = firstcharacter;
         }
 
-        /// <inheritdoc />
-        bool ITextScanner.Read()
-        {
-            return this.Read();
-        }
-
-        /// <inheritdoc />
-        bool ITextScanner.TryMatch(char c)
-        {
-            return this.TryMatch(c, false);
-        }
-
-        /// <inheritdoc />
-        bool ITextScanner.TryMatch(char c, bool ignoreCase)
-        {
-            return this.TryMatch(c, ignoreCase);
-        }
-
         /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
         /// <param name="disposing"><c>true</c> to clean up both managed and unmanaged resources; otherwise, <c>false</c> to clean up only unmanaged
         /// resources.</param>
@@ -247,7 +190,7 @@ namespace SLANG
         }
 
         /// <inheritdoc />
-        private ITextContext GetContext()
+        public ITextContext GetContext()
         {
             if (this.disposed)
             {
@@ -258,7 +201,7 @@ namespace SLANG
         }
 
         /// <inheritdoc />
-        private void PutBack(char c)
+        public void PutBack(char c)
         {
             if (this.disposed)
             {
@@ -291,7 +234,7 @@ namespace SLANG
         }
 
         /// <inheritdoc />
-        private bool Read()
+        public bool Read()
         {
             if (this.disposed)
             {
@@ -319,13 +262,7 @@ namespace SLANG
         }
 
         /// <inheritdoc />
-        private bool TryMatch(char c)
-        {
-            return this.TryMatch(c, false);
-        }
-
-        /// <inheritdoc />
-        private bool TryMatch(char c, bool ignoreCase)
+        public bool TryMatch(char c)
         {
             if (this.disposed)
             {
@@ -342,21 +279,39 @@ namespace SLANG
                 throw new InvalidOperationException("No next character available: end of input has been reached.");
             }
 
-            if (ignoreCase)
+            if (this.nextCharacter != c)
             {
-                if (char.ToUpperInvariant(this.nextCharacter) != char.ToUpperInvariant(c))
-                {
-                    return false;
-                }
-            }
-            else
-            {
-                if (this.nextCharacter != c)
-                {
-                    return false;
-                }
+                return false;
             }
 
+            this.Read();
+            return true;
+        }
+
+        public bool TryMatchIgnoreCase(char c, out char match)
+        {
+            if (this.disposed)
+            {
+                throw new ObjectDisposedException(this.GetType().FullName);
+            }
+
+            if (this.offset == -1)
+            {
+                throw new InvalidOperationException("No next character available: call 'Read()' to initialize.");
+            }
+
+            if (this.endOfInput)
+            {
+                throw new InvalidOperationException("No next character available: end of input has been reached.");
+            }
+
+            if (char.ToUpperInvariant(this.nextCharacter) != char.ToUpperInvariant(c))
+            {
+                match = default(char);
+                return false;
+            }
+
+            match = this.nextCharacter;
             this.Read();
             return true;
         }

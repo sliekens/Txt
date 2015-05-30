@@ -199,7 +199,7 @@ namespace SLANG
 
             for (int i = 0; i < s.Length; i++)
             {
-                if (scanner.EndOfInput || !scanner.TryMatch(s[i], ignoreCase: false))
+                if (scanner.EndOfInput || !scanner.TryMatch(s[i]))
                 {
                     if (i != 0)
                     {
@@ -246,11 +246,10 @@ namespace SLANG
             var buffer = new char[s.Length];
             for (int i = 0; i < s.Length; i++)
             {
-                var next = s[i];
-                var actual = scanner.NextCharacter.GetValueOrDefault();
-                if (!scanner.EndOfInput && scanner.TryMatch(next, ignoreCase: true))
+                var c = s[i];
+                if (!scanner.EndOfInput && scanner.TryMatchIgnoreCase(c, out c))
                 {
-                    buffer[i] = actual;
+                    buffer[i] = c;
                 }
                 else
                 {
