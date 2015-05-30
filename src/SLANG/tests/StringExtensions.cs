@@ -7,7 +7,7 @@
     {
         internal static Stream ToMemoryStream(this string instance)
         {
-            return new MemoryStream(Encoding.UTF8.GetBytes(instance));
+            return new MemoryStream(Encoding.GetEncoding("iso-8859-1").GetBytes(instance));
         }
     }
 }
