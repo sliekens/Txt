@@ -22,6 +22,8 @@ namespace SLANG
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly PushbackInputStream inputStream;
 
+        private readonly Encoding encoding;
+
         /// <summary>Indicates whether this object has been disposed.</summary>
         private bool disposed;
 
@@ -37,13 +39,27 @@ namespace SLANG
         /// <summary>Initializes a new instance of the <see cref="T:SLANG.TextScanner"/> class for the given data source.</summary>
         /// <param name="inputStream">The <see cref="PushbackInputStream"/> to read data from.</param>
         public TextScanner(PushbackInputStream inputStream)
+            : this(inputStream, Encoding.GetEncoding("us-ascii"))
+        {
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="T:SLANG.TextScanner"/> class for the given data source.</summary>
+        /// <param name="inputStream">The <see cref="PushbackInputStream"/> to read data from.</param>
+        /// <param name="encoding">The encoding to use when converting text to and from binary data.</param>
+        public TextScanner(PushbackInputStream inputStream, Encoding encoding)
         {
             if (inputStream == null)
             {
                 throw new ArgumentNullException("inputStream", "Precondition: inputStream != null");
             }
 
+            if (encoding == null)
+            {
+                throw new ArgumentNullException("encoding", "Precondition: encoding != null");
+            }
+
             this.inputStream = inputStream;
+            this.encoding = encoding;
         }
 
         /// <inheritdoc />
@@ -158,12 +174,12 @@ namespace SLANG
 
             if (this.inputStream.CanSeek)
             {
-                var pushbackLength = Encoding.UTF8.GetByteCount(pushbackCharArray);
+                var pushbackLength = this.encoding.GetByteCount(pushbackCharArray);
                 this.inputStream.Seek(-pushbackLength, SeekOrigin.Current);
             }
             else
             {
-                var pushbackBuffer = Encoding.UTF8.GetBytes(pushbackCharArray);
+                var pushbackBuffer = this.encoding.GetBytes(pushbackCharArray);
                 this.inputStream.Unread(pushbackBuffer, 0, pushbackBuffer.Length);
             }
 
@@ -225,7 +241,8 @@ namespace SLANG
                 }
                 else
                 {
-                    this.inputStream.UnreadByte(Convert.ToByte(this.nextCharacter));
+                    var buffer = this.encoding.GetBytes(new[] { c });
+                    this.inputStream.Unread(buffer, 0, buffer.Length);
                 }
             }
 
