@@ -7,13 +7,27 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG.Core
 {
-    using Microsoft.Practices.ServiceLocation;
-
     public partial class ControlCharacterLexer : AlternativeLexer<ControlCharacter, ControlCharacter.Controls, ControlCharacter.Delete>
     {
-        public ControlCharacterLexer(IServiceLocator serviceLocator)
-            : base(serviceLocator, "CTL")
+        private readonly ILexer<ControlCharacter.Controls> element1Lexer;
+
+        private readonly ILexer<ControlCharacter.Delete> element2Lexer;
+
+        public ControlCharacterLexer(ILexer<ControlCharacter.Controls> element1Lexer, ILexer<ControlCharacter.Delete> element2Lexer)
+            : base("CTL")
         {
+            this.element1Lexer = element1Lexer;
+            this.element2Lexer = element2Lexer;
+        }
+
+        protected override bool TryRead1(ITextScanner scanner, out ControlCharacter.Controls element)
+    {
+            return this.element1Lexer.TryRead(scanner, out element);
+        }
+
+        protected override bool TryRead2(ITextScanner scanner, out ControlCharacter.Delete element)
+        {
+            return this.element2Lexer.TryRead(scanner, out element);
         }
     }
 
@@ -21,8 +35,8 @@ namespace SLANG.Core
     {
         public class ControlsLexer : AlternativeLexer<ControlCharacter.Controls>
         {
-            public ControlsLexer(IServiceLocator serviceLocator)
-                : base(serviceLocator, '\0', '\x1F')
+            public ControlsLexer()
+                : base('\0', '\x1F')
             {
             }
         }
@@ -32,11 +46,6 @@ namespace SLANG.Core
     {
         public class DeleteLexer : Lexer<ControlCharacter.Delete>
         {
-            public DeleteLexer(IServiceLocator serviceLocator)
-                : base(serviceLocator)
-            {
-            }
-
             public override bool TryRead(ITextScanner scanner, out ControlCharacter.Delete element)
             {
                 Element terminal;

@@ -7,14 +7,11 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG.Core
 {
-    using Microsoft.Practices.ServiceLocation;
-
     public class SpaceLexer : Lexer<Space>
     {
         /// <summary>Initializes a new instance of the <see cref="SpaceLexer"/> class.</summary>
-        /// <param name="serviceLocator">The object that retrieves instances of <see cref="ILexer{TElement}"/> by type and optional rule name.</param>
-        public SpaceLexer(IServiceLocator serviceLocator)
-            : base(serviceLocator, "SP")
+        public SpaceLexer()
+            : base("SP")
         {
         }
 

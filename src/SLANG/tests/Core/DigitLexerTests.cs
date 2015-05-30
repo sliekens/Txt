@@ -4,7 +4,7 @@
 
     public class DigitLexerTests
     {
-        private readonly DigitLexer lexer = new DigitLexer(new FakeServiceLocator());
+        private readonly DigitLexer lexer = new DigitLexer();
 
         [Theory]
         [InlineData("\x30")]

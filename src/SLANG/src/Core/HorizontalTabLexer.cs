@@ -7,13 +7,11 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG.Core
 {
-    using Microsoft.Practices.ServiceLocation;
-
     public class HorizontalTabLexer : Lexer<HorizontalTab>
     {
         /// <summary>Initializes a new instance of the <see cref="HorizontalTabLexer"/> class.</summary>
-        public HorizontalTabLexer(IServiceLocator serviceLocator)
-            : base(serviceLocator, "HTAB")
+        public HorizontalTabLexer()
+            : base("HTAB")
         {
         }
 

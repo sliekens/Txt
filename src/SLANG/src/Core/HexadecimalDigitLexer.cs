@@ -7,13 +7,92 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG.Core
 {
-    using Microsoft.Practices.ServiceLocation;
+    using System;
+    using System.Diagnostics;
 
-    public partial class HexadecimalDigitLexer : AlternativeLexer<HexadecimalDigit, Digit, HexadecimalDigit.A, HexadecimalDigit.B, HexadecimalDigit.C, HexadecimalDigit.D, HexadecimalDigit.E, HexadecimalDigit.F>
+    public partial class HexadecimalDigitLexer
+        : AlternativeLexer<HexadecimalDigit, Digit, HexadecimalDigit.A, HexadecimalDigit.B, HexadecimalDigit.C, HexadecimalDigit.D, HexadecimalDigit.E, HexadecimalDigit.F>
     {
-        public HexadecimalDigitLexer(IServiceLocator serviceLocator)
-            : base(serviceLocator, "HEXDIG")
-        {   
+        private readonly ILexer<Digit> digitLexer;
+        private readonly ILexer<HexadecimalDigit.A> aLexer;
+        private readonly ILexer<HexadecimalDigit.B> bLexer;
+        private readonly ILexer<HexadecimalDigit.C> cLexer;
+        private readonly ILexer<HexadecimalDigit.D> dLexer;
+        private readonly ILexer<HexadecimalDigit.E> eLexer;
+        private readonly ILexer<HexadecimalDigit.F> fLexer;
+
+
+
+        public HexadecimalDigitLexer(ILexer<Digit> digitLexer, ILexer<HexadecimalDigit.A> aLexer, ILexer<HexadecimalDigit.B> bLexer, ILexer<HexadecimalDigit.C> cLexer, ILexer<HexadecimalDigit.D> dLexer, ILexer<HexadecimalDigit.E> eLexer, ILexer<HexadecimalDigit.F> fLexer)
+            : base("HEXDIG")
+        {
+            if (digitLexer == null)
+            {
+                throw new ArgumentNullException("digitLexer", "Precondition: digitLexer != null");
+            }
+
+            if (bLexer == null)
+            {
+                throw new ArgumentNullException("bLexer", "Precondition: bLexer != null");
+            }
+
+            if (cLexer == null)
+            {
+                throw new ArgumentNullException("cLexer", "Precondition: cLexer != null");
+            }
+
+            if (dLexer == null)
+            {
+                throw new ArgumentNullException("dLexer", "Precondition: dLexer != null");
+            }
+
+            if (eLexer == null)
+            {
+                throw new ArgumentNullException("eLexer", "Precondition: eLexer != null");
+            }
+
+            this.digitLexer = digitLexer;
+            this.aLexer = aLexer;
+            this.bLexer = bLexer;
+            this.cLexer = cLexer;
+            this.dLexer = dLexer;
+            this.eLexer = eLexer;
+            this.fLexer = fLexer;
+        }
+
+        protected override bool TryRead1(ITextScanner scanner, out Digit element)
+        {
+            return this.digitLexer.TryRead(scanner, out element);
+        }
+
+        protected override bool TryRead2(ITextScanner scanner, out HexadecimalDigit.A element)
+        {
+            return this.aLexer.TryRead(scanner, out element);
+        }
+
+        protected override bool TryRead3(ITextScanner scanner, out HexadecimalDigit.B element)
+        {
+            return this.bLexer.TryRead(scanner, out element);
+        }
+
+        protected override bool TryRead4(ITextScanner scanner, out HexadecimalDigit.C element)
+        {
+            return this.cLexer.TryRead(scanner, out element);
+        }
+
+        protected override bool TryRead5(ITextScanner scanner, out HexadecimalDigit.D element)
+        {
+            return this.dLexer.TryRead(scanner, out element);
+        }
+
+        protected override bool TryRead6(ITextScanner scanner, out HexadecimalDigit.E element)
+        {
+            return this.eLexer.TryRead(scanner, out element);
+        }
+
+        protected override bool TryRead7(ITextScanner scanner, out HexadecimalDigit.F element)
+        {
+            return this.fLexer.TryRead(scanner, out element);
         }
     }
 
@@ -21,11 +100,6 @@ namespace SLANG.Core
     {
         public class ALexer : Lexer<HexadecimalDigit.A>
         {
-            public ALexer(IServiceLocator serviceLocator)
-                : base(serviceLocator)
-            {
-            }
-
             public override bool TryRead(ITextScanner scanner, out HexadecimalDigit.A element)
             {
                 Element terminal;
@@ -45,10 +119,6 @@ namespace SLANG.Core
     {
         public class BLexer : Lexer<HexadecimalDigit.B>
         {
-            public BLexer(IServiceLocator serviceLocator)
-                : base(serviceLocator)
-            {
-            }
 
             public override bool TryRead(ITextScanner scanner, out HexadecimalDigit.B element)
             {
@@ -69,11 +139,6 @@ namespace SLANG.Core
     {
         public class CLexer : Lexer<HexadecimalDigit.C>
         {
-            public CLexer(IServiceLocator serviceLocator)
-                : base(serviceLocator)
-            {
-            }
-
             public override bool TryRead(ITextScanner scanner, out HexadecimalDigit.C element)
             {
                 Element terminal;
@@ -93,11 +158,6 @@ namespace SLANG.Core
     {
         public class DLexer : Lexer<HexadecimalDigit.D>
         {
-            public DLexer(IServiceLocator serviceLocator)
-                : base(serviceLocator)
-            {
-            }
-
             public override bool TryRead(ITextScanner scanner, out HexadecimalDigit.D element)
             {
                 Element terminal;
@@ -117,11 +177,6 @@ namespace SLANG.Core
     {
         public class ELexer : Lexer<HexadecimalDigit.E>
         {
-            public ELexer(IServiceLocator serviceLocator)
-                : base(serviceLocator)
-            {
-            }
-
             public override bool TryRead(ITextScanner scanner, out HexadecimalDigit.E element)
             {
                 Element terminal;
@@ -141,11 +196,6 @@ namespace SLANG.Core
     {
         public class FLexer : Lexer<HexadecimalDigit.F>
         {
-            public FLexer(IServiceLocator serviceLocator)
-                : base(serviceLocator)
-            {
-            }
-
             public override bool TryRead(ITextScanner scanner, out HexadecimalDigit.F element)
             {
                 Element terminal;

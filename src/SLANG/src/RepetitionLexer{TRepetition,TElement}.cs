@@ -3,8 +3,6 @@
     using System;
     using System.Collections.Generic;
 
-    using Microsoft.Practices.ServiceLocation;
-
     /// <summary>Provides the base class for lexers whose lexer rule is a repetition of elements.</summary>
     /// <typeparam name="TRepetition">The type of the lexer rule.</typeparam>
     /// <typeparam name="TElement">The type of the repeating element.</typeparam>
@@ -17,11 +15,9 @@
 
         /// <summary>Initializes a new instance of the <see cref="RepetitionLexer{TRepetition,TElement}"/> class for an unnamed element.
         /// </summary>
-        /// <param name="serviceLocator">The object that retrieves instances of <see cref="ILexer{TElement}"/> by type and optional rule name.</param>
         /// <param name="lowerBound">A number that indicates the minimum number of occurrences.</param>
         /// <param name="upperBound">A number that indicates the maximum number of occurrences.</param>
-        protected RepetitionLexer(IServiceLocator serviceLocator, int lowerBound, int upperBound)
-            : base(serviceLocator)
+        protected RepetitionLexer(int lowerBound, int upperBound)
         {
             this.lowerBound = lowerBound;
             this.upperBound = upperBound;
@@ -29,13 +25,12 @@
 
         /// <summary>Initializes a new instance of the <see cref="RepetitionLexer{TRepetition,TElement}"/> class for a specified rule.
         /// </summary>
-        /// <param name="serviceLocator">The object that retrieves instances of <see cref="ILexer{TElement}"/> by type and optional rule name.</param>
         /// <param name="ruleName">The name of the lexer rule. Rule names are case insensitive.</param>
         /// <param name="lowerBound">A number that indicates the minimum number of occurrences.</param>
         /// <param name="upperBound">A number that indicates the maximum number of occurrences.</param>
         /// <exception cref="ArgumentException">The value of <paramref name="ruleName"/> is a <c>null</c> reference (<c>Nothing</c> in Visual Basic) -or- the value of <paramref name="ruleName"/> does not start with a letter -or- the value of <paramref name="ruleName"/> contains one or more characters that are not letters, digits or hyphens.</exception>
-        protected RepetitionLexer(IServiceLocator serviceLocator, string ruleName, int lowerBound, int upperBound)
-            : base(serviceLocator, ruleName)
+        protected RepetitionLexer(string ruleName, int lowerBound, int upperBound)
+            : base(ruleName)
         {
             this.lowerBound = lowerBound;
             this.upperBound = upperBound;
@@ -89,10 +84,7 @@
         /// <param name="upperBound">A number that indicates the maximum number of occurrences.</param>
         /// <param name="context">The object that describes the context in which the text appears.</param>
         /// <returns>An instance of the lexer rule.</returns>
-        protected virtual TRepetition CreateInstance(IList<TElement> elements, int lowerBound, int upperBound, ITextContext context)
-        {
-            return (TRepetition)Activator.CreateInstance(typeof(TRepetition), elements, context);
-        }
+        protected abstract TRepetition CreateInstance(IList<TElement> elements, int lowerBound, int upperBound, ITextContext context);
 
         /// <summary>Attempts to read an occurrence of the repeating element. A return value indicates whether the element was available.</summary>
         /// <param name="scanner">The scanner object that provides text symbols as well as contextual information about the text source.</param>
@@ -101,9 +93,6 @@
         /// <param name="current">A number that indicates the current number of occurrences.</param>
         /// <param name="element">When this method returns, contains the next available element, or a <c>null</c> reference, depending on whether the return value indicates success.</param>
         /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
-        protected virtual bool TryRead(ITextScanner scanner, int lowerBound, int upperBound, int current, out TElement element)
-        {
-            return this.Services.GetInstance<ILexer<TElement>>().TryRead(scanner, out element);
-        }
+        protected abstract bool TryRead(ITextScanner scanner, int lowerBound, int upperBound, int current, out TElement element);
     }
 }

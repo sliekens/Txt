@@ -7,13 +7,11 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG.Core
 {
-    using Microsoft.Practices.ServiceLocation;
-
     public class LineFeedLexer : Lexer<LineFeed>
     {
         /// <summary>Initializes a new instance of the <see cref="LineFeedLexer"/> class.</summary>
-        public LineFeedLexer(IServiceLocator serviceLocator)
-            : base(serviceLocator, "LF")
+        public LineFeedLexer()
+            : base("LF")
         {
         }
 

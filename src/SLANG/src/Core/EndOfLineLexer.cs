@@ -7,13 +7,39 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG.Core
 {
-    using Microsoft.Practices.ServiceLocation;
+    using System;
+    using System.Diagnostics;
 
     public class EndOfLineLexer : SequenceLexer<EndOfLine, CarriageReturn, LineFeed>
     {
-        public EndOfLineLexer(IServiceLocator serviceLocator)
-            : base(serviceLocator, "CRLF")
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private readonly ILexer<CarriageReturn> carriageReturnLexer;
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private readonly ILexer<LineFeed> lineFeedLexer;
+
+        public EndOfLineLexer(ILexer<CarriageReturn> carriageReturnLexer, ILexer<LineFeed> lineFeedLexer)
+            : base("CRLF")
         {
+            if (carriageReturnLexer == null)
+            {
+                throw new ArgumentNullException("carriageReturnLexer", "Precondition: carriageReturnLexer != null");
+            }
+
+            if (lineFeedLexer == null)
+            {
+                throw new ArgumentNullException("lineFeedLexer", "Precondition: lineFeedLexer != null");
+            }
+        }
+
+        protected override bool TryRead1(ITextScanner scanner, out CarriageReturn element)
+        {
+            return this.carriageReturnLexer.TryRead(scanner, out element);
+        }
+
+        protected override bool TryRead2(ITextScanner scanner, out LineFeed element)
+        {
+            return this.lineFeedLexer.TryRead(scanner, out element);
         }
     }
 }

@@ -7,14 +7,12 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG.Core
 {
-    using Microsoft.Practices.ServiceLocation;
-
     /// <summary></summary>
     public class DoubleQuoteLexer : Lexer<DoubleQuote>
     {
         /// <summary>Initializes a new instance of the <see cref="DoubleQuoteLexer"/> class.</summary>
-        public DoubleQuoteLexer(IServiceLocator serviceLocator)
-            : base(serviceLocator, "DQUOTE")
+        public DoubleQuoteLexer()
+            : base("DQUOTE")
         {
         }
 

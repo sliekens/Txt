@@ -3,8 +3,6 @@
     using System;
     using System.Diagnostics;
 
-    using Microsoft.Practices.ServiceLocation;
-
     /// <summary>Provides the base class for lexers whose lexer rule has a range of alternatives.</summary>
     /// <typeparam name="TAlternative">The type of the lexer rule.</typeparam>
     public abstract class AlternativeLexer<TAlternative> : Lexer<TAlternative>
@@ -17,23 +15,20 @@
         private readonly char upperBound;
 
         /// <summary>Initializes a new instance of the <see cref="AlternativeLexer{TAlternative}"/> class for an unnamed element.</summary>
-        /// <param name="serviceLocator">The object that retrieves instances of <see cref="ILexer{TElement}"/> by type and optional rule name.</param>
         /// <param name="lowerBound">The lower bound of the range of alternatives.</param>
         /// <param name="upperBound">The upper bound of the range of alternatives.</param>
-        protected AlternativeLexer(IServiceLocator serviceLocator, char lowerBound, char upperBound)
-            : base(serviceLocator)
+        protected AlternativeLexer(char lowerBound, char upperBound)
         {
             this.lowerBound = lowerBound;
             this.upperBound = upperBound;
         }
 
         /// <summary>Initializes a new instance of the <see cref="AlternativeLexer{TAlternative}"/> class for a specified rule.</summary>
-        /// <param name="serviceLocator">The object that retrieves instances of <see cref="ILexer{TElement}"/> by type and optional rule name.</param>
         /// <param name="ruleName">The name of the lexer rule. Rule names are case insensitive.</param>
         /// <param name="lowerBound">The lower bound of the range of alternatives.</param>
         /// <param name="upperBound">The upper bound of the range of alternatives.</param>
-        protected AlternativeLexer(IServiceLocator serviceLocator, string ruleName, char lowerBound, char upperBound)
-            : base(serviceLocator, ruleName)
+        protected AlternativeLexer(string ruleName, char lowerBound, char upperBound)
+            : base(ruleName)
         {
             this.lowerBound = lowerBound;
             this.upperBound = upperBound;
