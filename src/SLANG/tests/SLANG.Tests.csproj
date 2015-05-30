@@ -48,6 +48,7 @@
     <Compile Include="Core\CarriageReturnLexerTests.cs" />
     <Compile Include="Core\CharacterLexerTests.cs" />
     <Compile Include="Core\DigitLexerTests.cs" />
+    <Compile Include="Core\EndOfLineLexerTests.cs" />
     <Compile Include="Core\LineFeedLexerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StringExtensions.cs" />
