@@ -4,7 +4,7 @@
 
     public class DigitLexerTests
     {
-        private readonly DigitLexer lexer = new DigitLexer();
+        private readonly DigitLexer lexer = new DigitLexer(new DigitLexer.DigitValueRangeLexer());
 
         [Theory]
         [InlineData("\x30")]

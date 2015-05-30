@@ -24,10 +24,10 @@ namespace SLANG.Core
 
     public partial class Alpha
     {
-        public class UpperCase : Alternative
+        public class UpperCase : Element
         {
             public UpperCase(Element element)
-                : base(element, '\x41', '\x5A')
+                : base(element)
             {
             }
         }
@@ -35,10 +35,10 @@ namespace SLANG.Core
 
     public partial class Alpha
     {
-        public class LowerCase : Alternative
+        public class LowerCase : Element
         {
             public LowerCase(Element element)
-                : base(element, '\x61', '\x7A')
+                : base(element)
             {
             }
         }

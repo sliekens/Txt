@@ -8,8 +8,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG.Core
 {
-    using System;
-
     /// <summary>Represents the CTL rule: 1 control character. Unicode: U+0000 - U+001F, U+007F.</summary>
     public partial class ControlCharacter : Alternative<ControlCharacter.Controls, ControlCharacter.Delete>
     {
@@ -32,10 +30,10 @@ namespace SLANG.Core
 
     public partial class ControlCharacter
     {
-        public class Controls : Alternative
+        public class Controls : Element
         {
             public Controls(Element element)
-                : base(element, '\0', '\x1F')
+                : base(element)
             {
             }
         }
@@ -48,10 +46,6 @@ namespace SLANG.Core
             public Delete(Element element)
                 : base(element)
             {
-                if (element.Data != "\x7F")
-                {
-                    throw new ArgumentOutOfRangeException("element", element, "Precondition: element.Data == \"\\x7F\"");
-                }
             }
         }
     }

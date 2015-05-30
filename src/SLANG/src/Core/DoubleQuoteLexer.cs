@@ -7,27 +7,47 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG.Core
 {
-    /// <summary></summary>
-    public class DoubleQuoteLexer : Lexer<DoubleQuote>
+    using System;
+
+    public partial class DoubleQuoteLexer : Lexer<DoubleQuote>
     {
-        /// <summary>Initializes a new instance of the <see cref="DoubleQuoteLexer"/> class.</summary>
-        public DoubleQuoteLexer()
+        private readonly ILexer<Element> doubleQuoteTerminalLexer;
+
+        public DoubleQuoteLexer(ILexer<Element> doubleQuoteTerminalLexer)
             : base("DQUOTE")
         {
+            if (doubleQuoteTerminalLexer == null)
+            {
+                throw new ArgumentNullException("doubleQuoteTerminalLexer", "Precondition: doubleQuoteTerminalLexer != null");
+            }
+
+            this.doubleQuoteTerminalLexer = doubleQuoteTerminalLexer;
         }
 
         /// <inheritdoc />
         public override bool TryRead(ITextScanner scanner, out DoubleQuote element)
         {
             Element terminal;
-            if (!TryReadTerminal(scanner, '\x22', out terminal))
+            if (this.doubleQuoteTerminalLexer.TryRead(scanner, out terminal))
             {
-                element = default(DoubleQuote);
-                return false;
+                element = new DoubleQuote(terminal);
+                return true;
             }
 
-            element = new DoubleQuote(terminal);
-            return true;
+            element = default(DoubleQuote);
+            return false;
         }
     }
+
+    public partial class DoubleQuoteLexer
+    {
+        public class DoubleQuoteTerminalLexer : TerminalsLexer
+        {
+            public DoubleQuoteTerminalLexer()
+                : base('\x22')
+            {
+            }
+        }
+    }
+
 }

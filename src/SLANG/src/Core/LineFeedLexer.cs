@@ -7,26 +7,46 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG.Core
 {
-    public class LineFeedLexer : Lexer<LineFeed>
+    using System;
+
+    public partial class LineFeedLexer : Lexer<LineFeed>
     {
-        /// <summary>Initializes a new instance of the <see cref="LineFeedLexer"/> class.</summary>
-        public LineFeedLexer()
+        private readonly ILexer<Element> lineFeedTerminalLexer;
+
+        public LineFeedLexer(ILexer<Element> lineFeedTerminalLexer)
             : base("LF")
         {
+            if (lineFeedTerminalLexer == null)
+            {
+                throw new ArgumentNullException("lineFeedTerminalLexer", "Precondition: lineFeedTerminalLexer != null");
+            }
+
+            this.lineFeedTerminalLexer = lineFeedTerminalLexer;
         }
 
         /// <inheritdoc />
         public override bool TryRead(ITextScanner scanner, out LineFeed element)
         {
             Element terminal;
-            if (!TryReadTerminal(scanner, '\x0A', out terminal))
+            if (this.lineFeedTerminalLexer.TryRead(scanner, out terminal))
             {
-                element = default(LineFeed);
-                return false;
+                element = new LineFeed(terminal);
+                return true;
             }
 
-            element = new LineFeed(terminal);
-            return true;
+            element = default(LineFeed);
+            return false;
+        }
+    }
+
+    public partial class LineFeedLexer
+    {
+        public class LineFeedTerminalLexer : TerminalsLexer
+        {
+            public LineFeedTerminalLexer()
+                : base('\x0A')
+            {
+            }
         }
     }
 }

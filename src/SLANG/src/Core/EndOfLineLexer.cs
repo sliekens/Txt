@@ -30,6 +30,9 @@ namespace SLANG.Core
             {
                 throw new ArgumentNullException("lineFeedLexer", "Precondition: lineFeedLexer != null");
             }
+
+            this.carriageReturnLexer = carriageReturnLexer;
+            this.lineFeedLexer = lineFeedLexer;
         }
 
         protected override bool TryRead1(ITextScanner scanner, out CarriageReturn element)

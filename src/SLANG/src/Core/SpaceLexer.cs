@@ -7,26 +7,46 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG.Core
 {
-    public class SpaceLexer : Lexer<Space>
+    using System;
+
+    public partial class SpaceLexer : Lexer<Space>
     {
-        /// <summary>Initializes a new instance of the <see cref="SpaceLexer"/> class.</summary>
-        public SpaceLexer()
+        private readonly ILexer<Element> spaceTerminalLexer;
+
+        public SpaceLexer(ILexer<Element> spaceTerminalLexer)
             : base("SP")
         {
+            if (spaceTerminalLexer == null)
+            {
+                throw new ArgumentNullException("spaceTerminalLexer", "Precondition: spaceTerminalLexer != null");
+            }
+
+            this.spaceTerminalLexer = spaceTerminalLexer;
         }
 
         /// <inheritdoc />
         public override bool TryRead(ITextScanner scanner, out Space element)
         {
-            Element space;
-            if (!TryReadTerminal(scanner, '\x20', out space))
+            Element terminal;
+            if (this.spaceTerminalLexer.TryRead(scanner, out terminal))
             {
-                element = default(Space);
-                return false;
+                element = new Space(terminal);
+                return true;
             }
 
-            element = new Space(space);
-            return true;
+            element = default(Space);
+            return false;
+        }
+    }
+
+    public partial class SpaceLexer
+    {
+        public class SpaceTerminalLexer : TerminalsLexer
+        {
+            public SpaceTerminalLexer()
+                : base('\x20')
+            {
+            }
         }
     }
 }

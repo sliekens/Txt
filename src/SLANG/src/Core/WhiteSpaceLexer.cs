@@ -18,11 +18,6 @@ namespace SLANG.Core
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly HorizontalTabLexer element2Lexer;
 
-        public WhiteSpaceLexer()
-            : this(new SpaceLexer(), new HorizontalTabLexer())
-        {
-        }
-
         public WhiteSpaceLexer(SpaceLexer element1Lexer, HorizontalTabLexer element2Lexer)
             : base("WSP")
         {

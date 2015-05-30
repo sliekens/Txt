@@ -6,7 +6,7 @@
 
     public class BitLexerTests
     {
-        private readonly BitLexer lexer = new BitLexer();
+        private readonly BitLexer lexer = new BitLexer(new BitLexer.ZeroBitTerminalLexer(), new BitLexer.OneBitTerminalLexer());
         
         [Fact]
         public void CanReadZero()

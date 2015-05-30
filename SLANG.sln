@@ -7,12 +7,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B202ABEB-8AB
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AA8D3C75-8A06-4DE3-90DE-EFA40C5F7952}"
 	ProjectSection(SolutionItems) = preProject
-		..\..\Core.abnf = ..\..\Core.abnf
-		..\..\LICENSE = ..\..\LICENSE
+		Core.abnf = Core.abnf
+		LICENSE = LICENSE
 		..\..\nuspec.xsd = ..\..\nuspec.xsd
-		..\..\README.md = ..\..\README.md
-		..\..\RFC5234.abnf = ..\..\RFC5234.abnf
-		src\SLANG.nuspec = src\SLANG.nuspec
+		README.md = README.md
+		RFC5234.abnf = RFC5234.abnf
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SLANG", "src\SLANG\src\SLANG.csproj", "{F889024E-5C62-49AC-AC9F-C17BC1CB9621}"

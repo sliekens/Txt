@@ -11,30 +11,25 @@ namespace SLANG.Core
 
     public partial class AlphaLexer : AlternativeLexer<Alpha, Alpha.UpperCase, Alpha.LowerCase>
     {
-        private readonly ILexer<Alpha.UpperCase> upperCaseLexer;
+        private readonly ILexer<Element> upperCaseValueRangeLexer;
 
-        private readonly ILexer<Alpha.LowerCase> lowerCaseLexer;
+        private readonly ILexer<Element> lowerCaseValueRangeLexer;
 
-        public AlphaLexer()
-            : this(new UpperCaseLexer(), new LowerCaseLexer())
-        {
-        }
-
-        public AlphaLexer(ILexer<Alpha.UpperCase> upperCaseLexer, ILexer<Alpha.LowerCase> lowerCaseLexer)
+        public AlphaLexer(ILexer<Element> upperCaseValueRangeLexer, ILexer<Element> lowerCaseValueRangeLexer)
             : base("ALPHA")
         {
-            if (upperCaseLexer == null)
+            if (upperCaseValueRangeLexer == null)
             {
-                throw new ArgumentNullException("upperCaseLexer", "Precondition: upperCaseLexer != null");
+                throw new ArgumentNullException("upperCaseValueRangeLexer", "Precondition: upperCaseValueRangeLexer != null");
             }
 
-            if (lowerCaseLexer == null)
+            if (lowerCaseValueRangeLexer == null)
             {
-                throw new ArgumentNullException("lowerCaseLexer", "Precondition: lowerCaseLexer != null");
+                throw new ArgumentNullException("lowerCaseValueRangeLexer", "Precondition: lowerCaseValueRangeLexer != null");
             }
 
-            this.upperCaseLexer = upperCaseLexer;
-            this.lowerCaseLexer = lowerCaseLexer;
+            this.upperCaseValueRangeLexer = upperCaseValueRangeLexer;
+            this.lowerCaseValueRangeLexer = lowerCaseValueRangeLexer;
         }
 
         protected override Alpha CreateInstance1(Alpha.UpperCase element)
@@ -49,20 +44,36 @@ namespace SLANG.Core
 
         protected override bool TryRead1(ITextScanner scanner, out Alpha.UpperCase element)
         {
-            return this.upperCaseLexer.TryRead(scanner, out element);
+            Element value;
+            if (this.upperCaseValueRangeLexer.TryRead(scanner, out value))
+            {
+                element = new Alpha.UpperCase(value);
+                return true;
+            }
+
+            element = default(Alpha.UpperCase);
+            return false;
         }
 
         protected override bool TryRead2(ITextScanner scanner, out Alpha.LowerCase element)
         {
-            return this.lowerCaseLexer.TryRead(scanner, out element);
+            Element value;
+            if (this.lowerCaseValueRangeLexer.TryRead(scanner, out value))
+            {
+                element = new Alpha.LowerCase(value);
+                return true;
+            }
+
+            element = default(Alpha.LowerCase);
+            return false;
         }
     }
 
     public partial class AlphaLexer
     {
-        public class UpperCaseLexer : AlternativeLexer<Alpha.UpperCase>
+        public class UpperCaseValueRangeLexer : ValueRangeLexer
         {
-            public UpperCaseLexer()
+            public UpperCaseValueRangeLexer()
                 : base('\x41', '\x5A')
             {
             }
@@ -71,9 +82,9 @@ namespace SLANG.Core
 
     public partial class AlphaLexer
     {
-        public class LowerCaseLexer : AlternativeLexer<Alpha.LowerCase>
+        public class LowerCaseValueRangeLexer : ValueRangeLexer
         {
-            public LowerCaseLexer()
+            public LowerCaseValueRangeLexer()
                 : base('\x61', '\x7A')
             {
             }

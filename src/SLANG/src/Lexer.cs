@@ -272,14 +272,5 @@ namespace SLANG
             element = new Element(new string(buffer), context);
             return true;
         }
-
-        /// <summary>Utility method. Sets a specified element to its default value, and returns <c>false</c>.</summary>
-        /// <param name="element">The element to set to its default value.</param>
-        /// <returns>Returns <c>false</c>.</returns>
-        protected static bool Default(out TElement element)
-        {
-            element = default(TElement);
-            return false;
-        }
     }
 }
