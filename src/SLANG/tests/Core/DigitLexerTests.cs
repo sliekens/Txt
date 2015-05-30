@@ -4,8 +4,6 @@
 
     public class DigitLexerTests
     {
-        private readonly DigitLexer lexer = new DigitLexer(new DigitValueRangeLexer());
-
         [Theory]
         [InlineData("\x30")]
         [InlineData("\x31")]
@@ -19,9 +17,10 @@
         [InlineData("\x39")]
         public void CanReadDigit(string digit)
         {
+            var digitLexer = new DigitLexer(new DigitValueRangeLexer());
             using (ITextScanner textScanner = new TextScanner(new PushbackInputStream(digit.ToMemoryStream())))
             {
-                var alpha = this.lexer.Read(textScanner);
+                var alpha = digitLexer.Read(textScanner);
                 Assert.Equal(digit, alpha.Data);
             }
         }

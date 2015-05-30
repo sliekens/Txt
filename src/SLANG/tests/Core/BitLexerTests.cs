@@ -4,15 +4,14 @@
 
     public class BitLexerTests
     {
-        private readonly BitLexer lexer = new BitLexer(new BitAlternativeLexer(new ZeroTerminalLexer(), new OneTerminalLexer()));
-        
         [Fact]
         public void CanReadZero()
         {
             var input = "0";
+            var bitLexer = new BitLexer(new BitAlternativeLexer(new ZeroTerminalLexer(), new OneTerminalLexer()));
             using (ITextScanner textScanner = new TextScanner(new PushbackInputStream(input.ToMemoryStream())))
             {
-                var bit = this.lexer.Read(textScanner);
+                var bit = bitLexer.Read(textScanner);
                 Assert.Equal(input, bit.Data);
             }
         }
@@ -21,9 +20,10 @@
         public void CanReadOne()
         {
             var input = "1";
+            var bitLexer = new BitLexer(new BitAlternativeLexer(new ZeroTerminalLexer(), new OneTerminalLexer()));
             using (ITextScanner textScanner = new TextScanner(new PushbackInputStream(input.ToMemoryStream())))
             {
-                var bit = this.lexer.Read(textScanner);
+                var bit = bitLexer.Read(textScanner);
                 Assert.Equal(input, bit.Data);
             }
         }
@@ -32,10 +32,11 @@
         public void CannotReadNegativeOne()
         {
             var input = "-1";
+            var bitLexer = new BitLexer(new BitAlternativeLexer(new ZeroTerminalLexer(), new OneTerminalLexer()));
             using (ITextScanner textScanner = new TextScanner(new PushbackInputStream(input.ToMemoryStream())))
             {
                 Assert.True(textScanner.Read());
-                Assert.Throws<SyntaxErrorException>(() => this.lexer.Read(textScanner));
+                Assert.Throws<SyntaxErrorException>(() => bitLexer.Read(textScanner));
             }
         }
     }
