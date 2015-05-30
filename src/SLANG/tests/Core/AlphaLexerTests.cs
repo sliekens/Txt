@@ -36,7 +36,6 @@
             var lexer = new AlphaLexer(new AlphaAlternativeLexer(new UpperCaseValueRangeLexer(), new LowerCaseValueRangeLexer()));
             using (ITextScanner textScanner = new TextScanner(new PushbackInputStream(letter.ToMemoryStream())))
             {
-                textScanner.Read();
                 var alpha = lexer.Read(textScanner);
                 Assert.Equal(letter, alpha.Data);
             }
@@ -74,7 +73,6 @@
             var lexer = new AlphaLexer(new AlphaAlternativeLexer(new UpperCaseValueRangeLexer(), new LowerCaseValueRangeLexer()));
             using (ITextScanner textScanner = new TextScanner(new PushbackInputStream(letter.ToMemoryStream())))
             {
-                textScanner.Read();
                 var alpha = lexer.Read(textScanner);
                 Assert.Equal(letter, alpha.Data);
             }

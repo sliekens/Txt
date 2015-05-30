@@ -12,7 +12,6 @@
             var input = "0";
             using (ITextScanner textScanner = new TextScanner(new PushbackInputStream(input.ToMemoryStream())))
             {
-                Assert.True(textScanner.Read());
                 var bit = this.lexer.Read(textScanner);
                 Assert.Equal(input, bit.Data);
             }
@@ -24,7 +23,6 @@
             var input = "1";
             using (ITextScanner textScanner = new TextScanner(new PushbackInputStream(input.ToMemoryStream())))
             {
-                Assert.True(textScanner.Read());
                 var bit = this.lexer.Read(textScanner);
                 Assert.Equal(input, bit.Data);
             }

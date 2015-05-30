@@ -21,7 +21,6 @@
         {
             using (ITextScanner textScanner = new TextScanner(new PushbackInputStream(digit.ToMemoryStream())))
             {
-                textScanner.Read();
                 var alpha = this.lexer.Read(textScanner);
                 Assert.Equal(digit, alpha.Data);
             }
