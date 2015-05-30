@@ -342,19 +342,9 @@ namespace SLANG
                 throw new InvalidOperationException("No next character available: end of input has been reached.");
             }
 
-            if (ignoreCase && char.IsLetter(c))
+            if (ignoreCase)
             {
-                char c2;
-                if (char.IsLower(c))
-                {
-                    c2 = char.ToUpperInvariant(c);
-                }
-                else
-                {
-                    c2 = char.ToLowerInvariant(c);
-                }
-
-                if (this.nextCharacter != c && this.nextCharacter != c2)
+                if (char.ToUpperInvariant(this.nextCharacter) != char.ToUpperInvariant(c))
                 {
                     return false;
                 }
