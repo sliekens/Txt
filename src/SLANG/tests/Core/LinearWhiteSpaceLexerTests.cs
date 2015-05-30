@@ -11,6 +11,7 @@
         [InlineData("\t")]
         [InlineData("\r\n\t")]
         [InlineData("\r\n   \t")]
+        [InlineData("\t\r\n \t \r\n  \t ")]
         public void ReadSuccess(string input)
         {
             var spaceTerminalLexer = new SpaceTerminalLexer();
