@@ -9,12 +9,11 @@
         private readonly char[] terminals;
 
         public TerminalsLexer(char terminal)
-            : this(terminals: terminal)
         {
             this.terminals = new[] { terminal };
         }
 
-        public TerminalsLexer(params char[] terminals)
+        public TerminalsLexer(char[] terminals)
         {
             if (terminals == null)
             {
