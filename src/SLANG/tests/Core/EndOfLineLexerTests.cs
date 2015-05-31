@@ -12,7 +12,7 @@
             var carriageReturnLexer = new CarriageReturnLexer(carriageReturnTerminalLexer);
             var lineFeedTerminalLexer = new TerminalsLexer('\x0A');
             var lineFeedLexer = new LineFeedLexer(lineFeedTerminalLexer);
-            var endOfLineSequenceLexer = new EndOfLineSequenceLexer(carriageReturnLexer, lineFeedLexer);
+            var endOfLineSequenceLexer = new SequenceLexer(carriageReturnLexer, lineFeedLexer);
             var endOfLineLexer = new EndOfLineLexer(endOfLineSequenceLexer);
             using (var scanner = new TextScanner(new PushbackInputStream(input.ToMemoryStream())))
             {
