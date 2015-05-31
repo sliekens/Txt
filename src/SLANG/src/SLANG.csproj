@@ -48,6 +48,7 @@
     <Compile Include="Core\BIT\BitLexerFactory.cs" />
     <Compile Include="Core\CHAR\CharacterLexerFactory.cs" />
     <Compile Include="Core\CR\CarriageReturnLexer.cs" />
+    <Compile Include="Core\CR\CarriageReturnLexerFactory.cs" />
     <Compile Include="IAlternativeLexerFactory.cs" />
     <Compile Include="ILexerFactory.cs" />
     <Compile Include="ISequenceLexerFactory.cs" />

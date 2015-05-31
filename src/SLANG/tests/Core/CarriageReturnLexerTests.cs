@@ -1,5 +1,7 @@
 ﻿namespace SLANG.Core
 {
+    using SLANG.Core.CR;
+
     using Xunit;
 
     public class CarriageReturnLexerTests
@@ -8,8 +10,8 @@
         [InlineData("\x0D")]
         public void ReadSuccess(string input)
         {
-            var carriageReturnTerminalLexer = new TerminalsLexer('\x0D');
-            var carriageReturnLexer = new CarriageReturnLexer(carriageReturnTerminalLexer);
+            var factory = new CarriageReturnLexerFactory(new TerminalsLexerFactory());
+            var carriageReturnLexer = factory.Create();
             using (var scanner = new TextScanner(new PushbackInputStream(input.ToMemoryStream())))
             {
                 scanner.Read();
