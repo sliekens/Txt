@@ -48,7 +48,6 @@
     <Compile Include="Core\HEXDIG\BTerminalLexer.cs" />
     <Compile Include="Core\CR\CarriageReturnLexer.cs" />
     <Compile Include="Core\CR\CarriageReturnTerminalLexer.cs" />
-    <Compile Include="Core\CHAR\CharacterValueRangeLexer.cs" />
     <Compile Include="Core\CTL\ControlCharacterAlternativeLexer.cs" />
     <Compile Include="Core\CTL\ControlsValueRangeLexer.cs" />
     <Compile Include="Core\HEXDIG\CTerminalLexer.cs" />

@@ -16,7 +16,8 @@
         [InlineData("\x7F")]
         public void ReadSuccess(string c)
         {
-            var lexer = new CharacterLexer(new CharacterValueRangeLexer());
+            var characterValueRangeLexer = new ValueRangeLexer('\x01', '\x7F');
+            var lexer = new CharacterLexer(characterValueRangeLexer);
             using (var scanner = new TextScanner(new PushbackInputStream(c.ToMemoryStream())))
             {
                 scanner.Read();
