@@ -5,10 +5,9 @@
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="upperCaseValueRangeLexer">%x41-5A</param>
-        /// <param name="lowerCaseValueRangeLexer">%x61-7A</param>
-        public AlphaAlternativeLexer(ILexer upperCaseValueRangeLexer, ILexer lowerCaseValueRangeLexer)
-            : base(upperCaseValueRangeLexer, lowerCaseValueRangeLexer)
+        /// <param name="lexers">%x41-5A / %x61-7A</param>
+        public AlphaAlternativeLexer(params ILexer[] lexers)
+            : base(lexers)
         {
         }
     }
