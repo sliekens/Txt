@@ -47,6 +47,7 @@
     </Compile>
     <Compile Include="Core\BIT\BitLexerFactory.cs" />
     <Compile Include="Core\CHAR\CharacterLexerFactory.cs" />
+    <Compile Include="Core\CRLF\EndOfLineLexerFactory.cs" />
     <Compile Include="Core\CR\CarriageReturnLexer.cs" />
     <Compile Include="Core\CR\CarriageReturnLexerFactory.cs" />
     <Compile Include="Core\LF\LineFeedLexerFactory.cs" />

@@ -1,5 +1,9 @@
 ﻿namespace SLANG.Core
 {
+    using SLANG.Core.CR;
+    using SLANG.Core.CRLF;
+    using SLANG.Core.LF;
+
     using Xunit;
 
     public class EndOfLineLexerTests
@@ -8,12 +12,14 @@
         [InlineData("\r\n")]
         public void ReadSuccess(string input)
         {
-            var carriageReturnTerminalLexer = new TerminalsLexer('\x0D');
-            var carriageReturnLexer = new CarriageReturnLexer(carriageReturnTerminalLexer);
-            var lineFeedTerminalLexer = new TerminalsLexer('\x0A');
-            var lineFeedLexer = new LineFeedLexer(lineFeedTerminalLexer);
-            var endOfLineSequenceLexer = new SequenceLexer(carriageReturnLexer, lineFeedLexer);
-            var endOfLineLexer = new EndOfLineLexer(endOfLineSequenceLexer);
+            var terminalsLexerFactory = new TerminalsLexerFactory();
+            var sequenceLexerFactory = new SequenceLexerFactory();
+            var carriageReturnLexerFactory = new CarriageReturnLexerFactory(terminalsLexerFactory);
+            var lineFeedLexerFactory = new LineFeedLexerFactory(terminalsLexerFactory);
+            var carriageReturnLexer = carriageReturnLexerFactory.Create();
+            var lineFeedLexer = lineFeedLexerFactory.Create();
+            var factory = new EndOfLineLexerFactory(carriageReturnLexer, lineFeedLexer, sequenceLexerFactory);
+            var endOfLineLexer = factory.Create();
             using (var scanner = new TextScanner(new PushbackInputStream(input.ToMemoryStream())))
             {
                 scanner.Read();
