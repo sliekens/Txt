@@ -35,7 +35,7 @@
         {
             var upperCaseValueRangeLexer = new ValueRangeLexer('\x41', '\x5A');
             var lowerCaseValueRangeLexer = new ValueRangeLexer('\x61', '\x7A');
-            var upperOrLowerCaseAlphaLexer = new AlphaAlternativeLexer(upperCaseValueRangeLexer, lowerCaseValueRangeLexer);
+            var upperOrLowerCaseAlphaLexer = new AlternativeLexer(upperCaseValueRangeLexer, lowerCaseValueRangeLexer);
             var alphaLexer = new AlphaLexer(upperOrLowerCaseAlphaLexer);
             using (var scanner = new TextScanner(new PushbackInputStream(letter.ToMemoryStream())))
             {
@@ -76,7 +76,7 @@
         {
             var upperCaseValueRangeLexer = new ValueRangeLexer('\x41', '\x5A');
             var lowerCaseValueRangeLexer = new ValueRangeLexer('\x61', '\x7A');
-            var upperOrLowerCaseAlphaLexer = new AlphaAlternativeLexer(upperCaseValueRangeLexer, lowerCaseValueRangeLexer);
+            var upperOrLowerCaseAlphaLexer = new AlternativeLexer(upperCaseValueRangeLexer, lowerCaseValueRangeLexer);
             var alphaLexer = new AlphaLexer(upperOrLowerCaseAlphaLexer);
             using (var scanner = new TextScanner(new PushbackInputStream(letter.ToMemoryStream())))
             {
