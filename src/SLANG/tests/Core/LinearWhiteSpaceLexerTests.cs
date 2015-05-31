@@ -16,7 +16,7 @@
         {
             var spaceTerminalLexer = new SpaceTerminalLexer();
             var spaceLexer = new SpaceLexer(spaceTerminalLexer);
-            var horizontalTabTerminalLexer = new HorizontalTabTerminalLexer();
+            var horizontalTabTerminalLexer = new TerminalsLexer('\x09');
             var horizontalTabLexer = new HorizontalTabLexer(horizontalTabTerminalLexer);
             var whiteSpaceAlternativeLexer = new WhiteSpaceAlternativeLexer(spaceLexer, horizontalTabLexer);
             var whiteSpaceLexer = new WhiteSpaceLexer(whiteSpaceAlternativeLexer);
