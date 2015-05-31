@@ -13,7 +13,12 @@ namespace SLANG.Core
     {
         private readonly ILexer<Alternative> controlCharacterAlternativeLexer;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="controlCharacterAlternativeLexer">%x00-1F / %x7F</param>
         public ControlCharacterLexer(ILexer<Alternative> controlCharacterAlternativeLexer)
+            : base("CTL")
         {
             if (controlCharacterAlternativeLexer == null)
             {
@@ -25,10 +30,10 @@ namespace SLANG.Core
 
         public override bool TryRead(ITextScanner scanner, out ControlCharacter element)
         {
-            Element terminal;
-            if (this.controlCharacterAlternativeLexer.TryReadElement(scanner, out terminal))
+            Element result;
+            if (this.controlCharacterAlternativeLexer.TryReadElement(scanner, out result))
             {
-                element = new ControlCharacter(terminal);
+                element = new ControlCharacter(result);
                 return true;
             }
 

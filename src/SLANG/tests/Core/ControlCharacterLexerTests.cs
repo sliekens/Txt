@@ -11,7 +11,10 @@
         [InlineData("\x7F")]
         public void ReadSuccess(string input)
         {
-            var controlCharacterLexer = new ControlCharacterLexer(new ControlCharacterAlternativeLexer(new ControlsValueRangeLexer(), new DeleteTerminalLexer()));
+            var valueRangeLexer = new ValueRangeLexer('\x00', '\x1F');
+            var terminalsLexer = new TerminalsLexer('\x7F');
+            var controlCharacterAlternativeLexer = new ControlCharacterAlternativeLexer(valueRangeLexer, terminalsLexer);
+            var controlCharacterLexer = new ControlCharacterLexer(controlCharacterAlternativeLexer);
             using (var scanner = new TextScanner(new PushbackInputStream(input.ToMemoryStream())))
             {
                 scanner.Read();

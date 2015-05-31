@@ -8,8 +8,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG.Core
 {
-    /// <summary>Represents the CTL rule: 1 control character. Unicode: U+0000 - U+001F, U+007F.</summary>
-    public class ControlCharacter : Element
+    public class ControlCharacter : Alternative
     {
         public ControlCharacter(Element element)
             : base(element)

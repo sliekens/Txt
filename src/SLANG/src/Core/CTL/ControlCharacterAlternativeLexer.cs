@@ -2,8 +2,12 @@
 {
     public class ControlCharacterAlternativeLexer : AlternativeLexer
     {
-        public ControlCharacterAlternativeLexer(ILexer controlsValueRangeLexer, ILexer deleteTerminalLexer)
-            : base(controlsValueRangeLexer, deleteTerminalLexer)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="lexers">%x00-1F / %x7F</param>
+        public ControlCharacterAlternativeLexer(params ILexer[] lexers)
+            : base(lexers)
         {
         }
     }
