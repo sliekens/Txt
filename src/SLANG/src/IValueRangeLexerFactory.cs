@@ -2,6 +2,6 @@
 {
     public interface IValueRangeLexerFactory
     {
-        ILexer Create(char lowerBound, char upperBound);
+        ILexer<Element> Create(char lowerBound, char upperBound);
     }
 }
