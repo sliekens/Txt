@@ -13,7 +13,10 @@ namespace SLANG.Core
     {
         private readonly ILexer horizontalTabTerminalLexer;
 
-        /// <summary>Initializes a new instance of the <see cref="HorizontalTabLexer"/> class.</summary>
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="horizontalTabTerminalLexer">%x09</param>
         public HorizontalTabLexer(ILexer horizontalTabTerminalLexer)
             : base("HTAB")
         {
@@ -28,10 +31,10 @@ namespace SLANG.Core
         /// <inheritdoc />
         public override bool TryRead(ITextScanner scanner, out HorizontalTab element)
         {
-            Element terminal;
-            if (this.horizontalTabTerminalLexer.TryReadElement(scanner, out terminal))
+            Element result;
+            if (this.horizontalTabTerminalLexer.TryReadElement(scanner, out result))
             {
-                element = new HorizontalTab(terminal);
+                element = new HorizontalTab(result);
                 return true;
             }
             

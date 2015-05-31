@@ -50,7 +50,6 @@
     <Compile Include="Core\CRLF\EndOfLineSequenceLexer.cs" />
     <Compile Include="Core\LWSP\EndOfLineWhiteSpaceSequenceLexer.cs" />
     <Compile Include="Core\HEXDIG\HexadecimalDigitAlternativeLexer.cs" />
-    <Compile Include="Core\HTAB\HorizontalTabTerminalLexer.cs" />
     <Compile Include="Core\LWSP\LinearWhiteSpaceRepetitionLexer.cs" />
     <Compile Include="Core\LF\LineFeedTerminalLexer.cs" />
     <Compile Include="Core\OCTET\OctetValueRangeLexer.cs" />
