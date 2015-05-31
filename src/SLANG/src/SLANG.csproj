@@ -51,6 +51,7 @@
     <Compile Include="Core\CR\CarriageReturnLexer.cs" />
     <Compile Include="Core\CR\CarriageReturnLexerFactory.cs" />
     <Compile Include="Core\LF\LineFeedLexerFactory.cs" />
+    <Compile Include="Core\WSP\WhiteSpaceLexerFactory.cs" />
     <Compile Include="IAlternativeLexerFactory.cs" />
     <Compile Include="ILexerFactory.cs" />
     <Compile Include="ISequenceLexerFactory.cs" />
