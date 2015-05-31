@@ -22,7 +22,7 @@
             var whiteSpaceLexer = new WhiteSpaceLexer(whiteSpaceAlternativeLexer);
             var carriageReturnTerminalLexer = new CarriageReturnTerminalLexer();
             var carriageReturnLexer = new CarriageReturnLexer(carriageReturnTerminalLexer);
-            var lineFeedTerminalLexer = new LineFeedTerminalLexer();
+            var lineFeedTerminalLexer = new TerminalsLexer('\x0A');
             var lineFeedLexer = new LineFeedLexer(lineFeedTerminalLexer);
             var endOfLineSequenceLexer = new EndOfLineSequenceLexer(carriageReturnLexer, lineFeedLexer);
             var endOfLineLexer = new EndOfLineLexer(endOfLineSequenceLexer);

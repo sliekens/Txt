@@ -8,7 +8,12 @@
         [InlineData("\r\n")]
         public void ReadSuccess(string input)
         {
-            var endOfLineLexer = new EndOfLineLexer(new EndOfLineSequenceLexer(new CarriageReturnLexer(new CarriageReturnTerminalLexer()), new LineFeedLexer(new LineFeedTerminalLexer())));
+            var carriageReturnTerminalLexer = new CarriageReturnTerminalLexer();
+            var carriageReturnLexer = new CarriageReturnLexer(carriageReturnTerminalLexer);
+            var lineFeedTerminalLexer = new TerminalsLexer('\x0A');
+            var lineFeedLexer = new LineFeedLexer(lineFeedTerminalLexer);
+            var endOfLineSequenceLexer = new EndOfLineSequenceLexer(carriageReturnLexer, lineFeedLexer);
+            var endOfLineLexer = new EndOfLineLexer(endOfLineSequenceLexer);
             using (var scanner = new TextScanner(new PushbackInputStream(input.ToMemoryStream())))
             {
                 scanner.Read();

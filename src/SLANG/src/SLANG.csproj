@@ -51,7 +51,6 @@
     <Compile Include="Core\LWSP\EndOfLineWhiteSpaceSequenceLexer.cs" />
     <Compile Include="Core\HEXDIG\HexadecimalDigitAlternativeLexer.cs" />
     <Compile Include="Core\LWSP\LinearWhiteSpaceRepetitionLexer.cs" />
-    <Compile Include="Core\LF\LineFeedTerminalLexer.cs" />
     <Compile Include="Core\OCTET\OctetValueRangeLexer.cs" />
     <Compile Include="Core\SP\SpaceTerminalLexer.cs" />
     <Compile Include="Core\VCHAR\VisibleCharacterValueRangeLexer.cs" />

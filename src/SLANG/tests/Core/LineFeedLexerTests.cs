@@ -8,7 +8,8 @@
         [InlineData("\x0A")]
         public void ReadSuccess(string input)
         {
-            var lineFeedLexer = new LineFeedLexer(new LineFeedTerminalLexer());
+            var lineFeedTerminalLexer = new TerminalsLexer('\x0A');
+            var lineFeedLexer = new LineFeedLexer(lineFeedTerminalLexer);
             using (var scanner = new TextScanner(new PushbackInputStream(input.ToMemoryStream())))
             {
                 scanner.Read();
