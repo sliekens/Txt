@@ -14,7 +14,7 @@
         [InlineData("\t\r\n \t \r\n  \t ")]
         public void ReadSuccess(string input)
         {
-            var spaceTerminalLexer = new SpaceTerminalLexer();
+            var spaceTerminalLexer = new TerminalsLexer('\x20');
             var spaceLexer = new SpaceLexer(spaceTerminalLexer);
             var horizontalTabTerminalLexer = new TerminalsLexer('\x09');
             var horizontalTabLexer = new HorizontalTabLexer(horizontalTabTerminalLexer);

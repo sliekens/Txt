@@ -11,9 +11,13 @@ namespace SLANG.Core
 
     public class SpaceLexer : Lexer<Space>
     {
-        private readonly ILexer spaceTerminalLexer;
+        private readonly ILexer<Element> spaceTerminalLexer;
 
-        public SpaceLexer(ILexer spaceTerminalLexer)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="spaceTerminalLexer">%x20</param>
+        public SpaceLexer(ILexer<Element> spaceTerminalLexer)
             : base("SP")
         {
             if (spaceTerminalLexer == null)
@@ -28,7 +32,7 @@ namespace SLANG.Core
         public override bool TryRead(ITextScanner scanner, out Space element)
         {
             Element terminal;
-            if (this.spaceTerminalLexer.TryReadElement(scanner, out terminal))
+            if (this.spaceTerminalLexer.TryRead(scanner, out terminal))
             {
                 element = new Space(terminal);
                 return true;
