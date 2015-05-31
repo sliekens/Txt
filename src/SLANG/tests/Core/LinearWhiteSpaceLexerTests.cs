@@ -18,7 +18,7 @@
             var spaceLexer = new SpaceLexer(spaceTerminalLexer);
             var horizontalTabTerminalLexer = new TerminalsLexer('\x09');
             var horizontalTabLexer = new HorizontalTabLexer(horizontalTabTerminalLexer);
-            var whiteSpaceAlternativeLexer = new WhiteSpaceAlternativeLexer(spaceLexer, horizontalTabLexer);
+            var whiteSpaceAlternativeLexer = new AlternativeLexer(spaceLexer, horizontalTabLexer);
             var whiteSpaceLexer = new WhiteSpaceLexer(whiteSpaceAlternativeLexer);
             var carriageReturnTerminalLexer = new TerminalsLexer('\x0D');
             var carriageReturnLexer = new CarriageReturnLexer(carriageReturnTerminalLexer);
