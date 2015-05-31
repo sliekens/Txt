@@ -11,10 +11,13 @@ namespace SLANG.Core
 
     public class DigitLexer : Lexer<Digit>
     {
-        private readonly ILexer digitValueRangeLexer;
+        private readonly ILexer<Element> digitValueRangeLexer;
 
-        /// <summary>Initializes a new instance of the <see cref="DigitLexer"/> class.</summary>
-        public DigitLexer(ILexer digitValueRangeLexer)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="digitValueRangeLexer">%x30-39</param>
+        public DigitLexer(ILexer<Element> digitValueRangeLexer)
             : base("DIGIT")
         {
             if (digitValueRangeLexer == null)
@@ -28,7 +31,7 @@ namespace SLANG.Core
         public override bool TryRead(ITextScanner scanner, out Digit element)
         {
             Element value;
-            if (this.digitValueRangeLexer.TryReadElement(scanner, out value))
+            if (this.digitValueRangeLexer.TryRead(scanner, out value))
             {
                 element = new Digit(value);
                 return true;

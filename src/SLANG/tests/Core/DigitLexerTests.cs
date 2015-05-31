@@ -17,7 +17,8 @@
         [InlineData("\x39")]
         public void ReadSuccess(string input)
         {
-            var digitLexer = new DigitLexer(new DigitValueRangeLexer());
+            var valueRangeLexer = new ValueRangeLexer('\x30', '\x39');
+            var digitLexer = new DigitLexer(valueRangeLexer);
             using (var scanner = new TextScanner(new PushbackInputStream(input.ToMemoryStream())))
             {
                 scanner.Read();
