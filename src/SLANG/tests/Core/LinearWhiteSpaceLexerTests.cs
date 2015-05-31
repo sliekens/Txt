@@ -26,7 +26,7 @@
             var lineFeedLexer = new LineFeedLexer(lineFeedTerminalLexer);
             var endOfLineSequenceLexer = new SequenceLexer(carriageReturnLexer, lineFeedLexer);
             var endOfLineLexer = new EndOfLineLexer(endOfLineSequenceLexer);
-            var endOfLineWhiteSpaceSequenceLexer = new EndOfLineWhiteSpaceSequenceLexer(endOfLineLexer, whiteSpaceLexer);
+            var endOfLineWhiteSpaceSequenceLexer = new SequenceLexer(endOfLineLexer, whiteSpaceLexer);
             var breakingWhiteSpaceLexer = new AlternativeLexer(whiteSpaceLexer, endOfLineWhiteSpaceSequenceLexer);
             var linearWhiteSpaceRepetitionLexer = new RepetitionLexer(breakingWhiteSpaceLexer, 0, int.MaxValue);
             var lexer = new LinearWhiteSpaceLexer(linearWhiteSpaceRepetitionLexer);
