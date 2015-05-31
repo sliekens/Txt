@@ -11,10 +11,13 @@ namespace SLANG.Core
 
     public class VisibleCharacterLexer : Lexer<VisibleCharacter>
     {
-        private readonly ILexer visibleCharacterValueRangeLexer;
+        private readonly ILexer<Element> visibleCharacterValueRangeLexer;
 
-        /// <summary>Initializes a new instance of the <see cref="VisibleCharacterLexer"/> class.</summary>
-        public VisibleCharacterLexer(ILexer visibleCharacterValueRangeLexer)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="visibleCharacterValueRangeLexer">%x21-7E</param>
+        public VisibleCharacterLexer(ILexer<Element> visibleCharacterValueRangeLexer)
             : base("VCHAR")
         {
             if (visibleCharacterValueRangeLexer == null)
@@ -27,10 +30,10 @@ namespace SLANG.Core
 
         public override bool TryRead(ITextScanner scanner, out VisibleCharacter element)
         {
-            Element value;
-            if (this.visibleCharacterValueRangeLexer.TryReadElement(scanner, out value))
+            Element result;
+            if (this.visibleCharacterValueRangeLexer.TryRead(scanner, out result))
             {
-                element = new VisibleCharacter(value);
+                element = new VisibleCharacter(result);
                 return true;
             }
 

@@ -52,7 +52,6 @@
     <Compile Include="Core\HEXDIG\HexadecimalDigitAlternativeLexer.cs" />
     <Compile Include="Core\LWSP\LinearWhiteSpaceRepetitionLexer.cs" />
     <Compile Include="Core\OCTET\OctetValueRangeLexer.cs" />
-    <Compile Include="Core\VCHAR\VisibleCharacterValueRangeLexer.cs" />
     <Compile Include="Core\WSP\WhiteSpaceAlternativeLexer.cs" />
     <Compile Include="Repetition.cs" />
     <Compile Include="Sequence.cs" />
