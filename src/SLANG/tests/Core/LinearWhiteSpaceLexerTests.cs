@@ -27,7 +27,7 @@
             var endOfLineSequenceLexer = new SequenceLexer(carriageReturnLexer, lineFeedLexer);
             var endOfLineLexer = new EndOfLineLexer(endOfLineSequenceLexer);
             var endOfLineWhiteSpaceSequenceLexer = new EndOfLineWhiteSpaceSequenceLexer(endOfLineLexer, whiteSpaceLexer);
-            var breakingWhiteSpaceLexer = new BreakingWhiteSpaceLexer(whiteSpaceLexer, endOfLineWhiteSpaceSequenceLexer);
+            var breakingWhiteSpaceLexer = new AlternativeLexer(whiteSpaceLexer, endOfLineWhiteSpaceSequenceLexer);
             var linearWhiteSpaceRepetitionLexer = new RepetitionLexer(breakingWhiteSpaceLexer, 0, int.MaxValue);
             var lexer = new LinearWhiteSpaceLexer(linearWhiteSpaceRepetitionLexer);
             using (var scanner = new TextScanner(new PushbackInputStream(input.ToMemoryStream())))
