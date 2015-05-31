@@ -2,10 +2,13 @@
 {
     public class WhiteSpaceAlternativeLexer : AlternativeLexer
     {
-        public WhiteSpaceAlternativeLexer(ILexer<Space> spaceLexer, ILexer<HorizontalTab> horizontalTabLexer)
-            : base(spaceLexer, horizontalTabLexer)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="lexers">SP / HTAB</param>
+        public WhiteSpaceAlternativeLexer(params ILexer[] lexers)
+            : base(lexers)
         {
-            
         }
     }
 }

@@ -26,10 +26,10 @@ namespace SLANG.Core
 
         public override bool TryRead(ITextScanner scanner, out WhiteSpace element)
         {
-            Element terminal;
-            if (this.whiteSpaceAlternativeLexer.TryReadElement(scanner, out terminal))
+            Element result;
+            if (this.whiteSpaceAlternativeLexer.TryReadElement(scanner, out result))
             {
-                element = new WhiteSpace(terminal);
+                element = new WhiteSpace(result);
                 return true;
             }
 
