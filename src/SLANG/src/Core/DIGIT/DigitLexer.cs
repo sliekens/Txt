@@ -30,10 +30,10 @@ namespace SLANG.Core
 
         public override bool TryRead(ITextScanner scanner, out Digit element)
         {
-            Element value;
-            if (this.digitValueRangeLexer.TryRead(scanner, out value))
+            Element result;
+            if (this.digitValueRangeLexer.TryRead(scanner, out result))
             {
-                element = new Digit(value);
+                element = new Digit(result);
                 return true;
             }
 

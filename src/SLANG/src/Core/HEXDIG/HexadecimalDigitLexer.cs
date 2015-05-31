@@ -30,8 +30,8 @@ namespace SLANG.Core
 
         public override bool TryRead(ITextScanner scanner, out HexadecimalDigit element)
         {
-            Element result;
-            if (this.hexadecimalDigitAlternativeLexer.TryReadElement(scanner, out result))
+            Alternative result;
+            if (this.hexadecimalDigitAlternativeLexer.TryRead(scanner, out result))
             {
                 element = new HexadecimalDigit(result);
                 return true;

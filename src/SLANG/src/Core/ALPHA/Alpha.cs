@@ -8,7 +8,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG.Core
 {
-    /// <summary>Represents the ALPHA rule: 1 letter of the alphabet (case-insensitive). Unicode: U+0041-U+005A, U+0061-U+007A.</summary>
     public class Alpha : Alternative
     {
         public Alpha(Element element)

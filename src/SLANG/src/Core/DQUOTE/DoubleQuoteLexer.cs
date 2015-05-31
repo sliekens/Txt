@@ -31,10 +31,10 @@ namespace SLANG.Core
         /// <inheritdoc />
         public override bool TryRead(ITextScanner scanner, out DoubleQuote element)
         {
-            Element terminal;
-            if (this.doubleQuoteTerminalLexer.TryRead(scanner, out terminal))
+            Element result;
+            if (this.doubleQuoteTerminalLexer.TryRead(scanner, out result))
             {
-                element = new DoubleQuote(terminal);
+                element = new DoubleQuote(result);
                 return true;
             }
 

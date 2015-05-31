@@ -8,7 +8,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG.Core
 {
-    /// <summary>Represents the CHAR rule: 1 US-ASCII character, excluding NUL. Unicode: U+0001 - U+007F.</summary>
     public class Character : Element
     {
         public Character(Element element)
