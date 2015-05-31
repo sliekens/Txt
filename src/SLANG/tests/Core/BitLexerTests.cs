@@ -10,7 +10,8 @@
             var input = "0";
             var zeroStringLexer = new StringLexer("0");
             var oneStringLexer = new StringLexer("1");
-            var bitLexer = new BitLexer(new BitAlternativeLexer(zeroStringLexer, oneStringLexer));
+            var bitAlternativeLexer = new AlternativeLexer(zeroStringLexer, oneStringLexer);
+            var bitLexer = new BitLexer(bitAlternativeLexer);
             using (var scanner = new TextScanner(new PushbackInputStream(input.ToMemoryStream())))
             {
                 scanner.Read();
@@ -24,8 +25,9 @@
         {
             var input = "1";
             var zeroStringLexer = new StringLexer("0");
-            var oneStringLexer = new StringLexer("1");
-            var bitLexer = new BitLexer(new BitAlternativeLexer(zeroStringLexer, oneStringLexer));
+            var oneStringLexer = new StringLexer("1"); 
+            var bitAlternativeLexer = new AlternativeLexer(zeroStringLexer, oneStringLexer);
+            var bitLexer = new BitLexer(bitAlternativeLexer);
             using (var scanner = new TextScanner(new PushbackInputStream(input.ToMemoryStream())))
             {
                 scanner.Read();
@@ -40,7 +42,8 @@
             var input = "-1";
             var zeroStringLexer = new StringLexer("0");
             var oneStringLexer = new StringLexer("1");
-            var bitLexer = new BitLexer(new BitAlternativeLexer(zeroStringLexer, oneStringLexer));
+            var bitAlternativeLexer = new AlternativeLexer(zeroStringLexer, oneStringLexer);
+            var bitLexer = new BitLexer(bitAlternativeLexer);
             using (var scanner = new TextScanner(new PushbackInputStream(input.ToMemoryStream())))
             {
                 scanner.Read();
