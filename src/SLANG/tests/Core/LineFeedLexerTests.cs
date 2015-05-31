@@ -1,5 +1,7 @@
 ﻿namespace SLANG.Core
 {
+    using SLANG.Core.LF;
+
     using Xunit;
 
     public class LineFeedLexerTests
@@ -8,8 +10,8 @@
         [InlineData("\x0A")]
         public void ReadSuccess(string input)
         {
-            var lineFeedTerminalLexer = new TerminalsLexer('\x0A');
-            var lineFeedLexer = new LineFeedLexer(lineFeedTerminalLexer);
+            var factory = new LineFeedLexerFactory(new TerminalsLexerFactory());
+            var lineFeedLexer = factory.Create();
             using (var scanner = new TextScanner(new PushbackInputStream(input.ToMemoryStream())))
             {
                 scanner.Read();
