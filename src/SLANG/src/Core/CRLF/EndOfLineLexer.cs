@@ -13,6 +13,10 @@ namespace SLANG.Core
     {
         private readonly ILexer<Sequence> endOfLineSequenceLexer;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="endOfLineSequenceLexer">CR LF</param>
         public EndOfLineLexer(ILexer<Sequence> endOfLineSequenceLexer)
             : base("CRLF")
         {
@@ -26,10 +30,10 @@ namespace SLANG.Core
 
         public override bool TryRead(ITextScanner scanner, out EndOfLine element)
         {
-            Sequence sequence;
-            if (this.endOfLineSequenceLexer.TryRead(scanner, out sequence))
+            Sequence result;
+            if (this.endOfLineSequenceLexer.TryRead(scanner, out result))
             {
-                element = new EndOfLine(sequence);
+                element = new EndOfLine(result);
                 return true;
             }
 
