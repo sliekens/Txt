@@ -50,6 +50,7 @@
     <Compile Include="Core\CRLF\EndOfLineLexerFactory.cs" />
     <Compile Include="Core\CR\CarriageReturnLexer.cs" />
     <Compile Include="Core\CR\CarriageReturnLexerFactory.cs" />
+    <Compile Include="Core\CTL\ControlCharacterLexerFactory.cs" />
     <Compile Include="Core\DIGIT\DigitLexerFactory.cs" />
     <Compile Include="Core\DQUOTE\DoubleQuoteLexerFactory.cs" />
     <Compile Include="Core\HEXDIG\HexadecimalDigitLexerFactory.cs" />
