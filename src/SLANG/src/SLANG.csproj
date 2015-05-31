@@ -45,6 +45,7 @@
     <Compile Include="Core\ALPHA\AlphaLexerFactory.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Core\BIT\BitLexerFactory.cs" />
     <Compile Include="Core\CR\CarriageReturnLexer.cs" />
     <Compile Include="IAlternativeLexerFactory.cs" />
     <Compile Include="ILexerFactory.cs" />

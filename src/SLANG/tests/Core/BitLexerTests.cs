@@ -1,5 +1,7 @@
 ﻿namespace SLANG.Core
 {
+    using SLANG.Core.BIT;
+
     using Xunit;
 
     public class BitLexerTests
@@ -8,10 +10,8 @@
         public void CanReadZero()
         {
             var input = "0";
-            var zeroStringLexer = new StringLexer("0");
-            var oneStringLexer = new StringLexer("1");
-            var bitAlternativeLexer = new AlternativeLexer(zeroStringLexer, oneStringLexer);
-            var bitLexer = new BitLexer(bitAlternativeLexer);
+            var factory = new BitLexerFactory(new AlternativeLexerFactory(), new TerminalsLexerFactory());
+            var bitLexer = factory.Create();
             using (var scanner = new TextScanner(new PushbackInputStream(input.ToMemoryStream())))
             {
                 scanner.Read();
@@ -24,10 +24,8 @@
         public void CanReadOne()
         {
             var input = "1";
-            var zeroStringLexer = new StringLexer("0");
-            var oneStringLexer = new StringLexer("1"); 
-            var bitAlternativeLexer = new AlternativeLexer(zeroStringLexer, oneStringLexer);
-            var bitLexer = new BitLexer(bitAlternativeLexer);
+            var factory = new BitLexerFactory(new AlternativeLexerFactory(), new TerminalsLexerFactory());
+            var bitLexer = factory.Create();
             using (var scanner = new TextScanner(new PushbackInputStream(input.ToMemoryStream())))
             {
                 scanner.Read();
@@ -40,10 +38,8 @@
         public void CannotReadNegativeOne()
         {
             var input = "-1";
-            var zeroStringLexer = new StringLexer("0");
-            var oneStringLexer = new StringLexer("1");
-            var bitAlternativeLexer = new AlternativeLexer(zeroStringLexer, oneStringLexer);
-            var bitLexer = new BitLexer(bitAlternativeLexer);
+            var factory = new BitLexerFactory(new AlternativeLexerFactory(), new TerminalsLexerFactory());
+            var bitLexer = factory.Create();
             using (var scanner = new TextScanner(new PushbackInputStream(input.ToMemoryStream())))
             {
                 scanner.Read();
