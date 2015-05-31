@@ -13,6 +13,10 @@ namespace SLANG.Core
     {
         private readonly ILexer<Alternative> hexadecimalDigitAlternativeLexer;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="hexadecimalDigitAlternativeLexer">DIGIT / "A" / "B" / "C" / "D" / "E" / "F"</param>
         public HexadecimalDigitLexer(ILexer<Alternative> hexadecimalDigitAlternativeLexer)
             : base("HEXDIG")
         {
@@ -26,10 +30,10 @@ namespace SLANG.Core
 
         public override bool TryRead(ITextScanner scanner, out HexadecimalDigit element)
         {
-            Element terminal;
-            if (this.hexadecimalDigitAlternativeLexer.TryReadElement(scanner, out terminal))
+            Element result;
+            if (this.hexadecimalDigitAlternativeLexer.TryReadElement(scanner, out result))
             {
-                element = new HexadecimalDigit(terminal);
+                element = new HexadecimalDigit(result);
                 return true;
             }
 
