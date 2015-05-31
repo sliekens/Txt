@@ -56,6 +56,9 @@
     <Compile Include="Core\HEXDIG\HexadecimalDigitLexerFactory.cs" />
     <Compile Include="Core\HTAB\HorizontalTabLexerFactory.cs" />
     <Compile Include="Core\LF\LineFeedLexerFactory.cs" />
+    <Compile Include="Core\LWSP\LinearWhiteSpaceLexerFactory.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Core\OCTET\OctetLexerFactory.cs" />
     <Compile Include="Core\SP\SpaceLexerFactory.cs" />
     <Compile Include="Core\VCHAR\VisibleCharacterLexerFactory.cs" />
