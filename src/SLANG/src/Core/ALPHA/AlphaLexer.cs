@@ -13,6 +13,10 @@ namespace SLANG.Core
     {
         private readonly ILexer<Alternative> alphaAlternativeLexer;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="alphaAlternativeLexer">%x41-5A / %x61-7A</param>
         public AlphaLexer(ILexer<Alternative> alphaAlternativeLexer)
             : base("ALPHA")
         {
@@ -26,10 +30,10 @@ namespace SLANG.Core
 
         public override bool TryRead(ITextScanner scanner, out Alpha element)
         {
-            Element terminal;
-            if (this.alphaAlternativeLexer.TryReadElement(scanner, out terminal))
+            Alternative result;
+            if (this.alphaAlternativeLexer.TryRead(scanner, out result))
             {
-                element = new Alpha(terminal);
+                element = new Alpha(result);
                 return true;
             }
 
