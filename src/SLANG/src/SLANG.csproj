@@ -44,7 +44,6 @@
     <Compile Include="Core\LWSP\BreakingWhiteSpaceLexer.cs" />
     <Compile Include="Core\CR\CarriageReturnLexer.cs" />
     <Compile Include="Core\LWSP\EndOfLineWhiteSpaceSequenceLexer.cs" />
-    <Compile Include="Core\HEXDIG\HexadecimalDigitAlternativeLexer.cs" />
     <Compile Include="Core\LWSP\LinearWhiteSpaceRepetitionLexer.cs" />
     <Compile Include="Core\WSP\WhiteSpaceAlternativeLexer.cs" />
     <Compile Include="Repetition.cs" />
