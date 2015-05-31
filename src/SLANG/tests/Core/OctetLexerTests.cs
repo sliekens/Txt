@@ -24,7 +24,8 @@
         [InlineData("\x00FF", "0xFF")]
         public void ReadSuccess(string input, string displayName)
         {
-            var octetLexer = new OctetLexer(new OctetValueRangeLexer());
+            var octetValueRangeLexer = new ValueRangeLexer('\x00', '\xFF');
+            var octetLexer = new OctetLexer(octetValueRangeLexer);
             using (var scanner = new TextScanner(new PushbackInputStream(input.ToMemoryStream())))
             {
                 scanner.Read();
