@@ -13,7 +13,7 @@
         {
             var valueRangeLexer = new ValueRangeLexer('\x00', '\x1F');
             var terminalsLexer = new TerminalsLexer('\x7F');
-            var controlCharacterAlternativeLexer = new ControlCharacterAlternativeLexer(valueRangeLexer, terminalsLexer);
+            var controlCharacterAlternativeLexer = new AlternativeLexer(valueRangeLexer, terminalsLexer);
             var controlCharacterLexer = new ControlCharacterLexer(controlCharacterAlternativeLexer);
             using (var scanner = new TextScanner(new PushbackInputStream(input.ToMemoryStream())))
             {
