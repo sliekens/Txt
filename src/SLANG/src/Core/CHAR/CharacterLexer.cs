@@ -30,10 +30,10 @@ namespace SLANG.Core
 
         public override bool TryRead(ITextScanner scanner, out Character element)
         {
-            Element value;
-            if (this.characterValueRangeLexer.TryRead(scanner, out value))
+            Element result;
+            if (this.characterValueRangeLexer.TryRead(scanner, out result))
             {
-                element = new Character(value);
+                element = new Character(result);
                 return true;
             }
 
