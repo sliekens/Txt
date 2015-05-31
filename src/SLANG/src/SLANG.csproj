@@ -50,7 +50,6 @@
     <Compile Include="Core\CR\CarriageReturnTerminalLexer.cs" />
     <Compile Include="Core\CTL\ControlCharacterAlternativeLexer.cs" />
     <Compile Include="Core\HEXDIG\CTerminalLexer.cs" />
-    <Compile Include="Core\DQUOTE\DoubleQuoteTerminalLexer.cs" />
     <Compile Include="Core\HEXDIG\DTerminalLexer.cs" />
     <Compile Include="Core\CRLF\EndOfLineSequenceLexer.cs" />
     <Compile Include="Core\LWSP\EndOfLineWhiteSpaceSequenceLexer.cs" />
