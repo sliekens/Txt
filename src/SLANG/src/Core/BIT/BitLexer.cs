@@ -26,10 +26,10 @@ namespace SLANG.Core
 
         public override bool TryRead(ITextScanner scanner, out Bit element)
         {
-            Element terminal;
-            if (this.bitAlternativeLexer.TryReadElement(scanner, out terminal))
+            Alternative result;
+            if (this.bitAlternativeLexer.TryRead(scanner, out result))
             {
-                element = new Bit(terminal);
+                element = new Bit(result);
                 return true;
             }
 

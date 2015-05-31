@@ -8,7 +8,9 @@
         public void CanReadZero()
         {
             var input = "0";
-            var bitLexer = new BitLexer(new BitAlternativeLexer(new ZeroTerminalLexer(), new OneTerminalLexer()));
+            var zeroStringLexer = new StringLexer("0");
+            var oneStringLexer = new StringLexer("1");
+            var bitLexer = new BitLexer(new BitAlternativeLexer(zeroStringLexer, oneStringLexer));
             using (var scanner = new TextScanner(new PushbackInputStream(input.ToMemoryStream())))
             {
                 scanner.Read();
@@ -21,7 +23,9 @@
         public void CanReadOne()
         {
             var input = "1";
-            var bitLexer = new BitLexer(new BitAlternativeLexer(new ZeroTerminalLexer(), new OneTerminalLexer()));
+            var zeroStringLexer = new StringLexer("0");
+            var oneStringLexer = new StringLexer("1");
+            var bitLexer = new BitLexer(new BitAlternativeLexer(zeroStringLexer, oneStringLexer));
             using (var scanner = new TextScanner(new PushbackInputStream(input.ToMemoryStream())))
             {
                 scanner.Read();
@@ -34,7 +38,9 @@
         public void CannotReadNegativeOne()
         {
             var input = "-1";
-            var bitLexer = new BitLexer(new BitAlternativeLexer(new ZeroTerminalLexer(), new OneTerminalLexer()));
+            var zeroStringLexer = new StringLexer("0");
+            var oneStringLexer = new StringLexer("1");
+            var bitLexer = new BitLexer(new BitAlternativeLexer(zeroStringLexer, oneStringLexer));
             using (var scanner = new TextScanner(new PushbackInputStream(input.ToMemoryStream())))
             {
                 scanner.Read();

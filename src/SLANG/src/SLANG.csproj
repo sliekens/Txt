@@ -65,11 +65,9 @@
     <Compile Include="Core\LWSP\LinearWhiteSpaceRepetitionLexer.cs" />
     <Compile Include="Core\LF\LineFeedTerminalLexer.cs" />
     <Compile Include="Core\OCTET\OctetValueRangeLexer.cs" />
-    <Compile Include="Core\BIT\OneTerminalLexer.cs" />
     <Compile Include="Core\SP\SpaceTerminalLexer.cs" />
     <Compile Include="Core\VCHAR\VisibleCharacterValueRangeLexer.cs" />
     <Compile Include="Core\WSP\WhiteSpaceAlternativeLexer.cs" />
-    <Compile Include="Core\BIT\ZeroTerminalLexer.cs" />
     <Compile Include="Repetition.cs" />
     <Compile Include="Sequence.cs" />
     <Compile Include="SequenceLexer.cs" />
