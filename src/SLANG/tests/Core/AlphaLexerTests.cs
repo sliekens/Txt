@@ -1,5 +1,7 @@
 ﻿namespace SLANG.Core
 {
+    using SLANG.Core.ALPHA;
+
     using Xunit;
 
     public class AlphaLexerTests
@@ -33,10 +35,8 @@
         [InlineData("z")]
         public void CanReadLowercaseAsciiLetters(string letter)
         {
-            var upperCaseValueRangeLexer = new ValueRangeLexer('\x41', '\x5A');
-            var lowerCaseValueRangeLexer = new ValueRangeLexer('\x61', '\x7A');
-            var upperOrLowerCaseAlphaLexer = new AlternativeLexer(upperCaseValueRangeLexer, lowerCaseValueRangeLexer);
-            var alphaLexer = new AlphaLexer(upperOrLowerCaseAlphaLexer);
+            var factory = new AlphaLexerFactory(new ValueRangeLexerFactory(), new AlternativeLexerFactory());
+            var alphaLexer = factory.Create();
             using (var scanner = new TextScanner(new PushbackInputStream(letter.ToMemoryStream())))
             {
                 scanner.Read();
@@ -74,10 +74,8 @@
         [InlineData("Z")]
         public void CanReadUppercaseAsciiLetters(string letter)
         {
-            var upperCaseValueRangeLexer = new ValueRangeLexer('\x41', '\x5A');
-            var lowerCaseValueRangeLexer = new ValueRangeLexer('\x61', '\x7A');
-            var upperOrLowerCaseAlphaLexer = new AlternativeLexer(upperCaseValueRangeLexer, lowerCaseValueRangeLexer);
-            var alphaLexer = new AlphaLexer(upperOrLowerCaseAlphaLexer);
+            var factory = new AlphaLexerFactory(new ValueRangeLexerFactory(), new AlternativeLexerFactory());
+            var alphaLexer = factory.Create();
             using (var scanner = new TextScanner(new PushbackInputStream(letter.ToMemoryStream())))
             {
                 scanner.Read();
