@@ -20,7 +20,7 @@
             var horizontalTabLexer = new HorizontalTabLexer(horizontalTabTerminalLexer);
             var whiteSpaceAlternativeLexer = new WhiteSpaceAlternativeLexer(spaceLexer, horizontalTabLexer);
             var whiteSpaceLexer = new WhiteSpaceLexer(whiteSpaceAlternativeLexer);
-            var carriageReturnTerminalLexer = new CarriageReturnTerminalLexer();
+            var carriageReturnTerminalLexer = new TerminalsLexer('\x0D');
             var carriageReturnLexer = new CarriageReturnLexer(carriageReturnTerminalLexer);
             var lineFeedTerminalLexer = new TerminalsLexer('\x0A');
             var lineFeedLexer = new LineFeedLexer(lineFeedTerminalLexer);

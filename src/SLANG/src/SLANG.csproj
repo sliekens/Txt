@@ -45,7 +45,6 @@
     <Compile Include="Core\BIT\BitAlternativeLexer.cs" />
     <Compile Include="Core\LWSP\BreakingWhiteSpaceLexer.cs" />
     <Compile Include="Core\CR\CarriageReturnLexer.cs" />
-    <Compile Include="Core\CR\CarriageReturnTerminalLexer.cs" />
     <Compile Include="Core\CTL\ControlCharacterAlternativeLexer.cs" />
     <Compile Include="Core\CRLF\EndOfLineSequenceLexer.cs" />
     <Compile Include="Core\LWSP\EndOfLineWhiteSpaceSequenceLexer.cs" />

@@ -8,7 +8,8 @@
         [InlineData("\x0D")]
         public void ReadSuccess(string input)
         {
-            var carriageReturnLexer = new CarriageReturnLexer(new CarriageReturnTerminalLexer());
+            var carriageReturnTerminalLexer = new TerminalsLexer('\x0D');
+            var carriageReturnLexer = new CarriageReturnLexer(carriageReturnTerminalLexer);
             using (var scanner = new TextScanner(new PushbackInputStream(input.ToMemoryStream())))
             {
                 scanner.Read();
