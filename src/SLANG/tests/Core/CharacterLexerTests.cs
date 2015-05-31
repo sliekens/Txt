@@ -1,5 +1,7 @@
 ﻿namespace SLANG.Core
 {
+    using SLANG.Core.CHAR;
+
     using Xunit;
 
     public class CharacterLexerTests
@@ -16,8 +18,8 @@
         [InlineData("\x7F")]
         public void ReadSuccess(string c)
         {
-            var characterValueRangeLexer = new ValueRangeLexer('\x01', '\x7F');
-            var lexer = new CharacterLexer(characterValueRangeLexer);
+            var factory = new CharacterLexerFactory(new ValueRangeLexerFactory());
+            var lexer = factory.Create();
             using (var scanner = new TextScanner(new PushbackInputStream(c.ToMemoryStream())))
             {
                 scanner.Read();
