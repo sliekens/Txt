@@ -1,5 +1,7 @@
 ﻿namespace SLANG.Core
 {
+    using SLANG.Core.CTL;
+
     using Xunit;
 
     public class ControlCharacterLexerTests
@@ -11,10 +13,8 @@
         [InlineData("\x7F")]
         public void ReadSuccess(string input)
         {
-            var valueRangeLexer = new ValueRangeLexer('\x00', '\x1F');
-            var terminalsLexer = new TerminalsLexer('\x7F');
-            var controlCharacterAlternativeLexer = new AlternativeLexer(valueRangeLexer, terminalsLexer);
-            var controlCharacterLexer = new ControlCharacterLexer(controlCharacterAlternativeLexer);
+            var factory = new ControlCharacterLexerFactory(new ValueRangeLexerFactory(), new TerminalsLexerFactory(), new AlternativeLexerFactory());
+            var controlCharacterLexer = factory.Create();
             using (var scanner = new TextScanner(new PushbackInputStream(input.ToMemoryStream())))
             {
                 scanner.Read();

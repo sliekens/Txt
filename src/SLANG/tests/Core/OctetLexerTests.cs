@@ -1,5 +1,7 @@
 ﻿namespace SLANG.Core
 {
+    using SLANG.Core.OCTET;
+
     using Xunit;
 
     public class OctetLexerTests
@@ -24,8 +26,8 @@
         [InlineData("\x00FF", "0xFF")]
         public void ReadSuccess(string input, string displayName)
         {
-            var octetValueRangeLexer = new ValueRangeLexer('\x00', '\xFF');
-            var octetLexer = new OctetLexer(octetValueRangeLexer);
+            var factory = new OctetLexerFactory(new ValueRangeLexerFactory());
+            var octetLexer = factory.Create();
             using (var scanner = new TextScanner(new PushbackInputStream(input.ToMemoryStream())))
             {
                 scanner.Read();
