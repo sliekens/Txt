@@ -10,9 +10,9 @@ namespace SLANG.Core.CHAR
 {
     using System.Diagnostics;
 
-    public class Character : Element
+    public class Character : Terminal
     {
-        public Character(Element element)
+        public Character(Terminal element)
             : base(element)
         {
         }
