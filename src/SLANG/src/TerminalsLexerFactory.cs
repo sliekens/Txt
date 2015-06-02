@@ -4,17 +4,17 @@
     {
         public ILexer<Element> Create(char terminal)
         {
-            return new TerminalsLexer(terminal);
+            return new TerminalLexer(terminal);
         }
 
         public ILexer<Element> Create(char[] terminals)
         {
-            return new TerminalsLexer(terminals);
+            return new CaseSensitiveStringLexer(terminals);
         }
 
         public ILexer<Element> Create(string terminals)
         {
-            return new StringLexer(terminals);
+            return new CaseInsensitiveStringLexer(terminals.ToCharArray());
         }
     }
 }
