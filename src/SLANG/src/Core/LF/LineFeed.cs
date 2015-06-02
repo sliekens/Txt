@@ -8,9 +8,9 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG.Core.LF
 {
-    public class LineFeed : Element
+    public class LineFeed : Terminal
     {
-        public LineFeed(Element element)
+        public LineFeed(Terminal element)
             : base(element)
         {
         }
