@@ -11,13 +11,13 @@ namespace SLANG.Core.CHAR
 
     public class CharacterLexer : Lexer<Character>
     {
-        private readonly ILexer<Element> characterValueRangeLexer;
+        private readonly ILexer<Terminal> characterValueRangeLexer;
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="characterValueRangeLexer">%x01-7F</param>
-        public CharacterLexer(ILexer<Element> characterValueRangeLexer)
+        public CharacterLexer(ILexer<Terminal> characterValueRangeLexer)
             : base("CHAR")
         {
             if (characterValueRangeLexer == null)
@@ -30,7 +30,7 @@ namespace SLANG.Core.CHAR
 
         public override bool TryRead(ITextScanner scanner, out Character element)
         {
-            Element result;
+            Terminal result;
             if (this.characterValueRangeLexer.TryRead(scanner, out result))
             {
                 element = new Character(result);

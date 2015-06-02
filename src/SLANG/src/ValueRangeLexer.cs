@@ -4,7 +4,7 @@
     using System.Diagnostics;
 
     /// <summary>Provides the base class for lexers whose lexer rule has a range of alternatives.</summary>
-    public class ValueRangeLexer : Lexer<Element>
+    public class ValueRangeLexer : Lexer<Terminal>
     {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly char lowerBound;
@@ -22,7 +22,7 @@
         }
 
         /// <inheritdoc />
-        public override bool TryRead(ITextScanner scanner, out Element element)
+        public override bool TryRead(ITextScanner scanner, out Terminal element)
         {
             if (scanner == null)
             {
@@ -39,12 +39,12 @@
 
                 if (scanner.TryMatch(c))
                 {
-                    element = new Element(c, context);
+                    element = new Terminal(c, context);
                     return true;
                 }
             }
 
-            element = default(Element);
+            element = default(Terminal);
             return false;
         }
     }

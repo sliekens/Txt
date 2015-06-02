@@ -11,9 +11,9 @@ namespace SLANG.Core.OCTET
 
     public class OctetLexer : Lexer<Octet>
     {
-        private readonly ILexer<Element> octetValueRangeLexer;
+        private readonly ILexer<Terminal> octetValueRangeLexer;
 
-        public OctetLexer(ILexer<Element> octetValueRangeLexer)
+        public OctetLexer(ILexer<Terminal> octetValueRangeLexer)
             : base("OCTET")
         {
             if (octetValueRangeLexer == null)
@@ -26,10 +26,10 @@ namespace SLANG.Core.OCTET
 
         public override bool TryRead(ITextScanner scanner, out Octet element)
         {
-            Element value;
-            if (this.octetValueRangeLexer.TryRead(scanner, out value))
+            Terminal result;
+            if (this.octetValueRangeLexer.TryRead(scanner, out result))
             {
-                element = new Octet(value);
+                element = new Octet(result);
                 return true;
             }
 
