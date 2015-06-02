@@ -8,11 +8,19 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG.Core.ALPHA
 {
+    using System.Diagnostics;
+
     public class Alpha : Alternative
     {
         public Alpha(Element element)
             : base(element)
         {
+        }
+
+        public char ToChar()
+        {
+            Debug.Assert(this.Data.Length == 1, "this.Data.Length == 1");
+            return this.Data[0];
         }
     }
 }
