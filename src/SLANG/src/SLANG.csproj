@@ -39,8 +39,10 @@
     <Compile Include="Alternative.cs" />
     <Compile Include="AlternativeLexer.cs" />
     <Compile Include="AlternativeLexerFactory.cs" />
-    <Compile Include="CaseInsensitiveStringLexer.cs" />
     <Compile Include="CaseInsensitiveTerminalLexer.cs" />
+    <Compile Include="CaseInsensitiveTerminalLexerFactory.cs" />
+    <Compile Include="IStringLexerFactory.cs" />
+    <Compile Include="ITerminalLexerFactory.cs" />
     <Compile Include="StringLexer.cs" />
     <Compile Include="Core\ALPHA\AlphaLexer.cs" />
     <Compile Include="Core\ALPHA\Alpha.cs" />
@@ -70,7 +72,6 @@
     <Compile Include="IOptionLexerFactory.cs" />
     <Compile Include="IRepetitionLexerFactory.cs" />
     <Compile Include="ISequenceLexerFactory.cs" />
-    <Compile Include="ITerminalsLexerFactory.cs" />
     <Compile Include="IValueRangeLexerFactory.cs" />
     <Compile Include="OptionLexerFactory.cs" />
     <Compile Include="Repetition.cs" />
@@ -78,9 +79,10 @@
     <Compile Include="Sequence.cs" />
     <Compile Include="SequenceLexer.cs" />
     <Compile Include="SequenceLexerFactory.cs" />
+    <Compile Include="StringLexerFactory.cs" />
     <Compile Include="Terminal.cs" />
     <Compile Include="TerminalLexer.cs" />
-    <Compile Include="TerminalsLexerFactory.cs" />
+    <Compile Include="TerminalLexerFactory.cs" />
     <Compile Include="TerminalString.cs" />
     <Compile Include="ValueRangeLexer.cs" />
     <Compile Include="Core\BIT\BitLexer.cs" />

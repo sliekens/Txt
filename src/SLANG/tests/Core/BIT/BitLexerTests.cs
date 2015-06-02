@@ -8,7 +8,7 @@
         public void CanReadZero()
         {
             var input = "0";
-            var factory = new BitLexerFactory(new AlternativeLexerFactory(), new TerminalsLexerFactory());
+            var factory = new BitLexerFactory(new AlternativeLexerFactory(), new StringLexerFactory(new CaseInsensitiveTerminalLexerFactory()));
             var bitLexer = factory.Create();
             using (var scanner = new TextScanner(new PushbackInputStream(input.ToMemoryStream())))
             {
@@ -22,7 +22,7 @@
         public void CanReadOne()
         {
             var input = "1";
-            var factory = new BitLexerFactory(new AlternativeLexerFactory(), new TerminalsLexerFactory());
+            var factory = new BitLexerFactory(new AlternativeLexerFactory(), new StringLexerFactory(new CaseInsensitiveTerminalLexerFactory()));
             var bitLexer = factory.Create();
             using (var scanner = new TextScanner(new PushbackInputStream(input.ToMemoryStream())))
             {
@@ -36,7 +36,7 @@
         public void CannotReadNegativeOne()
         {
             var input = "-1";
-            var factory = new BitLexerFactory(new AlternativeLexerFactory(), new TerminalsLexerFactory());
+            var factory = new BitLexerFactory(new AlternativeLexerFactory(), new StringLexerFactory(new CaseInsensitiveTerminalLexerFactory()));
             var bitLexer = factory.Create();
             using (var scanner = new TextScanner(new PushbackInputStream(input.ToMemoryStream())))
             {

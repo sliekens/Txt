@@ -1,27 +1,23 @@
 ﻿namespace SLANG
 {
     using System;
+    using System.Collections.Generic;
 
-    public class StringLexer : Lexer<Element>
+    public class StringLexer : Lexer<TerminalString>
     {
-        private readonly char[] terminals;
+        private readonly IList<ILexer<Terminal>> lexers; 
 
-        public StringLexer(char[] terminals)
+        public StringLexer(IList<ILexer<Terminal>> lexers)
         {
-            if (terminals == null)
+            if (lexers == null)
             {
-                throw new ArgumentNullException("terminals", "Precondition: terminals != null");
+                throw new ArgumentNullException("lexers", "Precondition: lexers != null");
             }
 
-            if (terminals.Length == 0)
-            {
-                throw new ArgumentException("Precondition: terminals.Length > 0", "terminals");
-            }
-
-            this.terminals = terminals;
+            this.lexers = lexers;
         }
 
-        public override bool TryRead(ITextScanner scanner, out Element element)
+        public override bool TryRead(ITextScanner scanner, out TerminalString element)
         {
             if (scanner == null)
             {
@@ -29,26 +25,32 @@
             }
 
             var context = scanner.GetContext();
-            for (var i = 0; i < this.terminals.Length; i++)
+            IList<Terminal> elements = new List<Terminal>(this.lexers.Count);
+
+            // ReSharper disable once ForCanBeConvertedToForeach
+            for (var i = 0; i < this.lexers.Count; i++)
             {
-                if (!scanner.EndOfInput && scanner.TryMatch(this.terminals[i]))
+                Terminal terminals;
+                if (this.lexers[i].TryRead(scanner, out terminals))
                 {
-                    continue;
+                    elements.Add(terminals);
                 }
-
-                // When the code reaches this block, it means that one of two things
-                // * the scanner unexpectedly reached the end of the input
-                // * the next terminal is not the expected character
-                for (int j = i - 1; j >= 0; j--)
+                else
                 {
-                    scanner.PutBack(this.terminals[j]);
-                }
+                    if (elements.Count != this.lexers.Count && elements.Count != 0)
+                    {
+                        for (int j = elements.Count - 1; j >= 0; j--)
+                        {
+                            scanner.PutBack(elements[j].Data);
+                        }
+                    }
 
-                element = default(Element);
-                return false;
+                    element = default(TerminalString);
+                    return false;
+                }
             }
 
-            element = new Element(new string(this.terminals), context);
+            element = new TerminalString(elements, context);
             return true;
         }
     }

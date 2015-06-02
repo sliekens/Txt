@@ -4,21 +4,21 @@
 
     public class HorizontalTabLexerFactory : ILexerFactory<HorizontalTab>
     {
-        private readonly ITerminalsLexerFactory terminalsLexerFactory;
+        private readonly ITerminalLexerFactory terminalLexerFactory;
 
-        public HorizontalTabLexerFactory(ITerminalsLexerFactory terminalsLexerFactory)
+        public HorizontalTabLexerFactory(ITerminalLexerFactory terminalLexerFactory)
         {
-            if (terminalsLexerFactory == null)
+            if (terminalLexerFactory == null)
             {
-                throw new ArgumentNullException("terminalsLexerFactory", "Precondition: terminalsLexerFactory != null");
+                throw new ArgumentNullException("terminalLexerFactory", "Precondition: terminalLexerFactory != null");
             }
 
-            this.terminalsLexerFactory = terminalsLexerFactory;
+            this.terminalLexerFactory = terminalLexerFactory;
         }
 
         public ILexer<HorizontalTab> Create()
         {
-            var horizontalTabTerminalLexer = this.terminalsLexerFactory.Create('\x09');
+            var horizontalTabTerminalLexer = this.terminalLexerFactory.Create('\x09');
             return new HorizontalTabLexer(horizontalTabTerminalLexer);
         }
     }

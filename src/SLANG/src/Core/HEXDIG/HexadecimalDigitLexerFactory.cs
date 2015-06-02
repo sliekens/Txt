@@ -10,11 +10,11 @@
 
         private readonly ILexerFactory<Digit> digitLexerFactory;
 
-        private readonly ITerminalsLexerFactory terminalsLexerFactory;
+        private readonly IStringLexerFactory stringLexerFactory;
 
         public HexadecimalDigitLexerFactory(
             ILexerFactory<Digit> digitLexerFactory,
-            ITerminalsLexerFactory terminalsLexerFactory,
+            IStringLexerFactory stringLexerFactory,
             IAlternativeLexerFactory alternativeLexerFactory)
         {
             if (digitLexerFactory == null)
@@ -22,9 +22,9 @@
                 throw new ArgumentNullException("digitLexerFactory", "Precondition: digitLexerFactory != null");
             }
 
-            if (terminalsLexerFactory == null)
+            if (stringLexerFactory == null)
             {
-                throw new ArgumentNullException("terminalsLexerFactory", "Precondition: terminalsLexerFactory != null");
+                throw new ArgumentNullException("stringLexerFactory", "Precondition: stringLexerFactory != null");
             }
 
             if (alternativeLexerFactory == null)
@@ -35,7 +35,7 @@
             }
 
             this.digitLexerFactory = digitLexerFactory;
-            this.terminalsLexerFactory = terminalsLexerFactory;
+            this.stringLexerFactory = stringLexerFactory;
             this.alternativeLexerFactory = alternativeLexerFactory;
         }
 
@@ -43,12 +43,12 @@
         {
             var hexadecimalDigitAlternativeLexer = this.alternativeLexerFactory.Create(
                 this.digitLexerFactory.Create(),
-                this.terminalsLexerFactory.Create("A"),
-                this.terminalsLexerFactory.Create("B"),
-                this.terminalsLexerFactory.Create("C"),
-                this.terminalsLexerFactory.Create("D"),
-                this.terminalsLexerFactory.Create("E"),
-                this.terminalsLexerFactory.Create("F"));
+                this.stringLexerFactory.Create("A"),
+                this.stringLexerFactory.Create("B"),
+                this.stringLexerFactory.Create("C"),
+                this.stringLexerFactory.Create("D"),
+                this.stringLexerFactory.Create("E"),
+                this.stringLexerFactory.Create("F"));
             return new HexadecimalDigitLexer(hexadecimalDigitAlternativeLexer);
         }
     }

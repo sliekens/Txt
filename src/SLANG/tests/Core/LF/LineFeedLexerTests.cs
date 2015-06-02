@@ -8,7 +8,7 @@
         [InlineData("\x0A")]
         public void ReadSuccess(string input)
         {
-            var factory = new LineFeedLexerFactory(new TerminalsLexerFactory());
+            var factory = new LineFeedLexerFactory(new TerminalLexerFactory());
             var lineFeedLexer = factory.Create();
             using (var scanner = new TextScanner(new PushbackInputStream(input.ToMemoryStream())))
             {

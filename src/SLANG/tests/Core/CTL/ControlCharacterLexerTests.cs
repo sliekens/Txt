@@ -11,7 +11,7 @@
         [InlineData("\x7F")]
         public void ReadSuccess(string input)
         {
-            var factory = new ControlCharacterLexerFactory(new ValueRangeLexerFactory(), new TerminalsLexerFactory(), new AlternativeLexerFactory());
+            var factory = new ControlCharacterLexerFactory(new ValueRangeLexerFactory(), new TerminalLexerFactory(), new AlternativeLexerFactory());
             var controlCharacterLexer = factory.Create();
             using (var scanner = new TextScanner(new PushbackInputStream(input.ToMemoryStream())))
             {

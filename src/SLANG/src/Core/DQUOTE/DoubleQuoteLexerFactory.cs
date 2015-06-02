@@ -4,21 +4,21 @@
 
     public class DoubleQuoteLexerFactory : ILexerFactory<DoubleQuote>
     {
-        private readonly ITerminalsLexerFactory terminalsLexerFactory;
+        private readonly ITerminalLexerFactory terminalLexerFactory;
 
-        public DoubleQuoteLexerFactory(ITerminalsLexerFactory terminalsLexerFactory)
+        public DoubleQuoteLexerFactory(ITerminalLexerFactory terminalLexerFactory)
         {
-            if (terminalsLexerFactory == null)
+            if (terminalLexerFactory == null)
             {
-                throw new ArgumentNullException("terminalsLexerFactory", "Precondition: terminalsLexerFactory != null");
+                throw new ArgumentNullException("terminalLexerFactory", "Precondition: terminalLexerFactory != null");
             }
 
-            this.terminalsLexerFactory = terminalsLexerFactory;
+            this.terminalLexerFactory = terminalLexerFactory;
         }
 
         public ILexer<DoubleQuote> Create()
         {
-            var doubleQuoteTerminalLexer = this.terminalsLexerFactory.Create('\x22');
+            var doubleQuoteTerminalLexer = this.terminalLexerFactory.Create('\x22');
             return new DoubleQuoteLexer(doubleQuoteTerminalLexer);
         }
     }

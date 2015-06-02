@@ -11,7 +11,7 @@
         [InlineData("\r\n")]
         public void ReadSuccess(string input)
         {
-            var terminalsLexerFactory = new TerminalsLexerFactory();
+            var terminalsLexerFactory = new TerminalLexerFactory();
             var sequenceLexerFactory = new SequenceLexerFactory();
             var carriageReturnLexerFactory = new CarriageReturnLexerFactory(terminalsLexerFactory);
             var lineFeedLexerFactory = new LineFeedLexerFactory(terminalsLexerFactory);

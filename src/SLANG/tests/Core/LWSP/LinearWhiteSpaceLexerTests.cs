@@ -22,16 +22,16 @@
         public void ReadSuccess(string input)
         {
             // General
-            var terminalsLexerFactory = new TerminalsLexerFactory();
+            var terminalLexerFactory = new TerminalLexerFactory();
             var alternativeLexerFactory = new AlternativeLexerFactory();
             var sequenceLexerFactory = new SequenceLexerFactory();
             var repetitionLexerFactory = new RepetitionLexerFactory();
 
             // SP
-            var spaceLexerFactory = new SpaceLexerFactory(terminalsLexerFactory);
+            var spaceLexerFactory = new SpaceLexerFactory(terminalLexerFactory);
 
             // HTAB
-            var horizontalTabLexerFactory = new HorizontalTabLexerFactory(terminalsLexerFactory);
+            var horizontalTabLexerFactory = new HorizontalTabLexerFactory(terminalLexerFactory);
 
             // WSP
             var whiteSpaceLexerFactory = new WhiteSpaceLexerFactory(
@@ -40,10 +40,10 @@
                 alternativeLexerFactory);
 
             // CR
-            var carriageReturnLexerFactory = new CarriageReturnLexerFactory(terminalsLexerFactory);
+            var carriageReturnLexerFactory = new CarriageReturnLexerFactory(terminalLexerFactory);
 
             // LF
-            var lineFeedLexerFactory = new LineFeedLexerFactory(terminalsLexerFactory);
+            var lineFeedLexerFactory = new LineFeedLexerFactory(terminalLexerFactory);
 
             // CRLF
             var endOfLineLexerFactory = new EndOfLineLexerFactory(

@@ -4,21 +4,21 @@
 
     public class SpaceLexerFactory : ILexerFactory<Space>
     {
-        private readonly ITerminalsLexerFactory terminalsLexerFactory;
+        private readonly ITerminalLexerFactory terminalLexerFactory;
 
-        public SpaceLexerFactory(ITerminalsLexerFactory terminalsLexerFactory)
+        public SpaceLexerFactory(ITerminalLexerFactory terminalLexerFactory)
         {
-            if (terminalsLexerFactory == null)
+            if (terminalLexerFactory == null)
             {
-                throw new ArgumentNullException("terminalsLexerFactory", "Precondition: terminalsLexerFactory != null");
+                throw new ArgumentNullException("terminalLexerFactory", "Precondition: terminalLexerFactory != null");
             }
 
-            this.terminalsLexerFactory = terminalsLexerFactory;
+            this.terminalLexerFactory = terminalLexerFactory;
         }
 
         public ILexer<Space> Create()
         {
-            var spaceTerminalLexer = this.terminalsLexerFactory.Create('\x20');
+            var spaceTerminalLexer = this.terminalLexerFactory.Create('\x20');
             return new SpaceLexer(spaceTerminalLexer);
         }
     }

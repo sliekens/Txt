@@ -4,21 +4,21 @@
 
     public class LineFeedLexerFactory : ILexerFactory<LineFeed>
     {
-        private readonly ITerminalsLexerFactory terminalsLexerFactory;
+        private readonly ITerminalLexerFactory terminalLexerFactory;
 
-        public LineFeedLexerFactory(ITerminalsLexerFactory terminalsLexerFactory)
+        public LineFeedLexerFactory(ITerminalLexerFactory terminalLexerFactory)
         {
-            if (terminalsLexerFactory == null)
+            if (terminalLexerFactory == null)
             {
-                throw new ArgumentNullException("terminalsLexerFactory", "Precondition: terminalsLexerFactory != null");
+                throw new ArgumentNullException("terminalLexerFactory", "Precondition: terminalLexerFactory != null");
             }
 
-            this.terminalsLexerFactory = terminalsLexerFactory;
+            this.terminalLexerFactory = terminalLexerFactory;
         }
 
         public ILexer<LineFeed> Create()
         {
-            var lineFeedTerminalLexer = this.terminalsLexerFactory.Create('\x0A');
+            var lineFeedTerminalLexer = this.terminalLexerFactory.Create('\x0A');
             return new LineFeedLexer(lineFeedTerminalLexer);
         }
     }

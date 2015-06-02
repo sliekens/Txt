@@ -6,13 +6,13 @@
     {
         private readonly IAlternativeLexerFactory alternativeLexerFactory;
 
-        private readonly ITerminalsLexerFactory terminalsLexerFactory;
+        private readonly ITerminalLexerFactory terminalLexerFactory;
 
         private readonly IValueRangeLexerFactory valueRangeLexerFactory;
 
         public ControlCharacterLexerFactory(
             IValueRangeLexerFactory valueRangeLexerFactory,
-            ITerminalsLexerFactory terminalsLexerFactory,
+            ITerminalLexerFactory terminalLexerFactory,
             IAlternativeLexerFactory alternativeLexerFactory)
         {
             if (valueRangeLexerFactory == null)
@@ -22,9 +22,9 @@
                     "Precondition: valueRangeLexerFactory != null");
             }
 
-            if (terminalsLexerFactory == null)
+            if (terminalLexerFactory == null)
             {
-                throw new ArgumentNullException("terminalsLexerFactory", "Precondition: terminalsLexerFactory != null");
+                throw new ArgumentNullException("terminalLexerFactory", "Precondition: terminalLexerFactory != null");
             }
 
             if (alternativeLexerFactory == null)
@@ -35,14 +35,14 @@
             }
 
             this.valueRangeLexerFactory = valueRangeLexerFactory;
-            this.terminalsLexerFactory = terminalsLexerFactory;
+            this.terminalLexerFactory = terminalLexerFactory;
             this.alternativeLexerFactory = alternativeLexerFactory;
         }
 
         public ILexer<ControlCharacter> Create()
         {
             var controlsValueRange = this.valueRangeLexerFactory.Create('\x00', '\x1F');
-            var delete = this.terminalsLexerFactory.Create('\x7F');
+            var delete = this.terminalLexerFactory.Create('\x7F');
             var controlCharacterAlternativeLexer = this.alternativeLexerFactory.Create(controlsValueRange, delete);
             return new ControlCharacterLexer(controlCharacterAlternativeLexer);
         }

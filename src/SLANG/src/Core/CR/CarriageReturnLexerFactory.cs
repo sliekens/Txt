@@ -4,21 +4,21 @@
 
     public class CarriageReturnLexerFactory : ILexerFactory<CarriageReturn>
     {
-        private readonly ITerminalsLexerFactory terminalsLexerFactory;
+        private readonly ITerminalLexerFactory terminalLexerFactory;
 
-        public CarriageReturnLexerFactory(ITerminalsLexerFactory terminalsLexerFactory)
+        public CarriageReturnLexerFactory(ITerminalLexerFactory terminalLexerFactory)
         {
-            if (terminalsLexerFactory == null)
+            if (terminalLexerFactory == null)
             {
-                throw new ArgumentNullException("terminalsLexerFactory", "Precondition: terminalsLexerFactory != null");
+                throw new ArgumentNullException("terminalLexerFactory", "Precondition: terminalLexerFactory != null");
             }
 
-            this.terminalsLexerFactory = terminalsLexerFactory;
+            this.terminalLexerFactory = terminalLexerFactory;
         }
 
         public ILexer<CarriageReturn> Create()
         {
-            var carriageReturnTerminalLexer = this.terminalsLexerFactory.Create('\x0D');
+            var carriageReturnTerminalLexer = this.terminalLexerFactory.Create('\x0D');
             return new CarriageReturnLexer(carriageReturnTerminalLexer);
         }
     }
