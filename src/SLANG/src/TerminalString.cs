@@ -1,6 +1,8 @@
 ﻿namespace SLANG
 {
+    using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
 
     public class TerminalString : Element
     {
@@ -14,6 +16,11 @@
         public TerminalString(IList<Terminal> terminals, ITextContext context)
             : base(string.Concat(terminals), context)
         {
+            if (terminals == null)
+            {
+                throw new ArgumentNullException("terminals", "Precondition: terminals != null");
+            }
+
             this.terminals = terminals;
         }
 
@@ -21,6 +28,7 @@
         {
             get
             {
+                Debug.Assert(this.terminals != null, "this.terminals != null");
                 return this.terminals;
             }
         }
