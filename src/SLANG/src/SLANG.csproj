@@ -39,6 +39,8 @@
     <Compile Include="Alternative.cs" />
     <Compile Include="AlternativeLexer.cs" />
     <Compile Include="AlternativeLexerFactory.cs" />
+    <Compile Include="CaseInsensitiveStringLexer.cs" />
+    <Compile Include="CaseSensitiveStringLexer.cs" />
     <Compile Include="Core\ALPHA\AlphaLexer.cs" />
     <Compile Include="Core\ALPHA\Alpha.cs" />
     <Compile Include="Core\ALPHA\AlphaLexerFactory.cs">
@@ -75,6 +77,7 @@
     <Compile Include="Sequence.cs" />
     <Compile Include="SequenceLexer.cs" />
     <Compile Include="SequenceLexerFactory.cs" />
+    <Compile Include="TerminalLexer.cs" />
     <Compile Include="TerminalsLexerFactory.cs" />
     <Compile Include="ValueRangeLexer.cs" />
     <Compile Include="Core\BIT\BitLexer.cs" />
