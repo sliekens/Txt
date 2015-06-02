@@ -18,6 +18,11 @@ namespace SLANG.Core.BIT
         {
         }
 
+        public static explicit operator bool(Bit instance)
+        {
+            return instance.ToBool();
+        }
+
         public bool ToBool()
         {
             Debug.Assert(this.Data == "0" || this.Data == "1", "this.Data == '0' || this.Data == '1'");
