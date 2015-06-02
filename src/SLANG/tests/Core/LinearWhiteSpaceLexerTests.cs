@@ -30,38 +30,32 @@
 
             // SP
             var spaceLexerFactory = new SpaceLexerFactory(terminalsLexerFactory);
-            var spaceLexer = spaceLexerFactory.Create();
 
             // HTAB
             var horizontalTabLexerFactory = new HorizontalTabLexerFactory(terminalsLexerFactory);
-            var horizontalTabLexer = horizontalTabLexerFactory.Create();
 
             // WSP
             var whiteSpaceLexerFactory = new WhiteSpaceLexerFactory(
-                spaceLexer,
-                horizontalTabLexer,
+                spaceLexerFactory,
+                horizontalTabLexerFactory,
                 alternativeLexerFactory);
-            var whiteSpaceLexer = whiteSpaceLexerFactory.Create();
 
             // CR
             var carriageReturnLexerFactory = new CarriageReturnLexerFactory(terminalsLexerFactory);
-            var carriageReturnLexer = carriageReturnLexerFactory.Create();
 
             // LF
             var lineFeedLexerFactory = new LineFeedLexerFactory(terminalsLexerFactory);
-            var lineFeedLexer = lineFeedLexerFactory.Create();
 
             // CRLF
             var endOfLineLexerFactory = new EndOfLineLexerFactory(
-                carriageReturnLexer,
-                lineFeedLexer,
+                carriageReturnLexerFactory,
+                lineFeedLexerFactory,
                 sequenceLexerFactory);
-            var endOfLineLexer = endOfLineLexerFactory.Create();
 
             // LWSP
             var linearWhiteSpaceLexerFactory = new LinearWhiteSpaceLexerFactory(
-                whiteSpaceLexer,
-                endOfLineLexer,
+                whiteSpaceLexerFactory,
+                endOfLineLexerFactory,
                 sequenceLexerFactory,
                 alternativeLexerFactory,
                 repetitionLexerFactory);

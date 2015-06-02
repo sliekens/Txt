@@ -4,21 +4,20 @@
 
     public class EndOfLineLexerFactory : ILexerFactory<EndOfLine>
     {
-        private readonly ILexer<CarriageReturn> carriageReturnLexer;
-
-        private readonly ILexer<LineFeed> lineFeedLexer; 
+        private readonly ILexerFactory<CarriageReturn> carriageReturnLexerFactory;
+        private readonly ILexerFactory<LineFeed> lineFeedLexerFactory; 
         private readonly ISequenceLexerFactory sequenceLexerFactory;
 
-        public EndOfLineLexerFactory(ILexer<CarriageReturn> carriageReturnLexer, ILexer<LineFeed> lineFeedLexer, ISequenceLexerFactory sequenceLexerFactory)
+        public EndOfLineLexerFactory(ILexerFactory<CarriageReturn> carriageReturnLexerFactory, ILexerFactory<LineFeed> lineFeedLexerFactory, ISequenceLexerFactory sequenceLexerFactory)
         {
-            if (carriageReturnLexer == null)
+            if (carriageReturnLexerFactory == null)
             {
-                throw new ArgumentNullException("carriageReturnLexer", "Precondition: carriageReturnLexer != null");
+                throw new ArgumentNullException("carriageReturnLexerFactory", "Precondition: carriageReturnLexerFactory != null");
             }
 
-            if (lineFeedLexer == null)
+            if (lineFeedLexerFactory == null)
             {
-                throw new ArgumentNullException("lineFeedLexer", "Precondition: lineFeedLexer != null");
+                throw new ArgumentNullException("lineFeedLexerFactory", "Precondition: lineFeedLexerFactory != null");
             }
 
             if (sequenceLexerFactory == null)
@@ -26,14 +25,16 @@
                 throw new ArgumentNullException("sequenceLexerFactory", "Precondition: sequenceLexerFactory != null");
             }
 
-            this.carriageReturnLexer = carriageReturnLexer;
-            this.lineFeedLexer = lineFeedLexer;
+            this.carriageReturnLexerFactory = carriageReturnLexerFactory;
+            this.lineFeedLexerFactory = lineFeedLexerFactory;
             this.sequenceLexerFactory = sequenceLexerFactory;
         }
 
         public ILexer<EndOfLine> Create()
         {
-            var endOfLineSequenceLexer = this.sequenceLexerFactory.Create(this.carriageReturnLexer, this.lineFeedLexer);
+            var carriageReturnLexer = this.carriageReturnLexerFactory.Create();
+            var lineFeedLexer = this.lineFeedLexerFactory.Create();
+            var endOfLineSequenceLexer = this.sequenceLexerFactory.Create(carriageReturnLexer, lineFeedLexer);
             return new EndOfLineLexer(endOfLineSequenceLexer);
         }
     }

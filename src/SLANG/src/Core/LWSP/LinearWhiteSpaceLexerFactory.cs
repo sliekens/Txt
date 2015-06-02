@@ -6,29 +6,29 @@
     {
         private readonly IAlternativeLexerFactory alternativeLexerFactory;
 
-        private readonly ILexer<EndOfLine> endOfLineLexer;
+        private readonly ILexerFactory<EndOfLine> endOfLineLexerFactory;
 
         private readonly IRepetitionLexerFactory repetitionLexerFactory;
 
         private readonly ISequenceLexerFactory sequenceLexerFactory;
 
-        private readonly ILexer<WhiteSpace> whiteSpaceLexer;
+        private readonly ILexerFactory<WhiteSpace> whiteSpaceLexerFactory;
 
         public LinearWhiteSpaceLexerFactory(
-            ILexer<WhiteSpace> whiteSpaceLexer,
-            ILexer<EndOfLine> endOfLineLexer,
+            ILexerFactory<WhiteSpace> whiteSpaceLexerFactory,
+            ILexerFactory<EndOfLine> endOfLineLexerFactory,
             ISequenceLexerFactory sequenceLexerFactory,
             IAlternativeLexerFactory alternativeLexerFactory,
             IRepetitionLexerFactory repetitionLexerFactory)
         {
-            if (whiteSpaceLexer == null)
+            if (whiteSpaceLexerFactory == null)
             {
-                throw new ArgumentNullException("whiteSpaceLexer", "Precondition: whiteSpaceLexer != null");
+                throw new ArgumentNullException("whiteSpaceLexerFactory", "Precondition: whiteSpaceLexerFactory != null");
             }
 
-            if (endOfLineLexer == null)
+            if (endOfLineLexerFactory == null)
             {
-                throw new ArgumentNullException("endOfLineLexer", "Precondition: endOfLineLexer != null");
+                throw new ArgumentNullException("endOfLineLexerFactory", "Precondition: endOfLineLexerFactory != null");
             }
 
             if (sequenceLexerFactory == null)
@@ -50,8 +50,8 @@
                     "Precondition: repetitionLexerFactory != null");
             }
 
-            this.whiteSpaceLexer = whiteSpaceLexer;
-            this.endOfLineLexer = endOfLineLexer;
+            this.whiteSpaceLexerFactory = whiteSpaceLexerFactory;
+            this.endOfLineLexerFactory = endOfLineLexerFactory;
             this.alternativeLexerFactory = alternativeLexerFactory;
             this.repetitionLexerFactory = repetitionLexerFactory;
             this.sequenceLexerFactory = sequenceLexerFactory;
@@ -59,8 +59,10 @@
 
         public ILexer<LinearWhiteSpace> Create()
         {
-            var foldLexer = this.sequenceLexerFactory.Create(this.endOfLineLexer, this.whiteSpaceLexer);
-            var breakingWhiteSpaceLexer = this.alternativeLexerFactory.Create(this.whiteSpaceLexer, foldLexer);
+            var endOfLineLexer = this.endOfLineLexerFactory.Create();
+            var whiteSpaceLexer = this.whiteSpaceLexerFactory.Create();
+            var foldLexer = this.sequenceLexerFactory.Create(endOfLineLexer, whiteSpaceLexer);
+            var breakingWhiteSpaceLexer = this.alternativeLexerFactory.Create(whiteSpaceLexer, foldLexer);
             var linearWhiteSpaceRepetitionLexer = this.repetitionLexerFactory.Create(breakingWhiteSpaceLexer, 0, int.MaxValue);
             return new LinearWhiteSpaceLexer(linearWhiteSpaceRepetitionLexer);
         }

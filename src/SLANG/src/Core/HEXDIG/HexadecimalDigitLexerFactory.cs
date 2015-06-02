@@ -6,18 +6,18 @@
     {
         private readonly IAlternativeLexerFactory alternativeLexerFactory;
 
-        private readonly ILexer<Digit> digitLexer;
+        private readonly ILexerFactory<Digit> digitLexerFactory;
 
         private readonly ITerminalsLexerFactory terminalsLexerFactory;
 
         public HexadecimalDigitLexerFactory(
-            ILexer<Digit> digitLexer,
+            ILexerFactory<Digit> digitLexerFactory,
             ITerminalsLexerFactory terminalsLexerFactory,
             IAlternativeLexerFactory alternativeLexerFactory)
         {
-            if (digitLexer == null)
+            if (digitLexerFactory == null)
             {
-                throw new ArgumentNullException("digitLexer", "Precondition: digitLexer != null");
+                throw new ArgumentNullException("digitLexerFactory", "Precondition: digitLexerFactory != null");
             }
 
             if (terminalsLexerFactory == null)
@@ -32,7 +32,7 @@
                     "Precondition: alternativeLexerFactory != null");
             }
 
-            this.digitLexer = digitLexer;
+            this.digitLexerFactory = digitLexerFactory;
             this.terminalsLexerFactory = terminalsLexerFactory;
             this.alternativeLexerFactory = alternativeLexerFactory;
         }
@@ -40,7 +40,7 @@
         public ILexer<HexadecimalDigit> Create()
         {
             var hexadecimalDigitAlternativeLexer = this.alternativeLexerFactory.Create(
-                this.digitLexer,
+                this.digitLexerFactory.Create(),
                 this.terminalsLexerFactory.Create("A"),
                 this.terminalsLexerFactory.Create("B"),
                 this.terminalsLexerFactory.Create("C"),

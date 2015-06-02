@@ -4,22 +4,22 @@
 
     public class WhiteSpaceLexerFactory : ILexerFactory<WhiteSpace>
     {
-        private readonly ILexer<Space> spaceLexer;
+        private readonly ILexerFactory<Space> spaceLexerFactory;
 
-        private readonly ILexer<HorizontalTab> horizontalTabLexer;
+        private readonly ILexerFactory<HorizontalTab> horizontalTabLexerFactory;
 
         private readonly IAlternativeLexerFactory alternativeLexerFactory;
 
-        public WhiteSpaceLexerFactory(ILexer<Space> spaceLexer, ILexer<HorizontalTab> horizontalTabLexer, IAlternativeLexerFactory alternativeLexerFactory)
+        public WhiteSpaceLexerFactory(ILexerFactory<Space> spaceLexerFactory, ILexerFactory<HorizontalTab> horizontalTabLexerFactory, IAlternativeLexerFactory alternativeLexerFactory)
         {
-            if (spaceLexer == null)
+            if (spaceLexerFactory == null)
             {
-                throw new ArgumentNullException("spaceLexer", "Precondition: spaceLexer != null");
+                throw new ArgumentNullException("spaceLexerFactory", "Precondition: spaceLexerFactory != null");
             }
 
-            if (horizontalTabLexer == null)
+            if (horizontalTabLexerFactory == null)
             {
-                throw new ArgumentNullException("horizontalTabLexer", "Precondition: horizontalTabLexer != null");
+                throw new ArgumentNullException("horizontalTabLexerFactory", "Precondition: horizontalTabLexerFactory != null");
             }
 
             if (alternativeLexerFactory == null)
@@ -27,14 +27,16 @@
                 throw new ArgumentNullException("alternativeLexerFactory", "Precondition: alternativeLexerFactory != null");
             }
 
-            this.spaceLexer = spaceLexer;
-            this.horizontalTabLexer = horizontalTabLexer;
+            this.spaceLexerFactory = spaceLexerFactory;
+            this.horizontalTabLexerFactory = horizontalTabLexerFactory;
             this.alternativeLexerFactory = alternativeLexerFactory;
         }
 
         public ILexer<WhiteSpace> Create()
         {
-            var whiteSpaceAlternativeLexer = this.alternativeLexerFactory.Create(this.spaceLexer, this.horizontalTabLexer);
+            var spaceLexer = this.spaceLexerFactory.Create();
+            var horizontalTabLexer = this.horizontalTabLexerFactory.Create();
+            var whiteSpaceAlternativeLexer = this.alternativeLexerFactory.Create(spaceLexer, horizontalTabLexer);
             return new WhiteSpaceLexer(whiteSpaceAlternativeLexer);
         }
     }

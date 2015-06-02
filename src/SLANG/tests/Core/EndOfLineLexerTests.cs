@@ -16,9 +16,7 @@
             var sequenceLexerFactory = new SequenceLexerFactory();
             var carriageReturnLexerFactory = new CarriageReturnLexerFactory(terminalsLexerFactory);
             var lineFeedLexerFactory = new LineFeedLexerFactory(terminalsLexerFactory);
-            var carriageReturnLexer = carriageReturnLexerFactory.Create();
-            var lineFeedLexer = lineFeedLexerFactory.Create();
-            var factory = new EndOfLineLexerFactory(carriageReturnLexer, lineFeedLexer, sequenceLexerFactory);
+            var factory = new EndOfLineLexerFactory(carriageReturnLexerFactory, lineFeedLexerFactory, sequenceLexerFactory);
             var endOfLineLexer = factory.Create();
             using (var scanner = new TextScanner(new PushbackInputStream(input.ToMemoryStream())))
             {
