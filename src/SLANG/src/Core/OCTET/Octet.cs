@@ -8,9 +8,9 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG.Core.OCTET
 {
-    public class Octet : Element
+    public class Octet : Terminal
     {
-        public Octet(Element element)
+        public Octet(Terminal element)
             : base(element)
         {
         }
