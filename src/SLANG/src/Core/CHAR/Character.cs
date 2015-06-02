@@ -8,11 +8,19 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG.Core.CHAR
 {
+    using System.Diagnostics;
+
     public class Character : Element
     {
         public Character(Element element)
             : base(element)
         {
+        }
+
+        public char ToChar()
+        {
+            Debug.Assert(this.Data.Length == 1, "this.Data.Length == 1");
+            return this.Data[0];
         }
     }
 }
