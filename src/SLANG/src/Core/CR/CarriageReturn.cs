@@ -8,9 +8,9 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG.Core.CR
 {
-    public class CarriageReturn : Element
+    public class CarriageReturn : Terminal
     {
-        public CarriageReturn(Element element)
+        public CarriageReturn(Terminal element)
             : base(element)
         {
         }
