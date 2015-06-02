@@ -8,9 +8,9 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG.Core.SP
 {
-    public class Space : Element
+    public class Space : Terminal
     {
-        public Space(Element element)
+        public Space(Terminal element)
             : base(element)
         {
         }
