@@ -78,8 +78,10 @@
     <Compile Include="Sequence.cs" />
     <Compile Include="SequenceLexer.cs" />
     <Compile Include="SequenceLexerFactory.cs" />
+    <Compile Include="Terminal.cs" />
     <Compile Include="TerminalLexer.cs" />
     <Compile Include="TerminalsLexerFactory.cs" />
+    <Compile Include="TerminalString.cs" />
     <Compile Include="ValueRangeLexer.cs" />
     <Compile Include="Core\BIT\BitLexer.cs" />
     <Compile Include="Core\BIT\Bit.cs" />
