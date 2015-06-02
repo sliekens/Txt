@@ -7,9 +7,9 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG.Core.DQUOTE
 {
-    public class DoubleQuote : Element
+    public class DoubleQuote : Terminal
     {
-        public DoubleQuote(Element element)
+        public DoubleQuote(Terminal element)
             : base(element)
         {
         }
