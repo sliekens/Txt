@@ -17,6 +17,11 @@ namespace SLANG.Core.CHAR
         {
         }
 
+        public static explicit operator char(Character instance)
+        {
+            return instance.ToChar();
+        }
+
         public char ToChar()
         {
             Debug.Assert(this.Data.Length == 1, "this.Data.Length == 1");
