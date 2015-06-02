@@ -1,7 +1,5 @@
-﻿namespace SLANG.Core
+﻿namespace SLANG.Core.CR
 {
-    using SLANG.Core.CR;
-
     using Xunit;
 
     public class CarriageReturnLexerTests

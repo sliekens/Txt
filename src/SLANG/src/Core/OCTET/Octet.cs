@@ -6,7 +6,7 @@
 //   
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-namespace SLANG.Core
+namespace SLANG.Core.OCTET
 {
     public class Octet : Element
     {

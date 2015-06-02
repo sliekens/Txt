@@ -6,7 +6,7 @@
 //   Represents the CHAR rule: 1 US-ASCII character, excluding NUL. Unicode: U+0001 - U+007F.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-namespace SLANG.Core
+namespace SLANG.Core.CHAR
 {
     public class Character : Element
     {

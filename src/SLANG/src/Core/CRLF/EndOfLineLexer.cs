@@ -5,7 +5,7 @@
 // <summary>
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-namespace SLANG.Core
+namespace SLANG.Core.CRLF
 {
     using System;
 

@@ -2,6 +2,9 @@
 {
     using System;
 
+    using SLANG.Core.CRLF;
+    using SLANG.Core.WSP;
+
     public class LinearWhiteSpaceLexerFactory : ILexerFactory<LinearWhiteSpace>
     {
         private readonly IAlternativeLexerFactory alternativeLexerFactory;

@@ -6,7 +6,7 @@
 //   
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-namespace SLANG.Core
+namespace SLANG.Core.ALPHA
 {
     public class Alpha : Alternative
     {

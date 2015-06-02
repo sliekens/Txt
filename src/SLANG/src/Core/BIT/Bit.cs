@@ -6,7 +6,7 @@
 //   
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-namespace SLANG.Core
+namespace SLANG.Core.BIT
 {
     public class Bit : Alternative
     {

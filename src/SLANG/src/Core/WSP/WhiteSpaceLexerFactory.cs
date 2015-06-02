@@ -2,6 +2,9 @@
 {
     using System;
 
+    using SLANG.Core.HTAB;
+    using SLANG.Core.SP;
+
     public class WhiteSpaceLexerFactory : ILexerFactory<WhiteSpace>
     {
         private readonly ILexerFactory<Space> spaceLexerFactory;

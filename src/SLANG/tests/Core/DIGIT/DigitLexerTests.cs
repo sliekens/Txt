@@ -1,7 +1,5 @@
-﻿namespace SLANG.Core
+﻿namespace SLANG.Core.DIGIT
 {
-    using SLANG.Core.DIGIT;
-
     using Xunit;
 
     public class DigitLexerTests

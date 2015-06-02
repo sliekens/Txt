@@ -1,7 +1,6 @@
-﻿namespace SLANG.Core
+﻿namespace SLANG.Core.CRLF
 {
     using SLANG.Core.CR;
-    using SLANG.Core.CRLF;
     using SLANG.Core.LF;
 
     using Xunit;

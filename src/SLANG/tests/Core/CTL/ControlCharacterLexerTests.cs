@@ -1,7 +1,5 @@
-﻿namespace SLANG.Core
+﻿namespace SLANG.Core.CTL
 {
-    using SLANG.Core.CTL;
-
     using Xunit;
 
     public class ControlCharacterLexerTests

@@ -1,7 +1,5 @@
-﻿namespace SLANG.Core
+﻿namespace SLANG.Core.BIT
 {
-    using SLANG.Core.BIT;
-
     using Xunit;
 
     public class BitLexerTests

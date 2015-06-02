@@ -1,7 +1,5 @@
-﻿namespace SLANG.Core
+﻿namespace SLANG.Core.ALPHA
 {
-    using SLANG.Core.ALPHA;
-
     using Xunit;
 
     public class AlphaLexerTests

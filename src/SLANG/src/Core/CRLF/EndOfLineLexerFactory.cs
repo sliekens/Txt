@@ -2,6 +2,9 @@
 {
     using System;
 
+    using SLANG.Core.CR;
+    using SLANG.Core.LF;
+
     public class EndOfLineLexerFactory : ILexerFactory<EndOfLine>
     {
         private readonly ILexerFactory<CarriageReturn> carriageReturnLexerFactory;

@@ -1,7 +1,5 @@
-﻿namespace SLANG.Core
+﻿namespace SLANG.Core.OCTET
 {
-    using SLANG.Core.OCTET;
-
     using Xunit;
 
     public class OctetLexerTests

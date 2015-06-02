@@ -2,6 +2,8 @@
 {
     using System;
 
+    using SLANG.Core.DIGIT;
+
     public class HexadecimalDigitLexerFactory : ILexerFactory<HexadecimalDigit>
     {
         private readonly IAlternativeLexerFactory alternativeLexerFactory;

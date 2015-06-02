@@ -1,7 +1,5 @@
-﻿namespace SLANG.Core
+﻿namespace SLANG.Core.CHAR
 {
-    using SLANG.Core.CHAR;
-
     using Xunit;
 
     public class CharacterLexerTests

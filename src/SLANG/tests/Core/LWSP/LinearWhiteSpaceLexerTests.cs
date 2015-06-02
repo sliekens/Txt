@@ -1,10 +1,9 @@
-﻿namespace SLANG.Core
+﻿namespace SLANG.Core.LWSP
 {
     using SLANG.Core.CR;
     using SLANG.Core.CRLF;
     using SLANG.Core.HTAB;
     using SLANG.Core.LF;
-    using SLANG.Core.LWSP;
     using SLANG.Core.SP;
     using SLANG.Core.WSP;
 

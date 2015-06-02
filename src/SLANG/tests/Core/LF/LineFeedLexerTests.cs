@@ -1,7 +1,5 @@
-﻿namespace SLANG.Core
+﻿namespace SLANG.Core.LF
 {
-    using SLANG.Core.LF;
-
     using Xunit;
 
     public class LineFeedLexerTests
