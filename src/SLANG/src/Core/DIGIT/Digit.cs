@@ -8,9 +8,9 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG.Core.DIGIT
 {
-    public class Digit : Element
+    public class Digit : Terminal
     {
-        public Digit(Element element)
+        public Digit(Terminal element)
             : base(element)
         {
         }
