@@ -8,9 +8,9 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG.Core.HTAB
 {
-    public class HorizontalTab : Element
+    public class HorizontalTab : Terminal
     {
-        public HorizontalTab(Element element)
+        public HorizontalTab(Terminal element)
             : base(element)
         {
         }
