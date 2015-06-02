@@ -41,7 +41,7 @@
     <Compile Include="AlternativeLexerFactory.cs" />
     <Compile Include="CaseInsensitiveStringLexer.cs" />
     <Compile Include="CaseInsensitiveTerminalLexer.cs" />
-    <Compile Include="CaseSensitiveStringLexer.cs" />
+    <Compile Include="StringLexer.cs" />
     <Compile Include="Core\ALPHA\AlphaLexer.cs" />
     <Compile Include="Core\ALPHA\Alpha.cs" />
     <Compile Include="Core\ALPHA\AlphaLexerFactory.cs">

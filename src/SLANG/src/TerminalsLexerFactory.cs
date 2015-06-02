@@ -9,7 +9,7 @@
 
         public ILexer<Element> Create(char[] terminals)
         {
-            return new CaseSensitiveStringLexer(terminals);
+            return new StringLexer(terminals);
         }
 
         public ILexer<Element> Create(string terminals)

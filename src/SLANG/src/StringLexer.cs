@@ -2,11 +2,11 @@
 {
     using System;
 
-    public class CaseSensitiveStringLexer : Lexer<Element>
+    public class StringLexer : Lexer<Element>
     {
         private readonly char[] terminals;
 
-        public CaseSensitiveStringLexer(char[] terminals)
+        public StringLexer(char[] terminals)
         {
             if (terminals == null)
             {
