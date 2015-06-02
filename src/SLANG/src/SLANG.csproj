@@ -64,10 +64,12 @@
     <Compile Include="Core\WSP\WhiteSpaceLexerFactory.cs" />
     <Compile Include="IAlternativeLexerFactory.cs" />
     <Compile Include="ILexerFactory.cs" />
+    <Compile Include="IOptionLexerFactory.cs" />
     <Compile Include="IRepetitionLexerFactory.cs" />
     <Compile Include="ISequenceLexerFactory.cs" />
     <Compile Include="ITerminalsLexerFactory.cs" />
     <Compile Include="IValueRangeLexerFactory.cs" />
+    <Compile Include="OptionLexerFactory.cs" />
     <Compile Include="Repetition.cs" />
     <Compile Include="RepetitionLexerFactory.cs" />
     <Compile Include="Sequence.cs" />
