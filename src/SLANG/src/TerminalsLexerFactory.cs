@@ -2,7 +2,7 @@
 {
     public class TerminalsLexerFactory : ITerminalsLexerFactory
     {
-        public ILexer<Element> Create(char terminal)
+        public ILexer<Terminal> Create(char terminal)
         {
             return new TerminalLexer(terminal);
         }

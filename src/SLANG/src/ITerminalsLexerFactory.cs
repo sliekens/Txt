@@ -2,7 +2,7 @@
 {
     public interface ITerminalsLexerFactory
     {
-        ILexer<Element> Create(char terminal);
+        ILexer<Terminal> Create(char terminal);
 
         ILexer<Element> Create(char[] terminals);
 

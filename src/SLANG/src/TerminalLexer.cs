@@ -2,7 +2,7 @@
 {
     using System;
 
-    public class TerminalLexer : Lexer<Element>
+    public class TerminalLexer : Lexer<Terminal>
     {
         private readonly char terminal;
 
@@ -11,7 +11,7 @@
             this.terminal = terminal;
         }
 
-        public override bool TryRead(ITextScanner scanner, out Element element)
+        public override bool TryRead(ITextScanner scanner, out Terminal element)
         {
             if (scanner == null)
             {
@@ -21,11 +21,11 @@
             var context = scanner.GetContext();
             if (!scanner.EndOfInput && scanner.TryMatch(this.terminal))
             {
-                element = new Element(this.terminal, context);
+                element = new Terminal(this.terminal, context);
                 return true;
             }
 
-            element = default(Element);
+            element = default(Terminal);
             return false;
         }
     }

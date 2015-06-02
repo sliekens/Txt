@@ -11,13 +11,13 @@ namespace SLANG.Core.LF
 
     public class LineFeedLexer : Lexer<LineFeed>
     {
-        private readonly ILexer<Element> lineFeedTerminalLexer;
+        private readonly ILexer<Terminal> lineFeedTerminalLexer;
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="lineFeedTerminalLexer">%x0A</param>
-        public LineFeedLexer(ILexer<Element> lineFeedTerminalLexer)
+        public LineFeedLexer(ILexer<Terminal> lineFeedTerminalLexer)
             : base("LF")
         {
             if (lineFeedTerminalLexer == null)
@@ -31,7 +31,7 @@ namespace SLANG.Core.LF
         /// <inheritdoc />
         public override bool TryRead(ITextScanner scanner, out LineFeed element)
         {
-            Element result;
+            Terminal result;
             if (this.lineFeedTerminalLexer.TryRead(scanner, out result))
             {
                 element = new LineFeed(result);

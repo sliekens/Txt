@@ -11,13 +11,13 @@ namespace SLANG.Core.CR
 
     public class CarriageReturnLexer : Lexer<CarriageReturn>
     {
-        private readonly ILexer<Element> carriageReturnTerminalLexer;
+        private readonly ILexer<Terminal> carriageReturnTerminalLexer;
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="carriageReturnTerminalLexer">%x0D</param>
-        public CarriageReturnLexer(ILexer<Element> carriageReturnTerminalLexer)
+        public CarriageReturnLexer(ILexer<Terminal> carriageReturnTerminalLexer)
             : base("CR")
         {
             if (carriageReturnTerminalLexer == null)
@@ -31,7 +31,7 @@ namespace SLANG.Core.CR
         /// <inheritdoc />
         public override bool TryRead(ITextScanner scanner, out CarriageReturn element)
         {
-            Element result;
+            Terminal result;
             if (this.carriageReturnTerminalLexer.TryRead(scanner, out result))
             {
                 element = new CarriageReturn(result);
