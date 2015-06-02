@@ -8,9 +8,9 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG.Core.VCHAR
 {
-    public class VisibleCharacter : Element
+    public class VisibleCharacter : Terminal
     {
-        public VisibleCharacter(Element element)
+        public VisibleCharacter(Terminal element)
             : base(element)
         {
         }
