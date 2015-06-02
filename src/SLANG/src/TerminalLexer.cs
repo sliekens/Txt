@@ -19,7 +19,7 @@
             }
 
             var context = scanner.GetContext();
-            if (scanner.TryMatch(this.terminal))
+            if (!scanner.EndOfInput && scanner.TryMatch(this.terminal))
             {
                 element = new Element(this.terminal, context);
                 return true;

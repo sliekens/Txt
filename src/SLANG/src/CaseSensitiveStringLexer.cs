@@ -39,7 +39,7 @@
                 // When the code reaches this block, it means that one of two things
                 // * the scanner unexpectedly reached the end of the input
                 // * the next terminal is not the expected character
-                for (int j = this.terminals.Length - 1; j >= 0; j--)
+                for (int j = i - 1; j >= 0; j--)
                 {
                     scanner.PutBack(this.terminals[j]);
                 }
