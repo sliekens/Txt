@@ -50,6 +50,7 @@
     <Compile Include="Core\CR\CarriageReturnLexerTests.cs" />
     <Compile Include="Core\CTL\ControlCharacterLexerTests.cs" />
     <Compile Include="Core\DIGIT\DigitLexerTests.cs" />
+    <Compile Include="Core\DQUOTE\DoubleQuoteLexerTests.cs" />
     <Compile Include="Core\LF\LineFeedLexerTests.cs" />
     <Compile Include="Core\LWSP\LinearWhiteSpaceLexerTests.cs" />
     <Compile Include="Core\OCTET\OctetLexerTests.cs" />
