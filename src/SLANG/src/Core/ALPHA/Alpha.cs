@@ -19,8 +19,8 @@ namespace SLANG.Core.ALPHA
 
         public char ToChar()
         {
-            Debug.Assert(this.Data.Length == 1, "this.Data.Length == 1");
-            return this.Data[0];
+            Debug.Assert(this.Element is Terminal, "this.Element is Terminal");
+            return ((Terminal)this.Element).ToChar();
         }
     }
 }
