@@ -10,7 +10,7 @@ namespace SLANG.Core.CTL
 {
     public class ControlCharacter : Alternative
     {
-        public ControlCharacter(Element element)
+        public ControlCharacter(Alternative element)
             : base(element)
         {
         }

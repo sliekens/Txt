@@ -10,7 +10,7 @@ namespace SLANG.Core.HEXDIG
 {
     public class HexadecimalDigit : Alternative
     {
-        public HexadecimalDigit(Element element)
+        public HexadecimalDigit(Alternative element)
             : base(element)
         {
         }

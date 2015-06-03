@@ -12,7 +12,7 @@ namespace SLANG.Core.ALPHA
 
     public class Alpha : Alternative
     {
-        public Alpha(Element element)
+        public Alpha(Alternative element)
             : base(element)
         {
         }

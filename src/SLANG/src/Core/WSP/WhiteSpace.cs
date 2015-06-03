@@ -10,7 +10,7 @@ namespace SLANG.Core.WSP
 {
     public class WhiteSpace : Alternative
     {
-        public WhiteSpace(Element element)
+        public WhiteSpace(Alternative element)
             : base(element)
         {
         }

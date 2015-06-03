@@ -13,7 +13,7 @@ namespace SLANG.Core.BIT
 
     public class Bit : Alternative
     {
-        public Bit(Element element)
+        public Bit(Alternative element)
             : base(element)
         {
         }
