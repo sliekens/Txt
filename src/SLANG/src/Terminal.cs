@@ -1,9 +1,9 @@
 ﻿namespace SLANG
 {
-    using System.Diagnostics;
-
     public class Terminal : Element
     {
+        private readonly char terminal;
+
         public Terminal(Terminal element)
             : base(element)
         {
@@ -12,12 +12,12 @@
         public Terminal(char data, ITextContext context)
             : base(data, context)
         {
+            this.terminal = data;
         }
 
         public char ToChar()
         {
-            Debug.Assert(this.Data.Length == 1, "this.Data.Length == 1");
-            return this.Data[0];
+            return this.terminal;
         }
     }
 }
