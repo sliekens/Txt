@@ -1,7 +1,5 @@
 ﻿namespace SLANG.Core.HTAB
 {
-    using SLANG.Core.DQUOTE;
-
     using Xunit;
 
     public class HorizontalTabLexerTests
@@ -9,6 +7,7 @@
         [Theory]
         [InlineData("\x09")]
         [InlineData("\t")]
+        [InlineData(@"	")]
         public void ReadSuccess(string input)
         {
             var factory = new HorizontalTabLexerFactory(new TerminalLexerFactory());
