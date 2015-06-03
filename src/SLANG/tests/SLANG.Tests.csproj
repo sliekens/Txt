@@ -51,6 +51,7 @@
     <Compile Include="Core\CTL\ControlCharacterLexerTests.cs" />
     <Compile Include="Core\DIGIT\DigitLexerTests.cs" />
     <Compile Include="Core\DQUOTE\DoubleQuoteLexerTests.cs" />
+    <Compile Include="Core\HEXDIG\HexadecimalDigitLexerTests.cs" />
     <Compile Include="Core\LF\LineFeedLexerTests.cs" />
     <Compile Include="Core\LWSP\LinearWhiteSpaceLexerTests.cs" />
     <Compile Include="Core\OCTET\OctetLexerTests.cs" />
@@ -74,6 +75,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
