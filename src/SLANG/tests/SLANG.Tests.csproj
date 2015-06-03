@@ -58,6 +58,7 @@
     <Compile Include="Core\OCTET\OctetLexerTests.cs" />
     <Compile Include="Core\SP\SpaceLexerTests.cs" />
     <Compile Include="Core\VCHAR\VisibleCharacterLexerTests.cs" />
+    <Compile Include="Core\WSP\WhiteSpaceLexerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StringExtensions.cs" />
   </ItemGroup>
