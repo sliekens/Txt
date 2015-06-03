@@ -17,6 +17,11 @@ namespace SLANG.Core.ALPHA
         {
         }
 
+        public static explicit operator char(Alpha instance)
+        {
+            return instance.ToChar();
+        }
+
         public char ToChar()
         {
             Debug.Assert(this.Element is Terminal, "this.Element is Terminal");
