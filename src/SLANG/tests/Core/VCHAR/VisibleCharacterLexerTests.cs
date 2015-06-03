@@ -10,11 +10,11 @@
         public void ReadSuccess(string input)
         {
             var factory = new VisibleCharacterLexerFactory(new ValueRangeLexerFactory());
-            var lineFeedLexer = factory.Create();
+            var visibleCharacterLexer = factory.Create();
             using (var scanner = new TextScanner(new PushbackInputStream(input.ToMemoryStream())))
             {
                 scanner.Read();
-                var visibleCharacter = lineFeedLexer.Read(scanner);
+                var visibleCharacter = visibleCharacterLexer.Read(scanner);
                 Assert.NotNull(visibleCharacter);
                 Assert.Equal(input, visibleCharacter.Data);
             }

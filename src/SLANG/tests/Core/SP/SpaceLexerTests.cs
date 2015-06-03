@@ -10,11 +10,11 @@
         public void ReadSuccess(string input)
         {
             var factory = new SpaceLexerFactory(new TerminalLexerFactory());
-            var lineFeedLexer = factory.Create();
+            var spaceLexer = factory.Create();
             using (var scanner = new TextScanner(new PushbackInputStream(input.ToMemoryStream())))
             {
                 scanner.Read();
-                var space = lineFeedLexer.Read(scanner);
+                var space = spaceLexer.Read(scanner);
                 Assert.NotNull(space);
                 Assert.Equal(input, space.Data);
             }
