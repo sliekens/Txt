@@ -57,6 +57,7 @@
     <Compile Include="Core\LWSP\LinearWhiteSpaceLexerTests.cs" />
     <Compile Include="Core\OCTET\OctetLexerTests.cs" />
     <Compile Include="Core\SP\SpaceLexerTests.cs" />
+    <Compile Include="Core\VCHAR\VisibleCharacterLexerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StringExtensions.cs" />
   </ItemGroup>
