@@ -14,6 +14,11 @@
         /// <param name="ruleName">The name of the grammar rule.</param>
         public RuleNameAttribute(string ruleName)
         {
+            if (ruleName == null)
+            {
+                throw new ArgumentNullException("ruleName");
+            }
+
             this.ruleName = ruleName;
         }
 
