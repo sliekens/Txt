@@ -10,8 +10,8 @@ namespace SLANG.Core.CRLF
 {
     public class EndOfLine : Sequence
     {
-        public EndOfLine(Sequence sequence)
-            : base(sequence)
+        public EndOfLine(Sequence repetition)
+            : base(repetition)
         {
         }
     }

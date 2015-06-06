@@ -4,8 +4,8 @@
 
     public class Repetition : Sequence
     {
-        public Repetition(Repetition sequence)
-            : base(sequence)
+        public Repetition(Repetition repetition)
+            : base(repetition)
         {
         }
 

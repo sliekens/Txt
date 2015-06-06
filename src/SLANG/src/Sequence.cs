@@ -9,10 +9,10 @@
     {
         private readonly IList<Element> elements;
 
-        public Sequence(Sequence sequence)
-            : base(sequence)
+        public Sequence(Sequence repetition)
+            : base(repetition)
         {
-            this.elements = sequence.elements;
+            this.elements = repetition.elements;
         }
 
         public Sequence(IList<Element> elements, ITextContext context)

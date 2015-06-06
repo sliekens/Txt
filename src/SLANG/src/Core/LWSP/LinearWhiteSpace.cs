@@ -10,8 +10,8 @@ namespace SLANG.Core.LWSP
 {
     public class LinearWhiteSpace : Repetition
     {
-        public LinearWhiteSpace(Repetition element)
-            : base(element)
+        public LinearWhiteSpace(Repetition repetition)
+            : base(repetition)
         {
         }
 
