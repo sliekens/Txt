@@ -117,11 +117,6 @@
             this.pushbackStack.TrimExcess();
         }
 
-        public void UnreadByte(byte b)
-        {
-            this.Unread(new[] { b }, 0, 1);
-        }
-
         public void Unread(byte[] buffer, int offset, int count)
         {
             if (buffer == null)
@@ -166,6 +161,11 @@
             Buffer.BlockCopy(buffer, offset, tmp, 0, count);
             this.pushbackBuffer = tmp;
             this.pushbackOffset = 0;
+        }
+
+        public void UnreadByte(byte b)
+        {
+            this.Unread(new[] { b }, 0, 1);
         }
 
         public override void Write(byte[] buffer, int offset, int count)

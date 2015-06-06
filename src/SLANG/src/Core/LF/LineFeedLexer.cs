@@ -5,6 +5,7 @@
 // <summary>
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace SLANG.Core.LF
 {
     using System;
@@ -15,7 +16,6 @@ namespace SLANG.Core.LF
         private readonly ILexer<Terminal> lineFeedTerminalLexer;
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="lineFeedTerminalLexer">%x0A</param>
         public LineFeedLexer(ILexer<Terminal> lineFeedTerminalLexer)

@@ -10,7 +10,9 @@
         {
             if (valueRangeLexerFactory == null)
             {
-                throw new ArgumentNullException("valueRangeLexerFactory", "Precondition: valueRangeLexerFactory != null");
+                throw new ArgumentNullException(
+                    "valueRangeLexerFactory",
+                    "Precondition: valueRangeLexerFactory != null");
             }
 
             this.valueRangeLexerFactory = valueRangeLexerFactory;

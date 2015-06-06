@@ -5,6 +5,7 @@
 // <summary>
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace SLANG.Core.HTAB
 {
     using System;
@@ -15,14 +16,15 @@ namespace SLANG.Core.HTAB
         private readonly ILexer<Terminal> horizontalTabTerminalLexer;
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="horizontalTabTerminalLexer">%x09</param>
         public HorizontalTabLexer(ILexer<Terminal> horizontalTabTerminalLexer)
         {
             if (horizontalTabTerminalLexer == null)
             {
-                throw new ArgumentNullException("horizontalTabTerminalLexer", "Precondition: horizontalTabTerminalLexer != null");
+                throw new ArgumentNullException(
+                    "horizontalTabTerminalLexer",
+                    "Precondition: horizontalTabTerminalLexer != null");
             }
 
             this.horizontalTabTerminalLexer = horizontalTabTerminalLexer;
@@ -37,7 +39,7 @@ namespace SLANG.Core.HTAB
                 element = new HorizontalTab(result);
                 return true;
             }
-            
+
             element = default(HorizontalTab);
             return false;
         }

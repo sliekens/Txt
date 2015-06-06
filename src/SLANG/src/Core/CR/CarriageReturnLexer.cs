@@ -5,6 +5,7 @@
 // <summary>
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace SLANG.Core.CR
 {
     using System;
@@ -15,14 +16,15 @@ namespace SLANG.Core.CR
         private readonly ILexer<Terminal> carriageReturnTerminalLexer;
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="carriageReturnTerminalLexer">%x0D</param>
         public CarriageReturnLexer(ILexer<Terminal> carriageReturnTerminalLexer)
         {
             if (carriageReturnTerminalLexer == null)
             {
-                throw new ArgumentNullException("carriageReturnTerminalLexer", "Precondition: carriageReturnTerminalLexer != null");
+                throw new ArgumentNullException(
+                    "carriageReturnTerminalLexer",
+                    "Precondition: carriageReturnTerminalLexer != null");
             }
 
             this.carriageReturnTerminalLexer = carriageReturnTerminalLexer;

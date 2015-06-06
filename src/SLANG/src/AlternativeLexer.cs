@@ -41,7 +41,7 @@
             }
 
             // ReSharper disable once ForCanBeConvertedToForeach
-            for (int i = 0; i < this.lexers.Count; i++)
+            for (var i = 0; i < this.lexers.Count; i++)
             {
                 Element alternative;
                 if (this.lexers[i].TryReadElement(scanner, out alternative))

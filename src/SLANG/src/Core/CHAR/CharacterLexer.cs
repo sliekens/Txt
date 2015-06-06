@@ -5,6 +5,7 @@
 // <summary>
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace SLANG.Core.CHAR
 {
     using System;
@@ -15,14 +16,15 @@ namespace SLANG.Core.CHAR
         private readonly ILexer<Terminal> characterValueRangeLexer;
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="characterValueRangeLexer">%x01-7F</param>
         public CharacterLexer(ILexer<Terminal> characterValueRangeLexer)
         {
             if (characterValueRangeLexer == null)
             {
-                throw new ArgumentNullException("characterValueRangeLexer", "Precondition: characterValueRangeLexer != null");
+                throw new ArgumentNullException(
+                    "characterValueRangeLexer",
+                    "Precondition: characterValueRangeLexer != null");
             }
 
             this.characterValueRangeLexer = characterValueRangeLexer;

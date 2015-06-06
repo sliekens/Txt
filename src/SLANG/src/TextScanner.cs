@@ -6,6 +6,7 @@
 //   
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace SLANG
 {
     using System;
@@ -14,15 +15,15 @@ namespace SLANG
     using System.Text;
 
     /// <summary>
-    /// Represents a text scanner that gets text from an instance of the <see cref="T:SLANG.TextScanner" />
-    /// class.
+    ///     Represents a text scanner that gets text from an instance of the <see cref="T:SLANG.TextScanner" />
+    ///     class.
     /// </summary>
     public sealed class TextScanner : ITextScanner
     {
+        private readonly Encoding encoding;
+
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly PushbackInputStream inputStream;
-
-        private readonly Encoding encoding;
 
         /// <summary>Indicates whether this object has been disposed.</summary>
         private bool disposed;
@@ -36,15 +37,15 @@ namespace SLANG
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private int offset = -1;
 
-        /// <summary>Initializes a new instance of the <see cref="T:SLANG.TextScanner"/> class for the given data source.</summary>
-        /// <param name="inputStream">The <see cref="PushbackInputStream"/> to read data from.</param>
+        /// <summary>Initializes a new instance of the <see cref="T:SLANG.TextScanner" /> class for the given data source.</summary>
+        /// <param name="inputStream">The <see cref="PushbackInputStream" /> to read data from.</param>
         public TextScanner(PushbackInputStream inputStream)
             : this(inputStream, Encoding.GetEncoding("us-ascii"))
         {
         }
 
-        /// <summary>Initializes a new instance of the <see cref="T:SLANG.TextScanner"/> class for the given data source.</summary>
-        /// <param name="inputStream">The <see cref="PushbackInputStream"/> to read data from.</param>
+        /// <summary>Initializes a new instance of the <see cref="T:SLANG.TextScanner" /> class for the given data source.</summary>
+        /// <param name="inputStream">The <see cref="PushbackInputStream" /> to read data from.</param>
         /// <param name="encoding">The encoding to use when converting text to and from binary data.</param>
         public TextScanner(PushbackInputStream inputStream, Encoding encoding)
         {
@@ -60,20 +61,6 @@ namespace SLANG
 
             this.inputStream = inputStream;
             this.encoding = encoding;
-        }
-
-        /// <inheritdoc />
-        public int Offset
-        {
-            get
-            {
-                if (this.disposed)
-                {
-                    throw new ObjectDisposedException(this.GetType().FullName);
-                }
-
-                return this.offset;
-            }
         }
 
         /// <inheritdoc />
@@ -114,6 +101,20 @@ namespace SLANG
             }
         }
 
+        /// <inheritdoc />
+        public int Offset
+        {
+            get
+            {
+                if (this.disposed)
+                {
+                    throw new ObjectDisposedException(this.GetType().FullName);
+                }
+
+                return this.offset;
+            }
+        }
+
         /// <summary>This method calls <see cref="Dispose(bool)" />, specifying <c>true</c> to release all resources.</summary>
         public void Close()
         {
@@ -122,9 +123,14 @@ namespace SLANG
         }
 
         /// <inheritdoc />
-        void IDisposable.Dispose()
+        public ITextContext GetContext()
         {
-            this.Close();
+            if (this.disposed)
+            {
+                throw new ObjectDisposedException(this.GetType().FullName);
+            }
+
+            return new TextContext(this.offset);
         }
 
         /// <inheritdoc />
@@ -185,35 +191,6 @@ namespace SLANG
 
             this.offset -= s.Length;
             this.nextCharacter = firstcharacter;
-        }
-
-        /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
-        /// <param name="disposing"><c>true</c> to clean up both managed and unmanaged resources; otherwise, <c>false</c> to clean up only unmanaged
-        /// resources.</param>
-        private void Dispose(bool disposing)
-        {
-            if (this.disposed)
-            {
-                return;
-            }
-
-            if (disposing)
-            {
-                this.inputStream.Dispose();
-            }
-
-            this.disposed = true;
-        }
-
-        /// <inheritdoc />
-        public ITextContext GetContext()
-        {
-            if (this.disposed)
-            {
-                throw new ObjectDisposedException(this.GetType().FullName);
-            }
-
-            return new TextContext(this.offset);
         }
 
         /// <inheritdoc />
@@ -331,6 +308,32 @@ namespace SLANG
             match = this.nextCharacter;
             this.Read();
             return true;
+        }
+
+        /// <inheritdoc />
+        void IDisposable.Dispose()
+        {
+            this.Close();
+        }
+
+        /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
+        /// <param name="disposing">
+        ///     <c>true</c> to clean up both managed and unmanaged resources; otherwise, <c>false</c> to clean up only unmanaged
+        ///     resources.
+        /// </param>
+        private void Dispose(bool disposing)
+        {
+            if (this.disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                this.inputStream.Dispose();
+            }
+
+            this.disposed = true;
         }
     }
 }

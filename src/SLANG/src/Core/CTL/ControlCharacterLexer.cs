@@ -5,6 +5,7 @@
 // <summary>
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace SLANG.Core.CTL
 {
     using System;
@@ -15,14 +16,15 @@ namespace SLANG.Core.CTL
         private readonly ILexer<Alternative> controlCharacterAlternativeLexer;
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="controlCharacterAlternativeLexer">%x00-1F / %x7F</param>
         public ControlCharacterLexer(ILexer<Alternative> controlCharacterAlternativeLexer)
         {
             if (controlCharacterAlternativeLexer == null)
             {
-                throw new ArgumentNullException("controlCharacterAlternativeLexer", "Precondition: controlCharacterAlternativeLexer != null");
+                throw new ArgumentNullException(
+                    "controlCharacterAlternativeLexer",
+                    "Precondition: controlCharacterAlternativeLexer != null");
             }
 
             this.controlCharacterAlternativeLexer = controlCharacterAlternativeLexer;

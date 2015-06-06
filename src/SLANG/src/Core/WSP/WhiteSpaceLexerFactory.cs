@@ -7,13 +7,16 @@
 
     public class WhiteSpaceLexerFactory : ILexerFactory<WhiteSpace>
     {
-        private readonly ILexerFactory<Space> spaceLexerFactory;
+        private readonly IAlternativeLexerFactory alternativeLexerFactory;
 
         private readonly ILexerFactory<HorizontalTab> horizontalTabLexerFactory;
 
-        private readonly IAlternativeLexerFactory alternativeLexerFactory;
+        private readonly ILexerFactory<Space> spaceLexerFactory;
 
-        public WhiteSpaceLexerFactory(ILexerFactory<Space> spaceLexerFactory, ILexerFactory<HorizontalTab> horizontalTabLexerFactory, IAlternativeLexerFactory alternativeLexerFactory)
+        public WhiteSpaceLexerFactory(
+            ILexerFactory<Space> spaceLexerFactory,
+            ILexerFactory<HorizontalTab> horizontalTabLexerFactory,
+            IAlternativeLexerFactory alternativeLexerFactory)
         {
             if (spaceLexerFactory == null)
             {
@@ -22,12 +25,16 @@
 
             if (horizontalTabLexerFactory == null)
             {
-                throw new ArgumentNullException("horizontalTabLexerFactory", "Precondition: horizontalTabLexerFactory != null");
+                throw new ArgumentNullException(
+                    "horizontalTabLexerFactory",
+                    "Precondition: horizontalTabLexerFactory != null");
             }
 
             if (alternativeLexerFactory == null)
             {
-                throw new ArgumentNullException("alternativeLexerFactory", "Precondition: alternativeLexerFactory != null");
+                throw new ArgumentNullException(
+                    "alternativeLexerFactory",
+                    "Precondition: alternativeLexerFactory != null");
             }
 
             this.spaceLexerFactory = spaceLexerFactory;

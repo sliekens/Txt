@@ -5,6 +5,7 @@
 // <summary>
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace SLANG.Core.DQUOTE
 {
     using System;
@@ -15,14 +16,15 @@ namespace SLANG.Core.DQUOTE
         private readonly ILexer<Terminal> doubleQuoteTerminalLexer;
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="doubleQuoteTerminalLexer">%x22</param>
         public DoubleQuoteLexer(ILexer<Terminal> doubleQuoteTerminalLexer)
         {
             if (doubleQuoteTerminalLexer == null)
             {
-                throw new ArgumentNullException("doubleQuoteTerminalLexer", "Precondition: doubleQuoteTerminalLexer != null");
+                throw new ArgumentNullException(
+                    "doubleQuoteTerminalLexer",
+                    "Precondition: doubleQuoteTerminalLexer != null");
             }
 
             this.doubleQuoteTerminalLexer = doubleQuoteTerminalLexer;

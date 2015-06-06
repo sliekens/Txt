@@ -4,15 +4,17 @@
 
     public class BitLexerFactory : ILexerFactory<Bit>
     {
-        private readonly IStringLexerFactory stringLexerFactory;
-
         private readonly IAlternativeLexerFactory alternativeLexerFactory;
+
+        private readonly IStringLexerFactory stringLexerFactory;
 
         public BitLexerFactory(IAlternativeLexerFactory alternativeLexerFactory, IStringLexerFactory stringLexerFactory)
         {
             if (alternativeLexerFactory == null)
             {
-                throw new ArgumentNullException("alternativeLexerFactory", "Precondition: alternativeLexerFactory != null");
+                throw new ArgumentNullException(
+                    "alternativeLexerFactory",
+                    "Precondition: alternativeLexerFactory != null");
             }
 
             if (stringLexerFactory == null)

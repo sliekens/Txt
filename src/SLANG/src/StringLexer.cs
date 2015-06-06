@@ -5,7 +5,7 @@
 
     public class StringLexer : Lexer<TerminalString>
     {
-        private readonly IList<ILexer<Terminal>> lexers; 
+        private readonly IList<ILexer<Terminal>> lexers;
 
         public StringLexer(IList<ILexer<Terminal>> lexers)
         {
@@ -39,7 +39,7 @@
                 {
                     if (elements.Count != this.lexers.Count && elements.Count != 0)
                     {
-                        for (int j = elements.Count - 1; j >= 0; j--)
+                        for (var j = elements.Count - 1; j >= 0; j--)
                         {
                             scanner.PutBack(elements[j].Data);
                         }

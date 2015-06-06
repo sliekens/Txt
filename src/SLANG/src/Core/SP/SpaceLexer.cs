@@ -5,6 +5,7 @@
 // <summary>
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace SLANG.Core.SP
 {
     using System;
@@ -15,7 +16,6 @@ namespace SLANG.Core.SP
         private readonly ILexer<Terminal> spaceTerminalLexer;
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="spaceTerminalLexer">%x20</param>
         public SpaceLexer(ILexer<Terminal> spaceTerminalLexer)

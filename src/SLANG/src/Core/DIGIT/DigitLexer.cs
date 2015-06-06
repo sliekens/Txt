@@ -5,6 +5,7 @@
 // <summary>
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace SLANG.Core.DIGIT
 {
     using System;
@@ -15,7 +16,6 @@ namespace SLANG.Core.DIGIT
         private readonly ILexer<Terminal> digitValueRangeLexer;
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="digitValueRangeLexer">%x30-39</param>
         public DigitLexer(ILexer<Terminal> digitValueRangeLexer)

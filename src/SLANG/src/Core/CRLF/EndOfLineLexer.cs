@@ -5,6 +5,7 @@
 // <summary>
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace SLANG.Core.CRLF
 {
     using System;
@@ -15,14 +16,15 @@ namespace SLANG.Core.CRLF
         private readonly ILexer<Sequence> endOfLineSequenceLexer;
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="endOfLineSequenceLexer">CR LF</param>
         public EndOfLineLexer(ILexer<Sequence> endOfLineSequenceLexer)
         {
             if (endOfLineSequenceLexer == null)
             {
-                throw new ArgumentNullException("endOfLineSequenceLexer", "Precondition: endOfLineSequenceLexer != null");
+                throw new ArgumentNullException(
+                    "endOfLineSequenceLexer",
+                    "Precondition: endOfLineSequenceLexer != null");
             }
 
             this.endOfLineSequenceLexer = endOfLineSequenceLexer;

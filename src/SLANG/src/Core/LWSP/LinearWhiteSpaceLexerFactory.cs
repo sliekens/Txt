@@ -26,7 +26,9 @@
         {
             if (whiteSpaceLexerFactory == null)
             {
-                throw new ArgumentNullException("whiteSpaceLexerFactory", "Precondition: whiteSpaceLexerFactory != null");
+                throw new ArgumentNullException(
+                    "whiteSpaceLexerFactory",
+                    "Precondition: whiteSpaceLexerFactory != null");
             }
 
             if (endOfLineLexerFactory == null)
@@ -66,7 +68,10 @@
             var whiteSpaceLexer = this.whiteSpaceLexerFactory.Create();
             var foldLexer = this.sequenceLexerFactory.Create(endOfLineLexer, whiteSpaceLexer);
             var breakingWhiteSpaceLexer = this.alternativeLexerFactory.Create(whiteSpaceLexer, foldLexer);
-            var linearWhiteSpaceRepetitionLexer = this.repetitionLexerFactory.Create(breakingWhiteSpaceLexer, 0, int.MaxValue);
+            var linearWhiteSpaceRepetitionLexer = this.repetitionLexerFactory.Create(
+                breakingWhiteSpaceLexer,
+                0,
+                int.MaxValue);
             return new LinearWhiteSpaceLexer(linearWhiteSpaceRepetitionLexer);
         }
     }

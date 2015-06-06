@@ -58,12 +58,6 @@
             }
         }
 
-        /// <summary>Gets a well-formed string that represents the current element. This is useful for elements that are technically valid, but contain formatting errors or other inpurities. For example: mixed upper and lower case characters where only lower case is well-formed. Unless overridden, the default return value is the value of <see cref="Data"/>.</summary>
-        public virtual string GetWellFormedData()
-        {
-            return this.Data;
-        }
-
         /// <summary>Gets the current position, relative to the beginning of the data source.</summary>
         public int Offset
         {
@@ -71,6 +65,17 @@
             {
                 return this.offset;
             }
+        }
+
+        /// <summary>
+        ///     Gets a well-formed string that represents the current element. This is useful for elements that are
+        ///     technically valid, but contain formatting errors or other inpurities. For example: mixed upper and lower case
+        ///     characters where only lower case is well-formed. Unless overridden, the default return value is the value of
+        ///     <see cref="Data" />.
+        /// </summary>
+        public virtual string GetWellFormedData()
+        {
+            return this.Data;
         }
 
         /// <inheritdoc />

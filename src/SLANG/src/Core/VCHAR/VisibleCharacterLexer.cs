@@ -5,6 +5,7 @@
 // <summary>
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace SLANG.Core.VCHAR
 {
     using System;
@@ -15,14 +16,15 @@ namespace SLANG.Core.VCHAR
         private readonly ILexer<Terminal> visibleCharacterValueRangeLexer;
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="visibleCharacterValueRangeLexer">%x21-7E</param>
         public VisibleCharacterLexer(ILexer<Terminal> visibleCharacterValueRangeLexer)
         {
             if (visibleCharacterValueRangeLexer == null)
             {
-                throw new ArgumentNullException("visibleCharacterValueRangeLexer", "Precondition: visibleCharacterValueRangeLexer != null");
+                throw new ArgumentNullException(
+                    "visibleCharacterValueRangeLexer",
+                    "Precondition: visibleCharacterValueRangeLexer != null");
             }
 
             this.visibleCharacterValueRangeLexer = visibleCharacterValueRangeLexer;

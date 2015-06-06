@@ -6,6 +6,7 @@
 //   
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace SLANG
 {
     using System.Diagnostics;
@@ -15,7 +16,7 @@ namespace SLANG
     {
         private readonly int offset;
 
-        /// <summary>Initializes a new instance of the <see cref="TextContext"/> struct with a specified offset.</summary>
+        /// <summary>Initializes a new instance of the <see cref="TextContext" /> struct with a specified offset.</summary>
         /// <param name="offset">The position, relative to the beginning of the data source.</param>
         public TextContext(int offset)
             : this()

@@ -6,11 +6,13 @@
     /// <summary>Provides the base class for lexers whose lexer rule is a repetition of elements.</summary>
     public class RepetitionLexer : Lexer<Repetition>
     {
-        private readonly ILexer repeatingElementLexer;
         private readonly int lowerBound;
+
+        private readonly ILexer repeatingElementLexer;
+
         private readonly int upperBound;
 
-        /// <summary>Initializes a new instance of the <see cref="RepetitionLexer"/> class with a specified lower and upper bound.</summary>
+        /// <summary>Initializes a new instance of the <see cref="RepetitionLexer" /> class with a specified lower and upper bound.</summary>
         /// <param name="repeatingElementLexer">The lexer for the repeating element.</param>
         /// <param name="lowerBound">A number that indicates the minimum number of occurrences.</param>
         /// <param name="upperBound">A number that indicates the maximum number of occurrences.</param>

@@ -5,6 +5,7 @@
 // <summary>
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace SLANG.Core.WSP
 {
     using System;
@@ -18,7 +19,9 @@ namespace SLANG.Core.WSP
         {
             if (whiteSpaceAlternativeLexer == null)
             {
-                throw new ArgumentNullException("whiteSpaceAlternativeLexer", "Precondition: whiteSpaceAlternativeLexer != null");
+                throw new ArgumentNullException(
+                    "whiteSpaceAlternativeLexer",
+                    "Precondition: whiteSpaceAlternativeLexer != null");
             }
 
             this.whiteSpaceAlternativeLexer = whiteSpaceAlternativeLexer;

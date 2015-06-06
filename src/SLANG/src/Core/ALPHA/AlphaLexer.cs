@@ -5,6 +5,7 @@
 // <summary>
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace SLANG.Core.ALPHA
 {
     using System;
@@ -15,7 +16,6 @@ namespace SLANG.Core.ALPHA
         private readonly ILexer<Alternative> alphaAlternativeLexer;
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="alphaAlternativeLexer">%x41-5A / %x61-7A</param>
         public AlphaLexer(ILexer<Alternative> alphaAlternativeLexer)

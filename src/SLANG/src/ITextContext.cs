@@ -6,6 +6,7 @@
 //   
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace SLANG
 {
     /// <summary>Provides the interface for types that provide contextual information about their source data.</summary>

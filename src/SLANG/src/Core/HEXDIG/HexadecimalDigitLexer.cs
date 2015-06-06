@@ -5,6 +5,7 @@
 // <summary>
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace SLANG.Core.HEXDIG
 {
     using System;
@@ -15,14 +16,15 @@ namespace SLANG.Core.HEXDIG
         private readonly ILexer<Alternative> hexadecimalDigitAlternativeLexer;
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="hexadecimalDigitAlternativeLexer">DIGIT / "A" / "B" / "C" / "D" / "E" / "F"</param>
         public HexadecimalDigitLexer(ILexer<Alternative> hexadecimalDigitAlternativeLexer)
         {
             if (hexadecimalDigitAlternativeLexer == null)
             {
-                throw new ArgumentNullException("hexadecimalDigitAlternativeLexer", "Precondition: hexadecimalDigitAlternativeLexer != null");
+                throw new ArgumentNullException(
+                    "hexadecimalDigitAlternativeLexer",
+                    "Precondition: hexadecimalDigitAlternativeLexer != null");
             }
 
             this.hexadecimalDigitAlternativeLexer = hexadecimalDigitAlternativeLexer;

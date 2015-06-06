@@ -38,7 +38,19 @@
         }
 
         /// <summary>
-        /// Converts the current instance to its equivalent string representation in a specified base.
+        ///     Gets the terminal values in the string, in order of appearance.
+        /// </summary>
+        public IList<Terminal> Terminals
+        {
+            get
+            {
+                Debug.Assert(this.terminals != null, "this.terminals != null");
+                return this.terminals;
+            }
+        }
+
+        /// <summary>
+        ///     Converts the current instance to its equivalent string representation in a specified base.
         /// </summary>
         /// <param name="toBase">The base of the return value, which must be 2, 10 or 16.</param>
         /// <returns>The converted value in a specified base.</returns>
@@ -57,18 +69,6 @@
                     return "%x" + valuesAsString;
                 default:
                     throw new ArgumentException("The given base is not currently supported.", "toBase");
-            }
-        }
-
-        /// <summary>
-        ///     Gets the terminal values in the string, in order of appearance.
-        /// </summary>
-        public IList<Terminal> Terminals
-        {
-            get
-            {
-                Debug.Assert(this.terminals != null, "this.terminals != null");
-                return this.terminals;
             }
         }
     }

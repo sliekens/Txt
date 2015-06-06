@@ -5,6 +5,7 @@
 // <summary>
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace SLANG.Core.LWSP
 {
     using System;
@@ -18,7 +19,9 @@ namespace SLANG.Core.LWSP
         {
             if (linearWhiteSpaceRepetitionLexer == null)
             {
-                throw new ArgumentNullException("linearWhiteSpaceRepetitionLexer", "Precondition: linearWhiteSpaceRepetitionLexer != null");
+                throw new ArgumentNullException(
+                    "linearWhiteSpaceRepetitionLexer",
+                    "Precondition: linearWhiteSpaceRepetitionLexer != null");
             }
 
             this.linearWhiteSpaceRepetitionLexer = linearWhiteSpaceRepetitionLexer;
