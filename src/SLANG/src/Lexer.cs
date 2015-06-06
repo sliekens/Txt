@@ -10,6 +10,7 @@
 namespace SLANG
 {
     using System;
+    using System.Reflection;
 
     /// <summary>
     ///     Provides the base class for lexers. A lexer is a class that matches symbols from a data source against a
@@ -50,8 +51,8 @@ namespace SLANG
 
             throw new FormatException(
                 string.Format(
-                    "Syntax error. Expected element of type: '{0}' at position '{1}'",
-                    typeof(TElement).FullName,
+                    "Syntax error. Expected '{0}' at position '{1}'",
+                    this.GetType().GetTypeInfo().GetCustomAttribute<RuleNameAttribute>().RuleName,
                     scanner.GetContext().Offset));
         }
 
