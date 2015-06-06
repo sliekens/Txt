@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace SLANG.Core.OCTET
+namespace SLANG.Core
 {
     public class Octet : Terminal
     {

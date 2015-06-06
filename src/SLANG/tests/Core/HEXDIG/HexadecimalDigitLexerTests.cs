@@ -1,7 +1,5 @@
-﻿namespace SLANG.Core.HEXDIG
+﻿namespace SLANG.Core
 {
-    using SLANG.Core.DIGIT;
-
     using Xunit;
 
     public class HexadecimalDigitLexerTests

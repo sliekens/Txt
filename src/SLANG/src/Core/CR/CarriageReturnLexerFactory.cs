@@ -1,4 +1,4 @@
-﻿namespace SLANG.Core.CR
+﻿namespace SLANG.Core
 {
     using System;
 

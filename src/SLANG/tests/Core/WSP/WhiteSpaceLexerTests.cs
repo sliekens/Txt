@@ -1,8 +1,5 @@
-﻿namespace SLANG.Core.WSP
+﻿namespace SLANG.Core
 {
-    using SLANG.Core.HTAB;
-    using SLANG.Core.SP;
-
     using Xunit;
 
     public class WhiteSpaceLexerTests

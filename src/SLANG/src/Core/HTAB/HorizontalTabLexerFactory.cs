@@ -1,4 +1,4 @@
-﻿namespace SLANG.Core.HTAB
+﻿namespace SLANG.Core
 {
     using System;
 

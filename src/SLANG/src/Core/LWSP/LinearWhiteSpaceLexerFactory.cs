@@ -1,9 +1,6 @@
-﻿namespace SLANG.Core.LWSP
+﻿namespace SLANG.Core
 {
     using System;
-
-    using SLANG.Core.CRLF;
-    using SLANG.Core.WSP;
 
     public class LinearWhiteSpaceLexerFactory : ILexerFactory<LinearWhiteSpace>
     {

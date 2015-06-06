@@ -1,4 +1,4 @@
-﻿namespace SLANG.Core.DIGIT
+﻿namespace SLANG.Core
 {
     using System;
 

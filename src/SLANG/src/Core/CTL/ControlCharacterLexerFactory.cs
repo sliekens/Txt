@@ -1,4 +1,4 @@
-﻿namespace SLANG.Core.CTL
+﻿namespace SLANG.Core
 {
     using System;
 

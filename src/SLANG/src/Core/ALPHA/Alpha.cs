@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace SLANG.Core.ALPHA
+namespace SLANG.Core
 {
     using System.Diagnostics;
 

@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace SLANG.Core.DIGIT
+namespace SLANG.Core
 {
     public class Digit : Terminal
     {

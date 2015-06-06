@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace SLANG.Core.CTL
+namespace SLANG.Core
 {
     public class ControlCharacter : Alternative
     {

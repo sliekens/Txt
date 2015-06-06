@@ -1,4 +1,4 @@
-﻿namespace SLANG.Core.BIT
+﻿namespace SLANG.Core
 {
     using System;
 

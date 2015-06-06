@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace SLANG.Core.HEXDIG
+namespace SLANG.Core
 {
     public class HexadecimalDigit : Alternative
     {

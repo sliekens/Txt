@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace SLANG.Core.VCHAR
+namespace SLANG.Core
 {
     public class VisibleCharacter : Terminal
     {

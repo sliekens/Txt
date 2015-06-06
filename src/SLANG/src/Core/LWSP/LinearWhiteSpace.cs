@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace SLANG.Core.LWSP
+namespace SLANG.Core
 {
     public class LinearWhiteSpace : Repetition
     {

@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace SLANG.Core.WSP
+namespace SLANG.Core
 {
     public class WhiteSpace : Alternative
     {

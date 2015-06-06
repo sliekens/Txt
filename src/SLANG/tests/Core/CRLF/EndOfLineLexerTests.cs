@@ -1,8 +1,5 @@
-﻿namespace SLANG.Core.CRLF
+﻿namespace SLANG.Core
 {
-    using SLANG.Core.CR;
-    using SLANG.Core.LF;
-
     using Xunit;
 
     public class EndOfLineLexerTests

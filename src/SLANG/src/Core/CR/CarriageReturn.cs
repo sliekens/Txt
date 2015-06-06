@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace SLANG.Core.CR
+namespace SLANG.Core
 {
     public class CarriageReturn : Terminal
     {

@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace SLANG.Core.CRLF
+namespace SLANG.Core
 {
     public class EndOfLine : Sequence
     {

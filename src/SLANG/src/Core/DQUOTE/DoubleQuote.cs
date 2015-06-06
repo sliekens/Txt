@@ -6,7 +6,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace SLANG.Core.DQUOTE
+namespace SLANG.Core
 {
     public class DoubleQuote : Terminal
     {

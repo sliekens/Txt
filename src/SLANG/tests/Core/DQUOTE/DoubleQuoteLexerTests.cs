@@ -1,4 +1,4 @@
-﻿namespace SLANG.Core.DQUOTE
+﻿namespace SLANG.Core
 {
     using Xunit;
 

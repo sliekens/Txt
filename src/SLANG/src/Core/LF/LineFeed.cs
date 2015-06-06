@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace SLANG.Core.LF
+namespace SLANG.Core
 {
     public class LineFeed : Terminal
     {

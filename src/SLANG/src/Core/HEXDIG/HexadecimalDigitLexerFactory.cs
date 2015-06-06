@@ -1,8 +1,6 @@
-﻿namespace SLANG.Core.HEXDIG
+﻿namespace SLANG.Core
 {
     using System;
-
-    using SLANG.Core.DIGIT;
 
     public class HexadecimalDigitLexerFactory : ILexerFactory<HexadecimalDigit>
     {

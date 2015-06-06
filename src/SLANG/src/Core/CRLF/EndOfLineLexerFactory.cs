@@ -1,9 +1,6 @@
-﻿namespace SLANG.Core.CRLF
+﻿namespace SLANG.Core
 {
     using System;
-
-    using SLANG.Core.CR;
-    using SLANG.Core.LF;
 
     public class EndOfLineLexerFactory : ILexerFactory<EndOfLine>
     {

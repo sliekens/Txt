@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace SLANG.Core.SP
+namespace SLANG.Core
 {
     public class Space : Terminal
     {

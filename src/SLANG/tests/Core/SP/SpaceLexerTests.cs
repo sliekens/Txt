@@ -1,4 +1,4 @@
-﻿namespace SLANG.Core.SP
+﻿namespace SLANG.Core
 {
     using Xunit;
 

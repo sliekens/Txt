@@ -1,4 +1,4 @@
-﻿namespace SLANG.Core.VCHAR
+﻿namespace SLANG.Core
 {
     using System;
 

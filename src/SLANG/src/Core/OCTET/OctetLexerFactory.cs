@@ -1,4 +1,4 @@
-﻿namespace SLANG.Core.OCTET
+﻿namespace SLANG.Core
 {
     using System;
 

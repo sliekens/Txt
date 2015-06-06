@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace SLANG.Core.HTAB
+namespace SLANG.Core
 {
     public class HorizontalTab : Terminal
     {
