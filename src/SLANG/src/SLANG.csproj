@@ -43,6 +43,7 @@
     <Compile Include="CaseInsensitiveTerminalLexerFactory.cs" />
     <Compile Include="IStringLexerFactory.cs" />
     <Compile Include="ITerminalLexerFactory.cs" />
+    <Compile Include="RuleNameAttribute.cs" />
     <Compile Include="StringLexer.cs" />
     <Compile Include="Core\ALPHA\AlphaLexer.cs" />
     <Compile Include="Core\ALPHA\Alpha.cs" />
