@@ -35,9 +35,9 @@
             }
         }
 
-        public override string GetWellFormedData()
+        public override string GetWellFormedText()
         {
-            return string.Concat(this.Elements.Select(element => element.GetWellFormedData()));
+            return string.Concat(this.Elements.Select(element => element.GetWellFormedText()));
         }
     }
 }

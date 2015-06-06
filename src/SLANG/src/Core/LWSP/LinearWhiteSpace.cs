@@ -16,7 +16,7 @@ namespace SLANG.Core.LWSP
         {
         }
 
-        public override string GetWellFormedData()
+        public override string GetWellFormedText()
         {
             // LWSP is optional, so don't return white space if there was no white space to begin with
             if (this.Values.Length == 0)

@@ -87,7 +87,7 @@
         ///     <see cref="Values" />.
         /// </summary>
         /// <returns>A well-formed string that represents the current element.</returns>
-        public virtual string GetWellFormedData()
+        public virtual string GetWellFormedText()
         {
             return this.Values;
         }

@@ -21,9 +21,9 @@
             }
         }
 
-        public override string GetWellFormedData()
+        public override string GetWellFormedText()
         {
-            return this.Element.GetWellFormedData();
+            return this.Element.GetWellFormedText();
         }
     }
 }
