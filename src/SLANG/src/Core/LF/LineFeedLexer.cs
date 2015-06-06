@@ -18,7 +18,6 @@ namespace SLANG.Core.LF
         /// </summary>
         /// <param name="lineFeedTerminalLexer">%x0A</param>
         public LineFeedLexer(ILexer<Terminal> lineFeedTerminalLexer)
-            : base("LF")
         {
             if (lineFeedTerminalLexer == null)
             {

@@ -18,7 +18,6 @@ namespace SLANG.Core.ALPHA
         /// </summary>
         /// <param name="alphaAlternativeLexer">%x41-5A / %x61-7A</param>
         public AlphaLexer(ILexer<Alternative> alphaAlternativeLexer)
-            : base("ALPHA")
         {
             if (alphaAlternativeLexer == null)
             {

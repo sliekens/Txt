@@ -18,7 +18,6 @@ namespace SLANG.Core.DIGIT
         /// </summary>
         /// <param name="digitValueRangeLexer">%x30-39</param>
         public DigitLexer(ILexer<Terminal> digitValueRangeLexer)
-            : base("DIGIT")
         {
             if (digitValueRangeLexer == null)
             {

@@ -18,7 +18,6 @@ namespace SLANG.Core.CRLF
         /// </summary>
         /// <param name="endOfLineSequenceLexer">CR LF</param>
         public EndOfLineLexer(ILexer<Sequence> endOfLineSequenceLexer)
-            : base("CRLF")
         {
             if (endOfLineSequenceLexer == null)
             {

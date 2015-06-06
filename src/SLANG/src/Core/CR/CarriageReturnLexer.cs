@@ -18,7 +18,6 @@ namespace SLANG.Core.CR
         /// </summary>
         /// <param name="carriageReturnTerminalLexer">%x0D</param>
         public CarriageReturnLexer(ILexer<Terminal> carriageReturnTerminalLexer)
-            : base("CR")
         {
             if (carriageReturnTerminalLexer == null)
             {

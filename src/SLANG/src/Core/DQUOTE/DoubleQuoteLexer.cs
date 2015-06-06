@@ -18,7 +18,6 @@ namespace SLANG.Core.DQUOTE
         /// </summary>
         /// <param name="doubleQuoteTerminalLexer">%x22</param>
         public DoubleQuoteLexer(ILexer<Terminal> doubleQuoteTerminalLexer)
-            : base("DQUOTE")
         {
             if (doubleQuoteTerminalLexer == null)
             {

@@ -14,7 +14,6 @@ namespace SLANG.Core.OCTET
         private readonly ILexer<Terminal> octetValueRangeLexer;
 
         public OctetLexer(ILexer<Terminal> octetValueRangeLexer)
-            : base("OCTET")
         {
             if (octetValueRangeLexer == null)
             {

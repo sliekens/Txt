@@ -14,7 +14,6 @@ namespace SLANG.Core.BIT
         private readonly ILexer<Alternative> bitAlternativeLexer;
 
         public BitLexer(ILexer<Alternative> bitAlternativeLexer)
-            : base("BIT")
         {
             if (bitAlternativeLexer == null)
             {

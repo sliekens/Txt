@@ -18,7 +18,6 @@ namespace SLANG.Core.HTAB
         /// </summary>
         /// <param name="horizontalTabTerminalLexer">%x09</param>
         public HorizontalTabLexer(ILexer<Terminal> horizontalTabTerminalLexer)
-            : base("HTAB")
         {
             if (horizontalTabTerminalLexer == null)
             {

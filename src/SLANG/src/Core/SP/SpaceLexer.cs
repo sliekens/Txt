@@ -18,7 +18,6 @@ namespace SLANG.Core.SP
         /// </summary>
         /// <param name="spaceTerminalLexer">%x20</param>
         public SpaceLexer(ILexer<Terminal> spaceTerminalLexer)
-            : base("SP")
         {
             if (spaceTerminalLexer == null)
             {

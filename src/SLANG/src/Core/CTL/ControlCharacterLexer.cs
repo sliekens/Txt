@@ -18,7 +18,6 @@ namespace SLANG.Core.CTL
         /// </summary>
         /// <param name="controlCharacterAlternativeLexer">%x00-1F / %x7F</param>
         public ControlCharacterLexer(ILexer<Alternative> controlCharacterAlternativeLexer)
-            : base("CTL")
         {
             if (controlCharacterAlternativeLexer == null)
             {

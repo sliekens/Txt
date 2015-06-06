@@ -9,7 +9,6 @@
 namespace SLANG
 {
     using System;
-    using System.Linq;
 
     /// <summary>Provides the base class for lexers. A lexer is a class that matches symbols from a data source against a grammar rule to produce grammar elements. Each class that extends the <see cref="Lexer{TElement}"/> class corresponds to a singe grammar rule. For complex grammars with many grammar rules, multiple lexers work together to convert the input text to a parse tree.</summary>
     /// <typeparam name="TElement">The type of the element that represents the lexer rule.</typeparam>
@@ -22,80 +21,14 @@ namespace SLANG
     /// Do not throw any exceptions in TryRead().
     /// Lexer classes should be sealed.
     /// Re-use lexer classes for lexer rules that reference other lexer rules. 
-    /// <example>INT = 1*DIGIT
-    /// <code>
-    /// public sealed class DigitLexer : Lexer&lt;Digit&gt;
-    /// {
-    ///     public DigitLexer() : base("DIGIT") { }
-    /// 
-    ///     public override bool TryRead(ITextScanner scanner, out Digit element)
-    ///     {
-    ///         // Actual implementation
-    ///     }
-    /// }
-    /// 
-    /// public sealed class IntLexer : Lexer&lt;Int&gt;
-    /// {
-    ///     private readonly ILexer&lt;Digit&gt; digitLexer;
-    /// 
-    ///     public IntLexer() : this(new DigitLexer()) { }
-    /// 
-    ///     public IntLexer(ILexer&lt;Digit&gt; digitLexer)
-    ///         : base("INT")
-    ///     {
-    ///         this.digitLexer = digitLexer
-    ///     }
-    /// 
-    ///     public override bool TryRead(ITextScanner scanner, out Int element)
-    ///     {
-    ///         // Actual implementation
-    ///     }
-    /// }</code>
-    /// </example>
     /// </para>
     /// </remarks>
     public abstract class Lexer<TElement> : ILexer<TElement>
         where TElement : Element
     {
-        /// <summary>The name of the lexer rule.</summary>
-        private readonly string ruleName;
-
         /// <summary>Initializes a new instance of the <see cref="Lexer{TElement}"/> class for an unnamed element.</summary>
         protected Lexer()
         {
-            }
-
-        /// <summary>Initializes a new instance of the <see cref="Lexer{TElement}"/> class for a specified rule.</summary>
-        /// <param name="ruleName">The name of the lexer rule. Rule names are case insensitive.</param>
-        /// <exception cref="ArgumentException">The value of <paramref name="ruleName"/> is a <c>null</c> reference (<c>Nothing</c> in Visual Basic) -or- the value of <paramref name="ruleName"/> does not start with a letter -or- the value of <paramref name="ruleName"/> contains one or more characters that are not letters, digits or hyphens.</exception>
-        protected Lexer(string ruleName)
-            {
-            if (string.IsNullOrEmpty(ruleName))
-            {
-                throw new ArgumentException("Precondition failed: !string.IsNullOrEmpty(ruleName)", "ruleName");
-            }
-
-            if (!char.IsLetter(ruleName, 0))
-            {
-                throw new ArgumentException("Precondition failed: char.IsLetter(ruleName, 0)");
-            }
-
-            if (ruleName.ToCharArray().Any(c => !char.IsLetterOrDigit(c) && c != '-'))
-            {
-                throw new ArgumentException(
-                    "Precondition failed: ruleName.ToCharArray().All(c => char.IsLetterOrDigit(c) || c == '-')");
-            }
-
-            this.ruleName = ruleName;
-        }
-
-        /// <inheritdoc />
-        public string RuleName
-        {
-            get
-            {
-                return this.ruleName;
-            }
         }
 
         /// <inheritdoc />
@@ -130,7 +63,7 @@ namespace SLANG
 
             throw new SyntaxErrorException(
                 scanner.GetContext(),
-                string.Format("Unexpected symbol. Expected element: '{0}'.", this.ruleName ?? typeof(TElement).FullName));
+                string.Format("Unexpected symbol. Expected element: '{0}'.", typeof(TElement).FullName));
         }
 
         /// <inheritdoc />

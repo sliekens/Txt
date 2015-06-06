@@ -18,7 +18,6 @@ namespace SLANG.Core.HEXDIG
         /// </summary>
         /// <param name="hexadecimalDigitAlternativeLexer">DIGIT / "A" / "B" / "C" / "D" / "E" / "F"</param>
         public HexadecimalDigitLexer(ILexer<Alternative> hexadecimalDigitAlternativeLexer)
-            : base("HEXDIG")
         {
             if (hexadecimalDigitAlternativeLexer == null)
             {

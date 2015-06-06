@@ -18,7 +18,6 @@ namespace SLANG.Core.CHAR
         /// </summary>
         /// <param name="characterValueRangeLexer">%x01-7F</param>
         public CharacterLexer(ILexer<Terminal> characterValueRangeLexer)
-            : base("CHAR")
         {
             if (characterValueRangeLexer == null)
             {

@@ -18,7 +18,6 @@ namespace SLANG.Core.VCHAR
         /// </summary>
         /// <param name="visibleCharacterValueRangeLexer">%x21-7E</param>
         public VisibleCharacterLexer(ILexer<Terminal> visibleCharacterValueRangeLexer)
-            : base("VCHAR")
         {
             if (visibleCharacterValueRangeLexer == null)
             {

@@ -10,10 +10,6 @@ namespace SLANG
 {
     public interface ILexer
     {
-        /// <summary>Gets the name of the current lexer rule.</summary>
-        /// <remarks>Rule names are case insensitive. The names "rulename", "Rulename", "RULENAME", and "rUlENamE" all refer to the same rule.</remarks>
-        string RuleName { get; }
-
         /// <summary>Attempts to read the next element. A return value indicates whether the element was available.</summary>
         /// <param name="scanner">The scanner object that provides text symbols as well as contextual information about the text source.</param>
         /// <param name="element">When this method returns, contains the next available element, or a <c>null</c> reference, depending

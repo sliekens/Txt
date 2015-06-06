@@ -14,7 +14,6 @@ namespace SLANG.Core.WSP
         private readonly ILexer<Alternative> whiteSpaceAlternativeLexer;
 
         public WhiteSpaceLexer(ILexer<Alternative> whiteSpaceAlternativeLexer)
-            : base("WSP")
         {
             if (whiteSpaceAlternativeLexer == null)
             {
