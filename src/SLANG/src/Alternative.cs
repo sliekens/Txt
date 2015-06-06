@@ -20,5 +20,10 @@
                 return this.element;
             }
         }
+
+        public override string GetWellFormedData()
+        {
+            return this.Element.GetWellFormedData();
+        }
     }
 }
