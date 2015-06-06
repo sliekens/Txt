@@ -11,7 +11,6 @@ namespace SLANG
     /// <summary>Represents an immutable implementation of the <see cref="ITextContext" /> interface</summary>
     public struct TextContext : ITextContext
     {
-        /// <summary>TODO </summary>
         private readonly int offset;
 
         /// <summary>Initializes a new instance of the <see cref="TextContext"/> struct with a specified offset.</summary>
