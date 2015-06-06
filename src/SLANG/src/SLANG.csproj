@@ -122,7 +122,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PushbackInputStream.cs" />
     <Compile Include="RepetitionLexer.cs" />
-    <Compile Include="SyntaxErrorException.cs" />
     <Compile Include="TextContext.cs" />
     <Compile Include="TextScanner.cs" />
     <Compile Include="Element.cs" />

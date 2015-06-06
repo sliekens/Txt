@@ -1,5 +1,7 @@
 ﻿namespace SLANG.Core.BIT
 {
+    using System;
+
     using Xunit;
 
     public class BitLexerTests
@@ -41,7 +43,7 @@
             using (var scanner = new TextScanner(new PushbackInputStream(input.ToMemoryStream())))
             {
                 scanner.Read();
-                Assert.Throws<SyntaxErrorException>(() => bitLexer.Read(scanner));
+                Assert.Throws<FormatException>(() => bitLexer.Read(scanner));
             }
         }
     }
