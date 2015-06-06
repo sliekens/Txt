@@ -3,7 +3,7 @@
     using System;
     using System.Diagnostics;
 
-    public class Element : ITextContext
+    public abstract class Element : ITextContext
     {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly string data;
@@ -11,7 +11,7 @@
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly int offset;
 
-        public Element(Element element)
+        protected Element(Element element)
         {
             if (element == null)
             {
@@ -22,7 +22,7 @@
             this.offset = element.offset;
         }
 
-        public Element(char data, ITextContext context)
+        protected Element(char data, ITextContext context)
         {
             if (context == null)
             {
@@ -33,7 +33,7 @@
             this.offset = context.Offset;
         }
 
-        public Element(string data, ITextContext context)
+        protected Element(string data, ITextContext context)
         {
             if (data == null)
             {
