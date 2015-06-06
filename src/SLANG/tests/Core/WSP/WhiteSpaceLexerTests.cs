@@ -26,7 +26,7 @@
                 scanner.Read();
                 var whiteSpace = whiteSpaceLexer.Read(scanner);
                 Assert.NotNull(whiteSpace);
-                Assert.Equal(input, whiteSpace.Data);
+                Assert.Equal(input, whiteSpace.Values);
             }
         }
     }

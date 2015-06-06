@@ -19,7 +19,7 @@ namespace SLANG.Core.HEXDIG
         public override string GetWellFormedData()
         {
             // Well-formed HEXDIG uses upper case letters
-            return this.Data.ToUpperInvariant();
+            return this.Values.ToUpperInvariant();
         }
     }
 }

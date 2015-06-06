@@ -22,7 +22,7 @@
                 scanner.Read();
                 var endOfLine = endOfLineLexer.Read(scanner);
                 Assert.NotNull(endOfLine);
-                Assert.Equal(input, endOfLine.Data);
+                Assert.Equal(input, endOfLine.Values);
             }
         }
     }

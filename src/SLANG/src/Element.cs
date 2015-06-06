@@ -6,7 +6,7 @@
     public abstract class Element : ITextContext
     {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private readonly string data;
+        private readonly string values;
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly int offset;
@@ -18,26 +18,26 @@
                 throw new ArgumentNullException("element", "Precondition: element != null");
             }
 
-            this.data = element.data;
+            this.values = element.values;
             this.offset = element.offset;
         }
 
-        protected Element(char data, ITextContext context)
+        protected Element(char value, ITextContext context)
         {
             if (context == null)
             {
                 throw new ArgumentNullException("context", "Precondition: context != null");
             }
 
-            this.data = char.ToString(data);
+            this.values = char.ToString(value);
             this.offset = context.Offset;
         }
 
-        protected Element(string data, ITextContext context)
+        protected Element(string values, ITextContext context)
         {
-            if (data == null)
+            if (values == null)
             {
-                throw new ArgumentNullException("data", "Precondition: data != null");
+                throw new ArgumentNullException("values", "Precondition: values != null");
             }
 
             if (context == null)
@@ -45,16 +45,16 @@
                 throw new ArgumentNullException("context", "Precondition: context != null");
             }
 
-            this.data = data;
+            this.values = values;
             this.offset = context.Offset;
         }
 
-        public string Data
+        public string Values
         {
             get
             {
-                Debug.Assert(this.data != null);
-                return this.data;
+                Debug.Assert(this.values != null);
+                return this.values;
             }
         }
 
@@ -71,17 +71,17 @@
         ///     Gets a well-formed string that represents the current element. This is useful for elements that are
         ///     technically valid, but contain formatting errors or other inpurities. For example: mixed upper and lower case
         ///     characters where only lower case is well-formed. Unless overridden, the default return value is the value of
-        ///     <see cref="Data" />.
+        ///     <see cref="Values" />.
         /// </summary>
         public virtual string GetWellFormedData()
         {
-            return this.Data;
+            return this.Values;
         }
 
         /// <inheritdoc />
         public override sealed string ToString()
         {
-            return this.Data;
+            return this.Values;
         }
     }
 }

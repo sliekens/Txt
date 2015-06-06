@@ -23,7 +23,7 @@
             {
                 scanner.Read();
                 var digit = digitLexer.Read(scanner);
-                Assert.Equal(input, digit.Data);
+                Assert.Equal(input, digit.Values);
             }
         }
     }

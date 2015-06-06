@@ -42,7 +42,7 @@
             {
                 scanner.Read();
                 var hexadecimalDigit = lexer.Read(scanner);
-                Assert.Equal(input, hexadecimalDigit.Data);
+                Assert.Equal(input, hexadecimalDigit.Values);
             }
         }
     }

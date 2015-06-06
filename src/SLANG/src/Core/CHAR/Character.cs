@@ -25,8 +25,8 @@ namespace SLANG.Core.CHAR
 
         public char ToChar()
         {
-            Debug.Assert(this.Data.Length == 1, "this.Data.Length == 1");
-            return this.Data[0];
+            Debug.Assert(this.Values.Length == 1, "this.Values.Length == 1");
+            return this.Values[0];
         }
     }
 }

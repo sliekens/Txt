@@ -16,7 +16,7 @@
                 scanner.Read();
                 var visibleCharacter = visibleCharacterLexer.Read(scanner);
                 Assert.NotNull(visibleCharacter);
-                Assert.Equal(input, visibleCharacter.Data);
+                Assert.Equal(input, visibleCharacter.Values);
             }
         }
     }

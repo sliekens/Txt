@@ -25,8 +25,8 @@ namespace SLANG.Core.BIT
 
         public bool ToBool()
         {
-            Debug.Assert(this.Data == "0" || this.Data == "1", "this.Data == '0' || this.Data == '1'");
-            if (this.Data == "1")
+            Debug.Assert(this.Values == "0" || this.Values == "1", "this.Values == '0' || this.Values == '1'");
+            if (this.Values == "1")
             {
                 return true;
             }

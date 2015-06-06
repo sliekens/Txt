@@ -39,7 +39,7 @@
             {
                 scanner.Read();
                 var alpha = alphaLexer.Read(scanner);
-                Assert.Equal(letter, alpha.Data);
+                Assert.Equal(letter, alpha.Values);
             }
         }
 
@@ -78,7 +78,7 @@
             {
                 scanner.Read();
                 var alpha = alphaLexer.Read(scanner);
-                Assert.Equal(letter, alpha.Data);
+                Assert.Equal(letter, alpha.Values);
             }
         }
     }
