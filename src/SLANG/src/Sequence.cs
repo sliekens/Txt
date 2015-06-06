@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Linq;
 
     public class Sequence : Element
     {
@@ -32,6 +33,11 @@
                 Debug.Assert(this.elements != null, "this.elements != null");
                 return this.elements;
             }
+        }
+
+        public override string GetWellFormedData()
+        {
+            return string.Concat(this.Elements.Select(element => element.GetWellFormedData()));
         }
     }
 }
