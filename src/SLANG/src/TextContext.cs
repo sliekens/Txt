@@ -8,6 +8,8 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace SLANG
 {
+    using System.Diagnostics;
+
     /// <summary>Represents an immutable implementation of the <see cref="ITextContext" /> interface</summary>
     public struct TextContext : ITextContext
     {
@@ -18,6 +20,7 @@ namespace SLANG
         public TextContext(int offset)
             : this()
         {
+            Debug.Assert(offset >= 0, "offset >= 0");
             this.offset = offset;
         }
 
