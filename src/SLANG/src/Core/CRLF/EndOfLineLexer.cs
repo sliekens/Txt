@@ -9,6 +9,7 @@ namespace SLANG.Core.CRLF
 {
     using System;
 
+    [RuleName("CRLF")]
     public class EndOfLineLexer : Lexer<EndOfLine>
     {
         private readonly ILexer<Sequence> endOfLineSequenceLexer;

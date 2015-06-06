@@ -9,6 +9,7 @@ namespace SLANG.Core.CHAR
 {
     using System;
 
+    [RuleName("CHAR")]
     public class CharacterLexer : Lexer<Character>
     {
         private readonly ILexer<Terminal> characterValueRangeLexer;

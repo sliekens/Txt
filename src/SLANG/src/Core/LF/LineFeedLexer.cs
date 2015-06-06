@@ -9,6 +9,7 @@ namespace SLANG.Core.LF
 {
     using System;
 
+    [RuleName("LF")]
     public class LineFeedLexer : Lexer<LineFeed>
     {
         private readonly ILexer<Terminal> lineFeedTerminalLexer;

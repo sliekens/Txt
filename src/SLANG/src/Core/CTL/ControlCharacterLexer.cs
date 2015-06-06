@@ -9,6 +9,7 @@ namespace SLANG.Core.CTL
 {
     using System;
 
+    [RuleName("CTL")]
     public class ControlCharacterLexer : Lexer<ControlCharacter>
     {
         private readonly ILexer<Alternative> controlCharacterAlternativeLexer;

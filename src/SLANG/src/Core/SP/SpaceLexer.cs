@@ -9,6 +9,7 @@ namespace SLANG.Core.SP
 {
     using System;
 
+    [RuleName("SP")]
     public class SpaceLexer : Lexer<Space>
     {
         private readonly ILexer<Terminal> spaceTerminalLexer;

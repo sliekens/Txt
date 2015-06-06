@@ -9,6 +9,7 @@ namespace SLANG.Core.DQUOTE
 {
     using System;
 
+    [RuleName("DQUOTE")]
     public class DoubleQuoteLexer : Lexer<DoubleQuote>
     {
         private readonly ILexer<Terminal> doubleQuoteTerminalLexer;

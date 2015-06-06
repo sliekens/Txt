@@ -9,6 +9,7 @@ namespace SLANG.Core.WSP
 {
     using System;
 
+    [RuleName("WSP")]
     public class WhiteSpaceLexer : Lexer<WhiteSpace>
     {
         private readonly ILexer<Alternative> whiteSpaceAlternativeLexer;

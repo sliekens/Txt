@@ -9,6 +9,7 @@ namespace SLANG.Core.CR
 {
     using System;
 
+    [RuleName("CR")]
     public class CarriageReturnLexer : Lexer<CarriageReturn>
     {
         private readonly ILexer<Terminal> carriageReturnTerminalLexer;

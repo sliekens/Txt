@@ -9,6 +9,7 @@ namespace SLANG.Core.BIT
 {
     using System;
 
+    [RuleName("BIT")]
     public class BitLexer : Lexer<Bit>
     {
         private readonly ILexer<Alternative> bitAlternativeLexer;

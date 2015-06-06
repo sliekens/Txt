@@ -9,6 +9,7 @@ namespace SLANG.Core.VCHAR
 {
     using System;
 
+    [RuleName("VCHAR")]
     public class VisibleCharacterLexer : Lexer<VisibleCharacter>
     {
         private readonly ILexer<Terminal> visibleCharacterValueRangeLexer;

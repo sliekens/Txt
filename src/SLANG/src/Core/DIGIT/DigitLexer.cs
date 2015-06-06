@@ -9,6 +9,7 @@ namespace SLANG.Core.DIGIT
 {
     using System;
 
+    [RuleName("DIGIT")]
     public class DigitLexer : Lexer<Digit>
     {
         private readonly ILexer<Terminal> digitValueRangeLexer;

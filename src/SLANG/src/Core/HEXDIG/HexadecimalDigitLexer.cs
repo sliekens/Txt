@@ -9,6 +9,7 @@ namespace SLANG.Core.HEXDIG
 {
     using System;
 
+    [RuleName("HEXDIG")]
     public class HexadecimalDigitLexer : Lexer<HexadecimalDigit>
     {
         private readonly ILexer<Alternative> hexadecimalDigitAlternativeLexer;

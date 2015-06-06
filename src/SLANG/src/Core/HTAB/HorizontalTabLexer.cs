@@ -9,6 +9,7 @@ namespace SLANG.Core.HTAB
 {
     using System;
 
+    [RuleName("HTAB")]
     public class HorizontalTabLexer : Lexer<HorizontalTab>
     {
         private readonly ILexer<Terminal> horizontalTabTerminalLexer;

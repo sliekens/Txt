@@ -9,6 +9,7 @@ namespace SLANG.Core.LWSP
 {
     using System;
 
+    [RuleName("LWSP")]
     public class LinearWhiteSpaceLexer : Lexer<LinearWhiteSpace>
     {
         private readonly ILexer<Repetition> linearWhiteSpaceRepetitionLexer;

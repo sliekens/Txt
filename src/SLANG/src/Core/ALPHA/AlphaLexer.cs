@@ -9,6 +9,7 @@ namespace SLANG.Core.ALPHA
 {
     using System;
 
+    [RuleName("ALPHA")]
     public class AlphaLexer : Lexer<Alpha>
     {
         private readonly ILexer<Alternative> alphaAlternativeLexer;

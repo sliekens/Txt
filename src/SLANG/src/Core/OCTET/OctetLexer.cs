@@ -9,6 +9,7 @@ namespace SLANG.Core.OCTET
 {
     using System;
 
+    [RuleName("OCTET")]
     public class OctetLexer : Lexer<Octet>
     {
         private readonly ILexer<Terminal> octetValueRangeLexer;
