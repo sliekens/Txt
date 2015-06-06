@@ -51,7 +51,7 @@ namespace SLANG
 
             throw new FormatException(
                 string.Format(
-                    "Syntax error. Expected '{0}' at position '{1}'",
+                    "Syntax error. Expected '{0}' at position '{1}'.",
                     this.GetType().GetTypeInfo().GetCustomAttribute<RuleNameAttribute>().RuleName,
                     scanner.GetContext().Offset));
         }
