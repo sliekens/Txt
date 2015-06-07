@@ -7,10 +7,10 @@
     public abstract class Element : ITextContext
     {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private readonly int offset;
+        private readonly string values;
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private readonly string values;
+        private readonly ITextContext context;
 
         /// <summary>Initializes a new instance of the <see cref="Element"/> class with a given element to copy.</summary>
         /// <param name="element">The element to copy.</param>
@@ -23,7 +23,7 @@
             }
 
             this.values = element.values;
-            this.offset = element.offset;
+            this.context = element.context;
         }
 
         /// <summary>Initializes a new instance of the <see cref="Element"/> class with a given terminal and context.</summary>
@@ -38,7 +38,7 @@
             }
 
             this.values = char.ToString(value);
-            this.offset = context.Offset;
+            this.context = context;
         }
 
         /// <summary>Initializes a new instance of the <see cref="Element"/> class with the given terminal values and context.</summary>
@@ -58,7 +58,7 @@
             }
 
             this.values = values;
-            this.offset = context.Offset;
+            this.context = context;
         }
 
         /// <summary>Gets the current position, relative to the beginning of the data source.</summary>
@@ -66,7 +66,7 @@
         {
             get
             {
-                return this.offset;
+                return this.context.Offset;
             }
         }
 
