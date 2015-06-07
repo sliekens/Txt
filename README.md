@@ -1,6 +1,6 @@
 TextFx
 ===========
-[![Build status](https://ci.appveyor.com/api/projects/status/01jxm32c7i9769ef?svg=true)](https://ci.appveyor.com/project/StevenLiekens/text-parser)
+[![Build status](https://ci.appveyor.com/api/projects/status/2ijyc3cck1ddlurt?svg=true)](https://ci.appveyor.com/project/StevenLiekens/textfx)
 
 # About
 
