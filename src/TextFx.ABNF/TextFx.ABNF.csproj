@@ -34,13 +34,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <!-- A reference to the entire .NET Framework is automatically included -->
-    <ProjectReference Include="..\TextFx\TextFx.csproj">
-      <Project>{f889024e-5c62-49ac-ac9f-c17bc1cb9621}</Project>
-      <Name>TextFx</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Alternative.cs" />
     <Compile Include="AlternativeLexer.cs" />
     <Compile Include="AlternativeLexerFactory.cs" />
@@ -121,6 +114,12 @@
     <Compile Include="TerminalString.cs" />
     <Compile Include="ValueRangeLexer.cs" />
     <Compile Include="ValueRangeLexerFactory.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TextFx\TextFx.csproj">
+      <Project>{f889024e-5c62-49ac-ac9f-c17bc1cb9621}</Project>
+      <Name>TextFx</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -15,4 +15,4 @@ using System.Reflection;
 
 [assembly: AssemblyTitle("TextFx")]
 [assembly: AssemblyDescription("TextFx is a text framework for .NET.")]
-[assembly: AssemblyCulture("en")]
+[assembly: AssemblyCulture("")]
