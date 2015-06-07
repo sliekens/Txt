@@ -9,8 +9,6 @@
 
 namespace TextFx.ABNF.Core
 {
-    using System.Diagnostics;
-
     public class Character : Terminal
     {
         public Character(Terminal terminal)
