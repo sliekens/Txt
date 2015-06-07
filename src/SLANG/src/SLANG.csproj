@@ -41,6 +41,7 @@
     <Compile Include="AlternativeLexerFactory.cs" />
     <Compile Include="CaseInsensitiveTerminalLexer.cs" />
     <Compile Include="CaseInsensitiveTerminalLexerFactory.cs" />
+    <Compile Include="ILexer.cs" />
     <Compile Include="IStringLexerFactory.cs" />
     <Compile Include="ITerminalLexerFactory.cs" />
     <Compile Include="RuleNameAttribute.cs" />
@@ -115,7 +116,7 @@
     <Compile Include="Core\VCHAR\VisibleCharacter.cs" />
     <Compile Include="Core\WSP\WhiteSpaceLexer.cs" />
     <Compile Include="Core\WSP\WhiteSpace.cs" />
-    <Compile Include="ILexer.cs" />
+    <Compile Include="ILexer{TElement}.cs" />
     <Compile Include="ITextContext.cs" />
     <Compile Include="ITextScanner.cs" />
     <Compile Include="Lexer.cs" />
