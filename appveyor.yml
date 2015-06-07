@@ -62,9 +62,12 @@ environment:
     major: 1
     minor: 0
     patch: 0
+
+environment:
+  global:
     assembly_version: $(major).$(minor)
-    assembly_file_version: $(assembly_version).{build}
-    assembly_informational_version: $(major).$(minor).$(patch)-CI{build}
+    assembly_file_version: $(major).$(minor).$(APPVEYOR_BUILD_NUMBER)
+    assembly_informational_version: $(major).$(minor).$(patch)-CI$(APPVEYOR_BUILD_NUMBER)
 
 # this is how to allow failing jobs in the matrix
 #matrix:
