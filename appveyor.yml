@@ -40,8 +40,10 @@ version: "{build}"
 os: Windows Server 2012
 
 # scripts that are called at very beginning, before repo cloning
-#init:
-#  - git config --global core.autocrlf input
+init:
+  - ps: Set-AppveyorBuildVariable -Name "assembly_version" -Value "1.0"
+  - ps: Set-AppveyorBuildVariable -Name "assembly_file_version" -Value "1.0.0.0"
+  - ps: Set-AppveyorBuildVariable -Name "assembly_informational_version" -Value "1.0.0"
 
 # clone directory
 clone_folder: c:\projects\textfx
@@ -146,9 +148,6 @@ assembly_info:
 
 before_build:
    - cmd: nuget restore
-   - ps: Set-AppveyorBuildVariable -Name "assembly_version" -Value "1.0"
-   - ps: Set-AppveyorBuildVariable -Name "assembly_file_version" -Value "1.0.0.0"
-   - ps: Set-AppveyorBuildVariable -Name "assembly_informational_version" -Value "1.0.0"
 
 build_script:
     - ps: MSBuild.exe /m /p:Configuration=Release /p:Platform=AnyCPU /p:OutDir=$Env:APPVEYOR_BUILD_FOLDER\artifacts /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" /p:GenerateProjectSpecificOutputFolder=true /verbosity:m build.proj
