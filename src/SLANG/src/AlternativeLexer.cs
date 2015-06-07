@@ -1,11 +1,10 @@
 ﻿namespace SLANG
 {
     using System;
-    using System.Collections.Generic;
 
     public class AlternativeLexer : Lexer<Alternative>
     {
-        private readonly IList<ILexer> lexers;
+        private readonly  ILexer[] lexers;
 
         public AlternativeLexer(params ILexer[] lexers)
         {
@@ -40,7 +39,7 @@
             }
 
             // ReSharper disable once ForCanBeConvertedToForeach
-            for (var i = 0; i < this.lexers.Count; i++)
+            for (var i = 0; i < this.lexers.Length; i++)
             {
                 Element alternative;
                 if (this.lexers[i].TryReadElement(scanner, out alternative))
