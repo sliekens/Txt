@@ -16,7 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextFx", "src\TextFx\TextFx.csproj", "{F889024E-5C62-49AC-AC9F-C17BC1CB9621}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextFx.ABNF.Tests", "src\TextFx.Tests\TextFx.ABNF.Tests.csproj", "{B46CBD79-65A0-4E91-B206-D30ECCEAB873}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextFx.ABNF.Tests", "src\TextFx.ABNF.Tests\TextFx.ABNF.Tests.csproj", "{B46CBD79-65A0-4E91-B206-D30ECCEAB873}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextFx.ABNF", "src\TextFx.ABNF\TextFx.ABNF.csproj", "{556A92C9-EACF-4353-9A89-900303140428}"
 EndProject
