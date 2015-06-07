@@ -2,6 +2,7 @@
 {
     using System;
 
+    /// <summary>Creates instances of the <see cref="AlphaLexer" /> class.</summary>
     public class AlphaLexerFactory : ILexerFactory<Alpha>
     {
         private readonly IAlternativeLexerFactory alternativeLexerFactory;
@@ -14,22 +15,19 @@
         {
             if (valueRangeLexerFactory == null)
             {
-                throw new ArgumentNullException(
-                    "valueRangeLexerFactory",
-                    "Precondition: valueRangeLexerFactory != null");
+                throw new ArgumentNullException("valueRangeLexerFactory");
             }
 
             if (alternativeLexerFactory == null)
             {
-                throw new ArgumentNullException(
-                    "alternativeLexerFactory",
-                    "Precondition: alternativeLexerFactory != null");
+                throw new ArgumentNullException("alternativeLexerFactory");
             }
 
             this.valueRangeLexerFactory = valueRangeLexerFactory;
             this.alternativeLexerFactory = alternativeLexerFactory;
         }
 
+        /// <inheritdoc />
         public ILexer<Alpha> Create()
         {
             var upperCaseValueRangeLexer = this.valueRangeLexerFactory.Create('\x41', '\x5A');

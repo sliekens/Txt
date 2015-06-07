@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
 
+    /// <summary>Provides methods for reading a string of values.</summary>
     public class StringLexer : Lexer<TerminalString>
     {
         private readonly IList<ILexer<Terminal>> lexers;
@@ -11,17 +12,18 @@
         {
             if (lexers == null)
             {
-                throw new ArgumentNullException("lexers", "Precondition: lexers != null");
+                throw new ArgumentNullException("lexers");
             }
 
             this.lexers = lexers;
         }
 
+        /// <inheritdoc />
         public override bool TryRead(ITextScanner scanner, out TerminalString element)
         {
             if (scanner == null)
             {
-                throw new ArgumentNullException("scanner", "Precondition: scanner != null");
+                throw new ArgumentNullException("scanner");
             }
 
             var context = scanner.GetContext();

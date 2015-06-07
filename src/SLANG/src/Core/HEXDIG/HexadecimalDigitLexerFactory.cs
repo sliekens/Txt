@@ -2,6 +2,7 @@
 {
     using System;
 
+    /// <summary>Creates instances of the <see cref="HexadecimalDigitLexer" /> class.</summary>
     public class HexadecimalDigitLexerFactory : ILexerFactory<HexadecimalDigit>
     {
         private readonly IAlternativeLexerFactory alternativeLexerFactory;
@@ -17,19 +18,17 @@
         {
             if (digitLexerFactory == null)
             {
-                throw new ArgumentNullException("digitLexerFactory", "Precondition: digitLexerFactory != null");
+                throw new ArgumentNullException("digitLexerFactory");
             }
 
             if (stringLexerFactory == null)
             {
-                throw new ArgumentNullException("stringLexerFactory", "Precondition: stringLexerFactory != null");
+                throw new ArgumentNullException("stringLexerFactory");
             }
 
             if (alternativeLexerFactory == null)
             {
-                throw new ArgumentNullException(
-                    "alternativeLexerFactory",
-                    "Precondition: alternativeLexerFactory != null");
+                throw new ArgumentNullException("alternativeLexerFactory");
             }
 
             this.digitLexerFactory = digitLexerFactory;
@@ -37,6 +36,7 @@
             this.alternativeLexerFactory = alternativeLexerFactory;
         }
 
+        /// <inheritdoc />
         public ILexer<HexadecimalDigit> Create()
         {
             var hexadecimalDigitAlternativeLexer = this.alternativeLexerFactory.Create(

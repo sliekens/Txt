@@ -31,7 +31,7 @@
         {
             if (terminals == null)
             {
-                throw new ArgumentNullException("terminals", "Precondition: terminals != null");
+                throw new ArgumentNullException("terminals");
             }
 
             this.terminals = terminals;

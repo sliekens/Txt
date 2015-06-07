@@ -2,6 +2,7 @@
 {
     using System;
 
+    /// <summary>Creates instances of the <see cref="BitLexer" /> class.</summary>
     public class BitLexerFactory : ILexerFactory<Bit>
     {
         private readonly IAlternativeLexerFactory alternativeLexerFactory;
@@ -12,20 +13,19 @@
         {
             if (alternativeLexerFactory == null)
             {
-                throw new ArgumentNullException(
-                    "alternativeLexerFactory",
-                    "Precondition: alternativeLexerFactory != null");
+                throw new ArgumentNullException("alternativeLexerFactory");
             }
 
             if (stringLexerFactory == null)
             {
-                throw new ArgumentNullException("stringLexerFactory", "Precondition: stringLexerFactory != null");
+                throw new ArgumentNullException("stringLexerFactory");
             }
 
             this.alternativeLexerFactory = alternativeLexerFactory;
             this.stringLexerFactory = stringLexerFactory;
         }
 
+        /// <inheritdoc />
         public ILexer<Bit> Create()
         {
             var bit0TerminalLexer = this.stringLexerFactory.Create("0");

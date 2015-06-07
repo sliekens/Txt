@@ -2,6 +2,7 @@
 {
     using System;
 
+    /// <summary>Creates instances of the <see cref="ControlCharacterLexer" /> class.</summary>
     public class ControlCharacterLexerFactory : ILexerFactory<ControlCharacter>
     {
         private readonly IAlternativeLexerFactory alternativeLexerFactory;
@@ -17,21 +18,17 @@
         {
             if (valueRangeLexerFactory == null)
             {
-                throw new ArgumentNullException(
-                    "valueRangeLexerFactory",
-                    "Precondition: valueRangeLexerFactory != null");
+                throw new ArgumentNullException("valueRangeLexerFactory");
             }
 
             if (terminalLexerFactory == null)
             {
-                throw new ArgumentNullException("terminalLexerFactory", "Precondition: terminalLexerFactory != null");
+                throw new ArgumentNullException("terminalLexerFactory");
             }
 
             if (alternativeLexerFactory == null)
             {
-                throw new ArgumentNullException(
-                    "alternativeLexerFactory",
-                    "Precondition: alternativeLexerFactory != null");
+                throw new ArgumentNullException("alternativeLexerFactory");
             }
 
             this.valueRangeLexerFactory = valueRangeLexerFactory;
@@ -39,6 +36,7 @@
             this.alternativeLexerFactory = alternativeLexerFactory;
         }
 
+        /// <inheritdoc />
         public ILexer<ControlCharacter> Create()
         {
             var controlsValueRange = this.valueRangeLexerFactory.Create('\x00', '\x1F');

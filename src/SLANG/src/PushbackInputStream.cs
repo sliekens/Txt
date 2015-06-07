@@ -26,7 +26,7 @@
         {
             if (stream == null)
             {
-                throw new ArgumentNullException("stream", "Precondition: stream != null");
+                throw new ArgumentNullException("stream");
             }
 
             if (!stream.CanRead)
@@ -121,7 +121,7 @@
         {
             if (buffer == null)
             {
-                throw new ArgumentNullException("buffer", "Precondition: buffer != null");
+                throw new ArgumentNullException("buffer");
             }
 
             if (offset < 0)

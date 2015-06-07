@@ -2,6 +2,7 @@
 {
     using System;
 
+    /// <summary>Creates instances of the <see cref="WhiteSpaceLexer" /> class.</summary>
     public class WhiteSpaceLexerFactory : ILexerFactory<WhiteSpace>
     {
         private readonly IAlternativeLexerFactory alternativeLexerFactory;
@@ -17,21 +18,17 @@
         {
             if (spaceLexerFactory == null)
             {
-                throw new ArgumentNullException("spaceLexerFactory", "Precondition: spaceLexerFactory != null");
+                throw new ArgumentNullException("spaceLexerFactory");
             }
 
             if (horizontalTabLexerFactory == null)
             {
-                throw new ArgumentNullException(
-                    "horizontalTabLexerFactory",
-                    "Precondition: horizontalTabLexerFactory != null");
+                throw new ArgumentNullException("horizontalTabLexerFactory");
             }
 
             if (alternativeLexerFactory == null)
             {
-                throw new ArgumentNullException(
-                    "alternativeLexerFactory",
-                    "Precondition: alternativeLexerFactory != null");
+                throw new ArgumentNullException("alternativeLexerFactory");
             }
 
             this.spaceLexerFactory = spaceLexerFactory;
@@ -39,6 +36,7 @@
             this.alternativeLexerFactory = alternativeLexerFactory;
         }
 
+        /// <inheritdoc />
         public ILexer<WhiteSpace> Create()
         {
             var sp = this.spaceLexerFactory.Create();

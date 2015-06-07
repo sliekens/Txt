@@ -20,7 +20,7 @@
         {
             if (elements == null)
             {
-                throw new ArgumentNullException("elements", "Precondition: elements != null");
+                throw new ArgumentNullException("elements");
             }
 
             this.elements = elements;

@@ -4,13 +4,13 @@
 
     public class AlternativeLexer : Lexer<Alternative>
     {
-        private readonly  ILexer[] lexers;
+        private readonly ILexer[] lexers;
 
         public AlternativeLexer(params ILexer[] lexers)
         {
             if (lexers == null)
             {
-                throw new ArgumentNullException("lexers", "Precondition: lexers != null");
+                throw new ArgumentNullException("lexers");
             }
 
             if (lexers.Length == 0)
@@ -31,11 +31,12 @@
             this.lexers = lexers;
         }
 
+        /// <inheritdoc />
         public override bool TryRead(ITextScanner scanner, out Alternative element)
         {
             if (scanner == null)
             {
-                throw new ArgumentNullException("scanner", "Precondition: scanner != null");
+                throw new ArgumentNullException("scanner");
             }
 
             // ReSharper disable once ForCanBeConvertedToForeach

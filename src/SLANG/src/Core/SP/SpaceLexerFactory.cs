@@ -2,6 +2,7 @@
 {
     using System;
 
+    /// <summary>Creates instances of the <see cref="SpaceLexer" /> class.</summary>
     public class SpaceLexerFactory : ILexerFactory<Space>
     {
         private readonly ITerminalLexerFactory terminalLexerFactory;
@@ -16,6 +17,7 @@
             this.terminalLexerFactory = terminalLexerFactory;
         }
 
+        /// <inheritdoc />
         public ILexer<Space> Create()
         {
             var spaceTerminalLexer = this.terminalLexerFactory.Create('\x20');

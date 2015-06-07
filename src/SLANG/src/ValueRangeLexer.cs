@@ -38,7 +38,7 @@
         {
             if (scanner == null)
             {
-                throw new ArgumentNullException("scanner", "Precondition: scanner != null");
+                throw new ArgumentNullException("scanner");
             }
 
             var context = scanner.GetContext();

@@ -25,6 +25,7 @@ namespace SLANG.Core
             this.innerLexer = innerLexer;
         }
 
+        /// <inheritdoc />
         public override bool TryRead(ITextScanner scanner, out LinearWhiteSpace element)
         {
             Repetition result;

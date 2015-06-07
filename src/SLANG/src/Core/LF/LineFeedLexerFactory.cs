@@ -2,6 +2,7 @@
 {
     using System;
 
+    /// <summary>Creates instances of the <see cref="LineFeedLexer" /> class.</summary>
     public class LineFeedLexerFactory : ILexerFactory<LineFeed>
     {
         private readonly ITerminalLexerFactory terminalLexerFactory;
@@ -10,12 +11,13 @@
         {
             if (terminalLexerFactory == null)
             {
-                throw new ArgumentNullException("terminalLexerFactory", "Precondition: terminalLexerFactory != null");
+                throw new ArgumentNullException("terminalLexerFactory");
             }
 
             this.terminalLexerFactory = terminalLexerFactory;
         }
 
+        /// <inheritdoc />
         public ILexer<LineFeed> Create()
         {
             var lineFeedTerminalLexer = this.terminalLexerFactory.Create('\x0A');

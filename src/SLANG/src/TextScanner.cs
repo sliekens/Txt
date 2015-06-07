@@ -51,12 +51,12 @@ namespace SLANG
         {
             if (inputStream == null)
             {
-                throw new ArgumentNullException("inputStream", "Precondition: inputStream != null");
+                throw new ArgumentNullException("inputStream");
             }
 
             if (encoding == null)
             {
-                throw new ArgumentNullException("encoding", "Precondition: encoding != null");
+                throw new ArgumentNullException("encoding");
             }
 
             this.inputStream = inputStream;
@@ -143,7 +143,7 @@ namespace SLANG
 
             if (s == null)
             {
-                throw new ArgumentNullException("s", "Precondition: s != null");
+                throw new ArgumentNullException("s");
             }
 
             if (this.offset < s.Length)

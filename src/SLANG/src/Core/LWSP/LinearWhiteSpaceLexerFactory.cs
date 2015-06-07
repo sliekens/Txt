@@ -2,6 +2,7 @@
 {
     using System;
 
+    /// <summary>Creates instances of the <see cref="LinearWhiteSpaceLexer" /> class.</summary>
     public class LinearWhiteSpaceLexerFactory : ILexerFactory<LinearWhiteSpace>
     {
         private readonly IAlternativeLexerFactory alternativeLexerFactory;
@@ -53,6 +54,7 @@
             this.sequenceLexerFactory = sequenceLexerFactory;
         }
 
+        /// <inheritdoc />
         public ILexer<LinearWhiteSpace> Create()
         {
             var endOfLineLexer = this.endOfLineLexerFactory.Create();

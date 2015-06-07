@@ -2,7 +2,7 @@
 {
     using System;
 
-    /// <summary>Provides the interface for types that create lexers for a range of alternative values.</summary>
+    /// <summary>Provides the interface for factory classes that create lexers for a range of alternative values.</summary>
     public interface IValueRangeLexerFactory
     {
         /// <summary>

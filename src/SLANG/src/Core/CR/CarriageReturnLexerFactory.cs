@@ -2,6 +2,7 @@
 {
     using System;
 
+    /// <summary>Creates instances of the <see cref="CarriageReturnLexer" /> class.</summary>
     public class CarriageReturnLexerFactory : ILexerFactory<CarriageReturn>
     {
         private readonly ITerminalLexerFactory terminalLexerFactory;
@@ -10,12 +11,13 @@
         {
             if (terminalLexerFactory == null)
             {
-                throw new ArgumentNullException("terminalLexerFactory", "Precondition: terminalLexerFactory != null");
+                throw new ArgumentNullException("terminalLexerFactory");
             }
 
             this.terminalLexerFactory = terminalLexerFactory;
         }
 
+        /// <inheritdoc />
         public ILexer<CarriageReturn> Create()
         {
             var carriageReturnTerminalLexer = this.terminalLexerFactory.Create('\x0D');

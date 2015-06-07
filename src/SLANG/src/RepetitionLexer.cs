@@ -12,15 +12,15 @@
 
         private readonly int upperBound;
 
-        /// <summary>Initializes a new instance of the <see cref="RepetitionLexer" /> class with a specified lower and upper bound.</summary>
+        /// <summary>Initializes a new instance of the <see cref="RepetitionLexer" /> class with a specified lower and upper bound, both inclusive.</summary>
         /// <param name="repeatingElementLexer">The lexer for the repeating element.</param>
-        /// <param name="lowerBound">A number that indicates the minimum number of occurrences.</param>
-        /// <param name="upperBound">A number that indicates the maximum number of occurrences.</param>
+        /// <param name="lowerBound">A number that indicates the minimum number of occurrences (inclusive).</param>
+        /// <param name="upperBound">A number that indicates the maximum number of occurrences (inclusive).</param>
         public RepetitionLexer(ILexer repeatingElementLexer, int lowerBound, int upperBound)
         {
             if (repeatingElementLexer == null)
             {
-                throw new ArgumentNullException("repeatingElementLexer", "Precondition: repeatingElementLexer != null");
+                throw new ArgumentNullException("repeatingElementLexer");
             }
 
             if (lowerBound < 0)

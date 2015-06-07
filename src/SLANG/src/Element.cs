@@ -7,54 +7,57 @@
     public abstract class Element : ITextContext
     {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private readonly string values;
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly ITextContext context;
 
-        /// <summary>Initializes a new instance of the <see cref="Element"/> class with a given element to copy.</summary>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private readonly string values;
+
+        /// <summary>Initializes a new instance of the <see cref="Element" /> class with a given element to copy.</summary>
         /// <param name="element">The element to copy.</param>
-        /// <exception cref="ArgumentNullException">The value of <paramref name="element"/> is a null reference.</exception>
+        /// <exception cref="ArgumentNullException">The value of <paramref name="element" /> is a null reference.</exception>
         protected Element(Element element)
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element", "Precondition: element != null");
+                throw new ArgumentNullException("element");
             }
 
             this.values = element.values;
             this.context = element.context;
         }
 
-        /// <summary>Initializes a new instance of the <see cref="Element"/> class with a given terminal and context.</summary>
+        /// <summary>Initializes a new instance of the <see cref="Element" /> class with a given terminal and context.</summary>
         /// <param name="value">The terminal value.</param>
         /// <param name="context">An object that describes the current element's context.</param>
-        /// <exception cref="ArgumentNullException">The value of <paramref name="context"/> is a null reference.</exception>
+        /// <exception cref="ArgumentNullException">The value of <paramref name="context" /> is a null reference.</exception>
         protected Element(char value, ITextContext context)
         {
             if (context == null)
             {
-                throw new ArgumentNullException("context", "Precondition: context != null");
+                throw new ArgumentNullException("context");
             }
 
             this.values = char.ToString(value);
             this.context = context;
         }
 
-        /// <summary>Initializes a new instance of the <see cref="Element"/> class with the given terminal values and context.</summary>
+        /// <summary>Initializes a new instance of the <see cref="Element" /> class with the given terminal values and context.</summary>
         /// <param name="values">The terminal values.</param>
         /// <param name="context">An object that describes the current element's context.</param>
-        /// <exception cref="ArgumentNullException">The value of <paramref name="values"/> or <paramref name="context"/> is a null reference.</exception>
+        /// <exception cref="ArgumentNullException">
+        ///     The value of <paramref name="values" /> or <paramref name="context" /> is a
+        ///     null reference.
+        /// </exception>
         protected Element(string values, ITextContext context)
         {
             if (values == null)
             {
-                throw new ArgumentNullException("values", "Precondition: values != null");
+                throw new ArgumentNullException("values");
             }
 
             if (context == null)
             {
-                throw new ArgumentNullException("context", "Precondition: context != null");
+                throw new ArgumentNullException("context");
             }
 
             this.values = values;

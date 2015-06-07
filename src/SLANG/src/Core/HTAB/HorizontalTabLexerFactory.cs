@@ -2,6 +2,7 @@
 {
     using System;
 
+    /// <summary>Creates instances of the <see cref="HorizontalTabLexer" /> class.</summary>
     public class HorizontalTabLexerFactory : ILexerFactory<HorizontalTab>
     {
         private readonly ITerminalLexerFactory terminalLexerFactory;
@@ -10,12 +11,13 @@
         {
             if (terminalLexerFactory == null)
             {
-                throw new ArgumentNullException("terminalLexerFactory", "Precondition: terminalLexerFactory != null");
+                throw new ArgumentNullException("terminalLexerFactory");
             }
 
             this.terminalLexerFactory = terminalLexerFactory;
         }
 
+        /// <inheritdoc />
         public ILexer<HorizontalTab> Create()
         {
             var horizontalTabTerminalLexer = this.terminalLexerFactory.Create('\x09');

@@ -11,7 +11,7 @@
         {
             if (lexers == null)
             {
-                throw new ArgumentNullException("lexers", "Precondition: lexers != null");
+                throw new ArgumentNullException("lexers");
             }
 
             if (lexers.Length == 0)
@@ -33,11 +33,12 @@
             this.lexers = lexers;
         }
 
+        /// <inheritdoc />
         public override bool TryRead(ITextScanner scanner, out Sequence element)
         {
             if (scanner == null)
             {
-                throw new ArgumentNullException("scanner", "Precondition: scanner != null");
+                throw new ArgumentNullException("scanner");
             }
 
             var context = scanner.GetContext();
