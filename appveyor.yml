@@ -59,11 +59,9 @@ clone_depth: 5                      # clone entire repository history if not def
 
 # environment variables
 environment:
-    major: 1
-    minor: 0
-    patch: 0
-
-environment:
+  major: 1
+  minor: 0
+  patch: 0
   global:
     assembly_version: $(major).$(minor)
     assembly_file_version: $(major).$(minor).$(APPVEYOR_BUILD_NUMBER)
