@@ -12,6 +12,7 @@
       <NuGetPackProperties>$(NuGetPackProperties);OutDir=$(OutDir)$(AssemblyName)$(TargetExt)</NuGetPackProperties>
       <NuGetPackParameters>$(NuGetPackParameters) -Properties &quot;$(NuGetPackProperties)&quot;</NuGetPackParameters>
       <NuGetPackParameters>$(NuGetPackParameters) -OutputDirectory &quot;$(OutDir.Trim('\\'))&quot;</NuGetPackParameters>
+      <NuGetPackParameters>$(NuGetPackParameters) -Symbols</NuGetPackParameters>
     </PropertyGroup>
     <Exec Command="$(NuGetToolPath) pack %(ProjectFileWithNuspec.Fullpath) $(NuGetPackParameters)" Condition=" '@(ProjectFileWithNuspec)' != '' " ContinueOnError="true">
 		<Output TaskParameter="ExitCode" PropertyName="ERRORLEVEL" />
