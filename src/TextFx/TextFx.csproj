@@ -36,100 +36,20 @@
     <DocumentationFile>bin\Release\TextFx.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Alternative.cs" />
-    <Compile Include="AlternativeLexer.cs" />
-    <Compile Include="AlternativeLexerFactory.cs" />
-    <Compile Include="CaseInsensitiveTerminalLexer.cs" />
-    <Compile Include="CaseInsensitiveTerminalLexerFactory.cs" />
     <Compile Include="ILexer.cs" />
-    <Compile Include="IStringLexerFactory.cs" />
-    <Compile Include="ITerminalLexerFactory.cs" />
     <Compile Include="RuleNameAttribute.cs" />
-    <Compile Include="StringLexer.cs" />
-    <Compile Include="Core\ALPHA\AlphaLexer.cs" />
-    <Compile Include="Core\ALPHA\Alpha.cs" />
-    <Compile Include="Core\ALPHA\AlphaLexerFactory.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\BIT\BitLexerFactory.cs" />
-    <Compile Include="Core\CHAR\CharacterLexerFactory.cs" />
-    <Compile Include="Core\CRLF\EndOfLineLexerFactory.cs" />
-    <Compile Include="Core\CR\CarriageReturnLexer.cs" />
-    <Compile Include="Core\CR\CarriageReturnLexerFactory.cs" />
-    <Compile Include="Core\CTL\ControlCharacterLexerFactory.cs" />
-    <Compile Include="Core\DIGIT\DigitLexerFactory.cs" />
-    <Compile Include="Core\DQUOTE\DoubleQuoteLexerFactory.cs" />
-    <Compile Include="Core\HEXDIG\HexadecimalDigitLexerFactory.cs" />
-    <Compile Include="Core\HTAB\HorizontalTabLexerFactory.cs" />
-    <Compile Include="Core\LF\LineFeedLexerFactory.cs" />
-    <Compile Include="Core\LWSP\LinearWhiteSpaceLexerFactory.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\OCTET\OctetLexerFactory.cs" />
-    <Compile Include="Core\SP\SpaceLexerFactory.cs" />
-    <Compile Include="Core\VCHAR\VisibleCharacterLexerFactory.cs" />
-    <Compile Include="Core\WSP\WhiteSpaceLexerFactory.cs" />
-    <Compile Include="IAlternativeLexerFactory.cs" />
     <Compile Include="ILexerFactory.cs" />
-    <Compile Include="IOptionLexerFactory.cs" />
-    <Compile Include="IRepetitionLexerFactory.cs" />
-    <Compile Include="ISequenceLexerFactory.cs" />
-    <Compile Include="IValueRangeLexerFactory.cs" />
-    <Compile Include="OptionLexerFactory.cs" />
-    <Compile Include="Repetition.cs" />
-    <Compile Include="RepetitionLexerFactory.cs" />
-    <Compile Include="Sequence.cs" />
-    <Compile Include="SequenceLexer.cs" />
-    <Compile Include="SequenceLexerFactory.cs" />
-    <Compile Include="StringLexerFactory.cs" />
-    <Compile Include="Terminal.cs" />
-    <Compile Include="TerminalLexer.cs" />
-    <Compile Include="TerminalLexerFactory.cs" />
-    <Compile Include="TerminalString.cs" />
-    <Compile Include="ValueRangeLexer.cs" />
-    <Compile Include="Core\BIT\BitLexer.cs" />
-    <Compile Include="Core\BIT\Bit.cs" />
-    <Compile Include="Core\CHAR\CharacterLexer.cs" />
-    <Compile Include="Core\CHAR\Character.cs" />
-    <Compile Include="Core\CRLF\EndOfLineLexer.cs" />
-    <Compile Include="Core\CRLF\EndOfLine.cs" />
-    <Compile Include="Core\CR\CarriageReturn.cs" />
-    <Compile Include="Core\CTL\ControlCharacterLexer.cs" />
-    <Compile Include="Core\CTL\ControlCharacter.cs" />
-    <Compile Include="Core\DIGIT\DigitLexer.cs" />
-    <Compile Include="Core\DIGIT\Digit.cs" />
-    <Compile Include="Core\DQUOTE\DoubleQuoteLexer.cs" />
-    <Compile Include="Core\DQUOTE\DoubleQuote.cs" />
-    <Compile Include="Core\HTAB\HorizontalTabLexer.cs" />
-    <Compile Include="Core\HTAB\HorizontalTab.cs" />
-    <Compile Include="Core\LF\LineFeedLexer.cs" />
-    <Compile Include="Core\LF\LineFeed.cs" />
-    <Compile Include="Core\HEXDIG\HexadecimalDigitLexer.cs" />
-    <Compile Include="Core\HEXDIG\HexadecimalDigit.cs" />
-    <Compile Include="Core\LWSP\LinearWhiteSpaceLexer.cs" />
-    <Compile Include="Core\LWSP\LinearWhiteSpace.cs" />
-    <Compile Include="Core\OCTET\OctetLexer.cs" />
-    <Compile Include="Core\OCTET\Octet.cs" />
-    <Compile Include="Core\SP\SpaceLexer.cs" />
-    <Compile Include="Core\SP\Space.cs" />
-    <Compile Include="Core\VCHAR\VisibleCharacterLexer.cs" />
-    <Compile Include="Core\VCHAR\VisibleCharacter.cs" />
-    <Compile Include="Core\WSP\WhiteSpaceLexer.cs" />
-    <Compile Include="Core\WSP\WhiteSpace.cs" />
     <Compile Include="ILexer{TElement}.cs" />
     <Compile Include="ITextContext.cs" />
     <Compile Include="ITextScanner.cs" />
     <Compile Include="Lexer.cs" />
-    <Compile Include="OptionLexer.cs" />
     <Compile Include="PushbackInputStream.cs" />
-    <Compile Include="RepetitionLexer.cs" />
     <Compile Include="TextContext.cs" />
     <Compile Include="TextScanner.cs" />
     <Compile Include="Element.cs" />
-    <Compile Include="ValueRangeLexerFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), SharedAssemblyInfo.cs))\SharedAssemblyInfo.cs">
-        <Link>Properties\SharedAssemblyInfo.cs</Link>
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
   </ItemGroup>
   <ItemGroup>

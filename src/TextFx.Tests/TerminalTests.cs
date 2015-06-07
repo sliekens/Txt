@@ -1,5 +1,7 @@
 ﻿namespace TextFx
 {
+    using TextFx.ABNF;
+
     using Xunit;
 
     public class TerminalTests

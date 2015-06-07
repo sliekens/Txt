@@ -2,6 +2,9 @@
 {
     using System;
 
+    using TextFx.ABNF;
+    using TextFx.ABNF.Core;
+
     using Xunit;
 
     public class BitLexerTests

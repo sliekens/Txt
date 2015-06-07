@@ -2,6 +2,8 @@
 {
     using System.Linq;
 
+    using TextFx.ABNF;
+
     using Xunit;
 
     public class TerminalStringTests

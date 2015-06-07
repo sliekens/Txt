@@ -1,5 +1,8 @@
 ﻿namespace TextFx.Core
 {
+    using TextFx.ABNF;
+    using TextFx.ABNF.Core;
+
     using Xunit;
 
     public class DigitLexerTests
