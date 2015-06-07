@@ -58,14 +58,6 @@ clone_depth: 5                      # clone entire repository history if not def
 #  db.server.com: 127.0.0.2
 
 # environment variables
-environment:
-  major: 1
-  minor: 0
-  patch: 0
-  global:
-    assembly_version: $(major).$(minor)
-    assembly_file_version: $(major).$(minor).$(APPVEYOR_BUILD_NUMBER)
-    assembly_informational_version: $(major).$(minor).$(patch)-CI$(APPVEYOR_BUILD_NUMBER)
 
 # this is how to allow failing jobs in the matrix
 #matrix:
@@ -110,9 +102,9 @@ cache:
 assembly_info:
   patch: true
   file: SharedAssemblyInfo.*
-  assembly_version: $(assembly_version)
-  assembly_file_version: $(assembly_file_version)
-  assembly_informational_version: $(assembly_informational_version)
+  assembly_version: "$(assembly_version)"
+  assembly_file_version: "$(assembly_file_version)"
+  assembly_informational_version: "$(assembly_informational_version)"
 
 
 # Automatically register private account and/or project AppVeyor NuGet feeds.
@@ -154,6 +146,9 @@ assembly_info:
 
 before_build:
    - cmd: nuget restore
+   - ps: Set-AppveyorBuildVariable -Name "assembly_version" -Value "1.0"
+   - ps: Set-AppveyorBuildVariable -Name "assembly_file_version" -Value "1.0.0.0"
+   - ps: Set-AppveyorBuildVariable -Name "assembly_informational_version" -Value "1.0.0"
 
 build_script:
     - ps: MSBuild.exe /m /p:Configuration=Release /p:Platform=AnyCPU /p:OutDir=$Env:APPVEYOR_BUILD_FOLDER\artifacts /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" /p:GenerateProjectSpecificOutputFolder=true /verbosity:m build.proj
