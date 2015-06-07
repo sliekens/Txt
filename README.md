@@ -1,10 +1,10 @@
-Structured Language (SLANG)
+TextFx
 ===========
 [![Build status](https://ci.appveyor.com/api/projects/status/01jxm32c7i9769ef?svg=true)](https://ci.appveyor.com/project/StevenLiekens/text-parser)
 
 # About
 
-SLANG is a collection of code that provides a foundation for structured text parsers with recursive descent.
+TextFx is a collection of code that provides a foundation for structured text parsers with recursive descent.
 
 Examples of structured languages that can be parsed with recursive descent include...
 
@@ -24,12 +24,15 @@ These specifications define a set of grammar rules for the language. Programmers
 
 Today, grammars are most commonly defined in what is called Augmented BNF (ABNF) notation. The ABNF specification itself defines a set of core grammar rules, which other specifications can then use to define a formal syntax for their language.
 
-An example that is commonly used is the formal syntax specification for integer numbers. An integer has one or more digits. A digit can be any decimal digit, and is a core ABNF rule.
+An example that is commonly used is the formal syntax specification for integer numbers. An integer number has an optional sign, followed by one or more digits. A digit can be any decimal digit, and is a core ABNF rule.
 
 ```abnf
-INT   = 1*DIGIT                      ; INT is a custom rule, invented for this demonstration
 DIGIT = "0" / "1" / "2" / "3" / "4"  ; DIGIT is a core ABNF rule
-        / "5" / "6" / "7" /"8" / "9"
+      / "5" / "6" / "7" / "8" / "9"
+
+SIGN  = "+" / "-"                    ; "+" or "-"
+
+INT   = [ SIGN ] 1*DIGIT             ; An optional sign, followed by 1 or more digits
 ```
 
 
