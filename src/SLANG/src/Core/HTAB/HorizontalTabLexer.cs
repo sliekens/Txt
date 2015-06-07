@@ -13,28 +13,26 @@ namespace SLANG.Core
     [RuleName("HTAB")]
     public class HorizontalTabLexer : Lexer<HorizontalTab>
     {
-        private readonly ILexer<Terminal> horizontalTabTerminalLexer;
+        private readonly ILexer<Terminal> innerLexer;
 
         /// <summary>
         /// </summary>
-        /// <param name="horizontalTabTerminalLexer">%x09</param>
-        public HorizontalTabLexer(ILexer<Terminal> horizontalTabTerminalLexer)
+        /// <param name="innerLexer">%x09</param>
+        public HorizontalTabLexer(ILexer<Terminal> innerLexer)
         {
-            if (horizontalTabTerminalLexer == null)
+            if (innerLexer == null)
             {
-                throw new ArgumentNullException(
-                    "horizontalTabTerminalLexer",
-                    "Precondition: horizontalTabTerminalLexer != null");
+                throw new ArgumentNullException("innerLexer");
             }
 
-            this.horizontalTabTerminalLexer = horizontalTabTerminalLexer;
+            this.innerLexer = innerLexer;
         }
 
         /// <inheritdoc />
         public override bool TryRead(ITextScanner scanner, out HorizontalTab element)
         {
             Terminal result;
-            if (this.horizontalTabTerminalLexer.TryRead(scanner, out result))
+            if (this.innerLexer.TryRead(scanner, out result))
             {
                 element = new HorizontalTab(result);
                 return true;

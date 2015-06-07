@@ -11,8 +11,8 @@ namespace SLANG.Core
 {
     public class CarriageReturn : Terminal
     {
-        public CarriageReturn(Terminal element)
-            : base(element)
+        public CarriageReturn(Terminal terminal)
+            : base(terminal)
         {
         }
     }

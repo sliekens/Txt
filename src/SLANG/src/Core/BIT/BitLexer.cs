@@ -13,22 +13,22 @@ namespace SLANG.Core
     [RuleName("BIT")]
     public class BitLexer : Lexer<Bit>
     {
-        private readonly ILexer<Alternative> bitAlternativeLexer;
+        private readonly ILexer<Alternative> innerLexer;
 
-        public BitLexer(ILexer<Alternative> bitAlternativeLexer)
+        public BitLexer(ILexer<Alternative> innerLexer)
         {
-            if (bitAlternativeLexer == null)
+            if (innerLexer == null)
             {
-                throw new ArgumentNullException("bitAlternativeLexer", "Precondition: bitAlternativeLexer != null");
+                throw new ArgumentNullException("innerLexer");
             }
 
-            this.bitAlternativeLexer = bitAlternativeLexer;
+            this.innerLexer = innerLexer;
         }
 
         public override bool TryRead(ITextScanner scanner, out Bit element)
         {
             Alternative result;
-            if (this.bitAlternativeLexer.TryRead(scanner, out result))
+            if (this.innerLexer.TryRead(scanner, out result))
             {
                 element = new Bit(result);
                 return true;

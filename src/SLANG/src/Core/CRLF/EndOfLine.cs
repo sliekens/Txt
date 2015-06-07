@@ -11,8 +11,8 @@ namespace SLANG.Core
 {
     public class EndOfLine : Sequence
     {
-        public EndOfLine(Sequence repetition)
-            : base(repetition)
+        public EndOfLine(Sequence sequence)
+            : base(sequence)
         {
         }
     }

@@ -13,26 +13,26 @@ namespace SLANG.Core
     [RuleName("LF")]
     public class LineFeedLexer : Lexer<LineFeed>
     {
-        private readonly ILexer<Terminal> lineFeedTerminalLexer;
+        private readonly ILexer<Terminal> innerLexer;
 
         /// <summary>
         /// </summary>
-        /// <param name="lineFeedTerminalLexer">%x0A</param>
-        public LineFeedLexer(ILexer<Terminal> lineFeedTerminalLexer)
+        /// <param name="innerLexer">%x0A</param>
+        public LineFeedLexer(ILexer<Terminal> innerLexer)
         {
-            if (lineFeedTerminalLexer == null)
+            if (innerLexer == null)
             {
-                throw new ArgumentNullException("lineFeedTerminalLexer", "Precondition: lineFeedTerminalLexer != null");
+                throw new ArgumentNullException("innerLexer");
             }
 
-            this.lineFeedTerminalLexer = lineFeedTerminalLexer;
+            this.innerLexer = innerLexer;
         }
 
         /// <inheritdoc />
         public override bool TryRead(ITextScanner scanner, out LineFeed element)
         {
             Terminal result;
-            if (this.lineFeedTerminalLexer.TryRead(scanner, out result))
+            if (this.innerLexer.TryRead(scanner, out result))
             {
                 element = new LineFeed(result);
                 return true;

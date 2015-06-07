@@ -11,8 +11,8 @@ namespace SLANG.Core
 {
     public class VisibleCharacter : Terminal
     {
-        public VisibleCharacter(Terminal element)
-            : base(element)
+        public VisibleCharacter(Terminal terminal)
+            : base(terminal)
         {
         }
     }

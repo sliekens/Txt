@@ -10,7 +10,7 @@
         {
             if (terminalLexerFactory == null)
             {
-                throw new ArgumentNullException("terminalLexerFactory", "Precondition: terminalLexerFactory != null");
+                throw new ArgumentNullException("terminalLexerFactory");
             }
 
             this.terminalLexerFactory = terminalLexerFactory;

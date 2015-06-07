@@ -13,28 +13,26 @@ namespace SLANG.Core
     [RuleName("CR")]
     public class CarriageReturnLexer : Lexer<CarriageReturn>
     {
-        private readonly ILexer<Terminal> carriageReturnTerminalLexer;
+        private readonly ILexer<Terminal> innerLexer;
 
         /// <summary>
         /// </summary>
-        /// <param name="carriageReturnTerminalLexer">%x0D</param>
-        public CarriageReturnLexer(ILexer<Terminal> carriageReturnTerminalLexer)
+        /// <param name="innerLexer">%x0D</param>
+        public CarriageReturnLexer(ILexer<Terminal> innerLexer)
         {
-            if (carriageReturnTerminalLexer == null)
+            if (innerLexer == null)
             {
-                throw new ArgumentNullException(
-                    "carriageReturnTerminalLexer",
-                    "Precondition: carriageReturnTerminalLexer != null");
+                throw new ArgumentNullException("innerLexer");
             }
 
-            this.carriageReturnTerminalLexer = carriageReturnTerminalLexer;
+            this.innerLexer = innerLexer;
         }
 
         /// <inheritdoc />
         public override bool TryRead(ITextScanner scanner, out CarriageReturn element)
         {
             Terminal result;
-            if (this.carriageReturnTerminalLexer.TryRead(scanner, out result))
+            if (this.innerLexer.TryRead(scanner, out result))
             {
                 element = new CarriageReturn(result);
                 return true;

@@ -23,8 +23,7 @@
             // ReSharper disable once LoopCanBeConvertedToQuery
             for (var i = 0; i < lexers.Length; i++)
             {
-                var lexer = lexers[i];
-                if (lexer == null)
+                if (lexers[i] == null)
                 {
                     throw new ArgumentException("Precondition: lexers.All(lexer => lexer != null", "lexers");
                 }

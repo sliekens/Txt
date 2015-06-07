@@ -13,26 +13,24 @@ namespace SLANG.Core
     [RuleName("LWSP")]
     public class LinearWhiteSpaceLexer : Lexer<LinearWhiteSpace>
     {
-        private readonly ILexer<Repetition> linearWhiteSpaceRepetitionLexer;
+        private readonly ILexer<Repetition> innerLexer;
 
-        public LinearWhiteSpaceLexer(ILexer<Repetition> linearWhiteSpaceRepetitionLexer)
+        public LinearWhiteSpaceLexer(ILexer<Repetition> innerLexer)
         {
-            if (linearWhiteSpaceRepetitionLexer == null)
+            if (innerLexer == null)
             {
-                throw new ArgumentNullException(
-                    "linearWhiteSpaceRepetitionLexer",
-                    "Precondition: linearWhiteSpaceRepetitionLexer != null");
+                throw new ArgumentNullException("innerLexer");
             }
 
-            this.linearWhiteSpaceRepetitionLexer = linearWhiteSpaceRepetitionLexer;
+            this.innerLexer = innerLexer;
         }
 
         public override bool TryRead(ITextScanner scanner, out LinearWhiteSpace element)
         {
-            Repetition sequence;
-            if (this.linearWhiteSpaceRepetitionLexer.TryRead(scanner, out sequence))
+            Repetition result;
+            if (this.innerLexer.TryRead(scanner, out result))
             {
-                element = new LinearWhiteSpace(sequence);
+                element = new LinearWhiteSpace(result);
                 return true;
             }
 

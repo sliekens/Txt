@@ -10,9 +10,7 @@
         {
             if (valueRangeLexerFactory == null)
             {
-                throw new ArgumentNullException(
-                    "valueRangeLexerFactory",
-                    "Precondition: valueRangeLexerFactory != null");
+                throw new ArgumentNullException("valueRangeLexerFactory");
             }
 
             this.valueRangeLexerFactory = valueRangeLexerFactory;
@@ -20,8 +18,8 @@
 
         public ILexer<Octet> Create()
         {
-            var octetValueRangeLexer = this.valueRangeLexerFactory.Create('\x00', '\xFF');
-            return new OctetLexer(octetValueRangeLexer);
+            var innerLexer = this.valueRangeLexerFactory.Create('\x00', '\xFF');
+            return new OctetLexer(innerLexer);
         }
     }
 }

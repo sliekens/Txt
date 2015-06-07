@@ -13,27 +13,25 @@ namespace SLANG.Core
     [RuleName("CTL")]
     public class ControlCharacterLexer : Lexer<ControlCharacter>
     {
-        private readonly ILexer<Alternative> controlCharacterAlternativeLexer;
+        private readonly ILexer<Alternative> innerLexer;
 
         /// <summary>
         /// </summary>
-        /// <param name="controlCharacterAlternativeLexer">%x00-1F / %x7F</param>
-        public ControlCharacterLexer(ILexer<Alternative> controlCharacterAlternativeLexer)
+        /// <param name="innerLexer">%x00-1F / %x7F</param>
+        public ControlCharacterLexer(ILexer<Alternative> innerLexer)
         {
-            if (controlCharacterAlternativeLexer == null)
+            if (innerLexer == null)
             {
-                throw new ArgumentNullException(
-                    "controlCharacterAlternativeLexer",
-                    "Precondition: controlCharacterAlternativeLexer != null");
+                throw new ArgumentNullException("innerLexer");
             }
 
-            this.controlCharacterAlternativeLexer = controlCharacterAlternativeLexer;
+            this.innerLexer = innerLexer;
         }
 
         public override bool TryRead(ITextScanner scanner, out ControlCharacter element)
         {
             Alternative result;
-            if (this.controlCharacterAlternativeLexer.TryRead(scanner, out result))
+            if (this.innerLexer.TryRead(scanner, out result))
             {
                 element = new ControlCharacter(result);
                 return true;

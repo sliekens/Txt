@@ -13,25 +13,25 @@ namespace SLANG.Core
     [RuleName("ALPHA")]
     public class AlphaLexer : Lexer<Alpha>
     {
-        private readonly ILexer<Alternative> alphaAlternativeLexer;
+        private readonly ILexer<Alternative> innerLexer;
 
         /// <summary>
         /// </summary>
-        /// <param name="alphaAlternativeLexer">%x41-5A / %x61-7A</param>
-        public AlphaLexer(ILexer<Alternative> alphaAlternativeLexer)
+        /// <param name="innerLexer">%x41-5A / %x61-7A</param>
+        public AlphaLexer(ILexer<Alternative> innerLexer)
         {
-            if (alphaAlternativeLexer == null)
+            if (innerLexer == null)
             {
-                throw new ArgumentNullException("alphaAlternativeLexer", "Precondition: alphaAlternativeLexer != null");
+                throw new ArgumentNullException("innerLexer");
             }
 
-            this.alphaAlternativeLexer = alphaAlternativeLexer;
+            this.innerLexer = innerLexer;
         }
 
         public override bool TryRead(ITextScanner scanner, out Alpha element)
         {
             Alternative result;
-            if (this.alphaAlternativeLexer.TryRead(scanner, out result))
+            if (this.innerLexer.TryRead(scanner, out result))
             {
                 element = new Alpha(result);
                 return true;

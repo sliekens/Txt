@@ -11,8 +11,8 @@ namespace SLANG.Core
 {
     public class HorizontalTab : Terminal
     {
-        public HorizontalTab(Terminal element)
-            : base(element)
+        public HorizontalTab(Terminal terminal)
+            : base(terminal)
         {
         }
     }

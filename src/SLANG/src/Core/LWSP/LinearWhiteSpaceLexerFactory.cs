@@ -23,33 +23,27 @@
         {
             if (whiteSpaceLexerFactory == null)
             {
-                throw new ArgumentNullException(
-                    "whiteSpaceLexerFactory",
-                    "Precondition: whiteSpaceLexerFactory != null");
+                throw new ArgumentNullException("whiteSpaceLexerFactory");
             }
 
             if (endOfLineLexerFactory == null)
             {
-                throw new ArgumentNullException("endOfLineLexerFactory", "Precondition: endOfLineLexerFactory != null");
+                throw new ArgumentNullException("endOfLineLexerFactory");
             }
 
             if (sequenceLexerFactory == null)
             {
-                throw new ArgumentNullException("sequenceLexerFactory", "Precondition: sequenceLexerFactory != null");
+                throw new ArgumentNullException("sequenceLexerFactory");
             }
 
             if (alternativeLexerFactory == null)
             {
-                throw new ArgumentNullException(
-                    "alternativeLexerFactory",
-                    "Precondition: alternativeLexerFactory != null");
+                throw new ArgumentNullException("alternativeLexerFactory");
             }
 
             if (repetitionLexerFactory == null)
             {
-                throw new ArgumentNullException(
-                    "repetitionLexerFactory",
-                    "Precondition: repetitionLexerFactory != null");
+                throw new ArgumentNullException("repetitionLexerFactory");
             }
 
             this.whiteSpaceLexerFactory = whiteSpaceLexerFactory;
@@ -65,11 +59,8 @@
             var whiteSpaceLexer = this.whiteSpaceLexerFactory.Create();
             var foldLexer = this.sequenceLexerFactory.Create(endOfLineLexer, whiteSpaceLexer);
             var breakingWhiteSpaceLexer = this.alternativeLexerFactory.Create(whiteSpaceLexer, foldLexer);
-            var linearWhiteSpaceRepetitionLexer = this.repetitionLexerFactory.Create(
-                breakingWhiteSpaceLexer,
-                0,
-                int.MaxValue);
-            return new LinearWhiteSpaceLexer(linearWhiteSpaceRepetitionLexer);
+            var innerLexer = this.repetitionLexerFactory.Create(breakingWhiteSpaceLexer, 0, int.MaxValue);
+            return new LinearWhiteSpaceLexer(innerLexer);
         }
     }
 }

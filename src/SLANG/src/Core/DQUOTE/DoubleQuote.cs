@@ -10,8 +10,8 @@ namespace SLANG.Core
 {
     public class DoubleQuote : Terminal
     {
-        public DoubleQuote(Terminal element)
-            : base(element)
+        public DoubleQuote(Terminal terminal)
+            : base(terminal)
         {
         }
     }

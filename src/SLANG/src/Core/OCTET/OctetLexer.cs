@@ -13,22 +13,22 @@ namespace SLANG.Core
     [RuleName("OCTET")]
     public class OctetLexer : Lexer<Octet>
     {
-        private readonly ILexer<Terminal> octetValueRangeLexer;
+        private readonly ILexer<Terminal> innerLexer;
 
-        public OctetLexer(ILexer<Terminal> octetValueRangeLexer)
+        public OctetLexer(ILexer<Terminal> innerLexer)
         {
-            if (octetValueRangeLexer == null)
+            if (innerLexer == null)
             {
-                throw new ArgumentNullException("octetValueRangeLexer", "Precondition: octetValueRangeLexer != null");
+                throw new ArgumentNullException("innerLexer");
             }
 
-            this.octetValueRangeLexer = octetValueRangeLexer;
+            this.innerLexer = innerLexer;
         }
 
         public override bool TryRead(ITextScanner scanner, out Octet element)
         {
             Terminal result;
-            if (this.octetValueRangeLexer.TryRead(scanner, out result))
+            if (this.innerLexer.TryRead(scanner, out result))
             {
                 element = new Octet(result);
                 return true;

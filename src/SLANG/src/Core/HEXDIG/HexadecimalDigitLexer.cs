@@ -13,27 +13,25 @@ namespace SLANG.Core
     [RuleName("HEXDIG")]
     public class HexadecimalDigitLexer : Lexer<HexadecimalDigit>
     {
-        private readonly ILexer<Alternative> hexadecimalDigitAlternativeLexer;
+        private readonly ILexer<Alternative> innerLexer;
 
         /// <summary>
         /// </summary>
-        /// <param name="hexadecimalDigitAlternativeLexer">DIGIT / "A" / "B" / "C" / "D" / "E" / "F"</param>
-        public HexadecimalDigitLexer(ILexer<Alternative> hexadecimalDigitAlternativeLexer)
+        /// <param name="innerLexer">DIGIT / "A" / "B" / "C" / "D" / "E" / "F"</param>
+        public HexadecimalDigitLexer(ILexer<Alternative> innerLexer)
         {
-            if (hexadecimalDigitAlternativeLexer == null)
+            if (innerLexer == null)
             {
-                throw new ArgumentNullException(
-                    "hexadecimalDigitAlternativeLexer",
-                    "Precondition: hexadecimalDigitAlternativeLexer != null");
+                throw new ArgumentNullException("innerLexer");
             }
 
-            this.hexadecimalDigitAlternativeLexer = hexadecimalDigitAlternativeLexer;
+            this.innerLexer = innerLexer;
         }
 
         public override bool TryRead(ITextScanner scanner, out HexadecimalDigit element)
         {
             Alternative result;
-            if (this.hexadecimalDigitAlternativeLexer.TryRead(scanner, out result))
+            if (this.innerLexer.TryRead(scanner, out result))
             {
                 element = new HexadecimalDigit(result);
                 return true;

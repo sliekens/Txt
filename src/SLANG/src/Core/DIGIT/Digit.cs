@@ -11,8 +11,8 @@ namespace SLANG.Core
 {
     public class Digit : Terminal
     {
-        public Digit(Terminal element)
-            : base(element)
+        public Digit(Terminal terminal)
+            : base(terminal)
         {
         }
     }

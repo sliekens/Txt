@@ -13,27 +13,25 @@ namespace SLANG.Core
     [RuleName("CHAR")]
     public class CharacterLexer : Lexer<Character>
     {
-        private readonly ILexer<Terminal> characterValueRangeLexer;
+        private readonly ILexer<Terminal> innerLexer;
 
         /// <summary>
         /// </summary>
-        /// <param name="characterValueRangeLexer">%x01-7F</param>
-        public CharacterLexer(ILexer<Terminal> characterValueRangeLexer)
+        /// <param name="innerLexer">%x01-7F</param>
+        public CharacterLexer(ILexer<Terminal> innerLexer)
         {
-            if (characterValueRangeLexer == null)
+            if (innerLexer == null)
             {
-                throw new ArgumentNullException(
-                    "characterValueRangeLexer",
-                    "Precondition: characterValueRangeLexer != null");
+                throw new ArgumentNullException("innerLexer");
             }
 
-            this.characterValueRangeLexer = characterValueRangeLexer;
+            this.innerLexer = innerLexer;
         }
 
         public override bool TryRead(ITextScanner scanner, out Character element)
         {
             Terminal result;
-            if (this.characterValueRangeLexer.TryRead(scanner, out result))
+            if (this.innerLexer.TryRead(scanner, out result))
             {
                 element = new Character(result);
                 return true;

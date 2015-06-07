@@ -13,25 +13,25 @@ namespace SLANG.Core
     [RuleName("DIGIT")]
     public class DigitLexer : Lexer<Digit>
     {
-        private readonly ILexer<Terminal> digitValueRangeLexer;
+        private readonly ILexer<Terminal> innerLexer;
 
         /// <summary>
         /// </summary>
-        /// <param name="digitValueRangeLexer">%x30-39</param>
-        public DigitLexer(ILexer<Terminal> digitValueRangeLexer)
+        /// <param name="innerLexer">%x30-39</param>
+        public DigitLexer(ILexer<Terminal> innerLexer)
         {
-            if (digitValueRangeLexer == null)
+            if (innerLexer == null)
             {
-                throw new ArgumentNullException("digitValueRangeLexer", "Precondition: digitValueRangeLexer != null");
+                throw new ArgumentNullException("innerLexer");
             }
 
-            this.digitValueRangeLexer = digitValueRangeLexer;
+            this.innerLexer = innerLexer;
         }
 
         public override bool TryRead(ITextScanner scanner, out Digit element)
         {
             Terminal result;
-            if (this.digitValueRangeLexer.TryRead(scanner, out result))
+            if (this.innerLexer.TryRead(scanner, out result))
             {
                 element = new Digit(result);
                 return true;

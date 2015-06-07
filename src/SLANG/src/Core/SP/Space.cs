@@ -11,8 +11,8 @@ namespace SLANG.Core
 {
     public class Space : Terminal
     {
-        public Space(Terminal element)
-            : base(element)
+        public Space(Terminal terminal)
+            : base(terminal)
         {
         }
     }

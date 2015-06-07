@@ -13,28 +13,28 @@ namespace SLANG.Core
     [RuleName("SP")]
     public class SpaceLexer : Lexer<Space>
     {
-        private readonly ILexer<Terminal> spaceTerminalLexer;
+        private readonly ILexer<Terminal> innerLexer;
 
         /// <summary>
         /// </summary>
-        /// <param name="spaceTerminalLexer">%x20</param>
-        public SpaceLexer(ILexer<Terminal> spaceTerminalLexer)
+        /// <param name="innerLexer">%x20</param>
+        public SpaceLexer(ILexer<Terminal> innerLexer)
         {
-            if (spaceTerminalLexer == null)
+            if (innerLexer == null)
             {
-                throw new ArgumentNullException("spaceTerminalLexer", "Precondition: spaceTerminalLexer != null");
+                throw new ArgumentNullException("innerLexer");
             }
 
-            this.spaceTerminalLexer = spaceTerminalLexer;
+            this.innerLexer = innerLexer;
         }
 
         /// <inheritdoc />
         public override bool TryRead(ITextScanner scanner, out Space element)
         {
-            Terminal terminal;
-            if (this.spaceTerminalLexer.TryRead(scanner, out terminal))
+            Terminal result;
+            if (this.innerLexer.TryRead(scanner, out result))
             {
-                element = new Space(terminal);
+                element = new Space(result);
                 return true;
             }
 

@@ -13,24 +13,22 @@ namespace SLANG.Core
     [RuleName("WSP")]
     public class WhiteSpaceLexer : Lexer<WhiteSpace>
     {
-        private readonly ILexer<Alternative> whiteSpaceAlternativeLexer;
+        private readonly ILexer<Alternative> innerLexer;
 
-        public WhiteSpaceLexer(ILexer<Alternative> whiteSpaceAlternativeLexer)
+        public WhiteSpaceLexer(ILexer<Alternative> innerLexer)
         {
-            if (whiteSpaceAlternativeLexer == null)
+            if (innerLexer == null)
             {
-                throw new ArgumentNullException(
-                    "whiteSpaceAlternativeLexer",
-                    "Precondition: whiteSpaceAlternativeLexer != null");
+                throw new ArgumentNullException("innerLexer");
             }
 
-            this.whiteSpaceAlternativeLexer = whiteSpaceAlternativeLexer;
+            this.innerLexer = innerLexer;
         }
 
         public override bool TryRead(ITextScanner scanner, out WhiteSpace element)
         {
             Alternative result;
-            if (this.whiteSpaceAlternativeLexer.TryRead(scanner, out result))
+            if (this.innerLexer.TryRead(scanner, out result))
             {
                 element = new WhiteSpace(result);
                 return true;

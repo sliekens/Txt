@@ -13,27 +13,25 @@ namespace SLANG.Core
     [RuleName("CRLF")]
     public class EndOfLineLexer : Lexer<EndOfLine>
     {
-        private readonly ILexer<Sequence> endOfLineSequenceLexer;
+        private readonly ILexer<Sequence> innerLexer;
 
         /// <summary>
         /// </summary>
-        /// <param name="endOfLineSequenceLexer">CR LF</param>
-        public EndOfLineLexer(ILexer<Sequence> endOfLineSequenceLexer)
+        /// <param name="innerLexer">CR LF</param>
+        public EndOfLineLexer(ILexer<Sequence> innerLexer)
         {
-            if (endOfLineSequenceLexer == null)
+            if (innerLexer == null)
             {
-                throw new ArgumentNullException(
-                    "endOfLineSequenceLexer",
-                    "Precondition: endOfLineSequenceLexer != null");
+                throw new ArgumentNullException("innerLexer");
             }
 
-            this.endOfLineSequenceLexer = endOfLineSequenceLexer;
+            this.innerLexer = innerLexer;
         }
 
         public override bool TryRead(ITextScanner scanner, out EndOfLine element)
         {
             Sequence result;
-            if (this.endOfLineSequenceLexer.TryRead(scanner, out result))
+            if (this.innerLexer.TryRead(scanner, out result))
             {
                 element = new EndOfLine(result);
                 return true;

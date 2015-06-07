@@ -11,8 +11,8 @@ namespace SLANG.Core
 {
     public class LineFeed : Terminal
     {
-        public LineFeed(Terminal element)
-            : base(element)
+        public LineFeed(Terminal terminal)
+            : base(terminal)
         {
         }
     }

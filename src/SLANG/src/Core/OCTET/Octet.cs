@@ -11,8 +11,8 @@ namespace SLANG.Core
 {
     public class Octet : Terminal
     {
-        public Octet(Terminal element)
-            : base(element)
+        public Octet(Terminal terminal)
+            : base(terminal)
         {
         }
     }

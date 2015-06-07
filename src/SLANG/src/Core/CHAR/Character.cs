@@ -13,8 +13,8 @@ namespace SLANG.Core
 
     public class Character : Terminal
     {
-        public Character(Terminal element)
-            : base(element)
+        public Character(Terminal terminal)
+            : base(terminal)
         {
         }
 

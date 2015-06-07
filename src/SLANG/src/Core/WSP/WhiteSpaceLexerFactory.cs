@@ -41,10 +41,10 @@
 
         public ILexer<WhiteSpace> Create()
         {
-            var spaceLexer = this.spaceLexerFactory.Create();
-            var horizontalTabLexer = this.horizontalTabLexerFactory.Create();
-            var whiteSpaceAlternativeLexer = this.alternativeLexerFactory.Create(spaceLexer, horizontalTabLexer);
-            return new WhiteSpaceLexer(whiteSpaceAlternativeLexer);
+            var sp = this.spaceLexerFactory.Create();
+            var htab = this.horizontalTabLexerFactory.Create();
+            var innerLexer = this.alternativeLexerFactory.Create(sp, htab);
+            return new WhiteSpaceLexer(innerLexer);
         }
     }
 }

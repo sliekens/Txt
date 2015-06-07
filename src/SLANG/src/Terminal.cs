@@ -12,9 +12,9 @@
         /// <summary>
         ///     Creates a new instance of the <see cref="Terminal" /> class with a specified terminal to copy.
         /// </summary>
-        /// <param name="element">The terminal element to copy.</param>
-        public Terminal(Terminal element)
-            : base(element)
+        /// <param name="terminal">The terminal element to copy.</param>
+        public Terminal(Terminal terminal)
+            : base(terminal)
         {
         }
 
