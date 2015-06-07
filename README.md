@@ -4,6 +4,12 @@ TextFx
 [![Open Issues](https://img.shields.io/github/issues/StevenLiekens/TextFx.svg)](https://github.com/StevenLiekens/TextFx/issues?q=is%3Aopen)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/StevenLiekens/TextFx/master/LICENSE)
 
+New! TextFx is now available on NuGet.
+
+[TextFx](https://www.nuget.org/packages/TextFx/)
+
+[TextFx.ABNF](https://www.nuget.org/packages/TextFx.ABNF/)
+
 
 # About
 
