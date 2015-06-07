@@ -43,15 +43,15 @@ os: Windows Server 2012
 init:
   - ps: |
       $assembly_version = "$Env:major.0"
-      $assembly_file_version = "$($Env:major).$($Env:minor).30.0"
+      $assembly_file_version = "$Env:major.$Env:minor.$Env:APPVEYOR_BUILD_NUMBER.0"
 
       If ($Env:CI_pack -eq "true")
       {
-          $assembly_informational_version = "$($Env:major).$($Env:minor).$($Env:patch)-CI$($Env:APPVEYOR_BUILD_NUMBER)"
+          $assembly_informational_version = "$Env:major.$Env:minor.$Env:patch-CI$Env:APPVEYOR_BUILD_NUMBER"
       }
       Else
       {
-          $assembly_informational_version = "$($Env:major).$($Env:minor).$($Env:patch)"
+          $assembly_informational_version = "$Env:major.$Env:minor.$Env:patch"
       }
 
       Set-AppveyorBuildVariable -Name "assembly_version" -Value $assembly_version
