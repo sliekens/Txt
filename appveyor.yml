@@ -42,9 +42,9 @@ os: Windows Server 2012
 # scripts that are called at very beginning, before repo cloning
 init:
   - ps: |
-  Set-AppveyorBuildVariable -Name "assembly_version" -Value "1.0"
-  Set-AppveyorBuildVariable -Name "assembly_file_version" -Value "1.0.$($Env:APPVEYOR_BUILD_NUMBER).0"
-  Set-AppveyorBuildVariable -Name "assembly_informational_version" -Value "1.0.0-CI$($Env:APPVEYOR_BUILD_NUMBER)"
+      Set-AppveyorBuildVariable -Name "assembly_version" -Value "1.0"
+      Set-AppveyorBuildVariable -Name "assembly_file_version" -Value "1.0.$($Env:APPVEYOR_BUILD_NUMBER).0"
+      Set-AppveyorBuildVariable -Name "assembly_informational_version" -Value "1.0.0-CI$($Env:APPVEYOR_BUILD_NUMBER)"
 
 # clone directory
 clone_folder: c:\projects\textfx
