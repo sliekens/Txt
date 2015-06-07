@@ -22,11 +22,5 @@ namespace TextFx.ABNF.Core
         {
             return instance.ToChar();
         }
-
-        public char ToChar()
-        {
-            Debug.Assert(this.Values.Length == 1, "this.Values.Length == 1");
-            return this.Values[0];
-        }
     }
 }
