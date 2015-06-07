@@ -9,6 +9,8 @@
 
 namespace SLANG
 {
+    using System;
+
     /// <summary>Provides the interface for types that process the lexical syntax of a language.</summary>
     /// <typeparam name="TElement">The type of the element that represents the lexer rule.</typeparam>
     public interface ILexer<TElement> : ILexer
@@ -19,9 +21,9 @@ namespace SLANG
         ///     The scanner object that provides text symbols as well as contextual information about the text
         ///     source.
         /// </param>
-        /// <exception cref="T:System.InvalidOperationException">The given scanner object is not initialized.</exception>
-        /// <exception cref="T:SLANG.SyntaxErrorException">
-        ///     The scanner returned an unexpected symbol, or unexpectedly reached the
+        /// <exception cref="InvalidOperationException">The given scanner object is not initialized.</exception>
+        /// <exception cref="FormatException">
+        ///     The scanner returned an unexpected element, or unexpectedly reached the
         ///     end of the text source.
         /// </exception>
         /// <returns>The next available element.</returns>
