@@ -11,5 +11,10 @@
     <copyright>The MIT License (MIT)</copyright>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <tags>text, parsing, parser, abnf</tags>
+    <dependencies>
+      <group>
+        <dependency id="TextFx" version="[$version$]" />
+      </group>
+    </dependencies>
   </metadata>
 </package>
