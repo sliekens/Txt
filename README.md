@@ -2,6 +2,7 @@ TextFx
 ===========
 [![Build status](https://ci.appveyor.com/api/projects/status/2ijyc3cck1ddlurt?svg=true)](https://ci.appveyor.com/project/StevenLiekens/textfx)
 [![Open Issues](https://img.shields.io/github/issues/StevenLiekens/TextFx.svg)](https://github.com/StevenLiekens/TextFx/issues?q=is%3Aopen)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/StevenLiekens/TextFx/master/LICENSE)
 
 
 # About
