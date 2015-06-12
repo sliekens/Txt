@@ -99,6 +99,7 @@
         public override void Flush()
         {
             this.stream.Flush();
+            this.pushbackStack.TrimExcess();
         }
 
         public override int Read(byte[] buffer, int offset, int count)
@@ -125,15 +126,6 @@
         public override void SetLength(long value)
         {
             this.stream.SetLength(value);
-        }
-
-        /// <summary>
-        ///     Sets the capacity of the internal pushback buffer to the actual number of unread bytes if that number is less
-        ///     than 90 percent of current capacity.
-        /// </summary>
-        public void Trim()
-        {
-            this.pushbackStack.TrimExcess();
         }
 
         public void Unread(byte[] buffer, int offset, int count)
