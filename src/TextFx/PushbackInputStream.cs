@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.IO;
 
     /// <summary>
@@ -22,6 +23,12 @@
         /// <summary>The current position within the pushback buffer.</summary>
         private int pushbackOffset;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PushbackInputStream"/> class that wraps a given <see cref="Stream"/> object.
+        /// </summary>
+        /// <param name="stream">The stream object to wrap.</param>
+        /// <exception cref="ArgumentNullException">The value of <paramref name="stream"/> is a null reference.</exception>
+        /// <exception cref="ArgumentException">The value of <see cref="Stream.CanRead"/> is <c>false</c>.</exception>
         public PushbackInputStream(Stream stream)
         {
             if (stream == null)
@@ -38,14 +45,19 @@
             this.pushbackStack = new Stack<PushbackContext>();
         }
 
+        /// <summary>Gets a value indicating whether the current stream supports reading.</summary>
+        /// <returns>Always returns <c>true</c>.</returns>
         public override bool CanRead
         {
             get
             {
+                Debug.Assert(this.stream.CanRead, "this.stream.CanRead");
                 return true;
             }
         }
 
+        /// <summary>Gets a value indicating whether the current stream supports seeking.</summary>
+        /// <returns>true if the stream supports seeking; otherwise, false.</returns>
         public override bool CanSeek
         {
             get
@@ -54,6 +66,8 @@
             }
         }
 
+        /// <summary>Gets a value indicating whether the current stream supports writing.</summary>
+        /// <returns>Always returns <c>false</c>.</returns>
         public override bool CanWrite
         {
             get
@@ -103,6 +117,11 @@
             return this.stream.Seek(offset, origin);
         }
 
+        /// <summary>Sets the length of the underlying stream.</summary>
+        /// <param name="value">The desired length of the underlying stream in bytes. </param>
+        /// <exception cref="T:System.IO.IOException">An I/O error occurs. </exception>
+        /// <exception cref="T:System.NotSupportedException">The stream does not support both writing and seeking, such as if the stream is constructed from a pipe or console output. </exception>
+        /// <exception cref="T:System.ObjectDisposedException">Methods were called after the stream was closed. </exception>
         public override void SetLength(long value)
         {
             this.stream.SetLength(value);
