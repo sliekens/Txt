@@ -89,6 +89,8 @@ Source: RFC 5234 [Augmented BNF for Syntax Specifications](https://tools.ietf.or
 Custom syntax specifications can define rules that build upon these core rules.
 
 
+## How to use the code
+
 Consider the syntax specification for an integer number:
 
 
@@ -102,5 +104,209 @@ INT   = [ SIGN ] 1*DIGIT             ; An optional sign, followed by 1 or more d
 ```
 
 An `INT` has an optional `SIGN`, followed by at least one `DIGIT`. A `SIGN` can be either `"+"` or `"-"`. A `DIGIT` can be any decimal digit, and is a core rule.
+
+An implementation of this grammar might look like this.
+
+
+```C#
+namespace Example
+{
+    using System;
+
+    using TextFx;
+    using TextFx.ABNF;
+
+    // SIGN = "+" / "-"
+    public class Sign : Alternative
+    {
+        public Sign(Element element)
+            : base(element)
+        {
+        }
+    }
+
+    // DIGIT = %x30-39
+    // Because DIGIT is a core ABNF rule, the library already contains similar code
+    // It is duplicated here only for demonstration
+    public class Digit : Terminal
+    {
+        public Digit(Terminal terminal)
+            : base(terminal)
+        {
+        }
+    }
+
+    // INT = [ SIGN ] 1*DIGIT
+    public class Int : Sequence
+    {
+        private Element signPart;
+
+        private Element numericPart;
+
+        public Int(Sequence sequence)
+            : base(sequence)
+        {
+            this.signPart = sequence.Elements[0];
+            this.numericPart = sequence.Elements[1];
+        }
+
+        // Converts the current instance to System.Int32
+        public int ToInt32()
+        {
+            var value = int.Parse(this.numericPart.Value);
+
+            // negate the value if the sign part is a minus (otherwise do nothing)
+            if (this.signPart.Value == "-")
+            {
+                value *= -1;
+            }
+
+            return value;
+        }
+    }
+
+    public class SignLexer : Lexer<Sign>
+    {
+        private ILexer<TerminalString> plusLexer;
+
+        private ILexer<TerminalString> minusLexer;
+
+        public SignLexer()
+        {
+            // TextFx uses a factory pattern for configuring element lexers
+
+            // You typically want to move this initialization code to a custom factory class
+            // instead of writing it in the constructor of the ILexer
+            ITerminalLexerFactory terminalLexerFactory;
+            IStringLexerFactory stringLexerFactory;
+            terminalLexerFactory = new TerminalLexerFactory();
+            stringLexerFactory = new StringLexerFactory(terminalLexerFactory);
+
+            // Create two inner lexers, one for each alternative
+            this.plusLexer = stringLexerFactory.Create("+");
+            this.minusLexer = stringLexerFactory.Create("-");
+        }
+
+        public override bool TryRead(ITextScanner scanner, out Sign element)
+        {
+
+            // Alternative 1: "+"
+            TerminalString plus;
+            if (this.plusLexer.TryRead(scanner, out plus))
+            {
+                element = new Sign(plus);
+                return true;
+            }
+
+            // Alternative 2: "-"
+            TerminalString minus;
+            if (this.minusLexer.TryRead(scanner, out minus))
+            {
+                element = new Sign(minus);
+                return true;
+            }
+
+            // No matches => the next input symbol is neither "+" or "-"
+            element = null;
+            return false;
+        }
+    }
+
+    // Because DIGIT is a core ABNF rule, the library already contains similar code
+    // It is duplicated here only for demonstration
+    public class DigitLexer : Lexer<Digit>
+    {
+        private ILexer<Terminal> digitValueRangeLexer;
+
+        public DigitLexer()
+        {
+            IValueRangeLexerFactory valueRangeLexerFactory;
+            valueRangeLexerFactory = new ValueRangeLexerFactory();
+
+            this.digitValueRangeLexer = valueRangeLexerFactory.Create(lowerBound: '\x30', upperBound: '\x39');
+        }
+
+        public override bool TryRead(ITextScanner scanner, out Digit element)
+        {
+            Terminal digit;
+            if (this.digitValueRangeLexer.TryRead(scanner, out digit))
+            {
+                element = new Digit(digit);
+                return true;
+            }
+
+            element = null;
+            return false;
+        }
+    }
+
+    public class IntLexer : Lexer<Int>
+    {
+        private ILexer<Sign> signLexer;
+
+        private ILexer<Digit> digitLexer; 
+
+        public override bool TryRead(ITextScanner scanner, out Int element)
+        {
+            ILexer<Repetition> optionalSignLexer;
+            optionalSignLexer = new OptionLexer(this.signLexer);
+
+            ILexer<Repetition> repeatingDigitsLexer;
+            repeatingDigitsLexer = new RepetitionLexer(this.digitLexer, lowerBound: 1, upperBound: Int32.MaxValue);
+
+            ILexer<Sequence> intSequenceLexer;
+            intSequenceLexer = new SequenceLexer(optionalSignLexer, repeatingDigitsLexer);
+
+            Sequence integer;
+            if (intSequenceLexer.TryRead(scanner, out integer))
+            {
+                element = new Int(integer);
+                return true;
+            }
+
+            element = null;
+            return false;
+        }
+    }
+}
+```
+
+With all this code in place, you could create a program that converts text to System.Int32.
+
+```C#
+// Convers all valid arguments to System.Int32 and prints their sum, then exits
+public class Program
+{
+    private static Encoding encoding = Encoding.GetEncoding("us-ascii");
+
+    private static Stream StringToMemoryStream(string s)
+    {
+        return new MemoryStream(encoding.GetBytes(s));
+    }
+
+    public static void Main(string[] args)
+    {
+        int sum = 0;
+        var lexer = new IntLexer();
+        foreach (string s in args)
+        {
+            using (var memoryStream = StringToMemoryStream(s))
+            using (var pushbackStream =  new PushbackInputStream(memoryStream))
+            using (var textScanner = new TextScanner(pushbackStream, encoding))
+            {
+                Int token;
+                if (lexer.TryRead(textScanner, out token))
+                {
+                    sum += token.ToInt32();
+                }
+            }
+                
+        }
+
+        Console.WriteLine(sum);
+        Console.ReadLine();
+    }
+}
+```
 
 Important: there is currently no support for automatically generating parsers. The idea here is that if you want to do it properly, then do it yourself.
