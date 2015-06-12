@@ -16,7 +16,7 @@
             {
                 scanner.Read();
                 var bit = bitLexer.Read(scanner);
-                Assert.Equal(input, bit.Values);
+                Assert.Equal(input, bit.Value);
             }
         }
 
@@ -30,7 +30,7 @@
             {
                 scanner.Read();
                 var bit = bitLexer.Read(scanner);
-                Assert.Equal(input, bit.Values);
+                Assert.Equal(input, bit.Value);
             }
         }
 

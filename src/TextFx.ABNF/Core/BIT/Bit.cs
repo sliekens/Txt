@@ -25,8 +25,8 @@ namespace TextFx.ABNF.Core
 
         public bool ToBool()
         {
-            Debug.Assert(this.Values == "0" || this.Values == "1", "this.Values == '0' || this.Values == '1'");
-            if (this.Values == "1")
+            Debug.Assert(this.Value == "0" || this.Value == "1", "this.Value == '0' || this.Value == '1'");
+            if (this.Value == "1")
             {
                 return true;
             }

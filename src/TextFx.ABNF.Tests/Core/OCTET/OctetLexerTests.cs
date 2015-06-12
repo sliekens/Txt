@@ -31,7 +31,7 @@
                 scanner.Read();
                 var octet = octetLexer.Read(scanner);
                 Assert.NotNull(octet);
-                Assert.Equal(input, octet.Values);
+                Assert.Equal(input, octet.Value);
             }
         }
     }

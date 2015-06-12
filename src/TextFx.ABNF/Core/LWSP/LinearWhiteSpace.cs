@@ -19,7 +19,7 @@ namespace TextFx.ABNF.Core
         public override string GetWellFormedText()
         {
             // LWSP is optional, so don't return white space if there was no white space to begin with
-            if (this.Values.Length == 0)
+            if (this.Value.Length == 0)
             {
                 return string.Empty;
             }

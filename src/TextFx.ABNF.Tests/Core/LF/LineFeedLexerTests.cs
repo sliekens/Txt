@@ -15,7 +15,7 @@
                 scanner.Read();
                 var lineFeed = lineFeedLexer.Read(scanner);
                 Assert.NotNull(lineFeed);
-                Assert.Equal(input, lineFeed.Values);
+                Assert.Equal(input, lineFeed.Value);
             }
         }
     }

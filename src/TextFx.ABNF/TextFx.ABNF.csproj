@@ -104,6 +104,7 @@
     <Compile Include="Repetition.cs" />
     <Compile Include="RepetitionLexer.cs" />
     <Compile Include="RepetitionLexerFactory.cs" />
+    <Compile Include="Sample.cs" />
     <Compile Include="Sequence.cs" />
     <Compile Include="SequenceLexer.cs" />
     <Compile Include="SequenceLexerFactory.cs" />

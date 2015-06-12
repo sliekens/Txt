@@ -43,7 +43,7 @@
                     {
                         for (var j = elements.Count - 1; j >= 0; j--)
                         {
-                            scanner.PutBack(elements[j].Values);
+                            scanner.PutBack(elements[j].Value);
                         }
                     }
 
