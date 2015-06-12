@@ -296,23 +296,46 @@ public class Program
         var lexer = new IntLexer();
         foreach (string s in args)
         {
+            Int token;
             using (var memoryStream = StringToMemoryStream(s))
-            using (var pushbackStream =  new PushbackInputStream(memoryStream))
+            using (var pushbackStream = new PushbackInputStream(memoryStream))
             using (var textScanner = new TextScanner(pushbackStream, encoding))
             {
-                Int token;
+                // Call ITextScanner.Read() once to initialize
+                textScanner.Read();
+
                 if (lexer.TryRead(textScanner, out token))
                 {
                     sum += token.ToInt32();
                 }
             }
-                
+
         }
 
         Console.WriteLine(sum);
-        Console.ReadLine();
     }
 }
+```
+
+Sample output
+```
+>Summer.exe 1
+1
+
+>Summer.exe +1
+1
+
+>Summer.exe -1
+-1
+
+>Summer.exe 2 2
+4
+
+>Summer.exe 4 4
+8
+
+>Summer.exe 40 -10
+30
 ```
 
 Important: there is currently no support for automatically generating parsers. The idea here is that if you want to do it properly, then do it yourself.
