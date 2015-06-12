@@ -67,12 +67,13 @@
         }
 
         /// <summary>Gets a value indicating whether the current stream supports writing.</summary>
-        /// <returns>Always returns <c>false</c>.</returns>
+        /// <returns></returns>
         public override bool CanWrite
         {
             get
             {
-                return false;
+                // MEMO: 'Write' means 'Unread'; if CanSeek, then the caller should Seek() instead of Write()
+                return !this.stream.CanSeek;
             }
         }
 
@@ -128,7 +129,7 @@
             this.stream.SetLength(value);
         }
 
-        public void Unread(byte[] buffer, int offset, int count)
+        public override void Write(byte[] buffer, int offset, int count)
         {
             if (buffer == null)
             {
@@ -172,16 +173,6 @@
             Buffer.BlockCopy(buffer, offset, tmp, 0, count);
             this.pushbackBuffer = tmp;
             this.pushbackOffset = 0;
-        }
-
-        public void UnreadByte(byte b)
-        {
-            this.Unread(new[] { b }, 0, 1);
-        }
-
-        public override void Write(byte[] buffer, int offset, int count)
-        {
-            throw new NotSupportedException("Precondition: Stream.CanWrite");
         }
 
         private bool ReadFromBuffer(byte[] buffer, int offset, int count, out int result)

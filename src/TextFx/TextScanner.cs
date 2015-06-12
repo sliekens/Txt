@@ -186,7 +186,7 @@ namespace TextFx
             else
             {
                 var pushbackBuffer = this.encoding.GetBytes(pushbackCharArray);
-                this.inputStream.Unread(pushbackBuffer, 0, pushbackBuffer.Length);
+                this.inputStream.Write(pushbackBuffer, 0, pushbackBuffer.Length);
             }
 
             this.offset -= s.Length;
@@ -219,7 +219,7 @@ namespace TextFx
                 else
                 {
                     var buffer = this.encoding.GetBytes(new[] { c });
-                    this.inputStream.Unread(buffer, 0, buffer.Length);
+                    this.inputStream.Write(buffer, 0, buffer.Length);
                 }
             }
 
