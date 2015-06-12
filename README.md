@@ -245,6 +245,12 @@ namespace Example
         private ILexer<Sign> signLexer;
 
         private ILexer<Digit> digitLexer; 
+        
+        public IntLexer()
+        {
+            this.signLexer = new SignLexer();
+            this.digitLexer = new DigitLexer();
+        }
 
         public override bool TryRead(ITextScanner scanner, out Int element)
         {
