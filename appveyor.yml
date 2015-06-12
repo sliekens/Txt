@@ -75,7 +75,7 @@ clone_depth: 5                      # clone entire repository history if not def
 # environment variables
 environment:
   # these variables are common to all jobs
-  major: 1
+  major: 2
   minor: 0
   patch: 0
 
