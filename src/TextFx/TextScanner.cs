@@ -20,6 +20,8 @@ namespace TextFx
     /// </summary>
     public sealed class TextScanner : ITextScanner
     {
+        public static readonly Encoding DefaultEncoding = Encoding.GetEncoding("us-ascii");
+
         private readonly Encoding encoding;
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -37,21 +39,48 @@ namespace TextFx
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private int offset = -1;
 
-        /// <summary>Initializes a new instance of the <see cref="T:TextFx.TextScanner" /> class for the given data source.</summary>
-        /// <param name="inputStream">The <see cref="PushbackInputStream" /> to read data from.</param>
-        public TextScanner(PushbackInputStream inputStream)
-            : this(inputStream, Encoding.GetEncoding("us-ascii"))
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="TextScanner" /> class that reads characters from a specified input
+        ///     stream, using the US-ASCII character encoding. The stream must support seeking with a negative offset that is
+        ///     relative to the
+        ///     <see cref="SeekOrigin.Current" /> position within the stream. For streams that do not support
+        ///     <see cref="Stream.Seek" />, use the constructor overload that accepts an instance of the
+        ///     <see cref="PushbackInputStream" /> class.
+        /// </summary>
+        /// <param name="seekableInputStream">
+        ///     The input stream to read from. The input stream must return <c>true</c> from
+        ///     <see cref="Stream.CanSeek" />.
+        /// </param>
+        /// <exception cref="ArgumentException">The value of <see cref="Stream.CanSeek" /> is <c>false</c>.</exception>
+        /// <exception cref="ArgumentNullException">The value of <paramref name="seekableInputStream" /> is a null reference.</exception>
+        public TextScanner(Stream seekableInputStream)
+            : this(seekableInputStream, DefaultEncoding)
         {
         }
 
-        /// <summary>Initializes a new instance of the <see cref="T:TextFx.TextScanner" /> class for the given data source.</summary>
-        /// <param name="inputStream">The <see cref="PushbackInputStream" /> to read data from.</param>
-        /// <param name="encoding">The encoding to use when converting text to and from binary data.</param>
-        public TextScanner(PushbackInputStream inputStream, Encoding encoding)
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="TextScanner" /> class that reads characters from a specified input
+        ///     stream, using the specified character encoding. The stream must support seeking with a negative offset that is
+        ///     relative to the
+        ///     <see cref="SeekOrigin.Current" /> position within the stream. For streams that do not support
+        ///     <see cref="Stream.Seek" />, use the constructor overload that accepts an instance of the
+        ///     <see cref="PushbackInputStream" /> class.
+        /// </summary>
+        /// <param name="seekableInputStream">
+        ///     The input stream to read from. The input stream must return <c>true</c> from
+        ///     <see cref="Stream.CanSeek" />.
+        /// </param>
+        /// <param name="encoding">The character encoding to use when converting between binary data and text.</param>
+        /// <exception cref="ArgumentException">The value of <see cref="Stream.CanSeek" /> is <c>false</c>.</exception>
+        /// <exception cref="ArgumentNullException">
+        ///     The value of <paramref name="seekableInputStream" /> or
+        ///     <paramref name="encoding" /> is a null reference.
+        /// </exception>
+        public TextScanner(Stream seekableInputStream, Encoding encoding)
         {
-            if (inputStream == null)
+            if (seekableInputStream == null)
             {
-                throw new ArgumentNullException("inputStream");
+                throw new ArgumentNullException("seekableInputStream");
             }
 
             if (encoding == null)
@@ -59,7 +88,43 @@ namespace TextFx
                 throw new ArgumentNullException("encoding");
             }
 
-            this.inputStream = inputStream;
+            if (!seekableInputStream.CanSeek)
+            {
+                throw new ArgumentException("Precondition: Stream.CanSeek", "seekableInputStream");
+            }
+
+            this.inputStream = seekableInputStream;
+            this.encoding = encoding;
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="TextScanner" /> class that reads characters from a specified input stream, using the US-ASCII character encoding.</summary>
+        /// <param name="pushbackInputStream">The <see cref="PushbackInputStream" /> to read data from.</param>
+        /// <exception cref="ArgumentNullException">The value of <paramref name="pushbackInputStream" /> is a null reference.</exception>
+        public TextScanner(PushbackInputStream pushbackInputStream)
+            : this(pushbackInputStream, DefaultEncoding)
+        {
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="TextScanner" /> class that reads characters from a specified input stream, using the specified character encoding.</summary>
+        /// <param name="pushbackInputStream">The <see cref="PushbackInputStream" /> to read data from.</param>
+        /// <param name="encoding">The character encoding to use when converting between binary data and text.</param>
+        /// <exception cref="ArgumentNullException">
+        ///     The value of <paramref name="pushbackInputStream" /> or
+        ///     <paramref name="encoding" /> is a null reference.
+        /// </exception>
+        public TextScanner(PushbackInputStream pushbackInputStream, Encoding encoding)
+        {
+            if (pushbackInputStream == null)
+            {
+                throw new ArgumentNullException("pushbackInputStream");
+            }
+
+            if (encoding == null)
+            {
+                throw new ArgumentNullException("encoding");
+            }
+
+            this.inputStream = pushbackInputStream;
             this.encoding = encoding;
         }
 
@@ -148,7 +213,7 @@ namespace TextFx
 
             if (this.offset < s.Length)
             {
-                throw new InvalidOperationException("Precondition failed: Offset >= s.Length");
+                throw new InvalidOperationException("Precondition: Offset >= s.Length");
             }
 
             // Special case: pushback string may be empty (no-op)
@@ -203,7 +268,7 @@ namespace TextFx
 
             if (this.offset == 0)
             {
-                throw new InvalidOperationException("Precondition failed: Offset > 0");
+                throw new InvalidOperationException("Precondition: Offset > 0");
             }
 
             if (this.endOfInput)

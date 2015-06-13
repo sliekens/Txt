@@ -18,7 +18,7 @@
             var alternativeLexerFactory = new AlternativeLexerFactory();
             var whiteSpaceLexerFactory = new WhiteSpaceLexerFactory(spaceLexerFactory, horizontalTabLexerFactory, alternativeLexerFactory);
             var whiteSpaceLexer = whiteSpaceLexerFactory.Create();
-            using (var scanner = new TextScanner(new PushbackInputStream(input.ToMemoryStream())))
+            using (var scanner = new TextScanner(input.ToMemoryStream()))
             {
                 scanner.Read();
                 var whiteSpace = whiteSpaceLexer.Read(scanner);

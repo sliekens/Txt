@@ -31,15 +31,15 @@
         [InlineData("x")]
         [InlineData("y")]
         [InlineData("z")]
-        public void CanReadLowercaseAsciiLetters(string letter)
+        public void CanReadLowercaseAsciiLetters(string input)
         {
             var factory = new AlphaLexerFactory(new ValueRangeLexerFactory(), new AlternativeLexerFactory());
             var alphaLexer = factory.Create();
-            using (var scanner = new TextScanner(new PushbackInputStream(letter.ToMemoryStream())))
+            using (var scanner = new TextScanner(input.ToMemoryStream()))
             {
                 scanner.Read();
                 var alpha = alphaLexer.Read(scanner);
-                Assert.Equal(letter, alpha.Value);
+                Assert.Equal(input, alpha.Value);
             }
         }
 
@@ -70,15 +70,15 @@
         [InlineData("X")]
         [InlineData("Y")]
         [InlineData("Z")]
-        public void CanReadUppercaseAsciiLetters(string letter)
+        public void CanReadUppercaseAsciiLetters(string input)
         {
             var factory = new AlphaLexerFactory(new ValueRangeLexerFactory(), new AlternativeLexerFactory());
             var alphaLexer = factory.Create();
-            using (var scanner = new TextScanner(new PushbackInputStream(letter.ToMemoryStream())))
+            using (var scanner = new TextScanner(input.ToMemoryStream()))
             {
                 scanner.Read();
                 var alpha = alphaLexer.Read(scanner);
-                Assert.Equal(letter, alpha.Value);
+                Assert.Equal(input, alpha.Value);
             }
         }
     }

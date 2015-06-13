@@ -11,7 +11,7 @@
         {
             var factory = new VisibleCharacterLexerFactory(new ValueRangeLexerFactory());
             var visibleCharacterLexer = factory.Create();
-            using (var scanner = new TextScanner(new PushbackInputStream(input.ToMemoryStream())))
+            using (var scanner = new TextScanner(input.ToMemoryStream()))
             {
                 scanner.Read();
                 var visibleCharacter = visibleCharacterLexer.Read(scanner);

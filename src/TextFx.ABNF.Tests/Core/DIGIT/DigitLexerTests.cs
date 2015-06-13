@@ -19,7 +19,7 @@
         {
             var factory = new DigitLexerFactory(new ValueRangeLexerFactory());
             var digitLexer = factory.Create();
-            using (var scanner = new TextScanner(new PushbackInputStream(input.ToMemoryStream())))
+            using (var scanner = new TextScanner(input.ToMemoryStream()))
             {
                 scanner.Read();
                 var digit = digitLexer.Read(scanner);

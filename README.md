@@ -298,8 +298,7 @@ public class Program
         {
             Int token;
             using (var memoryStream = StringToMemoryStream(s))
-            using (var pushbackStream = new PushbackInputStream(memoryStream))
-            using (var textScanner = new TextScanner(pushbackStream, encoding))
+            using (var textScanner = new TextScanner(memoryStream, encoding))
             {
                 // Call ITextScanner.Read() once to initialize
                 textScanner.Read();

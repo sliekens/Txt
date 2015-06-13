@@ -14,7 +14,7 @@
             var lineFeedLexerFactory = new LineFeedLexerFactory(terminalsLexerFactory);
             var factory = new EndOfLineLexerFactory(carriageReturnLexerFactory, lineFeedLexerFactory, sequenceLexerFactory);
             var endOfLineLexer = factory.Create();
-            using (var scanner = new TextScanner(new PushbackInputStream(input.ToMemoryStream())))
+            using (var scanner = new TextScanner(input.ToMemoryStream()))
             {
                 scanner.Read();
                 var endOfLine = endOfLineLexer.Read(scanner);

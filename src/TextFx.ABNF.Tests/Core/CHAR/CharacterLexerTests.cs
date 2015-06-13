@@ -14,16 +14,16 @@
         [InlineData("\x60")]
         [InlineData("\x70")]
         [InlineData("\x7F")]
-        public void ReadSuccess(string c)
+        public void ReadSuccess(string input)
         {
             var factory = new CharacterLexerFactory(new ValueRangeLexerFactory());
             var lexer = factory.Create();
-            using (var scanner = new TextScanner(new PushbackInputStream(c.ToMemoryStream())))
+            using (var scanner = new TextScanner(input.ToMemoryStream()))
             {
                 scanner.Read();
                 var character = lexer.Read(scanner);
                 Assert.NotNull(character);
-                Assert.Equal(c, character.Value);
+                Assert.Equal(input, character.Value);
             }
         }
     }
