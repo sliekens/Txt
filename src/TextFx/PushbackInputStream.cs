@@ -89,15 +89,29 @@
             }
         }
 
-        // BUG: PushbackInputStream.Position does not take the pushback buffer into consideration
+        /// <summary>Gets or sets the position within the underlying stream.</summary>
+        /// <returns>The current position within the stream.</returns>
+        /// <exception cref="T:System.IO.IOException">An I/O error occurs.</exception>
+        /// <exception cref="T:System.NotSupportedException">The stream does not support seeking. </exception>
+        /// <exception cref="T:System.ObjectDisposedException">Methods were called after the stream was closed. </exception>
         public override long Position
         {
             get
             {
+                if (!this.CanSeek)
+                {
+                    throw new NotSupportedException("This stream does not support seek operations.");
+                }
+
                 return this.stream.Position;
             }
             set
             {
+                if (!this.CanSeek)
+                {
+                    throw new NotSupportedException("This stream does not support seek operations.");
+                }
+
                 this.stream.Position = value;
             }
         }
@@ -190,7 +204,7 @@ if (stream.CanSeek)
 }}", count));
             }
 
-            // Push the current pushbuffer (if any) onto the stack
+            // Push the current pushback buffer (if any) onto the stack
             var currentBuffer = this.pushbackBuffer;
             if (currentBuffer != null)
             {
