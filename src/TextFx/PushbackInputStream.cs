@@ -146,14 +146,18 @@
 
         /// <summary>Sets the length of the underlying stream.</summary>
         /// <param name="value">The desired length of the underlying stream in bytes. </param>
-        /// <exception cref="T:System.IO.IOException">An I/O error occurs. </exception>
-        /// <exception cref="T:System.NotSupportedException">The stream does not support both writing and seeking, such as if the stream is constructed from a pipe or console output. </exception>
+        /// <exception cref="T:System.IO.IOException">An I/O error occurs.</exception>
+        /// <exception cref="T:System.NotSupportedException">The stream does not support both writing and seeking, such as if the stream is constructed from a pipe or console output.</exception>
         /// <exception cref="T:System.ObjectDisposedException">Methods were called after the stream was closed.</exception>
         public override void SetLength(long value)
         {
             this.stream.SetLength(value);
         }
 
+        /// <summary>Pushes back a sequence of bytes to the current stream and moves back the current position within this stream by the number of bytes written.</summary>
+        /// <param name="buffer">An array of bytes. This method copies <paramref name="count"/> bytes from <paramref name="buffer"/> to the current stream.</param>
+        /// <param name="offset">The zero-based byte offset in <paramref name="buffer"/> at which to begin copying bytes to the current stream.</param>
+        /// <param name="count">The number of bytes to be written to the current stream.</param>
         public override void Write(byte[] buffer, int offset, int count)
         {
             if (buffer == null)
@@ -178,8 +182,12 @@
 
             if (this.CanSeek)
             {
-                // MEMO: Seek() should be used when possible, because the position of the pushback buffer and the position of a seekable stream can become mismatched
-                throw new IOException("Precondition: !Stream.CanSeek");
+                throw new IOException(string.Format(@"Pushing back bytes to a seekable stream is an invalid operation. Use 'Seek' instead.
+
+if (stream.CanSeek)
+{{
+    stream.Seek(-{0}, SeekOrigin.Current)
+}}", count));
             }
 
             // Push the current pushbuffer (if any) onto the stack
