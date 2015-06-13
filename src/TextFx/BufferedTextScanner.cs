@@ -73,16 +73,16 @@ namespace TextFx
             base.Dispose(disposing);
         }
 
-        protected override bool ReadImpl(out char? nextCharacter)
+        protected override bool ReadImpl(out char c)
         {
             var nextByte = this.inputStream.ReadByte();
             if (nextByte == -1)
             {
-                nextCharacter = null;
+                c = default(char);
                 return false;
             }
 
-            nextCharacter = (char)nextByte;
+            c = (char)nextByte;
             return true;
         }
 

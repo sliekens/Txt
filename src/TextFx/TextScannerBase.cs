@@ -11,7 +11,7 @@
 
         private bool endOfInput;
 
-        private char? nextCharacter;
+        private char nextCharacter;
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private int offset = -1;
@@ -66,6 +66,11 @@
                     throw new ObjectDisposedException(this.GetType().FullName);
                 }
 
+                if (this.EndOfInput)
+                {
+                    return null;
+                }
+
                 return this.nextCharacter;
             }
         }
@@ -113,7 +118,6 @@
 
             this.offset += 1;
 
-            char c;
             if (!this.ReadImpl(out this.nextCharacter))
             {
                 this.endOfInput = true;
@@ -123,7 +127,7 @@
             return true;
         }
 
-        protected abstract bool ReadImpl(out char? nextCharacter);
+        protected abstract bool ReadImpl(out char c);
 
         /// <inheritdoc />
         public virtual ITextContext GetContext()
@@ -167,9 +171,9 @@
                 return;
             }
 
-            if (this.nextCharacter.HasValue)
+            if (!this.endOfInput)
             {
-                s += this.nextCharacter.Value;
+                s += this.nextCharacter;
             }
 
 
@@ -225,19 +229,13 @@
                 throw new InvalidOperationException("No next character available: end of input has been reached.");
             }
 
-            if (!this.nextCharacter.HasValue)
+            if (char.ToUpperInvariant(this.nextCharacter) != char.ToUpperInvariant(c))
             {
                 match = default(char);
                 return false;
             }
 
-            if (char.ToUpperInvariant(this.nextCharacter.Value) != char.ToUpperInvariant(c))
-            {
-                match = default(char);
-                return false;
-            }
-
-            match = this.nextCharacter.Value;
+            match = this.nextCharacter;
             this.Read();
             return true;
         }
