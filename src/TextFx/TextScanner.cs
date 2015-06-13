@@ -23,7 +23,7 @@ namespace TextFx
         private readonly Encoding encoding;
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private readonly PushbackInputStream inputStream;
+        private readonly Stream inputStream;
 
         /// <summary>Indicates whether this object has been disposed.</summary>
         private bool disposed;
