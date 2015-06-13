@@ -1,5 +1,7 @@
 ﻿namespace TextFx.Tests
 {
+    using System.IO;
+
     using Xunit;
 
     public class PushbackInputStreamTests
@@ -83,6 +85,23 @@
                 var pushbackBytes = new byte[PushbackSize];
                 pushbackStream.Write(pushbackBytes, 0, PushbackSize);
                 Assert.Equal(ExpectedPosition, pushbackStream.Position);
+            }
+        }
+
+        [Fact]
+        public void Write_SeekableStreamThrowsInvalidOperationException()
+        {
+            var stub = new FakeStream
+                           {
+                               OnCanReadGet = () => true,
+                               OnCanSeekGet = () => true,
+                               OnPositionGet = () => 128
+                           };
+
+            var pushbackBytes = new byte[8];
+            using (var pushbackStream = new PushbackInputStream(stub))
+            {
+                Assert.Throws<IOException>(() => pushbackStream.Write(pushbackBytes, 0, pushbackBytes.Length));
             }
         }
     }
