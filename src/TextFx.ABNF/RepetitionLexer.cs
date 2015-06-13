@@ -68,7 +68,7 @@
                 {
                     for (var i = occurrences.Count - 1; i >= 0; i--)
                     {
-                        scanner.PutBack(occurrences[i].Value);
+                        scanner.Unread(occurrences[i].Value);
                     }
                 }
 

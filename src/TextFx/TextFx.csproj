@@ -45,12 +45,14 @@
     <Compile Include="Lexer.cs" />
     <Compile Include="PushbackInputStream.cs" />
     <Compile Include="TextContext.cs" />
+    <Compile Include="BufferedTextScanner.cs" />
     <Compile Include="TextScanner.cs" />
     <Compile Include="Element.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), SharedAssemblyInfo.cs))\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="TextScannerBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="TextFx.nuspec" />

@@ -10,6 +10,7 @@
 namespace TextFx
 {
     using System;
+    using System.Text;
 
     /// <summary>Provides the interface for types that scan text with 1 character of lookahead and unlimited backtracking.</summary>
     public interface ITextScanner : ITextContext, IDisposable
@@ -32,15 +33,12 @@ namespace TextFx
         /// </remarks>
         ITextContext GetContext();
 
-        /// <summary>Prepends the given character to the input stream.</summary>
-        /// <param name="c">The character to put back.</param>
-        /// <exception cref="T:System.ObjectDisposedException">The current text scanner is closed.</exception>
-        void PutBack(char c);
+        Encoding Encoding { get; }
 
         /// <summary>Prepends the given text to the input stream.</summary>
         /// <param name="s">The text to put back.</param>
         /// <exception cref="T:System.ObjectDisposedException">The current text scanner is closed.</exception>
-        void PutBack(string s);
+        void Unread(string s);
 
         /// <summary>Consumes a character and advances the scanner's position to the next character.</summary>
         /// <exception cref="T:System.ObjectDisposedException">The current text scanner is closed.</exception>
