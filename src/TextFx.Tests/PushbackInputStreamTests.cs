@@ -1,5 +1,6 @@
 ﻿namespace TextFx.Tests
 {
+    using System;
     using System.IO;
 
     using Xunit;
@@ -7,7 +8,7 @@
     public class PushbackInputStreamTests
     {
         [Fact]
-        public void CanWrite_ReturnsFalseIfSeekingIsSupported()
+        public void CanWrite_WhenNotCanSeek_ReturnsFalse()
         {
             using (var stub = new FakeStream { OnCanReadGet = () => true, OnCanSeekGet = () => true })
             using (var pushbackStream = new PushbackInputStream(stub))
@@ -17,23 +18,12 @@
         }
 
         [Fact]
-        public void CanWrite_ReturnsTrueIfSeekingIsNotSupported()
+        public void CanWrite_WhenCanSeek_ReturnsTrue()
         {
             using (var stub = new FakeStream { OnCanReadGet = () => true, OnCanSeekGet = () => false })
             using (var pushbackStream = new PushbackInputStream(stub))
             {
                 Assert.True(pushbackStream.CanWrite);
-            }
-        }
-
-        [Fact]
-        public void Ctor_SetsInitialPositionSameAsUnderlyingStream()
-        {
-            const int Position = 123;
-            using (var stub = new FakeStream { OnCanReadGet = () => true, OnPositionGet = () => Position })
-            using (var pushbackStream = new PushbackInputStream(stub))
-            {
-                Assert.Equal(Position, pushbackStream.Position);
             }
         }
 
@@ -68,7 +58,7 @@
         }
 
         [Fact]
-        public void Write_SeekableStreamThrowsInvalidOperationException()
+        public void Write_WhenCanSeek_ThrowsIOException()
         {
             var stub = new FakeStream
                            {
@@ -81,6 +71,36 @@
             using (var pushbackStream = new PushbackInputStream(stub))
             {
                 Assert.Throws<IOException>(() => pushbackStream.Write(pushbackBytes, 0, pushbackBytes.Length));
+            }
+        }
+
+        [Fact]
+        public void Position_WhenCanSeek_ReturnsPositionOfUnderlyingStream()
+        {
+            var stub = new FakeStream
+            {
+                OnCanReadGet = () => true,
+                OnCanSeekGet = () => true,
+                OnPositionGet = () => 128
+            };
+            using (var pushbackStream = new PushbackInputStream(stub))
+            {
+                var position = pushbackStream.Position;
+                Assert.Equal(128, position);
+            }
+        }
+
+        [Fact]
+        public void Position_WhenNotCanSeek_ThrowsNotSupportedException()
+        {
+            var stub = new FakeStream
+            {
+                OnCanReadGet = () => true,
+                OnCanSeekGet = () => false
+            };
+            using (var pushbackStream = new PushbackInputStream(stub))
+            {
+                Assert.Throws<NotSupportedException>(() => pushbackStream.Position);
             }
         }
     }
