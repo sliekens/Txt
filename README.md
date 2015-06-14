@@ -11,18 +11,22 @@ This repository contains two libraries:
 * TextFx
 * TextFx.ABNF
 
+Both are available as separate packages on NuGet (stable builds &  pre-release builds) and MyGet (continuous integration builds).
 
-# TextFx
 
-[![TextFx](https://img.shields.io/nuget/v/TextFx.svg)](https://www.nuget.org/packages/TextFx/)
+# Package: TextFx
+
+[![TextFx Stable](https://img.shields.io/nuget/v/TextFx.svg)](https://www.nuget.org/packages/TextFx/)
+[![TextFx CI](https://img.shields.io/myget/textfx/vpre/TextFx.svg)](https://www.myget.org/gallery/textfx)
 
 All structured languages have one thing in common: each language has a formal syntax specification that describes the grammar rules for that language. Programmers use these grammar rules to create programs that parse the language.
 
 The TextFx code library assists you with creating parsers for any given language. You create your own tokens and token parsers by deriving from classes in this library.
 
-# TextFx.ABNF
+# Package: TextFx.ABNF
 
-[![TextFx.ABNF](https://img.shields.io/nuget/v/TextFx.ABNF.svg)](https://www.nuget.org/packages/TextFx.ABNF/)
+[![TextFx.ABNF Stable](https://img.shields.io/nuget/v/TextFx.ABNF.svg)](https://www.nuget.org/packages/TextFx.ABNF/)
+[![TextFx.ABNF CI](https://img.shields.io/myget/textfx/vpre/TextFx.ABNF.svg)](https://www.myget.org/gallery/textfx)
 
 Syntax specifications are most commonly defined in a flavor of BNF (Backus-Naur Form).
 
