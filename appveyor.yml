@@ -178,7 +178,8 @@ build_script:
     - ps: MSBuild.exe /m /p:Configuration=Release /p:Platform=AnyCPU /p:OutDir=$Env:APPVEYOR_BUILD_FOLDER\artifacts /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" /p:GenerateProjectSpecificOutputFolder=true /verbosity:m build.proj
 
 after_build:
-    - ps: Get-ChildItem -Path $Env:APPVEYOR_BUILD_FOLDER\artifacts -Recurse -Include *.nupkg | ForEach-Object { appveyor PushArtifact $_.FullName }
+    - ps: gci *.nupkg -Path artifacts -Recurse| %{ Push-AppveyorArtifact $_ }
+    - ps: gci SharedAssemblyInfo.cs -Recurse | %{ Push-AppveyorArtifact $_ }
 
 # to disable automatic builds
 #build: off
