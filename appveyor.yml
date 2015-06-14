@@ -47,7 +47,7 @@ init:
 
       If ($Env:CI_pack -eq "true")
       {
-          $assembly_informational_version = "$Env:major.$Env:minor.$Env:patch-CI$Env:APPVEYOR_BUILD_NUMBER"
+          $assembly_informational_version = "$Env:major.$Env:minor.$Env:patch-CI.$Env:APPVEYOR_BUILD_NUMBER"
       }
       Else
       {
