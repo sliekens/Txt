@@ -3,14 +3,16 @@
     using System;
 
     /// <summary>
-    ///     Wraps a collection of <see cref="ILexer" /> and tests their <see cref="ILexer.TryReadElement" /> method until a
-    ///     match is found. This class implements a first-match-wins algorithm. For a greedy algorithm, use the <see cref="GreedyAlternativeLexer"/> class instead.
+    ///     Wraps a collection of <see cref="ILexer" /> and tests their <see cref="ILexer.TryReadElement" /> method until the
+    ///     longest match is found.
+    ///     This class implements a greedy algorithm. For a first-match-wins algorithm, use the
+    ///     <see cref="AlternativeLexer" /> class instead.
     /// </summary>
-    public class AlternativeLexer : Lexer<Alternative>
+    public class GreedyAlternativeLexer : Lexer<Alternative>
     {
         private readonly ILexer[] lexers;
 
-        public AlternativeLexer(params ILexer[] lexers)
+        public GreedyAlternativeLexer(ILexer[] lexers)
         {
             if (lexers == null)
             {
@@ -35,7 +37,6 @@
             this.lexers = lexers;
         }
 
-        /// <inheritdoc />
         public override bool TryRead(ITextScanner scanner, out Alternative element)
         {
             if (scanner == null)
@@ -43,19 +44,36 @@
                 throw new ArgumentNullException("scanner");
             }
 
+            ILexer bestChoice = null;
+            var bestChoiceLength = -1;
+
             // ReSharper disable once ForCanBeConvertedToForeach
             for (var i = 0; i < this.lexers.Length; i++)
             {
+                var lexer = this.lexers[i];
                 Element alternative;
-                if (this.lexers[i].TryReadElement(scanner, out alternative))
+                if (lexer.TryReadElement(scanner, out alternative))
                 {
-                    element = new Alternative(alternative);
-                    return true;
+                    var length = alternative.Value.Length;
+                    if (length > bestChoiceLength)
+                    {
+                        bestChoice = lexer;
+                        bestChoiceLength = length;
+                    }
+
+                    scanner.Unread(alternative.Value);
                 }
             }
 
-            element = default(Alternative);
-            return false;
+            Element result;
+            if (bestChoice == null || !bestChoice.TryReadElement(scanner, out result))
+            {
+                element = default(Alternative);
+                return false;
+            }
+
+            element = new Alternative(result);
+            return true;
         }
     }
 }

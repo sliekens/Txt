@@ -88,6 +88,8 @@
     <Compile Include="Core\WSP\WhiteSpace.cs" />
     <Compile Include="Core\WSP\WhiteSpaceLexer.cs" />
     <Compile Include="Core\WSP\WhiteSpaceLexerFactory.cs" />
+    <Compile Include="GreedyAlternativeLexer.cs" />
+    <Compile Include="GreedyAlternativeLexerFactory.cs" />
     <Compile Include="IAlternativeLexerFactory.cs" />
     <Compile Include="IOptionLexerFactory.cs" />
     <Compile Include="IRepetitionLexerFactory.cs" />
