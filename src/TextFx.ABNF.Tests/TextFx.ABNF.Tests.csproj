@@ -38,6 +38,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AlternativeLexerTests.cs" />
     <Compile Include="Core\ALPHA\AlphaLexerTests.cs" />
     <Compile Include="Core\BIT\BitLexerTests.cs" />
     <Compile Include="Core\CHAR\CharacterLexerTests.cs" />
