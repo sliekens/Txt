@@ -88,8 +88,16 @@ namespace TextFx
 
         protected override void UnreadImpl(char[] values)
         {
-            var pushbackBuffer = this.Encoding.GetBytes(values);
-            this.inputStream.Write(pushbackBuffer, 0, pushbackBuffer.Length);
+            if (this.inputStream.CanSeek)
+            {
+                var length = this.Encoding.GetByteCount(values);
+                this.inputStream.Seek(-length, SeekOrigin.Current);
+            }
+            else
+            {
+                var pushbackBuffer = this.Encoding.GetBytes(values);
+                this.inputStream.Write(pushbackBuffer, 0, pushbackBuffer.Length);
+            }
         }
     }
 }
