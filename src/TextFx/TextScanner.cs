@@ -30,7 +30,7 @@ namespace TextFx
         ///     stream, using the US-ASCII character encoding. The stream must support seeking with a negative offset that is
         ///     relative to the
         ///     <see cref="SeekOrigin.Current" /> position within the stream. For streams that do not support
-        ///     <see cref="Stream.Seek" />, use the <see cref="BufferedRextScanner" /> class instead.
+        ///     <see cref="Stream.Seek" />, use the <see cref="BufferedTextScanner" /> class instead.
         /// </summary>
         /// <param name="seekableInputStream">
         ///     The input stream to read from. The input stream must return <c>true</c> from
@@ -48,7 +48,7 @@ namespace TextFx
         ///     stream, using the specified character encoding. The stream must support seeking with a negative offset that is
         ///     relative to the
         ///     <see cref="SeekOrigin.Current" /> position within the stream. For streams that do not support
-        ///     <see cref="Stream.Seek" />, use the <see cref="BufferedRextScanner" /> class instead.
+        ///     <see cref="Stream.Seek" />, use the <see cref="BufferedTextScanner" /> class instead.
         /// </summary>
         /// <param name="seekableInputStream">
         ///     The input stream to read from. The input stream must return <c>true</c> from

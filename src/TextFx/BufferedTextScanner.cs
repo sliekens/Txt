@@ -18,7 +18,7 @@ namespace TextFx
     ///     Represents a text scanner that gets text from an instance of the <see cref="T:TextFx.TextScanner" />
     ///     class.
     /// </summary>
-    public sealed class BufferedRextScanner : TextScannerBase
+    public sealed class BufferedTextScanner : TextScannerBase
     {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly Stream inputStream;
@@ -26,18 +26,18 @@ namespace TextFx
         private bool disposed;
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="BufferedRextScanner" /> class that reads characters from a
+        ///     Initializes a new instance of the <see cref="BufferedTextScanner" /> class that reads characters from a
         ///     specified input stream, using the US-ASCII character encoding.
         /// </summary>
         /// <param name="pushbackInputStream">The <see cref="PushbackInputStream" /> to read data from.</param>
         /// <exception cref="ArgumentNullException">The value of <paramref name="pushbackInputStream" /> is a null reference.</exception>
-        public BufferedRextScanner(PushbackInputStream pushbackInputStream)
+        public BufferedTextScanner(PushbackInputStream pushbackInputStream)
             : this(pushbackInputStream, Encoding.GetEncoding("us-ascii"))
         {
         }
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="BufferedRextScanner" /> class that reads characters from a
+        ///     Initializes a new instance of the <see cref="BufferedTextScanner" /> class that reads characters from a
         ///     specified input stream, using the specified character encoding.
         /// </summary>
         /// <param name="pushbackInputStream">The <see cref="PushbackInputStream" /> to read data from.</param>
@@ -46,7 +46,7 @@ namespace TextFx
         ///     The value of <paramref name="pushbackInputStream" /> or
         ///     <paramref name="encoding" /> is a null reference.
         /// </exception>
-        public BufferedRextScanner(PushbackInputStream pushbackInputStream, Encoding encoding)
+        public BufferedTextScanner(PushbackInputStream pushbackInputStream, Encoding encoding)
             : base(encoding)
         {
             if (pushbackInputStream == null)
