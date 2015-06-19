@@ -60,7 +60,7 @@
                     {
                         bestChoice = lexer;
                         bestChoiceLength = length;
-                        ordinal = i;
+                        ordinal = i + 1;
                     }
 
                     scanner.Unread(alternative.Value);
