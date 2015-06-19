@@ -46,6 +46,7 @@
 
             ILexer bestChoice = null;
             var bestChoiceLength = -1;
+            var ordinal = 0;
 
             // ReSharper disable once ForCanBeConvertedToForeach
             for (var i = 0; i < this.lexers.Length; i++)
@@ -59,6 +60,7 @@
                     {
                         bestChoice = lexer;
                         bestChoiceLength = length;
+                        ordinal = i;
                     }
 
                     scanner.Unread(alternative.Value);
@@ -72,7 +74,7 @@
                 return false;
             }
 
-            element = new Alternative(result);
+            element = new Alternative(result, ordinal);
             return true;
         }
     }

@@ -49,7 +49,7 @@
                 Element alternative;
                 if (this.lexers[i].TryReadElement(scanner, out alternative))
                 {
-                    element = new Alternative(alternative);
+                    element = new Alternative(alternative, i + 1);
                     return true;
                 }
             }
