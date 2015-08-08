@@ -1,4 +1,6 @@
-﻿namespace TextFx.ABNF
+﻿using System.Collections.Generic;
+
+namespace TextFx.ABNF
 {
     using System;
 
@@ -44,6 +46,7 @@
                 throw new ArgumentNullException("scanner");
             }
 
+            var context = scanner.GetContext();
             ILexer bestChoice = null;
             var bestChoiceLength = -1;
             var ordinal = 0;
@@ -74,7 +77,7 @@
                 return false;
             }
 
-            element = new Alternative(result, ordinal);
+            element = new Alternative(new List<Element>(1) { result }, context, ordinal);
             if (previousElementOrNull != null)
             {
                 element.PreviousElement = previousElementOrNull;

@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics;
     using System.Linq;
 
     /// <summary>
@@ -27,26 +26,8 @@
         /// <param name="terminals">The terminal values, in order of appearance.</param>
         /// <param name="context">An object that describes the current element's context.</param>
         public TerminalString(IList<Terminal> terminals, ITextContext context)
-            : base(string.Concat(terminals), context)
+            : base(terminals.Cast<Element>().ToList(), context)
         {
-            if (terminals == null)
-            {
-                throw new ArgumentNullException("terminals");
-            }
-
-            this.terminals = terminals;
-        }
-
-        /// <summary>
-        ///     Gets the terminal values in the string, in order of appearance.
-        /// </summary>
-        public IList<Terminal> Terminals
-        {
-            get
-            {
-                Debug.Assert(this.terminals != null, "this.terminals != null");
-                return this.terminals;
-            }
         }
 
         /// <summary>
@@ -57,7 +38,7 @@
         /// <exception cref="ArgumentException"><paramref name="toBase" /> is not 2, 10, or 16.</exception>
         public string ToBase(int toBase)
         {
-            var values = this.Terminals.Select(terminal => terminal.ToBase(toBase));
+            var values = this.elements.Cast<Terminal>().Select(terminal => terminal.ToBase(toBase));
             var valuesAsString = string.Join(".", values);
             switch (toBase)
             {

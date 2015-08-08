@@ -1,4 +1,7 @@
-﻿namespace TextFx
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace TextFx
 {
     using System;
     using System.Diagnostics;
@@ -10,7 +13,10 @@
         private readonly ITextContext context;
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private readonly string values;
+        private readonly string text;
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        protected IList<Element> elements;
 
         /// <summary>Initializes a new instance of the <see cref="Element" /> class with a given element to copy.</summary>
         /// <param name="element">The element to copy.</param>
@@ -22,7 +28,8 @@
                 throw new ArgumentNullException("element");
             }
 
-            this.values = element.values;
+            this.text = element.text;
+            this.elements = element.elements;
             this.context = element.context;
         }
 
@@ -37,22 +44,16 @@
                 throw new ArgumentNullException("context");
             }
 
-            this.values = char.ToString(value);
+            this.text = char.ToString(value);
+            this.elements = new List<Element>(0);
             this.context = context;
         }
 
-        /// <summary>Initializes a new instance of the <see cref="Element" /> class with the given terminal values and context.</summary>
-        /// <param name="values">The terminal values.</param>
-        /// <param name="context">An object that describes the current element's context.</param>
-        /// <exception cref="ArgumentNullException">
-        ///     The value of <paramref name="values" /> or <paramref name="context" /> is a
-        ///     null reference.
-        /// </exception>
-        protected Element(string values, ITextContext context)
+        protected Element(IList<Element> elements, ITextContext context)
         {
-            if (values == null)
+            if (elements == null)
             {
-                throw new ArgumentNullException("values");
+                throw new ArgumentNullException("elements");
             }
 
             if (context == null)
@@ -60,7 +61,8 @@
                 throw new ArgumentNullException("context");
             }
 
-            this.values = values;
+            this.elements = elements;
+            this.text = string.Concat(elements);
             this.context = context;
         }
 
@@ -82,8 +84,17 @@
         {
             get
             {
-                Debug.Assert(this.values != null);
-                return this.values;
+                Debug.Assert(this.text != null);
+                return this.text;
+            }
+        }
+
+        public IList<Element> Elements
+        {
+            get
+            {
+                Debug.Assert(this.elements != null, "this.elements != null");
+                return this.elements;
             }
         }
 
@@ -96,7 +107,7 @@
         /// <returns>A well-formed string that represents the current element.</returns>
         public virtual string GetWellFormedText()
         {
-            return this.Text;
+            return string.Concat(this.Elements.Select(element => element.GetWellFormedText()));
         }
 
         /// <inheritdoc />

@@ -1,24 +1,29 @@
-﻿namespace TextFx.ABNF
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace TextFx.ABNF
 {
     using System.Diagnostics;
 
     public class Alternative : Element
     {
-        private readonly Element element;
-
         private readonly int ordinal;
 
         public Alternative(Alternative alternative)
             : base(alternative)
         {
-            this.element = alternative.element;
             this.ordinal = alternative.ordinal;
         }
 
-        public Alternative(Element element, int ordinal)
-            : base(element)
+        public Alternative(IList<Element> elements, ITextContext context, int ordinal)
+            : base(elements, context)
         {
-            this.element = element;
+            if (elements.Count != 1)
+            {
+                throw new ArgumentException("Precondition: elements.Count == 1", "elements");
+            }
+
             this.ordinal = ordinal;
         }
 
@@ -26,8 +31,8 @@
         {
             get
             {
-                Debug.Assert(this.element != null);
-                return this.element;
+                Debug.Assert(this.elements.Count == 1);
+                return this.elements.Single();
             }
         }
 
@@ -38,11 +43,6 @@
                 Debug.Assert(this.ordinal > 0, "this.ordinal > 0");
                 return this.ordinal;
             }
-        }
-
-        public override string GetWellFormedText()
-        {
-            return this.Element.GetWellFormedText();
         }
     }
 }

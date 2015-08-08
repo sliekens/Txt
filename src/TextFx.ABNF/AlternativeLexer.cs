@@ -1,4 +1,6 @@
-﻿namespace TextFx.ABNF
+﻿using System.Collections.Generic;
+
+namespace TextFx.ABNF
 {
     using System;
 
@@ -43,13 +45,15 @@
                 throw new ArgumentNullException("scanner");
             }
 
+            var context = scanner.GetContext();
+
             // ReSharper disable once ForCanBeConvertedToForeach
             for (var i = 0; i < this.lexers.Length; i++)
             {
                 Element alternative;
                 if (this.lexers[i].TryReadElement(scanner, null, out alternative))
                 {
-                    element = new Alternative(alternative, i + 1);
+                    element = new Alternative(new List<Element>(1) { alternative }, context, i + 1);
                     if (previousElementOrNull != null)
                     {
                         element.PreviousElement = previousElementOrNull;
