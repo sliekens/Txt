@@ -16,7 +16,7 @@
                 scanner.Read();
                 var space = spaceLexer.Read(scanner, null);
                 Assert.NotNull(space);
-                Assert.Equal(input, space.Value);
+                Assert.Equal(input, space.Text);
             }
         }
     }

@@ -57,7 +57,7 @@
                 scanner.Read();
                 var linearWhiteSpace = linearWhiteSpaceLexer.Read(scanner, null);
                 Assert.NotNull(linearWhiteSpace);
-                Assert.Equal(input, linearWhiteSpace.Value);
+                Assert.Equal(input, linearWhiteSpace.Text);
             }
         }
     }

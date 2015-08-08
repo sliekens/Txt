@@ -18,7 +18,7 @@
                 scanner.Read();
                 var controlCharacter = controlCharacterLexer.Read(scanner, null);
                 Assert.NotNull(controlCharacter);
-                Assert.Equal(input, controlCharacter.Value);
+                Assert.Equal(input, controlCharacter.Text);
             }
         }
     }

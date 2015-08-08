@@ -15,7 +15,7 @@
                 scanner.Read();
                 var carriageReturn = carriageReturnLexer.Read(scanner, null);
                 Assert.NotNull(carriageReturn);
-                Assert.Equal(input, carriageReturn.Value);
+                Assert.Equal(input, carriageReturn.Text);
             }
         }
     }

@@ -19,7 +19,7 @@ namespace TextFx.ABNF.Core
         public override string GetWellFormedText()
         {
             // Well-formed HEXDIG uses upper case letters
-            return this.Value.ToUpperInvariant();
+            return this.Text.ToUpperInvariant();
         }
     }
 }

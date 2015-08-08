@@ -55,7 +55,7 @@
                 Element alternative;
                 if (lexer.TryReadElement(scanner, null, out alternative))
                 {
-                    var length = alternative.Value.Length;
+                    var length = alternative.Text.Length;
                     if (length > bestChoiceLength)
                     {
                         bestChoice = lexer;
@@ -63,7 +63,7 @@
                         ordinal = i + 1;
                     }
 
-                    scanner.Unread(alternative.Value);
+                    scanner.Unread(alternative.Text);
                 }
             }
 

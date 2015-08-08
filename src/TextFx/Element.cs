@@ -78,7 +78,7 @@
         public Element NextElement { get; set; }
 
         /// <summary>Gets one or more terminal values that represent the current element.</summary>
-        public string Value
+        public string Text
         {
             get
             {
@@ -91,18 +91,18 @@
         ///     Gets a well-formed string that represents the current element. This is useful for elements that are
         ///     technically valid, but contain formatting errors or other inpurities. For example: mixed upper and lower case
         ///     characters where only lower case is well-formed. Unless overridden, the default return value is the value of
-        ///     <see cref="Value" />.
+        ///     <see cref="Text" />.
         /// </summary>
         /// <returns>A well-formed string that represents the current element.</returns>
         public virtual string GetWellFormedText()
         {
-            return this.Value;
+            return this.Text;
         }
 
         /// <inheritdoc />
         public override sealed string ToString()
         {
-            return this.Value;
+            return this.Text;
         }
     }
 }

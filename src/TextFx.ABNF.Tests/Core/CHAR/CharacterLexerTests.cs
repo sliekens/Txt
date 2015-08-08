@@ -23,7 +23,7 @@
                 scanner.Read();
                 var character = lexer.Read(scanner, null);
                 Assert.NotNull(character);
-                Assert.Equal(input, character.Value);
+                Assert.Equal(input, character.Text);
             }
         }
     }

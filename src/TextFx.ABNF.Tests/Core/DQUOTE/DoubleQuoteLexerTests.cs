@@ -15,7 +15,7 @@
             {
                 scanner.Read();
                 var doubleQuote = lexer.Read(scanner, null);
-                Assert.Equal(input, doubleQuote.Value);
+                Assert.Equal(input, doubleQuote.Text);
             }
         }
     }

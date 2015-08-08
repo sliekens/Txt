@@ -16,7 +16,7 @@
             {
                 scanner.Read();
                 var horizontalTab = lexer.Read(scanner, null);
-                Assert.Equal(input, horizontalTab.Value);
+                Assert.Equal(input, horizontalTab.Text);
             }
         }
     }

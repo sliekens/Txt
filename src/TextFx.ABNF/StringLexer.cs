@@ -41,7 +41,7 @@
                 {
                     while (lastResult != null)
                     {
-                        scanner.Unread(lastResult.Value);
+                        scanner.Unread(lastResult.Text);
                         lastResult = (Terminal)lastResult.PreviousElement;
                     }
 
