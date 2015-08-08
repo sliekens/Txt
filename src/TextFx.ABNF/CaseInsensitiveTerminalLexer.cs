@@ -16,7 +16,7 @@
         }
 
         /// <inheritdoc />
-        public override bool TryRead(ITextScanner scanner, out Terminal element)
+        public override bool TryRead(ITextScanner scanner, Element previousElementOrNull, out Terminal element)
         {
             if (scanner == null)
             {
@@ -28,6 +28,12 @@
             if (!scanner.EndOfInput && scanner.TryMatchIgnoreCase(this.terminal, out c))
             {
                 element = new Terminal(c, context);
+                if (previousElementOrNull != null)
+                {
+                    element.PreviousElement = previousElementOrNull;
+                    previousElementOrNull.NextElement = element;
+                }
+
                 return true;
             }
 

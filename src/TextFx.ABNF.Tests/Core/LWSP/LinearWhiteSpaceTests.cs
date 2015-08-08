@@ -62,7 +62,7 @@
             using (var scanner = new TextScanner(input.ToMemoryStream()))
             {
                 scanner.Read();
-                var linearWhiteSpace = linearWhiteSpaceLexer.Read(scanner);
+                var linearWhiteSpace = linearWhiteSpaceLexer.Read(scanner, null);
                 Assert.Equal(wellFormed, linearWhiteSpace.GetWellFormedText());
             }
         }

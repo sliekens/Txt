@@ -15,7 +15,7 @@
             using (var scanner = new TextScanner(input.ToMemoryStream()))
             {
                 scanner.Read();
-                var bit = bitLexer.Read(scanner);
+                var bit = bitLexer.Read(scanner, null);
                 Assert.Equal(input, bit.Value);
             }
         }
@@ -29,7 +29,7 @@
             using (var scanner = new TextScanner(input.ToMemoryStream()))
             {
                 scanner.Read();
-                var bit = bitLexer.Read(scanner);
+                var bit = bitLexer.Read(scanner, null);
                 Assert.Equal(input, bit.Value);
             }
         }
@@ -43,7 +43,7 @@
             using (var scanner = new TextScanner(input.ToMemoryStream()))
             {
                 scanner.Read();
-                Assert.Throws<FormatException>(() => bitLexer.Read(scanner));
+                Assert.Throws<FormatException>(() => bitLexer.Read(scanner, null));
             }
         }
     }

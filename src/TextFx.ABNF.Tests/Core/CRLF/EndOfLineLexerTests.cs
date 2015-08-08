@@ -17,7 +17,7 @@
             using (var scanner = new TextScanner(input.ToMemoryStream()))
             {
                 scanner.Read();
-                var endOfLine = endOfLineLexer.Read(scanner);
+                var endOfLine = endOfLineLexer.Read(scanner, null);
                 Assert.NotNull(endOfLine);
                 Assert.Equal(input, endOfLine.Value);
             }

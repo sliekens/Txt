@@ -26,12 +26,18 @@ namespace TextFx.ABNF.Core
         }
 
         /// <inheritdoc />
-        public override bool TryRead(ITextScanner scanner, out Octet element)
+        public override bool TryRead(ITextScanner scanner, Element previousElementOrNull, out Octet element)
         {
             Terminal result;
-            if (this.innerLexer.TryRead(scanner, out result))
+            if (this.innerLexer.TryRead(scanner, previousElementOrNull, out result))
             {
                 element = new Octet(result);
+                if (previousElementOrNull != null)
+                {
+                    element.PreviousElement = previousElementOrNull;
+                    previousElementOrNull.NextElement = element;
+                }
+
                 return true;
             }
 

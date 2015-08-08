@@ -15,7 +15,7 @@
             using (var scanner = new TextScanner(input.ToMemoryStream()))
             {
                 scanner.Read();
-                var horizontalTab = lexer.Read(scanner);
+                var horizontalTab = lexer.Read(scanner, null);
                 Assert.Equal(input, horizontalTab.Value);
             }
         }

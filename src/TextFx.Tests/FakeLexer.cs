@@ -17,7 +17,7 @@
 
         public FakeTryReadElement OnTryReadElement { get; set; }
 
-        public T Read(ITextScanner scanner)
+        public T Read(ITextScanner scanner, Element previousElementOrNull)
         {
             if (this.OnRead == null)
             {
@@ -27,7 +27,7 @@
             return this.OnRead(scanner);
         }
 
-        public Element ReadElement(ITextScanner scanner)
+        public Element ReadElement(ITextScanner scanner, Element previousElementOrNull)
         {
             if (this.OnReadElement == null)
             {
@@ -37,7 +37,7 @@
             return this.OnReadElement(scanner);
         }
 
-        public bool TryRead(ITextScanner scanner, out T element)
+        public bool TryRead(ITextScanner scanner, Element previousElementOrNull, out T element)
         {
             if (this.OnTryRead == null)
             {
@@ -47,7 +47,7 @@
             return this.OnTryRead(scanner, out element);
         }
 
-        public bool TryReadElement(ITextScanner scanner, out Element element)
+        public bool TryReadElement(ITextScanner scanner, Element previousElementOrNull, out Element element)
         {
             if (this.OnTryReadElement == null)
             {

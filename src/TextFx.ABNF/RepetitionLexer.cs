@@ -39,7 +39,7 @@
         }
 
         /// <inheritdoc />
-        public override bool TryRead(ITextScanner scanner, out Repetition element)
+        public override bool TryRead(ITextScanner scanner, Element previousElementOrNull, out Repetition element)
         {
             if (scanner.EndOfInput && this.lowerBound != 0)
             {
@@ -48,13 +48,13 @@
             }
 
             var context = scanner.GetContext();
-            var occurrences = new List<Element>(this.lowerBound);
+            var elements = new List<Element>(this.lowerBound);
+            Element lastResult = null;
             for (var i = 0; i < this.upperBound; i++)
             {
-                Element occurrence;
-                if (this.repeatingElementLexer.TryReadElement(scanner, out occurrence))
+                if (this.repeatingElementLexer.TryReadElement(scanner, lastResult, out lastResult))
                 {
-                    occurrences.Add(occurrence);
+                    elements.Add(lastResult);
                 }
                 else
                 {
@@ -62,21 +62,25 @@
                 }
             }
 
-            if (occurrences.Count < this.lowerBound)
+            if (elements.Count < this.lowerBound)
             {
-                if (occurrences.Count != 0)
+                while (lastResult != null)
                 {
-                    for (var i = occurrences.Count - 1; i >= 0; i--)
-                    {
-                        scanner.Unread(occurrences[i].Value);
-                    }
+                    scanner.Unread(lastResult.Value);
+                    lastResult = lastResult.PreviousElement;
                 }
 
                 element = default(Repetition);
                 return false;
             }
 
-            element = new Repetition(occurrences, context);
+            element = new Repetition(elements, context);
+            if (previousElementOrNull != null)
+            {
+                element.PreviousElement = previousElementOrNull;
+                previousElementOrNull.NextElement = element;
+            }
+
             return true;
         }
     }

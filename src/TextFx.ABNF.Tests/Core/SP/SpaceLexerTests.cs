@@ -14,7 +14,7 @@
             using (var scanner = new TextScanner(input.ToMemoryStream()))
             {
                 scanner.Read();
-                var space = spaceLexer.Read(scanner);
+                var space = spaceLexer.Read(scanner, null);
                 Assert.NotNull(space);
                 Assert.Equal(input, space.Value);
             }

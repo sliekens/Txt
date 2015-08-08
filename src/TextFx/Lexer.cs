@@ -41,10 +41,10 @@ namespace TextFx
         where TElement : Element
     {
         /// <inheritdoc />
-        public virtual TElement Read(ITextScanner scanner)
+        public virtual TElement Read(ITextScanner scanner, Element previousElementOrNull)
         {
             TElement element;
-            if (this.TryRead(scanner, out element))
+            if (this.TryRead(scanner, previousElementOrNull, out element))
             {
                 return element;
             }
@@ -57,20 +57,20 @@ namespace TextFx
         }
 
         /// <inheritdoc />
-        public Element ReadElement(ITextScanner scanner)
+        public Element ReadElement(ITextScanner scanner, Element previousElementOrNull)
         {
-            return this.Read(scanner);
+            return this.Read(scanner, previousElementOrNull);
         }
 
         /// <inheritdoc />
-        public abstract bool TryRead(ITextScanner scanner, out TElement element);
+        public abstract bool TryRead(ITextScanner scanner, Element previousElementOrNull, out TElement element);
 
         /// <inheritdoc />
-        public bool TryReadElement(ITextScanner scanner, out Element element)
+        public bool TryReadElement(ITextScanner scanner, Element previousElementOrNull, out Element element)
         {
             // This intermediary variable is required to match the type of the output parameter
             TElement t;
-            if (this.TryRead(scanner, out t))
+            if (this.TryRead(scanner, previousElementOrNull, out t))
             {
                 element = t;
                 return true;

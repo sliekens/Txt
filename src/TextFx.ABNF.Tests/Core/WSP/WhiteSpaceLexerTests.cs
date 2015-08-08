@@ -21,7 +21,7 @@
             using (var scanner = new TextScanner(input.ToMemoryStream()))
             {
                 scanner.Read();
-                var whiteSpace = whiteSpaceLexer.Read(scanner);
+                var whiteSpace = whiteSpaceLexer.Read(scanner, null);
                 Assert.NotNull(whiteSpace);
                 Assert.Equal(input, whiteSpace.Value);
             }

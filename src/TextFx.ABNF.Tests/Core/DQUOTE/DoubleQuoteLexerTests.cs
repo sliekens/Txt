@@ -14,7 +14,7 @@
             using (var scanner = new TextScanner(input.ToMemoryStream()))
             {
                 scanner.Read();
-                var doubleQuote = lexer.Read(scanner);
+                var doubleQuote = lexer.Read(scanner, null);
                 Assert.Equal(input, doubleQuote.Value);
             }
         }

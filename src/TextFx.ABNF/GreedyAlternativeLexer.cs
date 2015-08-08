@@ -37,7 +37,7 @@
             this.lexers = lexers;
         }
 
-        public override bool TryRead(ITextScanner scanner, out Alternative element)
+        public override bool TryRead(ITextScanner scanner, Element previousElementOrNull, out Alternative element)
         {
             if (scanner == null)
             {
@@ -53,7 +53,7 @@
             {
                 var lexer = this.lexers[i];
                 Element alternative;
-                if (lexer.TryReadElement(scanner, out alternative))
+                if (lexer.TryReadElement(scanner, null, out alternative))
                 {
                     var length = alternative.Value.Length;
                     if (length > bestChoiceLength)
@@ -68,13 +68,19 @@
             }
 
             Element result;
-            if (bestChoice == null || !bestChoice.TryReadElement(scanner, out result))
+            if (bestChoice == null || !bestChoice.TryReadElement(scanner, null, out result))
             {
                 element = default(Alternative);
                 return false;
             }
 
             element = new Alternative(result, ordinal);
+            if (previousElementOrNull != null)
+            {
+                element.PreviousElement = previousElementOrNull;
+                previousElementOrNull.NextElement = element;
+            }
+
             return true;
         }
     }

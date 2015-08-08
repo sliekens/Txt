@@ -55,7 +55,7 @@
             using (var scanner = new TextScanner(input.ToMemoryStream()))
             {
                 scanner.Read();
-                var linearWhiteSpace = linearWhiteSpaceLexer.Read(scanner);
+                var linearWhiteSpace = linearWhiteSpaceLexer.Read(scanner, null);
                 Assert.NotNull(linearWhiteSpace);
                 Assert.Equal(input, linearWhiteSpace.Value);
             }

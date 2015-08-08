@@ -22,7 +22,7 @@
             using (var scanner = new TextScanner(input.ToMemoryStream()))
             {
                 scanner.Read();
-                var digit = digitLexer.Read(scanner);
+                var digit = digitLexer.Read(scanner, null);
                 Assert.Equal(input, digit.Value);
             }
         }

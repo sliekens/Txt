@@ -36,7 +36,7 @@
         }
 
         /// <inheritdoc />
-        public override bool TryRead(ITextScanner scanner, out Alternative element)
+        public override bool TryRead(ITextScanner scanner, Element previousElementOrNull, out Alternative element)
         {
             if (scanner == null)
             {
@@ -47,9 +47,15 @@
             for (var i = 0; i < this.lexers.Length; i++)
             {
                 Element alternative;
-                if (this.lexers[i].TryReadElement(scanner, out alternative))
+                if (this.lexers[i].TryReadElement(scanner, null, out alternative))
                 {
                     element = new Alternative(alternative, i + 1);
+                    if (previousElementOrNull != null)
+                    {
+                        element.PreviousElement = previousElementOrNull;
+                        previousElementOrNull.NextElement = element;
+                    }
+
                     return true;
                 }
             }

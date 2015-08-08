@@ -26,12 +26,18 @@ namespace TextFx.ABNF.Core
         }
 
         /// <inheritdoc />
-        public override bool TryRead(ITextScanner scanner, out WhiteSpace element)
+        public override bool TryRead(ITextScanner scanner, Element previousElementOrNull, out WhiteSpace element)
         {
             Alternative result;
-            if (this.innerLexer.TryRead(scanner, out result))
+            if (this.innerLexer.TryRead(scanner, previousElementOrNull, out result))
             {
                 element = new WhiteSpace(result);
+                if (previousElementOrNull != null)
+                {
+                    element.PreviousElement = previousElementOrNull;
+                    previousElementOrNull.NextElement = element;
+                }
+
                 return true;
             }
 

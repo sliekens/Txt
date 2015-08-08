@@ -16,7 +16,7 @@
         }
 
         /// <inheritdoc />
-        public override bool TryRead(ITextScanner scanner, out Terminal element)
+        public override bool TryRead(ITextScanner scanner, Element previousElementOrNull, out Terminal element)
         {
             if (scanner == null)
             {
@@ -27,6 +27,12 @@
             if (!scanner.EndOfInput && scanner.TryMatch(this.terminal))
             {
                 element = new Terminal(this.terminal, context);
+                if (previousElementOrNull != null)
+                {
+                    element.PreviousElement = previousElementOrNull;
+                    previousElementOrNull.NextElement = element;
+                }
+
                 return true;
             }
 

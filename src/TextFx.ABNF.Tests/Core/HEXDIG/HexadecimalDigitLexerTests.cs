@@ -39,7 +39,7 @@
             using (var scanner = new TextScanner(input.ToMemoryStream()))
             {
                 scanner.Read();
-                var hexadecimalDigit = lexer.Read(scanner);
+                var hexadecimalDigit = lexer.Read(scanner, null);
                 Assert.Equal(input, hexadecimalDigit.Value);
             }
         }

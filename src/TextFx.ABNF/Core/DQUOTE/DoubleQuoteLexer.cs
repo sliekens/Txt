@@ -29,12 +29,18 @@ namespace TextFx.ABNF.Core
         }
 
         /// <inheritdoc />
-        public override bool TryRead(ITextScanner scanner, out DoubleQuote element)
+        public override bool TryRead(ITextScanner scanner, Element previousElementOrNull, out DoubleQuote element)
         {
             Terminal result;
-            if (this.innerLexer.TryRead(scanner, out result))
+            if (this.innerLexer.TryRead(scanner, previousElementOrNull, out result))
             {
                 element = new DoubleQuote(result);
+                if (previousElementOrNull != null)
+                {
+                    element.PreviousElement = previousElementOrNull;
+                    previousElementOrNull.NextElement = element;
+                }
+
                 return true;
             }
 

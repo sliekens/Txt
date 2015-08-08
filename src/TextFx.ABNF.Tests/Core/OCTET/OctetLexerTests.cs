@@ -29,7 +29,7 @@
             using (var scanner = new TextScanner(input.ToMemoryStream()))
             {
                 scanner.Read();
-                var octet = octetLexer.Read(scanner);
+                var octet = octetLexer.Read(scanner, null);
                 Assert.NotNull(octet);
                 Assert.Equal(input, octet.Value);
             }

@@ -19,7 +19,7 @@
         }
 
         /// <inheritdoc />
-        public override bool TryRead(ITextScanner scanner, out TerminalString element)
+        public override bool TryRead(ITextScanner scanner, Element previousElementOrNull, out TerminalString element)
         {
             if (scanner == null)
             {
@@ -28,23 +28,21 @@
 
             var context = scanner.GetContext();
             IList<Terminal> elements = new List<Terminal>(this.lexers.Count);
+            Terminal lastResult = null;
 
             // ReSharper disable once ForCanBeConvertedToForeach
             for (var i = 0; i < this.lexers.Count; i++)
             {
-                Terminal terminals;
-                if (this.lexers[i].TryRead(scanner, out terminals))
+                if (this.lexers[i].TryRead(scanner, lastResult, out lastResult))
                 {
-                    elements.Add(terminals);
+                    elements.Add(lastResult);
                 }
                 else
                 {
-                    if (elements.Count != this.lexers.Count && elements.Count != 0)
+                    while (lastResult != null)
                     {
-                        for (var j = elements.Count - 1; j >= 0; j--)
-                        {
-                            scanner.Unread(elements[j].Value);
-                        }
+                        scanner.Unread(lastResult.Value);
+                        lastResult = (Terminal)lastResult.PreviousElement;
                     }
 
                     element = default(TerminalString);
@@ -53,6 +51,12 @@
             }
 
             element = new TerminalString(elements, context);
+            if (previousElementOrNull != null)
+            {
+                element.PreviousElement = previousElementOrNull;
+                previousElementOrNull.NextElement = element;
+            }
+
             return true;
         }
     }

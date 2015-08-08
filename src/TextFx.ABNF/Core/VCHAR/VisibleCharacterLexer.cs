@@ -29,12 +29,18 @@ namespace TextFx.ABNF.Core
         }
 
         /// <inheritdoc />
-        public override bool TryRead(ITextScanner scanner, out VisibleCharacter element)
+        public override bool TryRead(ITextScanner scanner, Element previousElementOrNull, out VisibleCharacter element)
         {
             Terminal result;
-            if (this.innerLexer.TryRead(scanner, out result))
+            if (this.innerLexer.TryRead(scanner, previousElementOrNull, out result))
             {
                 element = new VisibleCharacter(result);
+                if (previousElementOrNull != null)
+                {
+                    element.PreviousElement = previousElementOrNull;
+                    previousElementOrNull.NextElement = element;
+                }
+
                 return true;
             }
 

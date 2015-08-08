@@ -73,6 +73,10 @@
             }
         }
 
+        public Element PreviousElement { get; set; }
+
+        public Element NextElement { get; set; }
+
         /// <summary>Gets one or more terminal values that represent the current element.</summary>
         public string Value
         {

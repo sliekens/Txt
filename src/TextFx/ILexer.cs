@@ -10,19 +10,21 @@ namespace TextFx
         ///     The scanner object that provides text symbols as well as contextual information about the text
         ///     source.
         /// </param>
+        /// <param name="previousElementOrNull"></param>
         /// <exception cref="InvalidOperationException">The given scanner object is not initialized.</exception>
         /// <exception cref="FormatException">
         ///     The scanner returned an unexpected element, or unexpectedly reached the
         ///     end of the text source.
         /// </exception>
         /// <returns>The next available element.</returns>
-        Element ReadElement(ITextScanner scanner);
+        Element ReadElement(ITextScanner scanner, Element previousElementOrNull);
 
         /// <summary>Attempts to read the next element. A return value indicates whether the element was available.</summary>
         /// <param name="scanner">
         ///     The scanner object that provides text symbols as well as contextual information about the text
         ///     source.
         /// </param>
+        /// <param name="previousElementOrNull"></param>
         /// <param name="element">
         ///     When this method returns, contains the next available element, or a <c>null</c> reference, depending
         ///     on whether the return value indicates success.
@@ -30,6 +32,6 @@ namespace TextFx
         /// <exception cref="InvalidOperationException">The given scanner object is not initialized.</exception>
         /// <exception cref="ObjectDisposedException">The given text scanner is closed.</exception>
         /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
-        bool TryReadElement(ITextScanner scanner, out Element element);
+        bool TryReadElement(ITextScanner scanner, Element previousElementOrNull, out Element element);
     }
 }

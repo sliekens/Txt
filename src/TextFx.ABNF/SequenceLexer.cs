@@ -34,7 +34,7 @@
         }
 
         /// <inheritdoc />
-        public override bool TryRead(ITextScanner scanner, out Sequence element)
+        public override bool TryRead(ITextScanner scanner, Element previousElementOrNull, out Sequence element)
         {
             if (scanner == null)
             {
@@ -43,23 +43,21 @@
 
             var context = scanner.GetContext();
             IList<Element> elements = new List<Element>(this.lexers.Count);
+            Element lastResult = null;
 
             // ReSharper disable once ForCanBeConvertedToForeach
             for (var i = 0; i < this.lexers.Count; i++)
             {
-                Element terminals;
-                if (this.lexers[i].TryReadElement(scanner, out terminals))
+                if (this.lexers[i].TryReadElement(scanner, lastResult, out lastResult))
                 {
-                    elements.Add(terminals);
+                    elements.Add(lastResult);
                 }
                 else
                 {
-                    if (elements.Count != this.lexers.Count && elements.Count != 0)
+                    while (lastResult != null)
                     {
-                        for (var j = elements.Count - 1; j >= 0; j--)
-                        {
-                            scanner.Unread(elements[j].Value);
-                        }
+                        scanner.Unread(lastResult.Value);
+                        lastResult = lastResult.PreviousElement;
                     }
 
                     element = default(Sequence);
@@ -68,6 +66,12 @@
             }
 
             element = new Sequence(elements, context);
+            if (previousElementOrNull != null)
+            {
+                element.PreviousElement = previousElementOrNull;
+                previousElementOrNull.NextElement = element;
+            }
+
             return true;
         }
     }

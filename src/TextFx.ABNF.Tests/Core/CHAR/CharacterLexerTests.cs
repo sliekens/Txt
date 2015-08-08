@@ -21,7 +21,7 @@
             using (var scanner = new TextScanner(input.ToMemoryStream()))
             {
                 scanner.Read();
-                var character = lexer.Read(scanner);
+                var character = lexer.Read(scanner, null);
                 Assert.NotNull(character);
                 Assert.Equal(input, character.Value);
             }

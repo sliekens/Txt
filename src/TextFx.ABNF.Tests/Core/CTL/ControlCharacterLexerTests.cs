@@ -16,7 +16,7 @@
             using (var scanner = new TextScanner(input.ToMemoryStream()))
             {
                 scanner.Read();
-                var controlCharacter = controlCharacterLexer.Read(scanner);
+                var controlCharacter = controlCharacterLexer.Read(scanner, null);
                 Assert.NotNull(controlCharacter);
                 Assert.Equal(input, controlCharacter.Value);
             }

@@ -38,7 +38,7 @@
             using (var scanner = new TextScanner(input.ToMemoryStream()))
             {
                 scanner.Read();
-                var alpha = alphaLexer.Read(scanner);
+                var alpha = alphaLexer.Read(scanner, null);
                 Assert.Equal(input, alpha.Value);
             }
         }
@@ -77,7 +77,7 @@
             using (var scanner = new TextScanner(input.ToMemoryStream()))
             {
                 scanner.Read();
-                var alpha = alphaLexer.Read(scanner);
+                var alpha = alphaLexer.Read(scanner, null);
                 Assert.Equal(input, alpha.Value);
             }
         }
