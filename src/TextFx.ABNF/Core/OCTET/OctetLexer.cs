@@ -29,7 +29,7 @@ namespace TextFx.ABNF.Core
         public override bool TryRead(ITextScanner scanner, Element previousElementOrNull, out Octet element)
         {
             Terminal result;
-            if (this.innerLexer.TryRead(scanner, previousElementOrNull, out result))
+            if (this.innerLexer.TryRead(scanner, null, out result))
             {
                 element = new Octet(result);
                 if (previousElementOrNull != null)

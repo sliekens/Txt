@@ -32,7 +32,7 @@ namespace TextFx.ABNF.Core
         public override bool TryRead(ITextScanner scanner, Element previousElementOrNull, out HexadecimalDigit element)
         {
             Alternative result;
-            if (this.innerLexer.TryRead(scanner, previousElementOrNull, out result))
+            if (this.innerLexer.TryRead(scanner, null, out result))
             {
                 element = new HexadecimalDigit(result);
                 if (previousElementOrNull != null)
