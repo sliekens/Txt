@@ -62,7 +62,7 @@ namespace TextFx
             }
 
             this.elements = elements;
-            this.text = string.Concat(elements);
+            this.text = string.Concat(elements.Select(element => element.text));
             this.context = context;
         }
 
