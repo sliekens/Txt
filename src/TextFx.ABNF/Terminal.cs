@@ -51,5 +51,10 @@
         {
             return this.value;
         }
+        /// <inheritdoc />
+        public override string GetWellFormedText()
+        {
+            return this.Text;
+        }
     }
 }
