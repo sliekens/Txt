@@ -107,12 +107,7 @@ namespace TextFx
         /// <returns>A well-formed string that represents the current element.</returns>
         public virtual string GetWellFormedText()
         {
-            if (this.elements.Count == 0)
-            {
-                return this.text;
-            }
-
-            return string.Concat(this.elements.Select(element => element.GetWellFormedText()));
+            return string.Concat(this.Elements.Select(element => element.GetWellFormedText()));
         }
 
         /// <inheritdoc />
