@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 
 namespace TextFx
 {
@@ -98,22 +99,38 @@ namespace TextFx
             }
         }
 
-        /// <summary>
-        ///     Gets a well-formed string that represents the current element. This is useful for elements that are
-        ///     technically valid, but contain formatting errors or other inpurities. For example: mixed upper and lower case
-        ///     characters where only lower case is well-formed. Unless overridden, the default return value is the value of
-        ///     <see cref="Text" />.
-        /// </summary>
-        /// <returns>A well-formed string that represents the current element.</returns>
-        public virtual string GetWellFormedText()
+        /// <summary>Gets a collection of terminal elements by recursively evaluating <see cref="GetTerminals"/> for every <see cref="Element"/> in <see cref="Elements"/>.</summary>
+        /// <returns>A collection of terminal elements.</returns>
+        public IEnumerable<Element> GetTerminals()
         {
-            return string.Concat(this.Elements.Select(element => element.GetWellFormedText()));
+            if (this.Elements.Count == 0)
+            {
+                yield return this;
+                yield break;
+            }
+
+            foreach (var terminal in this.Elements.SelectMany(t => t.GetTerminals()))
+            {
+                yield return terminal;
+            }
         }
 
-        /// <inheritdoc />
-        public override sealed string ToString()
-        {
-            return this.Text;
-        }
+        /// <summary>
+///     Gets a well-formed string that represents the current element. This is useful for elements that are
+///     technically valid, but contain formatting errors or other inpurities. For example: mixed upper and lower case
+///     characters where only lower case is well-formed. Unless overridden, the default return value is the value of
+///     <see cref="Text" />.
+/// </summary>
+/// <returns>A well-formed string that represents the current element.</returns>
+public virtual string GetWellFormedText()
+{
+    return string.Concat(this.Elements.Select(element => element.GetWellFormedText()));
+}
+
+/// <inheritdoc />
+public override sealed string ToString()
+{
+    return this.Text;
+}
     }
 }
