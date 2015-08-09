@@ -9,8 +9,6 @@
     /// </summary>
     public class TerminalString : Element
     {
-        private readonly IList<Terminal> terminals;
-
         /// <summary>
         ///     Initializes a new instance of the <see cref="TerminalString" /> class with a specified terminal string to copy.
         /// </summary>
