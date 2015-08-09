@@ -41,10 +41,12 @@
                 }
                 else
                 {
-                    while (lastResult != null)
+                    if (elements.Count != 0)
                     {
-                        scanner.Unread(lastResult.Text);
-                        lastResult = lastResult.PreviousElement;
+                        for (var j = elements.Count - 1; j >= 0; j--)
+                        {
+                            scanner.Unread(elements[j].Text);
+                        }
                     }
 
                     element = default(TerminalString);

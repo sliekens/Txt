@@ -64,12 +64,11 @@
                 }
             }
 
-            if (elements.Count < this.lowerBound)
+            if (elements.Count < this.lowerBound && elements.Count != 0)
             {
-                while (lastResult != null)
+                for (var i = elements.Count - 1; i >= 0; i--)
                 {
-                    scanner.Unread(lastResult.Text);
-                    lastResult = lastResult.PreviousElement;
+                    scanner.Unread(elements[i].Text);
                 }
 
                 element = default(Repetition);
