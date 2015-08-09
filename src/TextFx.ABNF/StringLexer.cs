@@ -28,21 +28,23 @@
 
             var context = scanner.GetContext();
             IList<Terminal> elements = new List<Terminal>(this.lexers.Count);
-            Terminal lastResult = null;
+            Element lastResult = null;
 
             // ReSharper disable once ForCanBeConvertedToForeach
             for (var i = 0; i < this.lexers.Count; i++)
             {
-                if (this.lexers[i].TryRead(scanner, lastResult, out lastResult))
+                Terminal result;
+                if (this.lexers[i].TryRead(scanner, lastResult, out result))
                 {
-                    elements.Add(lastResult);
+                    elements.Add(result);
+                    lastResult = result;
                 }
                 else
                 {
                     while (lastResult != null)
                     {
                         scanner.Unread(lastResult.Text);
-                        lastResult = (Terminal)lastResult.PreviousElement;
+                        lastResult = lastResult.PreviousElement;
                     }
 
                     element = default(TerminalString);

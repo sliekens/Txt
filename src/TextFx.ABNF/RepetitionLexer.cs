@@ -52,9 +52,11 @@
             Element lastResult = null;
             for (var i = 0; i < this.upperBound; i++)
             {
-                if (this.repeatingElementLexer.TryReadElement(scanner, lastResult, out lastResult))
+                Element result;
+                if (this.repeatingElementLexer.TryReadElement(scanner, lastResult, out result))
                 {
-                    elements.Add(lastResult);
+                    elements.Add(result);
+                    lastResult = result;
                 }
                 else
                 {
