@@ -15,7 +15,7 @@
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private int offset = -1;
-        
+
         private readonly Encoding encoding;
 
         protected TextScannerBase(Encoding encoding)
@@ -165,34 +165,40 @@
                 throw new InvalidOperationException("Precondition: Offset >= s.Length");
             }
 
-            // Special case: pushback string may be empty (no-op)
+            // Special case: pushback string may be empty
+            // -> no-op
             if (s.Length == 0)
             {
                 return;
             }
 
-            char[] buffer;
+            char[] unreadBuffer;
             if (this.endOfInput)
             {
-                buffer = s.ToCharArray(1, s.Length - 1);
+                // Special case: pushback string may be the terminating character
+                // -> take down EOF flag but push back nothing to the underlying stream
+                unreadBuffer = s.Length == 1 ? null : s.ToCharArray(1, s.Length - 1);
             }
             else
             {
-                buffer = new char[s.Length];
+                unreadBuffer = new char[s.Length];
                 int i;
                 var count = s.Length - 1;
                 for (i = 0; i < count; i++)
                 {
-                    buffer[i] = s[i + 1];
+                    unreadBuffer[i] = s[i + 1];
                 }
 
-                buffer[i] = this.nextCharacter;
+                unreadBuffer[i] = this.nextCharacter;
             }
 
             this.nextCharacter = s[0];
-            this.UnreadImpl(buffer);
             this.offset -= s.Length;
             this.endOfInput = false;
+            if (unreadBuffer != null)
+            {
+                this.UnreadImpl(unreadBuffer);
+            }
         }
 
         protected abstract void UnreadImpl(char[] values);

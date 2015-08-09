@@ -107,11 +107,6 @@ namespace TextFx
 
         protected override void UnreadImpl(char[] values)
         {
-            if (values.Length == 0)
-            {
-                return;
-            }
-
             this.inputStream.Position -= this.Encoding.GetByteCount(values);
         }
     }
