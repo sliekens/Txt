@@ -179,7 +179,7 @@
             this.nextCharacter = s[0];
             var values = s.ToCharArray(1, s.Length - 1);
             this.UnreadImpl(values);
-            this.offset -= values.Length;
+            this.offset -= s.Length;
             this.endOfInput = false;
         }
 
