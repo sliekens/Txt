@@ -88,6 +88,11 @@ namespace TextFx
 
         protected override void UnreadImpl(char[] values)
         {
+            if (values.Length == 0)
+            {
+                return;
+            }
+
             if (this.inputStream.CanSeek)
             {
                 var length = this.Encoding.GetByteCount(values);
