@@ -171,14 +171,26 @@
                 return;
             }
 
-            if (!this.endOfInput)
+            char[] buffer;
+            if (this.endOfInput)
             {
-                s += this.nextCharacter;
+                buffer = s.ToCharArray(1, s.Length - 1);
+            }
+            else
+            {
+                buffer = new char[s.Length];
+                int i;
+                var count = s.Length - 1;
+                for (i = 0; i < count; i++)
+                {
+                    buffer[i] = s[i + 1];
+                }
+
+                buffer[i] = this.nextCharacter;
             }
 
             this.nextCharacter = s[0];
-            var values = s.ToCharArray(1, s.Length - 1);
-            this.UnreadImpl(values);
+            this.UnreadImpl(buffer);
             this.offset -= s.Length;
             this.endOfInput = false;
         }
