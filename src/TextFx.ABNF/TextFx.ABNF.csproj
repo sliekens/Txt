@@ -112,6 +112,7 @@
     <Compile Include="StringLexer.cs" />
     <Compile Include="StringLexerFactory.cs" />
     <Compile Include="Terminal.cs" />
+    <Compile Include="TerminalExtensions.cs" />
     <Compile Include="TerminalLexer.cs" />
     <Compile Include="TerminalLexerFactory.cs" />
     <Compile Include="TerminalString.cs" />
