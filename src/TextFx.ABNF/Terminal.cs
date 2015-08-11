@@ -44,7 +44,7 @@
         /// <inheritdoc />
         public override string GetWellFormedText()
         {
-            return this.Text;
+            return char.ToString(this.value);
         }
     }
 }
