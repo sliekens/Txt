@@ -103,15 +103,16 @@ namespace TextFx
         /// <returns>A collection of terminal elements.</returns>
         public IEnumerable<Element> GetTerminals()
         {
-            if (this.Elements.Count == 0)
+            if (this is Terminal)
             {
                 yield return this;
-                yield break;
             }
-
-            foreach (var terminal in this.Elements.SelectMany(t => t.GetTerminals()))
+            else
             {
-                yield return terminal;
+                foreach (var terminal in this.Elements.SelectMany(t => t.GetTerminals()))
+                {
+                    yield return terminal;
+                }
             }
         }
 
