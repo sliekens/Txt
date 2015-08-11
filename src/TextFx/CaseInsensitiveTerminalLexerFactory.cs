@@ -1,4 +1,4 @@
-﻿namespace TextFx.ABNF
+﻿namespace TextFx
 {
     /// <summary>Creates instances of the <see cref="CaseInsensitiveTerminalLexer" /> class.</summary>
     public class CaseInsensitiveTerminalLexerFactory : ITerminalLexerFactory

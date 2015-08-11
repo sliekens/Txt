@@ -36,7 +36,10 @@
     <DocumentationFile>bin\Release\TextFx.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="CaseInsensitiveTerminalLexer.cs" />
+    <Compile Include="CaseInsensitiveTerminalLexerFactory.cs" />
     <Compile Include="ILexer.cs" />
+    <Compile Include="ITerminalLexerFactory.cs" />
     <Compile Include="RuleNameAttribute.cs" />
     <Compile Include="ILexerFactory.cs" />
     <Compile Include="ILexer{TElement}.cs" />
@@ -44,6 +47,9 @@
     <Compile Include="ITextScanner.cs" />
     <Compile Include="Lexer.cs" />
     <Compile Include="PushbackInputStream.cs" />
+    <Compile Include="Terminal.cs" />
+    <Compile Include="TerminalLexer.cs" />
+    <Compile Include="TerminalLexerFactory.cs" />
     <Compile Include="TextContext.cs" />
     <Compile Include="BufferedTextScanner.cs" />
     <Compile Include="TextScanner.cs" />

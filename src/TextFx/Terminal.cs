@@ -1,7 +1,5 @@
-﻿namespace TextFx.ABNF
+﻿namespace TextFx
 {
-    using System;
-
     /// <summary>
     ///     Represents a terminal specification, sometimes called a character.
     /// </summary>

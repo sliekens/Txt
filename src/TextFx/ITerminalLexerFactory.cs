@@ -1,4 +1,4 @@
-﻿namespace TextFx.ABNF
+﻿namespace TextFx
 {
     /// <summary>Provides the interface for factory classes that create lexers for a terminal value.</summary>
     public interface ITerminalLexerFactory

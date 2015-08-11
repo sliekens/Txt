@@ -1,4 +1,4 @@
-﻿namespace TextFx.ABNF
+﻿namespace TextFx
 {
     using System;
 
