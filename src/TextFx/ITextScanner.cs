@@ -68,5 +68,9 @@ namespace TextFx
         /// <exception cref="T:System.ObjectDisposedException">The current text scanner is closed.</exception>
         /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
         bool TryMatchIgnoreCase(char c, out char match);
+
+        /// <summary>Sets the internal state to the pre-initialized state. Call <see cref="Read"/> to re-initialize the scanner.</summary>
+        /// <exception cref="T:System.ObjectDisposedException">The current text scanner is closed.</exception>
+        void Reset();
     }
 }

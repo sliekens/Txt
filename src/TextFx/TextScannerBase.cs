@@ -230,6 +230,7 @@
             return true;
         }
 
+        /// <inheritdoc />
         public virtual bool TryMatchIgnoreCase(char c, out char match)
         {
             if (this.disposed)
@@ -256,6 +257,24 @@
             match = this.nextCharacter;
             this.Read();
             return true;
+        }
+
+        /// <inheritdoc />
+        public virtual void Reset()
+        {
+            if (this.disposed)
+            {
+                throw new ObjectDisposedException(this.GetType().FullName);
+            }
+
+            this.offset = -1;
+            if (!this.endOfInput)
+            {
+                this.UnreadImpl(new[] { this.nextCharacter });
+            }
+
+            this.endOfInput = default(bool);
+            this.nextCharacter = default(char);
         }
     }
 }
