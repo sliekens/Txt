@@ -2,6 +2,7 @@
 {
     using System;
     using System.Diagnostics;
+    using System.IO;
     using System.Text;
 
     public abstract class TextScannerBase : ITextScanner
@@ -258,6 +259,21 @@
             this.Read();
             return true;
         }
+
+        public Stream BaseStream
+        {
+            get
+            {
+                if (this.disposed)
+                {
+                    throw new ObjectDisposedException(this.GetType().FullName);
+                }
+
+                return this.GetBaseStreamImpl() ?? Stream.Null;
+            }
+        }
+
+        protected abstract Stream GetBaseStreamImpl();
 
         /// <inheritdoc />
         public virtual void Reset()

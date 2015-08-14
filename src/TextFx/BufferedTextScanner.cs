@@ -99,5 +99,10 @@ namespace TextFx
                 this.inputStream.Write(pushbackBuffer, 0, pushbackBuffer.Length);
             }
         }
+
+        protected override Stream GetBaseStreamImpl()
+        {
+            return this.inputStream;
+        }
     }
 }

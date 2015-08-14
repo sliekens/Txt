@@ -10,6 +10,7 @@
 namespace TextFx
 {
     using System;
+    using System.IO;
     using System.Text;
 
     /// <summary>Provides the interface for types that scan text with 1 character of lookahead and unlimited backtracking.</summary>
@@ -68,6 +69,10 @@ namespace TextFx
         /// <exception cref="T:System.ObjectDisposedException">The current text scanner is closed.</exception>
         /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
         bool TryMatchIgnoreCase(char c, out char match);
+
+        /// <summary>Returns the underlying stream. Programs that intend to read from the underlying stream must call <see cref="Reset"/> first.</summary>
+        /// <exception cref="T:System.ObjectDisposedException">The current text scanner is closed.</exception>
+        Stream BaseStream { get; }
 
         /// <summary>Sets the internal state to the pre-initialized state. Call <see cref="Read"/> to re-initialize the scanner.</summary>
         /// <exception cref="T:System.ObjectDisposedException">The current text scanner is closed.</exception>

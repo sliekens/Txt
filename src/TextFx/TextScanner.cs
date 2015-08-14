@@ -105,6 +105,11 @@ namespace TextFx
             return true;
         }
 
+        protected override Stream GetBaseStreamImpl()
+        {
+            return this.inputStream;
+        }
+
         protected override void UnreadImpl(char[] values)
         {
             this.inputStream.Position -= this.Encoding.GetByteCount(values);
