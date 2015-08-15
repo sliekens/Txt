@@ -112,7 +112,12 @@ namespace TextFx
 
         protected override void UnreadImpl(char[] values)
         {
-            this.inputStream.Position -= this.Encoding.GetByteCount(values);
+            this.inputStream.Seek(-this.Encoding.GetByteCount(values), SeekOrigin.Current);
+        }
+
+        protected override void UnreadImpl(byte[] values)
+        {
+            this.inputStream.Seek(-values.Length, SeekOrigin.Current);
         }
     }
 }

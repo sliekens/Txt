@@ -1,4 +1,6 @@
-﻿namespace TextFx
+﻿using System.Collections.Generic;
+
+namespace TextFx
 {
     using System;
     using System.Diagnostics;
@@ -7,7 +9,6 @@
 
     public abstract class TextScannerBase : ITextScanner
     {
-        /// <summary>Indicates whether this object has been disposed.</summary>
         private bool disposed;
 
         private bool endOfInput;
@@ -203,6 +204,8 @@
         }
 
         protected abstract void UnreadImpl(char[] values);
+
+        protected abstract void UnreadImpl(byte[] values);
 
         /// <inheritdoc />
         public virtual bool TryMatch(char c)

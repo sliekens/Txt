@@ -100,6 +100,18 @@ namespace TextFx
             }
         }
 
+        protected override void UnreadImpl(byte[] values)
+        {
+            if (this.inputStream.CanSeek)
+            {
+                this.inputStream.Seek(-values.Length, SeekOrigin.Current);
+            }
+            else
+            {
+                this.inputStream.Write(values, 0, values.Length);
+            }
+        }
+
         protected override Stream GetBaseStreamImpl()
         {
             return this.inputStream;
