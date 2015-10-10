@@ -41,6 +41,7 @@
     <Compile Include="ILexer.cs" />
     <Compile Include="ITerminalLexerFactory.cs" />
     <Compile Include="ITextSource.cs" />
+    <Compile Include="ReadResult.cs" />
     <Compile Include="RuleNameAttribute.cs" />
     <Compile Include="ILexerFactory.cs" />
     <Compile Include="ILexer{TElement}.cs" />
@@ -50,6 +51,7 @@
     <Compile Include="PushbackInputStream.cs" />
     <Compile Include="StreamTextSource.cs" />
     <Compile Include="StringTextSource.cs" />
+    <Compile Include="SyntaxError.cs" />
     <Compile Include="Terminal.cs" />
     <Compile Include="TerminalLexer.cs" />
     <Compile Include="TerminalLexerFactory.cs" />
