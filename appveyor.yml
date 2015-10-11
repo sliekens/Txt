@@ -1,3 +1,4 @@
+os: Default Azure
 version: '{build}'
 configuration:
 - Debug
