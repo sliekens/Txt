@@ -5,12 +5,17 @@ using System.Resources;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 
-[assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Steven Liekens")]
 [assembly: AssemblyProduct("TextFx")]
 [assembly: AssemblyCopyright("The MIT License (MIT)")]
 [assembly: AssemblyTrademark("")]
 [assembly: NeutralResourcesLanguage("en")]
+
+#if DEBUG
+[assembly: AssemblyConfiguration("Debug")]
+#else
+[assembly: AssemblyConfiguration("Release")]
+# endif
 
 // Version information for an assembly consists of the following four values:
 //      Major Version
