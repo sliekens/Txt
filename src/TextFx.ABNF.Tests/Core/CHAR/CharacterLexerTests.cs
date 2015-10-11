@@ -18,7 +18,7 @@
         {
             var factory = new CharacterLexerFactory(new ValueRangeLexerFactory());
             var lexer = factory.Create();
-            using (var scanner = new TextScanner(input.ToMemoryStream()))
+            using (var scanner = new TextScanner(new StringTextSource(input)))
             {
                 scanner.Read();
                 var character = lexer.Read(scanner, null);

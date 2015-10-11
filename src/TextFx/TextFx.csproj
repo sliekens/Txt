@@ -54,14 +54,12 @@
     <Compile Include="TerminalLexer.cs" />
     <Compile Include="TerminalLexerFactory.cs" />
     <Compile Include="TextContext.cs" />
-    <Compile Include="BufferedTextScanner.cs" />
-    <Compile Include="TextScanner.cs" />
     <Compile Include="Element.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), SharedAssemblyInfo.cs))\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="TextScannerBase.cs" />
+    <Compile Include="TextScanner.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="TextFx.nuspec" />

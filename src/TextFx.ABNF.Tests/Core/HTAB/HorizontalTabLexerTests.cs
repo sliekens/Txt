@@ -12,7 +12,7 @@
         {
             var factory = new HorizontalTabLexerFactory(new TerminalLexerFactory());
             var lexer = factory.Create();
-            using (var scanner = new TextScanner(input.ToMemoryStream()))
+            using (var scanner = new TextScanner(new StringTextSource(input)))
             {
                 scanner.Read();
                 var horizontalTab = lexer.Read(scanner, null);

@@ -70,9 +70,9 @@ namespace TextFx
         /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
         bool TryMatchIgnoreCase(char c, out char match);
 
-        /// <summary>Returns the underlying stream. Programs that intend to read from the underlying stream must call <see cref="Reset"/> first.</summary>
-        /// <exception cref="T:System.ObjectDisposedException">The current text scanner is closed.</exception>
-        Stream BaseStream { get; }
+        ///// <summary>Returns the underlying stream. Programs that intend to read from the underlying stream must call <see cref="Reset"/> first.</summary>
+        ///// <exception cref="T:System.ObjectDisposedException">The current text scanner is closed.</exception>
+        //Stream BaseStream { get; }
 
         /// <summary>Sets the internal state to the pre-initialized state. Call <see cref="Read"/> to re-initialize the scanner.</summary>
         /// <exception cref="T:System.ObjectDisposedException">The current text scanner is closed.</exception>

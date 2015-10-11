@@ -10,7 +10,7 @@
         {
             var factory = new LineFeedLexerFactory(new TerminalLexerFactory());
             var lineFeedLexer = factory.Create();
-            using (var scanner = new TextScanner(input.ToMemoryStream()))
+            using (var scanner = new TextScanner(new StringTextSource(input)))
             {
                 scanner.Read();
                 var lineFeed = lineFeedLexer.Read(scanner, null);

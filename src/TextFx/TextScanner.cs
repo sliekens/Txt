@@ -1,123 +1,271 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="TextScanner.cs" company="Steven Liekens">
-//   The MIT License (MIT)
-// </copyright>
-// <summary>
-//   
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
-
-namespace TextFx
+﻿namespace TextFx
 {
     using System;
     using System.Diagnostics;
-    using System.IO;
     using System.Text;
 
-    /// <summary>
-    ///     Represents a text scanner that gets text from an instance of the <see cref="T:TextFx.TextScanner" />
-    ///     class.
-    /// </summary>
-    public sealed class TextScanner : TextScannerBase
+    public class TextScanner : ITextScanner
     {
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private readonly Stream inputStream;
+        private readonly ITextSource textSource;
 
         private bool disposed;
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="TextScanner" /> class that reads characters from a specified input
-        ///     stream, using the US-ASCII character encoding. The stream must support seeking with a negative offset that is
-        ///     relative to the
-        ///     <see cref="SeekOrigin.Current" /> position within the stream. For streams that do not support
-        ///     <see cref="Stream.Seek" />, use the <see cref="BufferedTextScanner" /> class instead.
-        /// </summary>
-        /// <param name="seekableInputStream">
-        ///     The input stream to read from. The input stream must return <c>true</c> from
-        ///     <see cref="Stream.CanSeek" />.
-        /// </param>
-        /// <exception cref="ArgumentException">The value of <see cref="Stream.CanSeek" /> is <c>false</c>.</exception>
-        /// <exception cref="ArgumentNullException">The value of <paramref name="seekableInputStream" /> is a null reference.</exception>
-        public TextScanner(Stream seekableInputStream)
-            : this(seekableInputStream, Encoding.GetEncoding("us-ascii"))
-        {
-        }
+        private bool endOfInput;
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="TextScanner" /> class that reads characters from a specified input
-        ///     stream, using the specified character encoding. The stream must support seeking with a negative offset that is
-        ///     relative to the
-        ///     <see cref="SeekOrigin.Current" /> position within the stream. For streams that do not support
-        ///     <see cref="Stream.Seek" />, use the <see cref="BufferedTextScanner" /> class instead.
-        /// </summary>
-        /// <param name="seekableInputStream">
-        ///     The input stream to read from. The input stream must return <c>true</c> from
-        ///     <see cref="Stream.CanSeek" />.
-        /// </param>
-        /// <param name="encoding">The character encoding to use when converting between binary data and text.</param>
-        /// <exception cref="ArgumentException">The value of <see cref="Stream.CanSeek" /> is <c>false</c>.</exception>
-        /// <exception cref="ArgumentNullException">
-        ///     The value of <paramref name="seekableInputStream" /> or
-        ///     <paramref name="encoding" /> is a null reference.
-        /// </exception>
-        public TextScanner(Stream seekableInputStream, Encoding encoding)
-            : base(encoding)
+        private char nextCharacter;
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private int offset = -1;
+
+        private readonly Encoding encoding;
+
+        public TextScanner(ITextSource textSource)
         {
-            if (seekableInputStream == null)
+            if (textSource == null)
             {
-                throw new ArgumentNullException("seekableInputStream");
+                throw new ArgumentNullException(nameof(textSource));
             }
 
-            if (!seekableInputStream.CanSeek)
-            {
-                throw new ArgumentException("Precondition: Stream.CanSeek", "seekableInputStream");
-            }
-
-            this.inputStream = seekableInputStream;
+            this.textSource = textSource;
         }
 
-        protected override void Dispose(bool disposing)
+        /// <summary>This method calls <see cref="Dispose(bool)" />, specifying <c>true</c> to release all resources.</summary>
+        public void Close()
+        {
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <inheritdoc />
+        void IDisposable.Dispose()
+        {
+            this.Close();
+        }
+
+        /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
+        /// <param name="disposing">
+        ///     <c>true</c> to clean up both managed and unmanaged resources; otherwise, <c>false</c> to clean up only unmanaged
+        ///     resources.
+        /// </param>
+        protected virtual void Dispose(bool disposing)
         {
             if (this.disposed)
             {
                 return;
             }
 
-            if (disposing)
-            {
-                this.inputStream.Dispose();
-            }
-
             this.disposed = true;
-            base.Dispose(disposing);
         }
 
-        protected override bool ReadImpl(out char c)
+        /// <inheritdoc />
+        public virtual char? NextCharacter
         {
-            var nextByte = this.inputStream.ReadByte();
-            if (nextByte == -1)
+            get
             {
-                c = default(char);
+                if (this.disposed)
+                {
+                    throw new ObjectDisposedException(this.GetType().FullName);
+                }
+
+                if (this.EndOfInput)
+                {
+                    return null;
+                }
+
+                return this.nextCharacter;
+            }
+        }
+
+        /// <inheritdoc />
+        public virtual int Offset
+        {
+            get
+            {
+                if (this.disposed)
+                {
+                    throw new ObjectDisposedException(this.GetType().FullName);
+                }
+
+                return this.offset;
+            }
+        }
+
+        /// <inheritdoc />
+        public virtual bool EndOfInput
+        {
+            get
+            {
+                if (this.disposed)
+                {
+                    throw new ObjectDisposedException(this.GetType().FullName);
+                }
+
+                return this.endOfInput;
+            }
+        }
+
+        /// <inheritdoc />
+        public virtual bool Read()
+        {
+            if (this.disposed)
+            {
+                throw new ObjectDisposedException(this.GetType().FullName);
+            }
+
+            if (this.endOfInput)
+            {
                 return false;
             }
 
-            c = (char)nextByte;
+            this.offset += 1;
+            int next;
+            if ((next = this.textSource.Read()) == -1)
+            {
+                this.endOfInput = true;
+                return false;
+            }
+
+            this.nextCharacter = (char)next;
             return true;
         }
 
-        protected override Stream GetBaseStreamImpl()
+        /// <inheritdoc />
+        public virtual ITextContext GetContext()
         {
-            return this.inputStream;
+            if (this.disposed)
+            {
+                throw new ObjectDisposedException(this.GetType().FullName);
+            }
+
+            return new TextContext(this.offset);
         }
 
-        protected override void UnreadImpl(char[] values)
+        public Encoding Encoding
         {
-            this.inputStream.Seek(-this.Encoding.GetByteCount(values), SeekOrigin.Current);
+            get
+            {
+                return this.encoding;
+            }
         }
 
-        protected override void UnreadImpl(byte[] values)
+        public void Unread(string s)
         {
-            this.inputStream.Seek(-values.Length, SeekOrigin.Current);
+            if (this.disposed)
+            {
+                throw new ObjectDisposedException(this.GetType().FullName);
+            }
+
+            if (s == null)
+            {
+                throw new ArgumentNullException("s");
+            }
+
+            if (this.offset < s.Length)
+            {
+                throw new InvalidOperationException("Precondition: Offset >= s.Length");
+            }
+
+            // Special case: pushback string may be empty
+            // -> no-op
+            if (s.Length == 0)
+            {
+                return;
+            }
+
+            if (s.Length == 1 && this.endOfInput)
+            {
+                // Special case: pusback string is the last character before EOF
+                // -> take down EOF flag and reset position but push back nothing to the underlying stream
+                this.offset -= 1;
+                this.endOfInput = false;
+            }
+            else
+            {
+                this.textSource.Unread(s.ToCharArray(1, s.Length - 1), 0, s.Length - 1);
+                if (!this.endOfInput)
+                {
+                    this.textSource.Unread(this.nextCharacter);
+                }
+
+                this.offset -= s.Length;
+                this.endOfInput = false;
+            }
+
+            this.nextCharacter = s[0];
+        }
+
+        /// <inheritdoc />
+        public virtual bool TryMatch(char c)
+        {
+            if (this.disposed)
+            {
+                throw new ObjectDisposedException(this.GetType().FullName);
+            }
+
+            if (this.offset == -1)
+            {
+                throw new InvalidOperationException("No next character available: call 'Read()' to initialize.");
+            }
+
+            if (this.endOfInput)
+            {
+                throw new InvalidOperationException("No next character available: end of input has been reached.");
+            }
+
+            if (this.nextCharacter != c)
+            {
+                return false;
+            }
+
+            this.Read();
+            return true;
+        }
+
+        /// <inheritdoc />
+        public virtual bool TryMatchIgnoreCase(char c, out char match)
+        {
+            if (this.disposed)
+            {
+                throw new ObjectDisposedException(this.GetType().FullName);
+            }
+
+            if (this.offset == -1)
+            {
+                throw new InvalidOperationException("No next character available: call 'Read()' to initialize.");
+            }
+
+            if (this.endOfInput)
+            {
+                throw new InvalidOperationException("No next character available: end of input has been reached.");
+            }
+
+            if (char.ToUpperInvariant(this.nextCharacter) != char.ToUpperInvariant(c))
+            {
+                match = default(char);
+                return false;
+            }
+
+            match = this.nextCharacter;
+            this.Read();
+            return true;
+        }
+
+        /// <inheritdoc />
+        public virtual void Reset()
+        {
+            if (this.disposed)
+            {
+                throw new ObjectDisposedException(this.GetType().FullName);
+            }
+
+            this.offset = -1;
+            if (!this.endOfInput)
+            {
+                this.textSource.Unread(this.nextCharacter);
+            }
+
+            this.endOfInput = default(bool);
+            this.nextCharacter = default(char);
         }
     }
 }

@@ -11,7 +11,7 @@
         {
             var factory = new DoubleQuoteLexerFactory(new TerminalLexerFactory());
             var lexer = factory.Create();
-            using (var scanner = new TextScanner(input.ToMemoryStream()))
+            using (var scanner = new TextScanner(new StringTextSource(input)))
             {
                 scanner.Read();
                 var doubleQuote = lexer.Read(scanner, null);

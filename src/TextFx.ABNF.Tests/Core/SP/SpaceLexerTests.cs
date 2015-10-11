@@ -11,7 +11,7 @@
         {
             var factory = new SpaceLexerFactory(new TerminalLexerFactory());
             var spaceLexer = factory.Create();
-            using (var scanner = new TextScanner(input.ToMemoryStream()))
+            using (var scanner = new TextScanner(new StringTextSource(input)))
             {
                 scanner.Read();
                 var space = spaceLexer.Read(scanner, null);

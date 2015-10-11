@@ -52,7 +52,7 @@
                 alternativeLexerFactory,
                 repetitionLexerFactory);
             var linearWhiteSpaceLexer = linearWhiteSpaceLexerFactory.Create();
-            using (var scanner = new TextScanner(input.ToMemoryStream()))
+            using (var scanner = new TextScanner(new StringTextSource(input)))
             {
                 scanner.Read();
                 var linearWhiteSpace = linearWhiteSpaceLexer.Read(scanner, null);

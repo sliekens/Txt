@@ -36,7 +36,7 @@
             var alternativeLexerFactory = new AlternativeLexerFactory();
             var factory = new HexadecimalDigitLexerFactory(digitLexerFactory, stringLexerFactory, alternativeLexerFactory);
             var lexer = factory.Create();
-            using (var scanner = new TextScanner(input.ToMemoryStream()))
+            using (var scanner = new TextScanner(new StringTextSource(input)))
             {
                 scanner.Read();
                 var hexadecimalDigit = lexer.Read(scanner, null);

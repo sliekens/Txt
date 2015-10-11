@@ -35,7 +35,7 @@
         {
             var factory = new AlphaLexerFactory(new ValueRangeLexerFactory(), new AlternativeLexerFactory());
             var alphaLexer = factory.Create();
-            using (var scanner = new TextScanner(input.ToMemoryStream()))
+            using (var scanner = new TextScanner(new StringTextSource(input)))
             {
                 scanner.Read();
                 var alpha = alphaLexer.Read(scanner, null);
@@ -74,7 +74,7 @@
         {
             var factory = new AlphaLexerFactory(new ValueRangeLexerFactory(), new AlternativeLexerFactory());
             var alphaLexer = factory.Create();
-            using (var scanner = new TextScanner(input.ToMemoryStream()))
+            using (var scanner = new TextScanner(new StringTextSource(input)))
             {
                 scanner.Read();
                 var alpha = alphaLexer.Read(scanner, null);
