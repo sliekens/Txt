@@ -42,6 +42,7 @@
     <Compile Include="FakeStream.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PushbackInputStreamTests.cs" />
+    <Compile Include="StringTextSourceTests.cs" />
     <Compile Include="StreamTextSourceTests.cs" />
   </ItemGroup>
   <ItemGroup>
