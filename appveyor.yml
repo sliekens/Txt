@@ -1,4 +1,4 @@
-os: Default Azure
+os: Visual Studio 2015
 version: '{build}'
 configuration:
 - Debug
