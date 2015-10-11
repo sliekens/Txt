@@ -18,7 +18,7 @@ build:
   publish_nuget_symbols: true
   include_nuget_references: true
   parallel: true
-  verbosity: minimal
+  verbosity: detailed
 deploy:
 - provider: NuGet
   server: https://www.myget.org/F/textfx/api/v2/package
