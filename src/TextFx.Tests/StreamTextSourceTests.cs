@@ -1,5 +1,6 @@
 ﻿namespace TextFx.Tests
 {
+    using System;
     using System.IO;
     using System.Text;
 
@@ -7,6 +8,24 @@
 
     public class StreamTextSourceTests
     {
+        [Fact]
+        public void Ctor_ThrowsOnNullStream()
+        {
+            Assert.Throws<ArgumentNullException>(() => new StreamTextSource(null, Encoding.UTF8));
+        }
+
+        [Fact]
+        public void Ctor_ThrowsOnNullEncoding()
+        {
+            Assert.Throws<ArgumentNullException>(() => new StreamTextSource(new PushbackInputStream(Stream.Null), null));
+        }
+
+        [Fact]
+        public void Ctor_AcceptsEmptyString()
+        {
+            new StringTextSource(string.Empty);
+        }
+
         [Fact]
         public void Read_One_BuffersLazily()
         {

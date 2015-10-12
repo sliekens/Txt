@@ -1,12 +1,23 @@
 ﻿namespace TextFx.Tests
 {
-    using System.IO;
-    using System.Text;
+    using System;
 
     using Xunit;
 
     public class StringTextSourceTests
     {
+        [Fact]
+        public void Ctor_ThrowsOnNull()
+        {
+            Assert.Throws<ArgumentNullException>(() => new StringTextSource(null));
+        }
+
+        [Fact]
+        public void Ctor_AcceptsEmptyString()
+        {
+            new StringTextSource(string.Empty);
+        }
+
         [Fact]
         public void Read_One()
         {
