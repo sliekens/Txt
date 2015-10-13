@@ -11,17 +11,11 @@
     /// </summary>
     public class PushbackInputStream : Stream
     {
-        /// <summary>Any previous pushback buffers.</summary>
-        private readonly Stack<PushbackContext> pushbackStack;
-
         /// <summary>The input stream that is being wrapped.</summary>
         private readonly Stream stream;
 
         /// <summary>The current pushback buffer.</summary>
-        private byte[] pushbackBuffer;
-
-        /// <summary>The current position within the pushback buffer.</summary>
-        private int pushbackOffset;
+        private readonly Stack<byte> pushback;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PushbackInputStream"/> class that wraps a given <see cref="Stream"/> object.
@@ -42,7 +36,7 @@
             }
 
             this.stream = stream;
-            this.pushbackStack = new Stack<PushbackContext>();
+            this.pushback = new Stack<byte>();
         }
 
         /// <summary>Gets a value indicating whether the current stream supports reading.</summary>
@@ -121,7 +115,7 @@
         public override void Flush()
         {
             this.stream.Flush();
-            this.pushbackStack.TrimExcess();
+            this.pushback.TrimExcess();
         }
 
         /// <summary>Reads a sequence of bytes from the current stream and advances the position within the stream by the number of bytes read.</summary>
@@ -204,68 +198,31 @@ if (stream.CanSeek)
 }}", count));
             }
 
-            // Push the current pushback buffer (if any) onto the stack
-            var currentBuffer = this.pushbackBuffer;
-            if (currentBuffer != null)
+            for (int i = buffer.Length - 1; i >= offset && count != 0; i--, count--)
             {
-                var position = this.pushbackOffset;
-                if (position < currentBuffer.Length)
-                {
-                    this.pushbackStack.Push(new PushbackContext { Buffer = currentBuffer, Offset = position });
-                }
+                this.pushback.Push(buffer[i]);
             }
-
-            // Replace the current pushback buffer
-            var tmp = new byte[count];
-            Buffer.BlockCopy(buffer, offset, tmp, 0, count);
-            this.pushbackBuffer = tmp;
-            this.pushbackOffset = 0;
         }
 
         private bool ReadFromBuffer(byte[] buffer, int offset, int count, out int result)
         {
-            if (this.pushbackBuffer == null)
+            if (this.pushback.Count == 0)
             {
                 result = default(int);
                 return false;
             }
 
-            if (this.pushbackOffset == this.pushbackBuffer.Length)
+            for (result = 0; result < count; result++, offset++)
             {
-                if (this.pushbackStack.Count == 0)
+                if (this.pushback.Count == 0)
                 {
-                    result = default(int);
-                    return false;
+                    break;
                 }
 
-                var ctx = this.pushbackStack.Pop();
-                this.pushbackBuffer = ctx.Buffer;
-                this.pushbackOffset = ctx.Offset;
+                buffer[offset] = this.pushback.Pop();
             }
 
-            var currentPushbackBuffer = this.pushbackBuffer;
-            var currentPushbackOffset = this.pushbackOffset;
-            var available = currentPushbackBuffer.Length - currentPushbackOffset;
-            if (count > available)
-            {
-                Buffer.BlockCopy(currentPushbackBuffer, currentPushbackOffset, buffer, offset, available);
-                result = available;
-            }
-            else
-            {
-                Buffer.BlockCopy(currentPushbackBuffer, currentPushbackOffset, buffer, offset, count);
-                result = count;
-            }
-
-            this.pushbackOffset += result;
             return true;
-        }
-
-        private class PushbackContext
-        {
-            public byte[] Buffer { get; set; }
-
-            public int Offset { get; set; }
         }
     }
 }
