@@ -8,6 +8,20 @@
     public class PushbackInputStreamTests
     {
         [Fact]
+        public void Ctor_ThrowsOnNullReference()
+        {
+            Assert.Throws<ArgumentNullException>(
+                () =>
+                new PushbackInputStream(null));
+        }
+
+        [Fact]
+        public void Ctor_AcceptsStreamNull()
+        {
+            new PushbackInputStream(Stream.Null);
+        }
+
+        [Fact]
         public void CanWrite_WhenNotCanSeek_ReturnsFalse()
         {
             using (var stub = new FakeStream { OnCanReadGet = () => true, OnCanSeekGet = () => true })
@@ -33,16 +47,16 @@
             const int Position = 128;
             var underlyingStreamReadCalled = false;
             var mock = new FakeStream
-                           {
-                               OnCanReadGet = () => true,
-                               OnCanSeekGet = () => false,
-                               OnPositionGet = () => Position,
-                               OnRead = (_, __, ___) =>
-                                   {
-                                       underlyingStreamReadCalled = true;
-                                       return 0;
-                                   }
-                           };
+            {
+                OnCanReadGet = () => true,
+                OnCanSeekGet = () => false,
+                OnPositionGet = () => Position,
+                OnRead = (_, __, ___) =>
+                    {
+                        underlyingStreamReadCalled = true;
+                        return 0;
+                    }
+            };
             using (var pushbackStream = new PushbackInputStream(mock))
             {
                 var pushbackBytes = new byte[] { 1, 2, 4, 8 };
@@ -61,11 +75,11 @@
         public void Write_WhenCanSeek_ThrowsIOException()
         {
             var stub = new FakeStream
-                           {
-                               OnCanReadGet = () => true,
-                               OnCanSeekGet = () => true,
-                               OnPositionGet = () => 128
-                           };
+            {
+                OnCanReadGet = () => true,
+                OnCanSeekGet = () => true,
+                OnPositionGet = () => 128
+            };
 
             var pushbackBytes = new byte[8];
             using (var pushbackStream = new PushbackInputStream(stub))
