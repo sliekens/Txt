@@ -11,6 +11,11 @@
 
         public StringTextSource(string s)
         {
+            if (s == null)
+            {
+                throw new ArgumentNullException(nameof(s));
+            }
+
             this.s = new Queue<char>(s.Length);
             for (int index = 0; index < s.Length; index++)
             {
