@@ -43,8 +43,8 @@
 
         public int Read(char[] buffer, int index, int count)
         {
-            int len = 0;
-            for (int i = index; i < count; i++, len++)
+            int length;
+            for (length = 0; length < count; length++, index++)
             {
                 if (this.pusback.Count == 0)
                 {
@@ -53,15 +53,15 @@
                         break;
                     }
 
-                    buffer[i] = this.s.Dequeue();
+                    buffer[index] = this.s.Dequeue();
                 }
                 else
                 {
-                    buffer[i] = this.pusback.Pop();
+                    buffer[index] = this.pusback.Pop();
                 }
             }
 
-            return len;
+            return length;
         }
 
         public void Unread(char c)
@@ -71,7 +71,7 @@
 
         public void Unread(char[] buffer, int index, int count)
         {
-            for (int i = count - 1; i >= index; i--)
+            for (int i = index + count - 1; i >= 0; i--)
             {
                 this.pusback.Push(buffer[i]);
             }
