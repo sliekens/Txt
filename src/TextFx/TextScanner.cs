@@ -181,11 +181,12 @@
             }
             else
             {
-                this.textSource.Unread(s.ToCharArray(1, s.Length - 1), 0, s.Length - 1);
                 if (!this.endOfInput)
                 {
                     this.textSource.Unread(this.nextCharacter);
                 }
+
+                this.textSource.Unread(s.ToCharArray(1, s.Length - 1), 0, s.Length - 1);
 
                 this.offset -= s.Length;
                 this.endOfInput = false;
