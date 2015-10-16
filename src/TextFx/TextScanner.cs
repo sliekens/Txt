@@ -195,7 +195,7 @@
         }
 
         /// <inheritdoc />
-        public virtual bool TryMatch(char c)
+        public virtual bool TryMatch(char c, out char next)
         {
             if (this.disposed)
             {
@@ -212,7 +212,8 @@
                 throw new InvalidOperationException("No next character available: end of input has been reached.");
             }
 
-            if (this.nextCharacter != c)
+            next = this.nextCharacter;
+            if (next != c)
             {
                 return false;
             }
@@ -222,7 +223,7 @@
         }
 
         /// <inheritdoc />
-        public virtual bool TryMatchIgnoreCase(char c, out char match)
+        public virtual bool TryMatchIgnoreCase(char c, out char next)
         {
             if (this.disposed)
             {
@@ -239,13 +240,12 @@
                 throw new InvalidOperationException("No next character available: end of input has been reached.");
             }
 
-            if (char.ToUpperInvariant(this.nextCharacter) != char.ToUpperInvariant(c))
+            next = this.nextCharacter;
+            if (char.ToUpperInvariant(next) != char.ToUpperInvariant(c))
             {
-                match = default(char);
                 return false;
             }
 
-            match = this.nextCharacter;
             this.Read();
             return true;
         }

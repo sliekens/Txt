@@ -49,9 +49,10 @@
                     break;
                 }
 
-                if (scanner.TryMatch(c))
+                char next;
+                if (scanner.TryMatch(c, out next))
                 {
-                    element = new Terminal(c, context);
+                    element = new Terminal(next, context);
                     if (previousElementOrNull != null)
                     {
                         element.PreviousElement = previousElementOrNull;

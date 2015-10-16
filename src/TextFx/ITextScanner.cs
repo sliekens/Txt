@@ -48,27 +48,28 @@ namespace TextFx
 
         /// <summary>Compares the given character to the next available character. If there is a match, the character is consumed.</summary>
         /// <param name="c">The character to compare to the next available character.</param>
+        /// <param name="next">The next available character.</param>
         /// <exception cref="T:System.InvalidOperationException">
         ///     There is no next character available. This occurs when
         ///     <see cref="Read" /> has never been called, or when <see cref="EndOfInput" /> is <c>true</c>.
         /// </exception>
         /// <exception cref="T:System.ObjectDisposedException">The current text scanner is closed.</exception>
         /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
-        bool TryMatch(char c);
+        bool TryMatch(char c, out char next);
 
         /// <summary>
         ///     Compares the given character to the next available character. The comparison is case-insensitive. If there is
         ///     a match, the character is consumed.
         /// </summary>
         /// <param name="c">The character to compare to the next available character.</param>
-        /// <param name="match">The character that was consumed.</param>
+        /// <param name="next">The next available character.</param>
         /// <exception cref="T:System.InvalidOperationException">
         ///     There is no next character available. This occurs when
         ///     <see cref="Read" /> has never been called, or when <see cref="EndOfInput" /> is <c>true</c>.
         /// </exception>
         /// <exception cref="T:System.ObjectDisposedException">The current text scanner is closed.</exception>
         /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
-        bool TryMatchIgnoreCase(char c, out char match);
+        bool TryMatchIgnoreCase(char c, out char next);
 
         ///// <summary>Returns the underlying stream. Programs that intend to read from the underlying stream must call <see cref="Reset"/> first.</summary>
         ///// <exception cref="T:System.ObjectDisposedException">The current text scanner is closed.</exception>

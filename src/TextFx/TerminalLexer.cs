@@ -24,9 +24,10 @@
             }
 
             var context = scanner.GetContext();
-            if (!scanner.EndOfInput && scanner.TryMatch(this.terminal))
+            char c;
+            if (!scanner.EndOfInput && scanner.TryMatch(this.terminal, out c))
             {
-                element = new Terminal(this.terminal, context);
+                element = new Terminal(c, context);
                 if (previousElementOrNull != null)
                 {
                     element.PreviousElement = previousElementOrNull;
