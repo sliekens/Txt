@@ -25,24 +25,29 @@ namespace TextFx.ABNF.Core
             this.innerLexer = innerLexer;
         }
 
-        /// <inheritdoc />
-        public override bool TryRead(ITextScanner scanner, Element previousElementOrNull, out Bit element)
+        public override ReadResult<Bit> Read(ITextScanner scanner, Element previousElementOrNull)
         {
-            Alternative result;
-            if (this.innerLexer.TryRead(scanner, null, out result))
+            var context = scanner.GetContext();
+            var result = this.innerLexer.Read(scanner, null);
+            if (!result.Success)
             {
-                element = new Bit(result);
-                if (previousElementOrNull != null)
+                return ReadResult<Bit>.FromError(new SyntaxError
                 {
-                    element.PreviousElement = previousElementOrNull;
-                    previousElementOrNull.NextElement = element;
-                }
-
-                return true;
+                    Message = "Expected 'BIT'.",
+                    RuleName = "BIT",
+                    Context = context,
+                    InnerError = result.Error
+                });
             }
 
-            element = default(Bit);
-            return false;
+            var element = new Bit(result.Element);
+            if (previousElementOrNull != null)
+            {
+                element.PreviousElement = previousElementOrNull;
+                previousElementOrNull.NextElement = element;
+            }
+
+            return ReadResult<Bit>.FromResult(element);
         }
     }
 }

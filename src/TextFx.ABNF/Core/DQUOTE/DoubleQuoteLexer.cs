@@ -28,24 +28,29 @@ namespace TextFx.ABNF.Core
             this.innerLexer = innerLexer;
         }
 
-        /// <inheritdoc />
-        public override bool TryRead(ITextScanner scanner, Element previousElementOrNull, out DoubleQuote element)
+        public override ReadResult<DoubleQuote> Read(ITextScanner scanner, Element previousElementOrNull)
         {
-            Terminal result;
-            if (this.innerLexer.TryRead(scanner, null, out result))
+            var context = scanner.GetContext();
+            var result = this.innerLexer.Read(scanner, null);
+            if (!result.Success)
             {
-                element = new DoubleQuote(result);
-                if (previousElementOrNull != null)
+                return ReadResult<DoubleQuote>.FromError(new SyntaxError
                 {
-                    element.PreviousElement = previousElementOrNull;
-                    previousElementOrNull.NextElement = element;
-                }
-
-                return true;
+                    Message = "Expected 'DQUOTE'.",
+                    RuleName = "DQUOTE",
+                    Context = context,
+                    InnerError = result.Error
+                });
             }
 
-            element = default(DoubleQuote);
-            return false;
+            var element = new DoubleQuote(result.Element);
+            if (previousElementOrNull != null)
+            {
+                element.PreviousElement = previousElementOrNull;
+                previousElementOrNull.NextElement = element;
+            }
+
+            return ReadResult<DoubleQuote>.FromResult(element);
         }
     }
 }

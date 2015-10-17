@@ -36,8 +36,6 @@
     <DocumentationFile>bin\Release\TextFx.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="CaseInsensitiveTerminalLexer.cs" />
-    <Compile Include="CaseInsensitiveTerminalLexerFactory.cs" />
     <Compile Include="ILexer.cs" />
     <Compile Include="ITerminalLexerFactory.cs" />
     <Compile Include="ITextSource.cs" />

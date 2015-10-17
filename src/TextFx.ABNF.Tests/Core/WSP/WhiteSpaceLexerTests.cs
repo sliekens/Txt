@@ -20,9 +20,11 @@
             var whiteSpaceLexer = whiteSpaceLexerFactory.Create();
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {
-                var whiteSpace = whiteSpaceLexer.Read(scanner, null);
-                Assert.NotNull(whiteSpace);
-                Assert.Equal(input, whiteSpace.Text);
+                var result = whiteSpaceLexer.Read(scanner, null);
+                Assert.NotNull(result);
+                Assert.True(result.Success);
+                Assert.NotNull(result.Element);
+                Assert.Equal(input, result.Element.Text);
             }
         }
     }

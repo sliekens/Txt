@@ -2,7 +2,7 @@
 {
     public class SyntaxError
     {
-        public SyntaxError Details { get; set; }
+        public SyntaxError InnerError { get; set; }
 
         public string RuleName { get; set; }
 

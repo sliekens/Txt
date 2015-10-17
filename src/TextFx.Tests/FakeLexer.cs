@@ -17,44 +17,14 @@
 
         public FakeTryReadElement OnTryReadElement { get; set; }
 
-        public T Read(ITextScanner scanner, Element previousElementOrNull)
+        public ReadResult<T> Read(ITextScanner scanner, Element previousElementOrNull)
         {
-            if (this.OnRead == null)
-            {
-                throw new NotImplementedException();
-            }
-
-            return this.OnRead(scanner);
+            throw new NotImplementedException();
         }
 
-        public Element ReadElement(ITextScanner scanner, Element previousElementOrNull)
+        ReadResult<Element> ILexer.ReadElement(ITextScanner scanner, Element previousElementOrNull)
         {
-            if (this.OnReadElement == null)
-            {
-                throw new NotImplementedException();
-            }
-
-            return this.OnReadElement(scanner);
-        }
-
-        public bool TryRead(ITextScanner scanner, Element previousElementOrNull, out T element)
-        {
-            if (this.OnTryRead == null)
-            {
-                throw new NotImplementedException();
-            }
-
-            return this.OnTryRead(scanner, out element);
-        }
-
-        public bool TryReadElement(ITextScanner scanner, Element previousElementOrNull, out Element element)
-        {
-            if (this.OnTryReadElement == null)
-            {
-                throw new NotImplementedException();
-            }
-
-            return this.OnTryReadElement(scanner, out element);
+            throw new NotImplementedException();
         }
     }
 }

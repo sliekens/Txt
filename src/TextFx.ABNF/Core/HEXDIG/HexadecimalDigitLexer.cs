@@ -28,24 +28,29 @@ namespace TextFx.ABNF.Core
             this.innerLexer = innerLexer;
         }
 
-        /// <inheritdoc />
-        public override bool TryRead(ITextScanner scanner, Element previousElementOrNull, out HexadecimalDigit element)
+        public override ReadResult<HexadecimalDigit> Read(ITextScanner scanner, Element previousElementOrNull)
         {
-            Alternative result;
-            if (this.innerLexer.TryRead(scanner, null, out result))
+            var context = scanner.GetContext();
+            var result = this.innerLexer.Read(scanner, null);
+            if (!result.Success)
             {
-                element = new HexadecimalDigit(result);
-                if (previousElementOrNull != null)
+                return ReadResult<HexadecimalDigit>.FromError(new SyntaxError
                 {
-                    element.PreviousElement = previousElementOrNull;
-                    previousElementOrNull.NextElement = element;
-                }
-
-                return true;
+                    Message = "Expected 'HEXDIG'.",
+                    RuleName = "HEXDIG",
+                    Context = context,
+                    InnerError = result.Error
+                });
             }
 
-            element = default(HexadecimalDigit);
-            return false;
+            var element = new HexadecimalDigit(result.Element);
+            if (previousElementOrNull != null)
+            {
+                element.PreviousElement = previousElementOrNull;
+                previousElementOrNull.NextElement = element;
+            }
+
+            return ReadResult<HexadecimalDigit>.FromResult(element);
         }
     }
 }

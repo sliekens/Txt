@@ -20,9 +20,11 @@
             var lexer = factory.Create();
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {
-                var character = lexer.Read(scanner, null);
-                Assert.NotNull(character);
-                Assert.Equal(input, character.Text);
+                var result = lexer.Read(scanner, null);
+                Assert.NotNull(result);
+                Assert.True(result.Success);
+                Assert.NotNull(result.Element);
+                Assert.Equal(input, result.Element.Text);
             }
         }
     }

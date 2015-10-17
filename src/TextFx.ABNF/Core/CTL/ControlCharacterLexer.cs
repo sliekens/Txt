@@ -28,24 +28,29 @@ namespace TextFx.ABNF.Core
             this.innerLexer = innerLexer;
         }
 
-        /// <inheritdoc />
-        public override bool TryRead(ITextScanner scanner, Element previousElementOrNull, out ControlCharacter element)
+        public override ReadResult<ControlCharacter> Read(ITextScanner scanner, Element previousElementOrNull)
         {
-            Alternative result;
-            if (this.innerLexer.TryRead(scanner, null, out result))
+            var context = scanner.GetContext();
+            var result = this.innerLexer.Read(scanner, null);
+            if (!result.Success)
             {
-                element = new ControlCharacter(result);
-                if (previousElementOrNull != null)
+                return ReadResult<ControlCharacter>.FromError(new SyntaxError
                 {
-                    element.PreviousElement = previousElementOrNull;
-                    previousElementOrNull.NextElement = element;
-                }
-
-                return true;
+                    Message = "Expected 'CTL'.",
+                    RuleName = "CTL",
+                    Context = context,
+                    InnerError = result.Error
+                });
             }
 
-            element = default(ControlCharacter);
-            return false;
+            var element = new ControlCharacter(result.Element);
+            if (previousElementOrNull != null)
+            {
+                element.PreviousElement = previousElementOrNull;
+                previousElementOrNull.NextElement = element;
+            }
+
+            return ReadResult<ControlCharacter>.FromResult(element);
         }
     }
 }

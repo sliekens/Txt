@@ -33,8 +33,7 @@
             this.upperBound = upperBound;
         }
 
-        /// <inheritdoc />
-        public override bool TryRead(ITextScanner scanner, Element previousElementOrNull, out Terminal element)
+        public override ReadResult<Terminal> Read(ITextScanner scanner, Element previousElementOrNull)
         {
             if (scanner == null)
             {
@@ -42,29 +41,36 @@
             }
 
             var context = scanner.GetContext();
+            if (scanner.EndOfInput)
+            {
+                return ReadResult<Terminal>.FromError(new SyntaxError
+                {
+                    Message = $"Unexpected end of input. Expected value range: '0x{(int)this.lowerBound:X2}-{(int)this.upperBound:X2}'.",
+                    Context = context
+                });
+            }
+
+            char next = default(char);
             for (var c = this.lowerBound; c <= this.upperBound; c++)
             {
-                if (scanner.EndOfInput)
-                {
-                    break;
-                }
-
-                char next;
                 if (scanner.TryMatch(c, out next))
                 {
-                    element = new Terminal(char.ToString(next), context);
+                    var element = new Terminal(next, context);
                     if (previousElementOrNull != null)
                     {
                         element.PreviousElement = previousElementOrNull;
                         previousElementOrNull.NextElement = element;
                     }
 
-                    return true;
+                    return ReadResult<Terminal>.FromResult(element);
                 }
             }
 
-            element = default(Terminal);
-            return false;
+            return ReadResult<Terminal>.FromError(new SyntaxError
+            {
+                Message = $"Unexpected symbol: '{next}'. Expected value range: '0x{(int)this.lowerBound:X2}-{(int)this.upperBound:X2}'.",
+                Context = context
+            });
         }
     }
 }

@@ -10,7 +10,6 @@
 namespace TextFx
 {
     using System;
-    using System.Reflection;
 
     /// <summary>
     ///     Provides the base class for lexers. A lexer is a class that matches symbols from a data source against a
@@ -24,14 +23,11 @@ namespace TextFx
     ///     <para>
     ///         Notes to inheritors.
     ///         The name of grammar rules are case insensitive.
-    ///         At minimum, you must provide an implementation for the <see cref="TryRead" /> method. You can optionally
-    ///         provide a custom implementation for the <see cref="Read" /> method. The default behavior of the
-    ///         <see cref="Read" /> method is essentially a virtual call to <see cref="TryRead" />, but contains additional
-    ///         logic to initialize and throw a <see cref="FormatException" />.
+    ///         At minimum, you must provide an implementation for the <see cref="Read" /> method.
     ///         There are a number of conventions that you should follow.
     ///         If the value of <see cref="ITextScanner.EndOfInput" /> is <c>true</c> and the grammar rule is not optional, you
     ///         should immediately return <c>false</c>.
-    ///         Do not throw any exceptions in TryRead().
+    ///         Do not throw any exceptions in <see cref="Read"/>.
     ///         Lexer classes should be sealed.
     ///         Re-use lexer classes for lexer rules that reference other lexer rules.
     ///     </para>
@@ -40,44 +36,17 @@ namespace TextFx
     public abstract class Lexer<TElement> : ILexer<TElement>
         where TElement : Element
     {
-        /// <inheritdoc />
-        public virtual TElement Read(ITextScanner scanner, Element previousElementOrNull)
+        public abstract ReadResult<TElement> Read(ITextScanner scanner, Element previousElementOrNull);
+
+        ReadResult<Element> ILexer.ReadElement(ITextScanner scanner, Element previousElementOrNull)
         {
-            TElement element;
-            if (this.TryRead(scanner, previousElementOrNull, out element))
+            var result = this.Read(scanner, previousElementOrNull);
+            if (!result.Success)
             {
-                return element;
+                return ReadResult<Element>.FromError(result.Error);
             }
 
-            throw new FormatException(
-                string.Format(
-                    "Syntax error. Expected '{0}' at position '{1}'.",
-                    this.GetType().GetTypeInfo().GetCustomAttribute<RuleNameAttribute>().RuleName,
-                    scanner.GetContext().Offset));
-        }
-
-        /// <inheritdoc />
-        public Element ReadElement(ITextScanner scanner, Element previousElementOrNull)
-        {
-            return this.Read(scanner, previousElementOrNull);
-        }
-
-        /// <inheritdoc />
-        public abstract bool TryRead(ITextScanner scanner, Element previousElementOrNull, out TElement element);
-
-        /// <inheritdoc />
-        public bool TryReadElement(ITextScanner scanner, Element previousElementOrNull, out Element element)
-        {
-            // This intermediary variable is required to match the type of the output parameter
-            TElement t;
-            if (this.TryRead(scanner, previousElementOrNull, out t))
-            {
-                element = t;
-                return true;
-            }
-
-            element = default(Element);
-            return false;
+            return ReadResult<Element>.FromResult(result.Element);
         }
     }
 }

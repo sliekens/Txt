@@ -28,9 +28,11 @@
             var octetLexer = factory.Create();
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {
-                var octet = octetLexer.Read(scanner, null);
-                Assert.NotNull(octet);
-                Assert.Equal(input, octet.Text);
+                var result = octetLexer.Read(scanner, null);
+                Assert.NotNull(result);
+                Assert.True(result.Success);
+                Assert.NotNull(result.Element);
+                Assert.Equal(input, result.Element.Text);
             }
         }
     }

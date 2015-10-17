@@ -16,9 +16,11 @@
             var endOfLineLexer = factory.Create();
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {
-                var endOfLine = endOfLineLexer.Read(scanner, null);
-                Assert.NotNull(endOfLine);
-                Assert.Equal(input, endOfLine.Text);
+                var result = endOfLineLexer.Read(scanner, null);
+                Assert.NotNull(result);
+                Assert.True(result.Success);
+                Assert.NotNull(result.Element);
+                Assert.Equal(input, result.Element.Text);
             }
         }
     }

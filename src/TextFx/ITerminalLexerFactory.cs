@@ -1,5 +1,7 @@
 ﻿namespace TextFx
 {
+    using System;
+
     /// <summary>Provides the interface for factory classes that create lexers for a terminal value.</summary>
     public interface ITerminalLexerFactory
     {
@@ -8,7 +10,8 @@
         ///     given terminal value.
         /// </summary>
         /// <param name="terminal">The terminal value.</param>
+        /// <param name="stringComparer"></param>
         /// <returns>>An instance of a class that implements <see cref="ILexer{TElement}" /> for the given terminal value.</returns>
-        ILexer<Terminal> Create(string terminal);
+        ILexer<Terminal> Create(string terminal, StringComparer stringComparer);
     }
 }

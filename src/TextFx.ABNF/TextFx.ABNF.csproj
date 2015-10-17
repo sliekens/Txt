@@ -35,6 +35,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AggregateSyntaxError.cs" />
     <Compile Include="Alternative.cs" />
     <Compile Include="AlternativeLexer.cs" />
     <Compile Include="AlternativeLexerFactory.cs" />
@@ -106,7 +107,6 @@
     <Compile Include="SequenceLexer.cs" />
     <Compile Include="SequenceLexerFactory.cs" />
     <Compile Include="TerminalExtensions.cs" />
-    <Compile Include="TerminalString.cs" />
     <Compile Include="ValueRangeLexer.cs" />
     <Compile Include="ValueRangeLexerFactory.cs" />
   </ItemGroup>

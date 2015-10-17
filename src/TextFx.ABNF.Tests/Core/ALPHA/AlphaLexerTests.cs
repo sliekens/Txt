@@ -37,8 +37,11 @@
             var alphaLexer = factory.Create();
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {
-                var alpha = alphaLexer.Read(scanner, null);
-                Assert.Equal(input, alpha.Text);
+                var result = alphaLexer.Read(scanner, null);
+                Assert.NotNull(result);
+                Assert.True(result.Success);
+                Assert.NotNull(result.Element);
+                Assert.Equal(input, result.Element.Text);
             }
         }
 
@@ -75,8 +78,11 @@
             var alphaLexer = factory.Create();
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {
-                var alpha = alphaLexer.Read(scanner, null);
-                Assert.Equal(input, alpha.Text);
+                var result = alphaLexer.Read(scanner, null);
+                Assert.NotNull(result);
+                Assert.True(result.Success);
+                Assert.NotNull(result.Element);
+                Assert.Equal(input, result.Element.Text);
             }
         }
     }

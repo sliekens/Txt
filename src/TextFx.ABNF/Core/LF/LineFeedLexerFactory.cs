@@ -20,7 +20,7 @@
         /// <inheritdoc />
         public ILexer<LineFeed> Create()
         {
-            var lineFeedTerminalLexer = this.terminalLexerFactory.Create("\x0A");
+            var lineFeedTerminalLexer = this.terminalLexerFactory.Create("\x0A", StringComparer.Ordinal);
             return new LineFeedLexer(lineFeedTerminalLexer);
         }
     }

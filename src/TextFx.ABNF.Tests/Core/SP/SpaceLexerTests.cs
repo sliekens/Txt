@@ -13,9 +13,11 @@
             var spaceLexer = factory.Create();
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {
-                var space = spaceLexer.Read(scanner, null);
-                Assert.NotNull(space);
-                Assert.Equal(input, space.Text);
+                var result = spaceLexer.Read(scanner, null);
+                Assert.NotNull(result);
+                Assert.True(result.Success);
+                Assert.NotNull(result.Element);
+                Assert.Equal(input, result.Element.Text);
             }
         }
     }

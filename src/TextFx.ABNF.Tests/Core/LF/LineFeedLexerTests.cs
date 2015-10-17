@@ -12,9 +12,11 @@
             var lineFeedLexer = factory.Create();
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {
-                var lineFeed = lineFeedLexer.Read(scanner, null);
-                Assert.NotNull(lineFeed);
-                Assert.Equal(input, lineFeed.Text);
+                var result = lineFeedLexer.Read(scanner, null);
+                Assert.NotNull(result);
+                Assert.True(result.Success);
+                Assert.NotNull(result.Element);
+                Assert.Equal(input, result.Element.Text);
             }
         }
     }

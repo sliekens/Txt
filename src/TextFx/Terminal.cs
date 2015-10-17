@@ -1,7 +1,7 @@
 ﻿namespace TextFx
 {
     /// <summary>
-    ///     Represents a terminal specification, sometimes called a character.
+    ///     Represents a terminal specification.
     /// </summary>
     public class Terminal : Element
     {
@@ -13,6 +13,16 @@
         /// <param name="terminal">The terminal element to copy.</param>
         public Terminal(Terminal terminal)
             : base(terminal)
+        {
+        }
+
+        /// <summary>
+        ///     Creates a new instance of the <see cref="Terminal" /> class with a specified string and context.
+        /// </summary>
+        /// <param name="value">The terminal value.</param>
+        /// <param name="context">An object that describes the current element's context.</param>
+        public Terminal(char value, ITextContext context)
+            : this(char.ToString(value), context)
         {
         }
 

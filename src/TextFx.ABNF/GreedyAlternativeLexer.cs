@@ -5,7 +5,7 @@ namespace TextFx.ABNF
     using System;
 
     /// <summary>
-    ///     Wraps a collection of <see cref="ILexer" /> and tests their <see cref="ILexer.TryReadElement" /> method until the
+    ///     Wraps a collection of <see cref="ILexer" /> and tests their <see cref="ILexer.ReadElement" /> method until the
     ///     longest match is found.
     ///     This class implements a greedy algorithm. For a first-match-wins algorithm, use the
     ///     <see cref="AlternativeLexer" /> class instead.
@@ -39,7 +39,7 @@ namespace TextFx.ABNF
             this.lexers = lexers;
         }
 
-        public override bool TryRead(ITextScanner scanner, Element previousElementOrNull, out Alternative element)
+        public override ReadResult<Alternative> Read(ITextScanner scanner, Element previousElementOrNull)
         {
             if (scanner == null)
             {
@@ -47,44 +47,56 @@ namespace TextFx.ABNF
             }
 
             var context = scanner.GetContext();
-            ILexer bestChoice = null;
-            var bestChoiceLength = -1;
+            ILexer bestCandidate = null;
+            var bestCandidateLength = -1;
             var ordinal = 0;
+            IList<SyntaxError> errors = new List<SyntaxError>(this.lexers.Length);
 
             // ReSharper disable once ForCanBeConvertedToForeach
             for (var i = 0; i < this.lexers.Length; i++)
             {
                 var lexer = this.lexers[i];
-                Element alternative;
-                if (lexer.TryReadElement(scanner, null, out alternative))
+                var candidate = lexer.ReadElement(scanner, null);
+                if (candidate.Success)
                 {
+                    var alternative = candidate.Element;
                     var length = alternative.Text.Length;
-                    if (length > bestChoiceLength)
+                    if (length > bestCandidateLength)
                     {
-                        bestChoice = lexer;
-                        bestChoiceLength = length;
+                        bestCandidate = lexer;
+                        bestCandidateLength = length;
                         ordinal = i + 1;
                     }
 
                     scanner.Unread(alternative.Text);
                 }
+                else
+                {
+                    errors.Add(candidate.Error);
+                }
             }
 
-            Element result;
-            if (bestChoice == null || !bestChoice.TryReadElement(scanner, null, out result))
+            if (bestCandidate == null)
             {
-                element = default(Alternative);
-                return false;
+                return ReadResult<Alternative>.FromError(new AggregateSyntaxError(errors)
+                {
+                    Message = "One or more syntax errors were found.",
+                    Context = context
+                });
             }
 
-            element = new Alternative(new List<Element>(1) { result }, context, ordinal);
+            var elements = new List<Element>(1)
+            {
+                bestCandidate.ReadElement(scanner, null).Element
+            };
+            var element = new Alternative(elements, context, ordinal);
             if (previousElementOrNull != null)
             {
                 element.PreviousElement = previousElementOrNull;
                 previousElementOrNull.NextElement = element;
             }
 
-            return true;
+            return ReadResult<Alternative>.FromResult(element);
         }
     }
 }

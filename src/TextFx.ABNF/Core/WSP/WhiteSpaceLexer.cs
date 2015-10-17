@@ -25,24 +25,29 @@ namespace TextFx.ABNF.Core
             this.innerLexer = innerLexer;
         }
 
-        /// <inheritdoc />
-        public override bool TryRead(ITextScanner scanner, Element previousElementOrNull, out WhiteSpace element)
+        public override ReadResult<WhiteSpace> Read(ITextScanner scanner, Element previousElementOrNull)
         {
-            Alternative result;
-            if (this.innerLexer.TryRead(scanner, null, out result))
+            var context = scanner.GetContext();
+            var result = this.innerLexer.Read(scanner, null);
+            if (!result.Success)
             {
-                element = new WhiteSpace(result);
-                if (previousElementOrNull != null)
+                return ReadResult<WhiteSpace>.FromError(new SyntaxError
                 {
-                    element.PreviousElement = previousElementOrNull;
-                    previousElementOrNull.NextElement = element;
-                }
-
-                return true;
+                    Message = "Expected 'WSP'.",
+                    RuleName = "WSP",
+                    Context = context,
+                    InnerError = result.Error
+                });
             }
 
-            element = default(WhiteSpace);
-            return false;
+            var element = new WhiteSpace(result.Element);
+            if (previousElementOrNull != null)
+            {
+                element.PreviousElement = previousElementOrNull;
+                previousElementOrNull.NextElement = element;
+            }
+
+            return ReadResult<WhiteSpace>.FromResult(element);
         }
     }
 }

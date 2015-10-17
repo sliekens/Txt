@@ -28,8 +28,8 @@
         /// <inheritdoc />
         public ILexer<Bit> Create()
         {
-            var bit0TerminalLexer = this.terminalLexerFactory.Create("0");
-            var bit1TerminalLexer = this.terminalLexerFactory.Create("1");
+            var bit0TerminalLexer = this.terminalLexerFactory.Create("0", StringComparer.Ordinal);
+            var bit1TerminalLexer = this.terminalLexerFactory.Create("1", StringComparer.Ordinal);
             var bitAlternativeLexer = this.alternativeLexerFactory.Create(bit0TerminalLexer, bit1TerminalLexer);
             return new BitLexer(bitAlternativeLexer);
         }

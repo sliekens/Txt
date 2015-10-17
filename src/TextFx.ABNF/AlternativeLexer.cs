@@ -5,7 +5,7 @@ namespace TextFx.ABNF
     using System;
 
     /// <summary>
-    ///     Wraps a collection of <see cref="ILexer" /> and tests their <see cref="ILexer.TryReadElement" /> method until a
+    ///     Wraps a collection of <see cref="ILexer" /> and tests their <see cref="ILexer.ReadElement" /> method until a
     ///     match is found. This class implements a first-match-wins algorithm. For a greedy algorithm, use the <see cref="GreedyAlternativeLexer"/> class instead.
     /// </summary>
     public class AlternativeLexer : Lexer<Alternative>
@@ -37,8 +37,7 @@ namespace TextFx.ABNF
             this.lexers = lexers;
         }
 
-        /// <inheritdoc />
-        public override bool TryRead(ITextScanner scanner, Element previousElementOrNull, out Alternative element)
+        public override ReadResult<Alternative> Read(ITextScanner scanner, Element previousElementOrNull)
         {
             if (scanner == null)
             {
@@ -46,26 +45,34 @@ namespace TextFx.ABNF
             }
 
             var context = scanner.GetContext();
+            IList<SyntaxError> errors = new List<SyntaxError>(this.lexers.Length);
 
             // ReSharper disable once ForCanBeConvertedToForeach
             for (var i = 0; i < this.lexers.Length; i++)
             {
-                Element alternative;
-                if (this.lexers[i].TryReadElement(scanner, null, out alternative))
+                var result = this.lexers[i].ReadElement(scanner, null);
+                if (!result.Success)
                 {
-                    element = new Alternative(new List<Element>(1) { alternative }, context, i + 1);
+                    errors.Add(result.Error);
+                }
+                else
+                {
+                    var element = new Alternative(new List<Element>(1) { result.Element }, context, i + 1);
                     if (previousElementOrNull != null)
                     {
                         element.PreviousElement = previousElementOrNull;
                         previousElementOrNull.NextElement = element;
                     }
 
-                    return true;
+                    return ReadResult<Alternative>.FromResult(element);
                 }
             }
 
-            element = default(Alternative);
-            return false;
+            return ReadResult<Alternative>.FromError(new AggregateSyntaxError(errors)
+            {
+                Message = "One or more syntax errors were found.",
+                Context = context
+            });
         }
     }
 }

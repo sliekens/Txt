@@ -28,24 +28,29 @@ namespace TextFx.ABNF.Core
             this.innerLexer = innerLexer;
         }
 
-        /// <inheritdoc />
-        public override bool TryRead(ITextScanner scanner, Element previousElementOrNull, out Space element)
+        public override ReadResult<Space> Read(ITextScanner scanner, Element previousElementOrNull)
         {
-            Terminal result;
-            if (this.innerLexer.TryRead(scanner, null, out result))
+            var context = scanner.GetContext();
+            var result = this.innerLexer.Read(scanner, null);
+            if (!result.Success)
             {
-                element = new Space(result);
-                if (previousElementOrNull != null)
+                return ReadResult<Space>.FromError(new SyntaxError
                 {
-                    element.PreviousElement = previousElementOrNull;
-                    previousElementOrNull.NextElement = element;
-                }
-
-                return true;
+                    Message = "Expected 'SP'.",
+                    RuleName = "SP",
+                    Context = context,
+                    InnerError = result.Error
+                });
             }
 
-            element = default(Space);
-            return false;
+            var element = new Space(result.Element);
+            if (previousElementOrNull != null)
+            {
+                element.PreviousElement = previousElementOrNull;
+                previousElementOrNull.NextElement = element;
+            }
+
+            return ReadResult<Space>.FromResult(element);
         }
     }
 }

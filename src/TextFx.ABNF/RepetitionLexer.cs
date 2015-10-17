@@ -28,9 +28,9 @@
                 throw new ArgumentOutOfRangeException(nameof(lowerBound), "Precondition: lowerBound >= 0");
             }
 
-            if (upperBound < lowerBound)
+            if (upperBound <= lowerBound)
             {
-                throw new ArgumentOutOfRangeException(nameof(upperBound), "Precondition: upperBound >= lowerBound");
+                throw new ArgumentOutOfRangeException(nameof(upperBound), "Precondition: upperBound > lowerBound");
             }
 
             this.repeatingElementLexer = repeatingElementLexer;
@@ -38,54 +38,48 @@
             this.upperBound = upperBound;
         }
 
-        /// <inheritdoc />
-        public override bool TryRead(ITextScanner scanner, Element previousElementOrNull, out Repetition element)
+        public override ReadResult<Repetition> Read(ITextScanner scanner, Element previousElementOrNull)
         {
-            if (scanner.EndOfInput && this.lowerBound != 0)
+            if (scanner == null)
             {
-                element = default(Repetition);
-                return false;
+                throw new ArgumentNullException(nameof(scanner));
             }
 
             var context = scanner.GetContext();
-            var elements = new List<Element>(this.lowerBound);
-            Element lastResult = null;
+            IList<Element> elements = new List<Element>(this.lowerBound);
+            ReadResult<Element> lastResult = null;
+
+            // ReSharper disable once ForCanBeConvertedToForeach
             for (var i = 0; i < this.upperBound; i++)
             {
-                Element result;
-                if (this.repeatingElementLexer.TryReadElement(scanner, lastResult, out result))
-                {
-                    elements.Add(result);
-                    lastResult = result;
-                }
-                else
+                lastResult = this.repeatingElementLexer.ReadElement(scanner, lastResult?.Element);
+                if (!lastResult.Success)
                 {
                     break;
                 }
+
+                elements.Add(lastResult.Element);
             }
 
-            if (elements.Count < this.lowerBound)
+            if (elements.Count >= this.lowerBound)
             {
-                if (elements.Count != 0)
+                return ReadResult<Repetition>.FromResult(new Repetition(elements, context));
+            }
+
+            if (elements.Count != 0)
+            {
+                for (var i = elements.Count - 1; i >= 0; i--)
                 {
-                    for (var i = elements.Count - 1; i >= 0; i--)
-                    {
-                        scanner.Unread(elements[i].Text);
-                    }
+                    scanner.Unread(elements[i].Text);
                 }
-
-                element = default(Repetition);
-                return false;
             }
 
-            element = new Repetition(elements, context);
-            if (previousElementOrNull != null)
+            return ReadResult<Repetition>.FromError(new SyntaxError
             {
-                element.PreviousElement = previousElementOrNull;
-                previousElementOrNull.NextElement = element;
-            }
-
-            return true;
+                Message = "A syntax error was found.",
+                InnerError = lastResult?.Error,
+                Context = context
+            });
         }
     }
 }

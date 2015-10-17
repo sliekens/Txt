@@ -16,7 +16,7 @@
 
             if (lexers.Length == 0)
             {
-                throw new ArgumentException("Precondition: lexers.Count > 0", nameof(lexers));
+                throw new ArgumentException($"Precondition: {nameof(lexers)}.Count > 0", nameof(lexers));
             }
 
             // ReSharper disable once ForCanBeConvertedToForeach
@@ -26,15 +26,14 @@
                 var lexer = lexers[i];
                 if (lexer == null)
                 {
-                    throw new ArgumentException("Precondition: lexers.All(lexer => lexer != null", nameof(lexers));
+                    throw new ArgumentException($"Precondition: {nameof(lexers)}.All(lexer => lexer != null", nameof(lexers));
                 }
             }
 
             this.lexers = lexers;
         }
 
-        /// <inheritdoc />
-        public override bool TryRead(ITextScanner scanner, Element previousElementOrNull, out Sequence element)
+        public override ReadResult<Sequence> Read(ITextScanner scanner, Element previousElementOrNull)
         {
             if (scanner == null)
             {
@@ -43,40 +42,39 @@
 
             var context = scanner.GetContext();
             IList<Element> elements = new List<Element>(this.lexers.Count);
-            Element lastResult = null;
+            ReadResult<Element> lastResult = null;
 
             // ReSharper disable once ForCanBeConvertedToForeach
             for (var i = 0; i < this.lexers.Count; i++)
             {
-                Element result;
-                if (this.lexers[i].TryReadElement(scanner, lastResult, out result))
+                lastResult = this.lexers[i].ReadElement(scanner, lastResult?.Element);
+                if (!lastResult.Success)
                 {
-                    elements.Add(result);
-                    lastResult = result;
+                    break;
                 }
-                else
-                {
-                    if (elements.Count != 0)
-                    {
-                        for (var j = elements.Count - 1; j >= 0; j--)
-                        {
-                            scanner.Unread(elements[j].Text);
-                        }
-                    }
 
-                    element = default(Sequence);
-                    return false;
-                }
+                elements.Add(lastResult.Element);
             }
 
-            element = new Sequence(elements, context);
-            if (previousElementOrNull != null)
+            if (elements.Count == this.lexers.Count)
             {
-                element.PreviousElement = previousElementOrNull;
-                previousElementOrNull.NextElement = element;
+                return ReadResult<Sequence>.FromResult(new Sequence(elements, context));
             }
 
-            return true;
+            if (elements.Count != 0)
+            {
+                for (int i = elements.Count - 1; i >= 0; i--)
+                {
+                    scanner.Unread(elements[i].Text);
+                }
+            }
+
+            return ReadResult<Sequence>.FromError(new SyntaxError
+            {
+                Message = "A syntax error was found.",
+                InnerError = lastResult?.Error,
+                Context = context
+            });
         }
     }
 }

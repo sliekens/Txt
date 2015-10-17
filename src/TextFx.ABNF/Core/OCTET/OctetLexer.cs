@@ -25,24 +25,29 @@ namespace TextFx.ABNF.Core
             this.innerLexer = innerLexer;
         }
 
-        /// <inheritdoc />
-        public override bool TryRead(ITextScanner scanner, Element previousElementOrNull, out Octet element)
+        public override ReadResult<Octet> Read(ITextScanner scanner, Element previousElementOrNull)
         {
-            Terminal result;
-            if (this.innerLexer.TryRead(scanner, null, out result))
+            var context = scanner.GetContext();
+            var result = this.innerLexer.Read(scanner, null);
+            if (!result.Success)
             {
-                element = new Octet(result);
-                if (previousElementOrNull != null)
+                return ReadResult<Octet>.FromError(new SyntaxError
                 {
-                    element.PreviousElement = previousElementOrNull;
-                    previousElementOrNull.NextElement = element;
-                }
-
-                return true;
+                    Message = "Expected 'OCTET'.",
+                    RuleName = "OCTET",
+                    Context = context,
+                    InnerError = result.Error
+                });
             }
 
-            element = default(Octet);
-            return false;
+            var element = new Octet(result.Element);
+            if (previousElementOrNull != null)
+            {
+                element.PreviousElement = previousElementOrNull;
+                previousElementOrNull.NextElement = element;
+            }
+
+            return ReadResult<Octet>.FromResult(element);
         }
     }
 }

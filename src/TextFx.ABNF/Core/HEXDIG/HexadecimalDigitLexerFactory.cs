@@ -41,12 +41,12 @@
         {
             var hexadecimalDigitAlternativeLexer = this.alternativeLexerFactory.Create(
                 this.digitLexerFactory.Create(),
-                this.terminalLexerFactory.Create("A"),
-                this.terminalLexerFactory.Create("B"),
-                this.terminalLexerFactory.Create("C"),
-                this.terminalLexerFactory.Create("D"),
-                this.terminalLexerFactory.Create("E"),
-                this.terminalLexerFactory.Create("F"));
+                this.terminalLexerFactory.Create("A", StringComparer.OrdinalIgnoreCase),
+                this.terminalLexerFactory.Create("B", StringComparer.OrdinalIgnoreCase),
+                this.terminalLexerFactory.Create("C", StringComparer.OrdinalIgnoreCase),
+                this.terminalLexerFactory.Create("D", StringComparer.OrdinalIgnoreCase),
+                this.terminalLexerFactory.Create("E", StringComparer.OrdinalIgnoreCase),
+                this.terminalLexerFactory.Create("F", StringComparer.OrdinalIgnoreCase));
             return new HexadecimalDigitLexer(hexadecimalDigitAlternativeLexer);
         }
     }
