@@ -19,7 +19,7 @@ namespace TextFx.ABNF.Core
         {
             if (innerLexer == null)
             {
-                throw new ArgumentNullException("innerLexer");
+                throw new ArgumentNullException(nameof(innerLexer));
             }
 
             this.innerLexer = innerLexer;

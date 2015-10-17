@@ -31,7 +31,7 @@ namespace TextFx.ABNF
                 case 16:
                     return "%x" + valuesAsString;
                 default:
-                    throw new ArgumentException("The given base is not currently supported.", "toBase");
+                    throw new ArgumentException("The given base is not currently supported.", nameof(toBase));
             }
         }
     }

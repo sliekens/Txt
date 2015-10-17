@@ -39,9 +39,34 @@
             return this.binaryReader.Read();
         }
 
-        public int Read(char[] buffer, int index, int count)
+        public int Read(char[] buffer, int offset, int count)
         {
-            return this.binaryReader.Read(buffer, index, count);
+            if (buffer == null)
+            {
+                throw new ArgumentNullException(nameof(buffer));
+            }
+
+            if (offset < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(offset), "Precondition: offset >= 0");
+            }
+
+            if (count < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(count), "Precondition: count >= 0");
+            }
+
+            if (offset + count > buffer.Length)
+            {
+                throw new ArgumentOutOfRangeException(nameof(count), "Precondition: offset + count <= buffer.Length");
+            }
+
+            if (count == 0)
+            {
+                return 0;
+            }
+
+            return this.binaryReader.Read(buffer, offset, count);
         }
 
         public void Unread(char c)
@@ -49,16 +74,41 @@
             this.Unread(new[] { c }, 0, 1);
         }
 
-        public void Unread(char[] buffer, int index, int count)
+        public void Unread(char[] buffer, int offset, int count)
         {
+            if (buffer == null)
+            {
+                throw new ArgumentNullException(nameof(buffer));
+            }
+
+            if (offset < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(offset), "Precondition: offset >= 0");
+            }
+
+            if (count < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(count), "Precondition: count >= 0");
+            }
+
+            if (offset + count > buffer.Length)
+            {
+                throw new ArgumentOutOfRangeException(nameof(count), "Precondition: offset + count <= buffer.Length");
+            }
+
+            if (count == 0)
+            {
+                return;
+            }
+
             if (this.inputStream.CanSeek)
             {
-                var length = this.Encoding.GetByteCount(buffer, index, count);
+                var length = this.Encoding.GetByteCount(buffer, offset, count);
                 this.inputStream.Seek(-length, SeekOrigin.Current);
             }
             else
             {
-                var pushbackBuffer = this.Encoding.GetBytes(buffer, index, count);
+                var pushbackBuffer = this.Encoding.GetBytes(buffer, offset, count);
                 this.inputStream.Write(pushbackBuffer, 0, pushbackBuffer.Length);
             }
         }

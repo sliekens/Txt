@@ -20,7 +20,7 @@
         {
             if (scanner == null)
             {
-                throw new ArgumentNullException("scanner");
+                throw new ArgumentNullException(nameof(scanner));
             }
 
             var context = scanner.GetContext();

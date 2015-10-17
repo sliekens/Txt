@@ -11,7 +11,7 @@
         {
             if (valueRangeLexer == null)
             {
-                throw new ArgumentNullException("valueRangeLexer");
+                throw new ArgumentNullException(nameof(valueRangeLexer));
             }
 
             this.valueRangeLexer = valueRangeLexer;

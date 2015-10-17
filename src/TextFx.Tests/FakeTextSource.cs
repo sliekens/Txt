@@ -47,24 +47,24 @@ namespace TextFx.Tests
             OnUnreadChar(c);
         }
 
-        public int Read(char[] buffer, int index, int count)
+        public int Read(char[] buffer, int offset, int count)
         {
             if (OnReadCharArrayInt32Int32 == null)
             {
                 throw new NotImplementedException();
             }
 
-            return OnReadCharArrayInt32Int32(buffer, index, count);
+            return OnReadCharArrayInt32Int32(buffer, offset, count);
         }
 
-        public void Unread(char[] buffer, int index, int count)
+        public void Unread(char[] buffer, int offset, int count)
         {
             if (OnUnreadCharArrayInt32Int32 == null)
             {
                 throw new NotImplementedException();
             }
 
-            OnUnreadCharArrayInt32Int32(buffer, index, count);
+            OnUnreadCharArrayInt32Int32(buffer, offset, count);
         }
 
         public Encoding Encoding

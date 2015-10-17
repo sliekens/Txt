@@ -46,10 +46,30 @@
             return this.s.Dequeue();
         }
 
-        public int Read(char[] buffer, int index, int count)
+        public int Read(char[] buffer, int offset, int count)
         {
+            if (buffer == null)
+            {
+                throw new ArgumentNullException(nameof(buffer));
+            }
+
+            if (offset < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(offset), "Precondition: offset >= 0");
+            }
+
+            if (count < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(count), "Precondition: count >= 0");
+            }
+
+            if (offset + count > buffer.Length)
+            {
+                throw new ArgumentOutOfRangeException(nameof(count), "Precondition: offset + count <= buffer.Length");
+            }
+
             int length;
-            for (length = 0; length < count; length++, index++)
+            for (length = 0; length < count; length++, offset++)
             {
                 if (this.pusback.Count == 0)
                 {
@@ -58,11 +78,11 @@
                         break;
                     }
 
-                    buffer[index] = this.s.Dequeue();
+                    buffer[offset] = this.s.Dequeue();
                 }
                 else
                 {
-                    buffer[index] = this.pusback.Pop();
+                    buffer[offset] = this.pusback.Pop();
                 }
             }
 
@@ -74,9 +94,29 @@
             this.pusback.Push(c);
         }
 
-        public void Unread(char[] buffer, int index, int count)
+        public void Unread(char[] buffer, int offset, int count)
         {
-            for (int i = index + count - 1; i >= 0; i--)
+            if (buffer == null)
+            {
+                throw new ArgumentNullException(nameof(buffer));
+            }
+
+            if (offset < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(offset), "Precondition: offset >= 0");
+            }
+
+            if (count < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(count), "Precondition: count >= 0");
+            }
+
+            if (offset + count > buffer.Length)
+            {
+                throw new ArgumentOutOfRangeException(nameof(count), "Precondition: offset + count <= buffer.Length");
+            }
+
+            for (int i = offset + count - 1; i >= 0; i--)
             {
                 this.pusback.Push(buffer[i]);
             }

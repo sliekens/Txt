@@ -18,17 +18,17 @@
         {
             if (valueRangeLexerFactory == null)
             {
-                throw new ArgumentNullException("valueRangeLexerFactory");
+                throw new ArgumentNullException(nameof(valueRangeLexerFactory));
             }
 
             if (terminalLexerFactory == null)
             {
-                throw new ArgumentNullException("terminalLexerFactory");
+                throw new ArgumentNullException(nameof(terminalLexerFactory));
             }
 
             if (alternativeLexerFactory == null)
             {
-                throw new ArgumentNullException("alternativeLexerFactory");
+                throw new ArgumentNullException(nameof(alternativeLexerFactory));
             }
 
             this.valueRangeLexerFactory = valueRangeLexerFactory;

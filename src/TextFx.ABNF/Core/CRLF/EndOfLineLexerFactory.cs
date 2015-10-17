@@ -18,17 +18,17 @@
         {
             if (carriageReturnLexerFactory == null)
             {
-                throw new ArgumentNullException("carriageReturnLexerFactory");
+                throw new ArgumentNullException(nameof(carriageReturnLexerFactory));
             }
 
             if (lineFeedLexerFactory == null)
             {
-                throw new ArgumentNullException("lineFeedLexerFactory");
+                throw new ArgumentNullException(nameof(lineFeedLexerFactory));
             }
 
             if (sequenceLexerFactory == null)
             {
-                throw new ArgumentNullException("sequenceLexerFactory");
+                throw new ArgumentNullException(nameof(sequenceLexerFactory));
             }
 
             this.carriageReturnLexerFactory = carriageReturnLexerFactory;

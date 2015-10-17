@@ -13,12 +13,12 @@
         {
             if (alternativeLexerFactory == null)
             {
-                throw new ArgumentNullException("alternativeLexerFactory");
+                throw new ArgumentNullException(nameof(alternativeLexerFactory));
             }
 
             if (terminalLexerFactory == null)
             {
-                throw new ArgumentNullException("terminalLexerFactory");
+                throw new ArgumentNullException(nameof(terminalLexerFactory));
             }
 
             this.alternativeLexerFactory = alternativeLexerFactory;

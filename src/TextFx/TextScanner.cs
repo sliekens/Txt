@@ -4,6 +4,7 @@ namespace TextFx
 {
     using System;
     using System.Diagnostics;
+    using System.Runtime.InteropServices.WindowsRuntime;
 
     public class TextScanner : ITextScanner
     {
@@ -102,7 +103,7 @@ namespace TextFx
 
             if (s == null)
             {
-                throw new ArgumentNullException("s");
+                throw new ArgumentNullException(nameof(s));
             }
 
             if (this.offset < s.Length)
@@ -142,6 +143,12 @@ namespace TextFx
             if (this.disposed)
             {
                 throw new ObjectDisposedException(this.GetType().FullName);
+            }
+
+            if (s.Length == 0)
+            {
+                next = s;
+                return true;
             }
 
             var buffer = new char[s.Length];

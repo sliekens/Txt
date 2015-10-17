@@ -12,9 +12,9 @@
 
         void Unread(char c);
 
-        int Read(char[] buffer, int index, int count);
+        int Read(char[] buffer, int offset, int count);
 
-        void Unread(char[] buffer, int index, int count);
+        void Unread(char[] buffer, int offset, int count);
 
         Encoding Encoding { get; }
     }

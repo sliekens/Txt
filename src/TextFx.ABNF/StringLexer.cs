@@ -12,7 +12,7 @@
         {
             if (lexers == null)
             {
-                throw new ArgumentNullException("lexers");
+                throw new ArgumentNullException(nameof(lexers));
             }
 
             this.lexers = lexers;
@@ -23,7 +23,7 @@
         {
             if (scanner == null)
             {
-                throw new ArgumentNullException("scanner");
+                throw new ArgumentNullException(nameof(scanner));
             }
 
             var context = scanner.GetContext();

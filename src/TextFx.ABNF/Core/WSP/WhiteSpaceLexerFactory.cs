@@ -18,17 +18,17 @@
         {
             if (spaceLexerFactory == null)
             {
-                throw new ArgumentNullException("spaceLexerFactory");
+                throw new ArgumentNullException(nameof(spaceLexerFactory));
             }
 
             if (horizontalTabLexerFactory == null)
             {
-                throw new ArgumentNullException("horizontalTabLexerFactory");
+                throw new ArgumentNullException(nameof(horizontalTabLexerFactory));
             }
 
             if (alternativeLexerFactory == null)
             {
-                throw new ArgumentNullException("alternativeLexerFactory");
+                throw new ArgumentNullException(nameof(alternativeLexerFactory));
             }
 
             this.spaceLexerFactory = spaceLexerFactory;

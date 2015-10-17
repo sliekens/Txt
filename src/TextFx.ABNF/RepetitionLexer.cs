@@ -20,17 +20,17 @@
         {
             if (repeatingElementLexer == null)
             {
-                throw new ArgumentNullException("repeatingElementLexer");
+                throw new ArgumentNullException(nameof(repeatingElementLexer));
             }
 
             if (lowerBound < 0)
             {
-                throw new ArgumentOutOfRangeException("lowerBound", "Precondition: lowerBound >= 0");
+                throw new ArgumentOutOfRangeException(nameof(lowerBound), "Precondition: lowerBound >= 0");
             }
 
             if (upperBound < lowerBound)
             {
-                throw new ArgumentOutOfRangeException("upperBound", "Precondition: upperBound >= lowerBound");
+                throw new ArgumentOutOfRangeException(nameof(upperBound), "Precondition: upperBound >= lowerBound");
             }
 
             this.repeatingElementLexer = repeatingElementLexer;

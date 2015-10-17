@@ -18,17 +18,17 @@
         {
             if (digitLexerFactory == null)
             {
-                throw new ArgumentNullException("digitLexerFactory");
+                throw new ArgumentNullException(nameof(digitLexerFactory));
             }
 
             if (terminalLexerFactory == null)
             {
-                throw new ArgumentNullException("terminalLexerFactory");
+                throw new ArgumentNullException(nameof(terminalLexerFactory));
             }
 
             if (alternativeLexerFactory == null)
             {
-                throw new ArgumentNullException("alternativeLexerFactory");
+                throw new ArgumentNullException(nameof(alternativeLexerFactory));
             }
 
             this.digitLexerFactory = digitLexerFactory;

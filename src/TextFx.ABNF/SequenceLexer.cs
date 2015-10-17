@@ -11,12 +11,12 @@
         {
             if (lexers == null)
             {
-                throw new ArgumentNullException("lexers");
+                throw new ArgumentNullException(nameof(lexers));
             }
 
             if (lexers.Length == 0)
             {
-                throw new ArgumentException("Precondition: lexers.Count > 0", "lexers");
+                throw new ArgumentException("Precondition: lexers.Count > 0", nameof(lexers));
             }
 
             // ReSharper disable once ForCanBeConvertedToForeach
@@ -26,7 +26,7 @@
                 var lexer = lexers[i];
                 if (lexer == null)
                 {
-                    throw new ArgumentException("Precondition: lexers.All(lexer => lexer != null", "lexers");
+                    throw new ArgumentException("Precondition: lexers.All(lexer => lexer != null", nameof(lexers));
                 }
             }
 
@@ -38,7 +38,7 @@
         {
             if (scanner == null)
             {
-                throw new ArgumentNullException("scanner");
+                throw new ArgumentNullException(nameof(scanner));
             }
 
             var context = scanner.GetContext();

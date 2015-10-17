@@ -10,7 +10,7 @@ namespace TextFx.ABNF
         {
             if (upperBound < lowerBound)
             {
-                throw new ArgumentOutOfRangeException("upperBound", "Precondition: upperBound >= lowerBound");
+                throw new ArgumentOutOfRangeException(nameof(upperBound), "Precondition: upperBound >= lowerBound");
             }
 
             return new ValueRangeLexer(lowerBound, upperBound);

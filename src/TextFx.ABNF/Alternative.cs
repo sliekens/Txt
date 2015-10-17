@@ -21,7 +21,7 @@ namespace TextFx.ABNF
         {
             if (elements.Count != 1)
             {
-                throw new ArgumentException("Precondition: elements.Count == 1", "elements");
+                throw new ArgumentException("Precondition: elements.Count == 1", nameof(elements));
             }
 
             this.ordinal = ordinal;

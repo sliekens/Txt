@@ -16,7 +16,7 @@
         {
             if (ruleName == null)
             {
-                throw new ArgumentNullException("ruleName");
+                throw new ArgumentNullException(nameof(ruleName));
             }
 
             this.ruleName = ruleName;

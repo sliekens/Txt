@@ -26,7 +26,7 @@
         {
             if (upperBound < lowerBound)
             {
-                throw new ArgumentOutOfRangeException("upperBound", "Precondition: upperBound >= lowerBound");
+                throw new ArgumentOutOfRangeException(nameof(upperBound), "Precondition: upperBound >= lowerBound");
             }
 
             this.lowerBound = lowerBound;
@@ -38,7 +38,7 @@
         {
             if (scanner == null)
             {
-                throw new ArgumentNullException("scanner");
+                throw new ArgumentNullException(nameof(scanner));
             }
 
             var context = scanner.GetContext();

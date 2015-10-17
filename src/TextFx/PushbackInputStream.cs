@@ -27,12 +27,12 @@
         {
             if (stream == null)
             {
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
             }
 
             if (!stream.CanRead)
             {
-                throw new ArgumentException("Precondition: Stream.CanRead", "stream");
+                throw new ArgumentException("Precondition: Stream.CanRead", nameof(stream));
             }
 
             this.stream = stream;
@@ -170,22 +170,27 @@
         {
             if (buffer == null)
             {
-                throw new ArgumentNullException("buffer");
+                throw new ArgumentNullException(nameof(buffer));
             }
 
             if (offset < 0)
             {
-                throw new ArgumentOutOfRangeException("offset", "Precondition: offset >= 0");
+                throw new ArgumentOutOfRangeException(nameof(offset), "Precondition: offset >= 0");
             }
 
             if (count < 0)
             {
-                throw new ArgumentOutOfRangeException("count", "Precondition: count >= 0");
+                throw new ArgumentOutOfRangeException(nameof(count), "Precondition: count >= 0");
             }
 
-            if (count > (buffer.Length - offset))
+            if (offset + count > buffer.Length)
             {
-                throw new ArgumentOutOfRangeException("count", "Precondition: count <= (buffer.Length - offset)");
+                throw new ArgumentOutOfRangeException(nameof(count), "Precondition: offset + count <= buffer.Length");
+            }
+
+            if (count == 0)
+            {
+                return;
             }
 
             if (this.CanSeek)
@@ -206,6 +211,32 @@ if (stream.CanSeek)
 
         private bool ReadFromBuffer(byte[] buffer, int offset, int count, out int result)
         {
+            if (buffer == null)
+            {
+                throw new ArgumentNullException(nameof(buffer));
+            }
+
+            if (offset < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(offset), "Precondition: offset >= 0");
+            }
+
+            if (count < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(count), "Precondition: count >= 0");
+            }
+
+            if (offset + count > buffer.Length)
+            {
+                throw new ArgumentOutOfRangeException(nameof(count), "Precondition: offset + count <= buffer.Length");
+            }
+
+            if (count == 0)
+            {
+                result = 0;
+                return true;
+            }
+
             if (this.pushback.Count == 0)
             {
                 result = default(int);

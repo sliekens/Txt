@@ -24,27 +24,27 @@
         {
             if (whiteSpaceLexerFactory == null)
             {
-                throw new ArgumentNullException("whiteSpaceLexerFactory");
+                throw new ArgumentNullException(nameof(whiteSpaceLexerFactory));
             }
 
             if (endOfLineLexerFactory == null)
             {
-                throw new ArgumentNullException("endOfLineLexerFactory");
+                throw new ArgumentNullException(nameof(endOfLineLexerFactory));
             }
 
             if (sequenceLexerFactory == null)
             {
-                throw new ArgumentNullException("sequenceLexerFactory");
+                throw new ArgumentNullException(nameof(sequenceLexerFactory));
             }
 
             if (alternativeLexerFactory == null)
             {
-                throw new ArgumentNullException("alternativeLexerFactory");
+                throw new ArgumentNullException(nameof(alternativeLexerFactory));
             }
 
             if (repetitionLexerFactory == null)
             {
-                throw new ArgumentNullException("repetitionLexerFactory");
+                throw new ArgumentNullException(nameof(repetitionLexerFactory));
             }
 
             this.whiteSpaceLexerFactory = whiteSpaceLexerFactory;
