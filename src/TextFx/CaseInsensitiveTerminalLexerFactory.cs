@@ -4,7 +4,7 @@
     public class CaseInsensitiveTerminalLexerFactory : ITerminalLexerFactory
     {
         /// <inheritdoc />
-        public ILexer<Terminal> Create(char terminal)
+        public ILexer<Terminal> Create(string terminal)
         {
             return new CaseInsensitiveTerminalLexer(terminal);
         }

@@ -4,7 +4,7 @@
     public class TerminalLexerFactory : ITerminalLexerFactory
     {
         /// <inheritdoc />
-        public ILexer<Terminal> Create(char terminal)
+        public ILexer<Terminal> Create(string terminal)
         {
             return new TerminalLexer(terminal);
         }

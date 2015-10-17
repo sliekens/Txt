@@ -20,7 +20,7 @@
         /// <inheritdoc />
         public ILexer<CarriageReturn> Create()
         {
-            var carriageReturnTerminalLexer = this.terminalLexerFactory.Create('\x0D');
+            var carriageReturnTerminalLexer = this.terminalLexerFactory.Create("\x0D");
             return new CarriageReturnLexer(carriageReturnTerminalLexer);
         }
     }

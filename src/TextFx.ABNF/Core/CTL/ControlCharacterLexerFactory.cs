@@ -40,7 +40,7 @@
         public ILexer<ControlCharacter> Create()
         {
             var controlsValueRange = this.valueRangeLexerFactory.Create('\x00', '\x1F');
-            var delete = this.terminalLexerFactory.Create('\x7F');
+            var delete = this.terminalLexerFactory.Create("\x7F");
             var controlCharacterAlternativeLexer = this.alternativeLexerFactory.Create(controlsValueRange, delete);
             return new ControlCharacterLexer(controlCharacterAlternativeLexer);
         }

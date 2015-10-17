@@ -13,7 +13,6 @@
             var spaceLexer = factory.Create();
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {
-                scanner.Read();
                 var space = spaceLexer.Read(scanner, null);
                 Assert.NotNull(space);
                 Assert.Equal(input, space.Text);

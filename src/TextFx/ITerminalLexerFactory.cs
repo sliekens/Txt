@@ -9,6 +9,6 @@
         /// </summary>
         /// <param name="terminal">The terminal value.</param>
         /// <returns>>An instance of a class that implements <see cref="ILexer{TElement}" /> for the given terminal value.</returns>
-        ILexer<Terminal> Create(char terminal);
+        ILexer<Terminal> Create(string terminal);
     }
 }

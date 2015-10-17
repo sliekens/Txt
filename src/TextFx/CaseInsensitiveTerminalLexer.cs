@@ -8,9 +8,9 @@
     /// </summary>
     public class CaseInsensitiveTerminalLexer : Lexer<Terminal>
     {
-        private readonly char terminal;
+        private readonly string terminal;
 
-        public CaseInsensitiveTerminalLexer(char terminal)
+        public CaseInsensitiveTerminalLexer(string terminal)
         {
             this.terminal = terminal;
         }
@@ -23,9 +23,9 @@
                 throw new ArgumentNullException("scanner");
             }
 
-            char c;
+            string c;
             var context = scanner.GetContext();
-            if (!scanner.EndOfInput && scanner.TryMatchIgnoreCase(this.terminal, out c))
+            if (!scanner.EndOfInput && scanner.TryMatch(this.terminal, StringComparer.OrdinalIgnoreCase, out c))
             {
                 element = new Terminal(c, context);
                 if (previousElementOrNull != null)

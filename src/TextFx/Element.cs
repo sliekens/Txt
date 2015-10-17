@@ -38,14 +38,14 @@ namespace TextFx
         /// <param name="value">The terminal value.</param>
         /// <param name="context">An object that describes the current element's context.</param>
         /// <exception cref="ArgumentNullException">The value of <paramref name="context" /> is a null reference.</exception>
-        protected Element(char value, ITextContext context)
+        protected Element(string value, ITextContext context)
         {
             if (context == null)
             {
                 throw new ArgumentNullException("context");
             }
 
-            this.text = char.ToString(value);
+            this.text = value;
             this.elements = new List<Element>(0);
             this.context = context;
         }

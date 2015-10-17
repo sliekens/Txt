@@ -54,7 +54,6 @@
             var linearWhiteSpaceLexer = linearWhiteSpaceLexerFactory.Create();
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {
-                scanner.Read();
                 var linearWhiteSpace = linearWhiteSpaceLexer.Read(scanner, null);
                 Assert.NotNull(linearWhiteSpace);
                 Assert.Equal(input, linearWhiteSpace.Text);

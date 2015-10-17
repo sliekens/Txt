@@ -12,7 +12,6 @@
             var carriageReturnLexer = factory.Create();
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {
-                scanner.Read();
                 var carriageReturn = carriageReturnLexer.Read(scanner, null);
                 Assert.NotNull(carriageReturn);
                 Assert.Equal(input, carriageReturn.Text);

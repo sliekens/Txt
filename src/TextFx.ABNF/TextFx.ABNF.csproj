@@ -107,7 +107,6 @@
     <Compile Include="SequenceLexer.cs" />
     <Compile Include="SequenceLexerFactory.cs" />
     <Compile Include="StringLexer.cs" />
-    <Compile Include="StringLexerFactory.cs" />
     <Compile Include="TerminalExtensions.cs" />
     <Compile Include="TerminalString.cs" />
     <Compile Include="ValueRangeLexer.cs" />

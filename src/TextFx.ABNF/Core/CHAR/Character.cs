@@ -15,10 +15,5 @@ namespace TextFx.ABNF.Core
             : base(terminal)
         {
         }
-
-        public static explicit operator char(Character instance)
-        {
-            return instance.ToChar();
-        }
     }
 }

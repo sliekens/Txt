@@ -58,7 +58,6 @@
     <Compile Include="Core\VCHAR\VisibleCharacterLexerTests.cs" />
     <Compile Include="Core\WSP\WhiteSpaceLexerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TerminalStringTests.cs" />
     <Compile Include="TerminalTests.cs" />
   </ItemGroup>
   <ItemGroup>

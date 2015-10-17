@@ -8,9 +8,9 @@
     /// </summary>
     public class TerminalLexer : Lexer<Terminal>
     {
-        private readonly char terminal;
+        private readonly string terminal;
 
-        public TerminalLexer(char terminal)
+        public TerminalLexer(string terminal)
         {
             this.terminal = terminal;
         }
@@ -24,10 +24,10 @@
             }
 
             var context = scanner.GetContext();
-            char c;
-            if (!scanner.EndOfInput && scanner.TryMatch(this.terminal, out c))
+            string s;
+            if (!scanner.EndOfInput && scanner.TryMatch(this.terminal, out s))
             {
-                element = new Terminal(c, context);
+                element = new Terminal(s, context);
                 if (previousElementOrNull != null)
                 {
                     element.PreviousElement = previousElementOrNull;

@@ -20,7 +20,6 @@
             var lexer = factory.Create();
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {
-                scanner.Read();
                 var character = lexer.Read(scanner, null);
                 Assert.NotNull(character);
                 Assert.Equal(input, character.Text);

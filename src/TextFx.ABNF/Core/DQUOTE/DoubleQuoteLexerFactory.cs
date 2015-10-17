@@ -20,7 +20,7 @@
         /// <inheritdoc />
         public ILexer<DoubleQuote> Create()
         {
-            var doubleQuoteTerminalLexer = this.terminalLexerFactory.Create('\x22');
+            var doubleQuoteTerminalLexer = this.terminalLexerFactory.Create("\x22");
             return new DoubleQuoteLexer(doubleQuoteTerminalLexer);
         }
     }

@@ -1,4 +1,6 @@
-﻿namespace TextFx.ABNF
+﻿using System.Linq;
+
+namespace TextFx.ABNF
 {
     using System;
 
@@ -18,7 +20,19 @@
                 throw new ArgumentNullException();
             }
 
-            return Convert.ToString(instance.ToChar(), toBase).ToUpperInvariant();
+            var values = instance.Text.ToCharArray().Select(c => Convert.ToString(c, toBase).ToUpperInvariant());
+            var valuesAsString = string.Join(".", values);
+            switch (toBase)
+            {
+                case 2:
+                    return "%b" + valuesAsString;
+                case 10:
+                    return "%d" + valuesAsString;
+                case 16:
+                    return "%x" + valuesAsString;
+                default:
+                    throw new ArgumentException("The given base is not currently supported.", "toBase");
+            }
         }
     }
 }

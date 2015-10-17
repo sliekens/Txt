@@ -1,8 +1,9 @@
-﻿namespace TextFx
+﻿using System.Threading;
+
+namespace TextFx
 {
     using System;
     using System.Diagnostics;
-    using System.Text;
 
     public class TextScanner : ITextScanner
     {
@@ -12,12 +13,8 @@
 
         private bool endOfInput;
 
-        private char nextCharacter;
-
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private int offset = -1;
-
-        private readonly Encoding encoding;
+        private int offset;
 
         public TextScanner(ITextSource textSource)
         {
@@ -58,25 +55,6 @@
         }
 
         /// <inheritdoc />
-        public virtual char? NextCharacter
-        {
-            get
-            {
-                if (this.disposed)
-                {
-                    throw new ObjectDisposedException(this.GetType().FullName);
-                }
-
-                if (this.EndOfInput)
-                {
-                    return null;
-                }
-
-                return this.nextCharacter;
-            }
-        }
-
-        /// <inheritdoc />
         public virtual int Offset
         {
             get
@@ -105,31 +83,6 @@
         }
 
         /// <inheritdoc />
-        public virtual bool Read()
-        {
-            if (this.disposed)
-            {
-                throw new ObjectDisposedException(this.GetType().FullName);
-            }
-
-            if (this.endOfInput)
-            {
-                return false;
-            }
-
-            this.offset += 1;
-            int next;
-            if ((next = this.textSource.Read()) == -1)
-            {
-                this.endOfInput = true;
-                return false;
-            }
-
-            this.nextCharacter = (char)next;
-            return true;
-        }
-
-        /// <inheritdoc />
         public virtual ITextContext GetContext()
         {
             if (this.disposed)
@@ -138,14 +91,6 @@
             }
 
             return new TextContext(this.offset);
-        }
-
-        public Encoding Encoding
-        {
-            get
-            {
-                return this.encoding;
-            }
         }
 
         public void Unread(string s)
@@ -172,33 +117,51 @@
                 return;
             }
 
-            if (s.Length == 1 && this.endOfInput)
+            if (s.Length == 1)
             {
-                // Special case: pusback string is the last character before EOF
-                // -> take down EOF flag and reset position but push back nothing to the underlying text source
-                this.offset -= 1;
-                this.endOfInput = false;
+                Interlocked.Decrement(ref this.offset);
+                this.textSource.Unread(s[0]);
             }
             else
             {
-                if (this.endOfInput)
-                {
-                    var buffer = s.ToCharArray(1, s.Length - 1);
-                    this.textSource.Unread(buffer, 0, s.Length - 1);
-                }
-                else
-                {
-                    var buffer = new char[s.Length];
-                    s.CopyTo(1, buffer, 0, s.Length - 1);
-                    buffer[s.Length - 1] = this.nextCharacter;
-                    this.textSource.Unread(buffer, 0, buffer.Length);
-                }
-
-                this.offset -= s.Length;
-                this.endOfInput = false;
+                var buffer = s.ToCharArray();
+                Interlocked.Add(ref this.offset, -buffer.Length);
+                this.textSource.Unread(buffer, 0, buffer.Length);
             }
 
-            this.nextCharacter = s[0];
+            this.endOfInput = false;
+        }
+
+        public virtual bool TryMatch(string s, out string next)
+        {
+            return this.TryMatch(s, StringComparer.Ordinal, out next);
+        }
+
+        public bool TryMatch(string s, StringComparer comparer, out string next)
+        {
+            if (this.disposed)
+            {
+                throw new ObjectDisposedException(this.GetType().FullName);
+            }
+
+            var buffer = new char[s.Length];
+            var len = this.textSource.Read(buffer, 0, buffer.Length);
+            next = new string(buffer, 0, len);
+            if (len == 0)
+            {
+                this.endOfInput = true;
+                next = string.Empty;
+                return false;
+            }
+
+            if (!comparer.Equals(s, next))
+            {
+                this.textSource.Unread(buffer, 0, len);
+                return false;
+            }
+
+            Interlocked.Add(ref this.offset, len);
+            return true;
         }
 
         /// <inheritdoc />
@@ -209,70 +172,23 @@
                 throw new ObjectDisposedException(this.GetType().FullName);
             }
 
-            if (this.offset == -1)
+            var head = this.textSource.Read();
+            if (head == -1)
             {
-                throw new InvalidOperationException("No next character available: call 'Read()' to initialize.");
-            }
-
-            if (this.endOfInput)
-            {
-                throw new InvalidOperationException("No next character available: end of input has been reached.");
-            }
-
-            next = this.nextCharacter;
-            if (next != c)
-            {
+                this.endOfInput = true;
+                next = default(char);
                 return false;
             }
 
-            this.Read();
-            return true;
-        }
-
-        /// <inheritdoc />
-        public virtual bool TryMatchIgnoreCase(char c, out char next)
-        {
-            if (this.disposed)
+            next = (char)head;
+            if (c != next)
             {
-                throw new ObjectDisposedException(this.GetType().FullName);
-            }
-
-            if (this.offset == -1)
-            {
-                throw new InvalidOperationException("No next character available: call 'Read()' to initialize.");
-            }
-
-            if (this.endOfInput)
-            {
-                throw new InvalidOperationException("No next character available: end of input has been reached.");
-            }
-
-            next = this.nextCharacter;
-            if (char.ToUpperInvariant(next) != char.ToUpperInvariant(c))
-            {
+                this.textSource.Unread(next);
                 return false;
             }
 
-            this.Read();
+            Interlocked.Increment(ref this.offset);
             return true;
-        }
-
-        /// <inheritdoc />
-        public virtual void Reset()
-        {
-            if (this.disposed)
-            {
-                throw new ObjectDisposedException(this.GetType().FullName);
-            }
-
-            this.offset = -1;
-            if (!this.endOfInput)
-            {
-                this.textSource.Unread(this.nextCharacter);
-            }
-
-            this.endOfInput = default(bool);
-            this.nextCharacter = default(char);
         }
     }
 }

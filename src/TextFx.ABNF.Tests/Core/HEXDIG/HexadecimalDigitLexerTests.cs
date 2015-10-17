@@ -32,13 +32,11 @@
             var valueRangeLexerFactory = new ValueRangeLexerFactory();
             var digitLexerFactory = new DigitLexerFactory(valueRangeLexerFactory);
             var caseInsensitiveTerminalLexerFactory = new CaseInsensitiveTerminalLexerFactory();
-            var stringLexerFactory = new StringLexerFactory(caseInsensitiveTerminalLexerFactory);
             var alternativeLexerFactory = new AlternativeLexerFactory();
-            var factory = new HexadecimalDigitLexerFactory(digitLexerFactory, stringLexerFactory, alternativeLexerFactory);
+            var factory = new HexadecimalDigitLexerFactory(digitLexerFactory, caseInsensitiveTerminalLexerFactory, alternativeLexerFactory);
             var lexer = factory.Create();
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {
-                scanner.Read();
                 var hexadecimalDigit = lexer.Read(scanner, null);
                 Assert.Equal(input, hexadecimalDigit.Text);
             }

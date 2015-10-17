@@ -12,7 +12,6 @@
             var lineFeedLexer = factory.Create();
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {
-                scanner.Read();
                 var lineFeed = lineFeedLexer.Read(scanner, null);
                 Assert.NotNull(lineFeed);
                 Assert.Equal(input, lineFeed.Text);

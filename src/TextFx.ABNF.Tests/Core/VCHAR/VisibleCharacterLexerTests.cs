@@ -13,7 +13,6 @@
             var visibleCharacterLexer = factory.Create();
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {
-                scanner.Read();
                 var visibleCharacter = visibleCharacterLexer.Read(scanner, null);
                 Assert.NotNull(visibleCharacter);
                 Assert.Equal(input, visibleCharacter.Text);

@@ -20,7 +20,7 @@
         /// <inheritdoc />
         public ILexer<Space> Create()
         {
-            var spaceTerminalLexer = this.terminalLexerFactory.Create('\x20');
+            var spaceTerminalLexer = this.terminalLexerFactory.Create("\x20");
             return new SpaceLexer(spaceTerminalLexer);
         }
     }

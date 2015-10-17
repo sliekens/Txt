@@ -52,7 +52,7 @@
                 char next;
                 if (scanner.TryMatch(c, out next))
                 {
-                    element = new Terminal(next, context);
+                    element = new Terminal(char.ToString(next), context);
                     if (previousElementOrNull != null)
                     {
                         element.PreviousElement = previousElementOrNull;
