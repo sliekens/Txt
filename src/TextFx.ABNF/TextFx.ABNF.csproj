@@ -92,7 +92,6 @@
     <Compile Include="IOptionLexerFactory.cs" />
     <Compile Include="IRepetitionLexerFactory.cs" />
     <Compile Include="ISequenceLexerFactory.cs" />
-    <Compile Include="IStringLexerFactory.cs" />
     <Compile Include="IValueRangeLexerFactory.cs" />
     <Compile Include="OptionLexer.cs" />
     <Compile Include="OptionLexerFactory.cs" />
@@ -106,7 +105,6 @@
     <Compile Include="Sequence.cs" />
     <Compile Include="SequenceLexer.cs" />
     <Compile Include="SequenceLexerFactory.cs" />
-    <Compile Include="StringLexer.cs" />
     <Compile Include="TerminalExtensions.cs" />
     <Compile Include="TerminalString.cs" />
     <Compile Include="ValueRangeLexer.cs" />
