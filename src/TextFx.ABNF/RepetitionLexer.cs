@@ -28,9 +28,9 @@
                 throw new ArgumentOutOfRangeException(nameof(lowerBound), "Precondition: lowerBound >= 0");
             }
 
-            if (upperBound <= lowerBound)
+            if (upperBound < lowerBound)
             {
-                throw new ArgumentOutOfRangeException(nameof(upperBound), "Precondition: upperBound > lowerBound");
+                throw new ArgumentOutOfRangeException(nameof(upperBound), "Precondition: upperBound >= lowerBound");
             }
 
             this.repeatingElementLexer = repeatingElementLexer;
