@@ -40,10 +40,12 @@
   <ItemGroup>
     <Compile Include="FakeLexer.cs" />
     <Compile Include="FakeStream.cs" />
+    <Compile Include="FakeTextSource.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PushbackInputStreamTests.cs" />
     <Compile Include="StringTextSourceTests.cs" />
     <Compile Include="StreamTextSourceTests.cs" />
+    <Compile Include="TextScannerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="xunit.abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
