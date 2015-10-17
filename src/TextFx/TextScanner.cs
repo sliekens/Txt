@@ -175,18 +175,24 @@
             if (s.Length == 1 && this.endOfInput)
             {
                 // Special case: pusback string is the last character before EOF
-                // -> take down EOF flag and reset position but push back nothing to the underlying stream
+                // -> take down EOF flag and reset position but push back nothing to the underlying text source
                 this.offset -= 1;
                 this.endOfInput = false;
             }
             else
             {
-                if (!this.endOfInput)
+                if (this.endOfInput)
                 {
-                    this.textSource.Unread(this.nextCharacter);
+                    var buffer = s.ToCharArray(1, s.Length - 1);
+                    this.textSource.Unread(buffer, 0, s.Length - 1);
                 }
-
-                this.textSource.Unread(s.ToCharArray(1, s.Length - 1), 0, s.Length - 1);
+                else
+                {
+                    var buffer = new char[s.Length];
+                    s.CopyTo(1, buffer, 0, s.Length - 1);
+                    buffer[s.Length - 1] = this.nextCharacter;
+                    this.textSource.Unread(buffer, 0, buffer.Length);
+                }
 
                 this.offset -= s.Length;
                 this.endOfInput = false;
