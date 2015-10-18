@@ -1,6 +1,7 @@
 ﻿namespace TextFx
 {
     using System;
+    using System.Collections.Generic;
 
     /// <summary>
     ///     Provides methods for reading a terminal value using the specified casing rules.
@@ -8,23 +9,23 @@
     public class TerminalLexer : Lexer<Terminal>
     {
         private readonly string terminal;
+        
+        private readonly IEqualityComparer<string> comparer;
 
-        private readonly StringComparer stringComparer;
-
-        public TerminalLexer(string terminal, StringComparer stringComparer)
+        public TerminalLexer(string terminal, IEqualityComparer<string> comparer)
         {
             if (terminal == null)
             {
                 throw new ArgumentNullException(nameof(terminal));
             }
 
-            if (stringComparer == null)
+            if (comparer == null)
             {
-                throw new ArgumentNullException(nameof(stringComparer));
+                throw new ArgumentNullException(nameof(comparer));
             }
 
             this.terminal = terminal;
-            this.stringComparer = stringComparer;
+            this.comparer = comparer;
         }
 
         public override ReadResult<Terminal> Read(ITextScanner scanner, Element previousElementOrNull)
@@ -44,7 +45,7 @@
                 });
             }
 
-            var result = scanner.TryMatch(this.terminal, this.stringComparer);
+            var result = scanner.TryMatch(this.terminal, this.comparer);
             if (!result.Success)
             {
                 return ReadResult<Terminal>.FromError(new SyntaxError
