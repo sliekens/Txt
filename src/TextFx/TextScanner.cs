@@ -3,6 +3,7 @@
     using System;
     using System.Diagnostics;
     using System.Threading;
+    using System.Threading.Tasks;
 
     public class TextScanner : ITextScanner
     {
@@ -175,6 +176,26 @@
             this.endOfInput = false;
         }
 
+        public Task UnreadAsync(string s)
+        {
+            if (this.disposed)
+            {
+                throw new ObjectDisposedException(this.GetType().FullName);
+            }
+
+            if (s == null)
+            {
+                throw new ArgumentNullException(nameof(s));
+            }
+
+            if (this.offset < s.Length)
+            {
+                throw new InvalidOperationException("Precondition: Offset >= s.Length");
+            }
+
+            return this.UnreadAsyncImpl(s);
+        }
+
         /// <inheritdoc />
         void IDisposable.Dispose()
         {
@@ -194,6 +215,16 @@
             }
 
             this.disposed = true;
+        }
+
+        private async Task UnreadAsyncImpl(string s)
+        {
+            Debug.Assert(s != null, "s != null");
+            Debug.Assert(this.offset < s.Length, "this.offset < s.Length");
+            Debug.Assert(s.Length > 0);
+            var buffer = s.ToCharArray();
+            Interlocked.Add(ref this.offset, -buffer.Length);
+            await this.textSource.UnreadAsync(buffer, 0, buffer.Length).ConfigureAwait(false);
         }
     }
 }

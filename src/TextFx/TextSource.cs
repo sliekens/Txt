@@ -7,8 +7,6 @@
 
     public abstract class TextSource : ITextSource
     {
-        private static readonly Task CompletedTask = Task.FromResult<object>(null);
-
         ~TextSource()
         {
             this.Dispose(false);
@@ -126,7 +124,7 @@
 
             if (count == 0)
             {
-                return CompletedTask;
+                return TaskHelper.CompletedTask;
             }
 
             return this.UnreadAsyncImpl(buffer, offset, count, CancellationToken.None);

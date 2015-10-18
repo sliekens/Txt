@@ -50,6 +50,7 @@
     <Compile Include="StreamTextSource.cs" />
     <Compile Include="StringTextSource.cs" />
     <Compile Include="SyntaxError.cs" />
+    <Compile Include="TaskHelper.cs" />
     <Compile Include="Terminal.cs" />
     <Compile Include="TerminalLexer.cs" />
     <Compile Include="TerminalLexerFactory.cs" />
