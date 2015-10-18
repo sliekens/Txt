@@ -39,6 +39,7 @@
     <Compile Include="ILexer.cs" />
     <Compile Include="ITerminalLexerFactory.cs" />
     <Compile Include="ITextSource.cs" />
+    <Compile Include="MatchResult.cs" />
     <Compile Include="ReadResult.cs" />
     <Compile Include="RuleNameAttribute.cs" />
     <Compile Include="ILexerFactory.cs" />

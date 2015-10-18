@@ -44,17 +44,17 @@
                 });
             }
 
-            string next;
-            if (!scanner.TryMatch(this.terminal, this.stringComparer, out next))
+            var result = scanner.TryMatch(this.terminal, this.stringComparer);
+            if (!result.Success)
             {
                 return ReadResult<Terminal>.FromError(new SyntaxError
                 {
-                    Message = $"Unexpected symbol: '{next}'. Expected symbol: '{this.terminal}'",
+                    Message = $"Unexpected symbol: '{result.Text}'. Expected symbol: '{this.terminal}'",
                     Context = context
                 });
             }
 
-            var element = new Terminal(next, context);
+            var element = new Terminal(result.Text, context);
             if (previousElementOrNull != null)
             {
                 element.PreviousElement = previousElementOrNull;

@@ -72,12 +72,12 @@
             return new TextContext(this.offset);
         }
 
-        public virtual bool TryMatch(string s, out string next)
+        public virtual MatchResult TryMatch(string s)
         {
-            return this.TryMatch(s, StringComparer.Ordinal, out next);
+            return this.TryMatch(s, StringComparer.Ordinal);
         }
 
-        public bool TryMatch(string s, StringComparer comparer, out string next)
+        public MatchResult TryMatch(string s, StringComparer comparer)
         {
             if (this.disposed)
             {
@@ -86,32 +86,30 @@
 
             if (s.Length == 0)
             {
-                next = s;
-                return true;
+                return MatchResult.FromMatch(string.Empty);
             }
 
             var buffer = new char[s.Length];
             var len = this.textSource.ReadBlock(buffer, 0, buffer.Length);
-            next = new string(buffer, 0, len);
+            var next = new string(buffer, 0, len);
             if (len == 0)
             {
                 this.endOfInput = true;
-                next = string.Empty;
-                return false;
+                return MatchResult.FromEndOfInput();
             }
 
             if (!comparer.Equals(s, next))
             {
                 this.textSource.Unread(buffer, 0, len);
-                return false;
+                return MatchResult.FromMismatch(next);
             }
 
             Interlocked.Add(ref this.offset, len);
-            return true;
+            return MatchResult.FromMatch(next);
         }
 
         /// <inheritdoc />
-        public virtual bool TryMatch(char c, out char next)
+        public virtual MatchResult TryMatch(char c)
         {
             if (this.disposed)
             {
@@ -122,19 +120,18 @@
             if (head == -1)
             {
                 this.endOfInput = true;
-                next = default(char);
-                return false;
+                return MatchResult.FromEndOfInput();
             }
 
-            next = (char)head;
+            var next = (char)head;
             if (c != next)
             {
                 this.textSource.Unread(next);
-                return false;
+                return MatchResult.FromMismatch(char.ToString(next));
             }
 
             Interlocked.Increment(ref this.offset);
-            return true;
+            return MatchResult.FromMatch(char.ToString(next));
         }
 
         public void Unread(string s)

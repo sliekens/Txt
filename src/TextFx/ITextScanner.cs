@@ -39,33 +39,23 @@ namespace TextFx
         /// <exception cref="ObjectDisposedException">The current text scanner is closed.</exception>
         Task UnreadAsync(string s);
 
-        /// <summary>Compares the given character to the next available character. If there is a match, the character is consumed.</summary>
+        /// <summary>Compares the given character to the next available character and advances the scanner's position if there is a match. This method performs a case-sensitive comparison using ordinal rules.</summary>
         /// <param name="c">The character to compare to the next available character.</param>
-        /// <param name="next">The next available character.</param>
-        /// <exception cref="T:System.InvalidOperationException">
-        ///     There is no next character available. This occurs when <see cref="EndOfInput" /> is <c>true</c>.
-        /// </exception>
         /// <exception cref="ObjectDisposedException">The current text scanner is closed.</exception>
-        /// <returns><c>true</c> to indicate success; otherwise, <c>false</c>.</returns>
-        bool TryMatch(char c, out char next);
+        /// <returns>A value container that contains the next available character and another value indicating whether it matches the given character.</returns>
+        MatchResult TryMatch(char c);
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="s"></param>
-        /// <param name="next"></param>
+        /// <summary>Compares the given string to the next available string and advances the scanner's position if there is a match. This method performs a case-sensitive comparison using ordinal rules.</summary>
+        /// <param name="s">The string to compare to the next available string.</param>
         /// <exception cref="ObjectDisposedException">The current text scanner is closed.</exception>
-        /// <returns></returns>
-        bool TryMatch(string s, out string next);
+        /// <returns>A value container that contains the next available string and another value indicating whether it matches the given string.</returns>
+        MatchResult TryMatch(string s);
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="s"></param>
+        /// <summary>Compares the given string to the next available string and advances the scanner's position if there is a match. A parameter specifies the comparison type.</summary>
+        /// <param name="s">The string to compare to the next available string.</param>
         /// <param name="comparer"></param>
-        /// <param name="next"></param>
         /// <exception cref="ObjectDisposedException">The current text scanner is closed.</exception>
-        /// <returns></returns>
-        bool TryMatch(string s, StringComparer comparer, out string next);
+        /// <returns>A value container that contains the next available string and another value indicating whether it matches the given string.</returns>
+        MatchResult TryMatch(string s, StringComparer comparer);
     }
 }

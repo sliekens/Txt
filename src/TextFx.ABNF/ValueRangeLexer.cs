@@ -53,9 +53,10 @@
             char next = default(char);
             for (var c = this.lowerBound; c <= this.upperBound; c++)
             {
-                if (scanner.TryMatch(c, out next))
+                var result = scanner.TryMatch(c);
+                if (result.Success)
                 {
-                    var element = new Terminal(next, context);
+                    var element = new Terminal(result.Text, context);
                     if (previousElementOrNull != null)
                     {
                         element.PreviousElement = previousElementOrNull;
