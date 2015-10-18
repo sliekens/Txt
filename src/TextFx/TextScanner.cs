@@ -1,6 +1,7 @@
 ﻿namespace TextFx
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics;
     using System.Threading;
     using System.Threading.Tasks;
@@ -77,7 +78,7 @@
             return this.TryMatch(s, StringComparer.Ordinal);
         }
 
-        public MatchResult TryMatch(string s, StringComparer comparer)
+        public MatchResult TryMatch(string s, IEqualityComparer<string> comparer)
         {
             if (this.disposed)
             {

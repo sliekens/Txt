@@ -10,6 +10,7 @@
 namespace TextFx
 {
     using System;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     /// <summary>Provides the interface for types that scan text with 1 character of lookahead and unlimited backtracking.</summary>
@@ -56,6 +57,6 @@ namespace TextFx
         /// <param name="comparer"></param>
         /// <exception cref="ObjectDisposedException">The current text scanner is closed.</exception>
         /// <returns>A value container that contains the next available string and another value indicating whether it matches the given string.</returns>
-        MatchResult TryMatch(string s, StringComparer comparer);
+        MatchResult TryMatch(string s, IEqualityComparer<string> comparer);
     }
 }
