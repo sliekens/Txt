@@ -90,7 +90,7 @@
             }
 
             var buffer = new char[s.Length];
-            var len = this.textSource.Read(buffer, 0, buffer.Length);
+            var len = this.textSource.ReadBlock(buffer, 0, buffer.Length);
             next = new string(buffer, 0, len);
             if (len == 0)
             {
