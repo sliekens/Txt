@@ -4,7 +4,7 @@
     using System.IO;
     using System.Text;
 
-    public class StreamTextSource : ITextSource
+    public class StreamTextSource : TextSource
     {
         private readonly BinaryReader binaryReader;
 
@@ -29,17 +29,22 @@
 
         public Encoding Encoding { get; }
 
-        public void Dispose()
+        protected override void Dispose(bool disposing)
         {
-            this.binaryReader.Dispose();
+            if (disposing)
+            {
+                this.binaryReader.Dispose();
+            }
+
+            base.Dispose(disposing);
         }
 
-        public int Read()
+        public override int Read()
         {
             return this.binaryReader.Read();
         }
 
-        public int Read(char[] buffer, int offset, int count)
+        public override int Read(char[] buffer, int offset, int count)
         {
             if (buffer == null)
             {
@@ -69,12 +74,7 @@
             return this.binaryReader.Read(buffer, offset, count);
         }
 
-        public void Unread(char c)
-        {
-            this.Unread(new[] { c }, 0, 1);
-        }
-
-        public void Unread(char[] buffer, int offset, int count)
+        public override void Unread(char[] buffer, int offset, int count)
         {
             if (buffer == null)
             {

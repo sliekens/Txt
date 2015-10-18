@@ -2,9 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Text;
 
-    public class StringTextSource : ITextSource
+    public class StringTextSource : TextSource
     {
         private Queue<char> s;
         private Stack<char> pusback;
@@ -25,13 +24,7 @@
             this.pusback = new Stack<char>();
         }
 
-        public Encoding Encoding { get; } = Encoding.Unicode;
-
-        public void Dispose()
-        {
-        }
-
-        public int Read()
+        public override int Read()
         {
             if (this.pusback.Count != 0)
             {
@@ -46,7 +39,7 @@
             return this.s.Dequeue();
         }
 
-        public int Read(char[] buffer, int offset, int count)
+        public override int Read(char[] buffer, int offset, int count)
         {
             if (buffer == null)
             {
@@ -89,12 +82,12 @@
             return length;
         }
 
-        public void Unread(char c)
+        public override void Unread(char c)
         {
             this.pusback.Push(c);
         }
 
-        public void Unread(char[] buffer, int offset, int count)
+        public override void Unread(char[] buffer, int offset, int count)
         {
             if (buffer == null)
             {

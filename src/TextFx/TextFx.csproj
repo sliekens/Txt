@@ -60,6 +60,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="TextScanner.cs" />
+    <Compile Include="TextSource.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="TextFx.nuspec" />
