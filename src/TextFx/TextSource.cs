@@ -57,7 +57,7 @@
             int i, n = 0;
             do
             {
-                n += (i = this.Read(buffer, offset + n, count - n));
+                n += i = this.Read(buffer, offset + n, count - n);
             }
             while (i > 0 && n < count);
             return n;

@@ -5,8 +5,8 @@
 
     public class StringTextSource : TextSource
     {
-        private Queue<char> s;
-        private Stack<char> pusback;
+        private readonly Queue<char> s;
+        private readonly Stack<char> pusback;
 
         public StringTextSource(string s)
         {
@@ -16,6 +16,7 @@
             }
 
             this.s = new Queue<char>(s.Length);
+            // ReSharper disable once ForCanBeConvertedToForeach
             for (int index = 0; index < s.Length; index++)
             {
                 this.s.Enqueue(s[index]);
