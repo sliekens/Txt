@@ -6,8 +6,6 @@
     [AttributeUsage(AttributeTargets.Class)]
     public sealed class RuleNameAttribute : Attribute
     {
-        private readonly string ruleName;
-
         /// <summary>
         ///     Initializes a new instance of the <see cref="RuleNameAttribute" /> with a given rule name.
         /// </summary>
@@ -19,18 +17,12 @@
                 throw new ArgumentNullException(nameof(ruleName));
             }
 
-            this.ruleName = ruleName;
+            this.RuleName = ruleName;
         }
 
         /// <summary>
         ///     Gets the name of the grammar rule.
         /// </summary>
-        public string RuleName
-        {
-            get
-            {
-                return this.ruleName;
-            }
-        }
+        public string RuleName { get; }
     }
 }

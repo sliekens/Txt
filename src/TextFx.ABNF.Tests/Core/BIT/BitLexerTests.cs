@@ -1,7 +1,5 @@
 ﻿namespace TextFx.ABNF.Core
 {
-    using System;
-
     using Xunit;
 
     public class BitLexerTests

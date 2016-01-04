@@ -9,8 +9,6 @@
 
 namespace TextFx.ABNF.Core
 {
-    using System.Diagnostics;
-
     public class Alpha : Alternative
     {
         public Alpha(Alternative element)

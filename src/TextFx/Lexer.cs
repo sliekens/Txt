@@ -9,8 +9,6 @@
 
 namespace TextFx
 {
-    using System;
-
     /// <summary>
     ///     Provides the base class for lexers. A lexer is a class that matches symbols from a data source against a
     ///     grammar rule to produce grammar elements. Each class that extends the <see cref="Lexer{TElement}" /> class

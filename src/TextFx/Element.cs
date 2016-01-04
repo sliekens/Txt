@@ -68,13 +68,7 @@ namespace TextFx
         }
 
         /// <summary>Gets the current position, relative to the beginning of the data source.</summary>
-        public int Offset
-        {
-            get
-            {
-                return this.context.Offset;
-            }
-        }
+        public int Offset => this.context.Offset;
 
         public Element PreviousElement { get; set; }
 
@@ -135,7 +129,7 @@ namespace TextFx
         }
 
         /// <inheritdoc />
-        public override sealed string ToString()
+        public sealed override string ToString()
         {
             return this.Text;
         }
@@ -147,21 +141,9 @@ namespace TextFx
         }
 
         /// <inheritdoc />
-        public int Count
-        {
-            get
-            {
-                return this.elements.Count;
-            }
-        }
+        public int Count => this.elements.Count;
 
         /// <inheritdoc />
-        public Element this[int index]
-        {
-            get
-            {
-                return this.elements[index];
-            }
-        }
+        public Element this[int index] => this.elements[index];
     }
 }

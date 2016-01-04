@@ -52,36 +52,17 @@
 
         /// <summary>Gets a value indicating whether the current stream supports seeking.</summary>
         /// <returns>true if the stream supports seeking; otherwise, false.</returns>
-        public override bool CanSeek
-        {
-            get
-            {
-                return this.stream.CanSeek;
-            }
-        }
+        public override bool CanSeek => this.stream.CanSeek;
 
         /// <summary>Gets a value indicating whether the current stream supports writing.</summary>
         /// <returns><c>true</c> if the stream supports pushing back bytes; <c>false</c> if the stream supports seeking.</returns>
-        public override bool CanWrite
-        {
-            get
-            {
-                // MEMO: 'Write' means 'Unread' -> if CanSeek, then the caller should Seek() instead of Write()
-                return !this.stream.CanSeek;
-            }
-        }
+        public override bool CanWrite => !this.stream.CanSeek;
 
         /// <summary>Gets the length in bytes of the underlying stream.</summary>
         /// <returns>A long value representing the length of the stream in bytes.</returns>
         /// <exception cref="T:System.NotSupportedException">A class derived from Stream does not support seeking. </exception>
         /// <exception cref="T:System.ObjectDisposedException">Methods were called after the stream was closed. </exception>
-        public override long Length
-        {
-            get
-            {
-                return this.stream.Length;
-            }
-        }
+        public override long Length => this.stream.Length;
 
         /// <summary>Gets or sets the position within the underlying stream.</summary>
         /// <returns>The current position within the stream.</returns>
@@ -195,12 +176,13 @@
 
             if (this.CanSeek)
             {
-                throw new IOException(string.Format(@"Pushing back bytes to a seekable stream is an invalid operation. Use 'Seek' instead.
+                throw new IOException(
+                    $@"Pushing back bytes to a seekable stream is an invalid operation. Use 'Seek' instead.
 
 if (stream.CanSeek)
 {{
-    stream.Seek(-{0}, SeekOrigin.Current)
-}}", count));
+    stream.Seek(-{count}, SeekOrigin.Current)
+}}");
             }
 
             for (int i = buffer.Length - 1; i >= offset && count != 0; i--, count--)

@@ -1,6 +1,5 @@
 ﻿namespace TextFx
 {
-    using System;
     using System.Collections.Generic;
 
     /// <summary>Creates instances of the <see cref="TerminalLexer" /> class.</summary>
