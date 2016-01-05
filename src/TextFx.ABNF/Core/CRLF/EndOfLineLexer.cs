@@ -14,12 +14,12 @@ namespace TextFx.ABNF.Core
     public class EndOfLineLexer : Lexer<EndOfLine>
     {
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly ILexer<Sequence> innerLexer;
+        private readonly ILexer<Concatenation> innerLexer;
 
         /// <summary>
         /// </summary>
         /// <param name="innerLexer">CR LF</param>
-        public EndOfLineLexer(ILexer<Sequence> innerLexer)
+        public EndOfLineLexer(ILexer<Concatenation> innerLexer)
         {
             if (innerLexer == null)
             {

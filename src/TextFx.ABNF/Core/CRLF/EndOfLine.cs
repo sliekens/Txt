@@ -9,10 +9,10 @@
 
 namespace TextFx.ABNF.Core
 {
-    public class EndOfLine : Sequence
+    public class EndOfLine : Concatenation
     {
-        public EndOfLine(Sequence sequence)
-            : base(sequence)
+        public EndOfLine(Concatenation concatenation)
+            : base(concatenation)
         {
         }
     }

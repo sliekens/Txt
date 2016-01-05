@@ -13,12 +13,12 @@
         private readonly ILexerFactory<LineFeed> lineFeedLexerFactory;
 
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly ISequenceLexerFactory sequenceLexerFactory;
+        private readonly IConcatenationLexerFactory concatenationLexerFactory;
 
         public EndOfLineLexerFactory(
             ILexerFactory<CarriageReturn> carriageReturnLexerFactory,
             ILexerFactory<LineFeed> lineFeedLexerFactory,
-            ISequenceLexerFactory sequenceLexerFactory)
+            IConcatenationLexerFactory concatenationLexerFactory)
         {
             if (carriageReturnLexerFactory == null)
             {
@@ -30,14 +30,14 @@
                 throw new ArgumentNullException(nameof(lineFeedLexerFactory));
             }
 
-            if (sequenceLexerFactory == null)
+            if (concatenationLexerFactory == null)
             {
-                throw new ArgumentNullException(nameof(sequenceLexerFactory));
+                throw new ArgumentNullException(nameof(concatenationLexerFactory));
             }
 
             this.carriageReturnLexerFactory = carriageReturnLexerFactory;
             this.lineFeedLexerFactory = lineFeedLexerFactory;
-            this.sequenceLexerFactory = sequenceLexerFactory;
+            this.concatenationLexerFactory = concatenationLexerFactory;
         }
 
         /// <inheritdoc />
@@ -45,7 +45,7 @@
         {
             var carriageReturnLexer = this.carriageReturnLexerFactory.Create();
             var lineFeedLexer = this.lineFeedLexerFactory.Create();
-            var endOfLineSequenceLexer = this.sequenceLexerFactory.Create(carriageReturnLexer, lineFeedLexer);
+            var endOfLineSequenceLexer = this.concatenationLexerFactory.Create(carriageReturnLexer, lineFeedLexer);
             return new EndOfLineLexer(endOfLineSequenceLexer);
         }
     }

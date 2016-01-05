@@ -4,12 +4,12 @@
     using System.Collections.Generic;
     using System.Diagnostics;
 
-    public class SequenceLexer : Lexer<Sequence>
+    public class ConcatenationLexer : Lexer<Concatenation>
     {
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly IList<ILexer> lexers;
 
-        public SequenceLexer(params ILexer[] lexers)
+        public ConcatenationLexer(params ILexer[] lexers)
         {
             if (lexers == null)
             {
@@ -35,7 +35,7 @@
             this.lexers = lexers;
         }
 
-        public override ReadResult<Sequence> Read(ITextScanner scanner, Element previousElementOrNull)
+        public override ReadResult<Concatenation> Read(ITextScanner scanner, Element previousElementOrNull)
         {
             if (scanner == null)
             {
@@ -60,7 +60,7 @@
 
             if (elements.Count == this.lexers.Count)
             {
-                return ReadResult<Sequence>.FromResult(new Sequence(elements, context));
+                return ReadResult<Concatenation>.FromResult(new Concatenation(elements, context));
             }
 
             if (elements.Count != 0)
@@ -71,7 +71,7 @@
                 }
             }
 
-            return ReadResult<Sequence>.FromError(new SyntaxError
+            return ReadResult<Concatenation>.FromError(new SyntaxError
             {
                 Message = "A syntax error was found.",
                 InnerError = lastResult?.Error,

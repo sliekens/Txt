@@ -17,7 +17,7 @@
             // General
             var terminalLexerFactory = new TerminalLexerFactory();
             var alternativeLexerFactory = new AlternativeLexerFactory();
-            var sequenceLexerFactory = new SequenceLexerFactory();
+            var sequenceLexerFactory = new ConcatenationLexerFactory();
             var repetitionLexerFactory = new RepetitionLexerFactory();
 
             // SP

@@ -9,7 +9,7 @@
         public void ReadSuccess(string input)
         {
             var terminalsLexerFactory = new TerminalLexerFactory();
-            var sequenceLexerFactory = new SequenceLexerFactory();
+            var sequenceLexerFactory = new ConcatenationLexerFactory();
             var carriageReturnLexerFactory = new CarriageReturnLexerFactory(terminalsLexerFactory);
             var lineFeedLexerFactory = new LineFeedLexerFactory(terminalsLexerFactory);
             var factory = new EndOfLineLexerFactory(carriageReturnLexerFactory, lineFeedLexerFactory, sequenceLexerFactory);

@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
 
-    public class Repetition : Sequence
+    public class Repetition : Concatenation
     {
         public Repetition(Repetition repetition)
             : base(repetition)
