@@ -43,7 +43,7 @@
     <Compile Include="ReadResult.cs" />
     <Compile Include="RuleNameAttribute.cs" />
     <Compile Include="ILexerFactory.cs" />
-    <Compile Include="ILexer{TElement}.cs" />
+    <Compile Include="ILexer`1.cs" />
     <Compile Include="ITextContext.cs" />
     <Compile Include="ITextScanner.cs" />
     <Compile Include="Lexer.cs" />
