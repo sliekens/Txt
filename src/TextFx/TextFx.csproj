@@ -39,6 +39,9 @@
     <Compile Include="..\Shared\SwitchOnBuild.cs">
       <Link>SwitchOnBuild.cs</Link>
     </Compile>
+    <Compile Include="..\Shared\TaskHelper.cs">
+      <Link>TaskHelper.cs</Link>
+    </Compile>
     <Compile Include="ILexer.cs" />
     <Compile Include="ITerminalLexerFactory.cs" />
     <Compile Include="ITextSource.cs" />
@@ -54,7 +57,6 @@
     <Compile Include="StreamTextSource.cs" />
     <Compile Include="StringTextSource.cs" />
     <Compile Include="SyntaxError.cs" />
-    <Compile Include="TaskHelper.cs" />
     <Compile Include="Terminal.cs" />
     <Compile Include="TerminalLexer.cs" />
     <Compile Include="TerminalLexerFactory.cs" />
