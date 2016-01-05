@@ -1,10 +1,12 @@
 ﻿namespace TextFx.ABNF.Core
 {
     using System;
+    using System.Diagnostics;
 
     /// <summary>Creates instances of the <see cref="HorizontalTabLexer" /> class.</summary>
     public class HorizontalTabLexerFactory : ILexerFactory<HorizontalTab>
     {
+        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly ITerminalLexerFactory terminalLexerFactory;
 
         public HorizontalTabLexerFactory(ITerminalLexerFactory terminalLexerFactory)

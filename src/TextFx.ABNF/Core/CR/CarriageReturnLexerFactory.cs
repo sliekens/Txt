@@ -1,10 +1,12 @@
 ﻿namespace TextFx.ABNF.Core
 {
     using System;
+    using System.Diagnostics;
 
     /// <summary>Creates instances of the <see cref="CarriageReturnLexer" /> class.</summary>
     public class CarriageReturnLexerFactory : ILexerFactory<CarriageReturn>
     {
+        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly ITerminalLexerFactory terminalLexerFactory;
 
         public CarriageReturnLexerFactory(ITerminalLexerFactory terminalLexerFactory)

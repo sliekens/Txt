@@ -1,13 +1,16 @@
 ﻿namespace TextFx
 {
     using System;
+    using System.Diagnostics;
     using System.IO;
     using System.Text;
 
     public class StreamTextSource : TextSource
     {
+        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly BinaryReader binaryReader;
 
+        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly PushbackInputStream inputStream;
 
         public StreamTextSource(PushbackInputStream inputStream, Encoding encoding)

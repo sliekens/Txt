@@ -9,10 +9,12 @@
 namespace TextFx.ABNF.Core
 {
     using System;
+    using System.Diagnostics;
 
     [RuleName("ALPHA")]
     public class AlphaLexer : Lexer<Alpha>
     {
+        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly ILexer<Alternative> innerLexer;
 
         /// <summary>

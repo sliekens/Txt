@@ -9,10 +9,12 @@
 namespace TextFx.ABNF.Core
 {
     using System;
+    using System.Diagnostics;
 
     [RuleName("SP")]
     public class SpaceLexer : Lexer<Space>
     {
+        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly ILexer<Terminal> innerLexer;
 
         /// <summary>

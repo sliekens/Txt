@@ -2,14 +2,17 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
 
     /// <summary>
     ///     Provides methods for reading a terminal value using the specified casing rules.
     /// </summary>
     public class TerminalLexer : Lexer<Terminal>
     {
+        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly string terminal;
-        
+
+        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly IEqualityComparer<string> comparer;
 
         public TerminalLexer(string terminal, IEqualityComparer<string> comparer)

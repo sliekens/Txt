@@ -2,9 +2,11 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
 
     public class SequenceLexer : Lexer<Sequence>
     {
+        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly IList<ILexer> lexers;
 
         public SequenceLexer(params ILexer[] lexers)

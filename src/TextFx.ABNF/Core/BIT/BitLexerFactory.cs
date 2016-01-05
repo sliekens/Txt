@@ -1,12 +1,15 @@
 ﻿namespace TextFx.ABNF.Core
 {
     using System;
+    using System.Diagnostics;
 
     /// <summary>Creates instances of the <see cref="BitLexer" /> class.</summary>
     public class BitLexerFactory : ILexerFactory<Bit>
     {
+        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly IAlternativeLexerFactory alternativeLexerFactory;
 
+        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly ITerminalLexerFactory terminalLexerFactory;
 
         public BitLexerFactory(IAlternativeLexerFactory alternativeLexerFactory, ITerminalLexerFactory terminalLexerFactory)

@@ -1,14 +1,18 @@
 ﻿namespace TextFx.ABNF.Core
 {
     using System;
+    using System.Diagnostics;
 
     /// <summary>Creates instances of the <see cref="WhiteSpaceLexer" /> class.</summary>
     public class WhiteSpaceLexerFactory : ILexerFactory<WhiteSpace>
     {
+        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly IAlternativeLexerFactory alternativeLexerFactory;
 
+        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly ILexerFactory<HorizontalTab> horizontalTabLexerFactory;
 
+        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly ILexerFactory<Space> spaceLexerFactory;
 
         public WhiteSpaceLexerFactory(

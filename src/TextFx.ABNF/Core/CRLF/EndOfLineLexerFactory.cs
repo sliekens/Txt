@@ -1,14 +1,18 @@
 ﻿namespace TextFx.ABNF.Core
 {
     using System;
+    using System.Diagnostics;
 
     /// <summary>Creates instances of the <see cref="EndOfLineLexer" /> class.</summary>
     public class EndOfLineLexerFactory : ILexerFactory<EndOfLine>
     {
+        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly ILexerFactory<CarriageReturn> carriageReturnLexerFactory;
 
+        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly ILexerFactory<LineFeed> lineFeedLexerFactory;
 
+        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly ISequenceLexerFactory sequenceLexerFactory;
 
         public EndOfLineLexerFactory(

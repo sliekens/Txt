@@ -1,10 +1,12 @@
 ﻿namespace TextFx.ABNF.Core
 {
     using System;
+    using System.Diagnostics;
 
     /// <summary>Creates instances of the <see cref="OctetLexer" /> class.</summary>
     public class OctetLexerFactory : ILexerFactory<Octet>
     {
+        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly IValueRangeLexerFactory valueRangeLexerFactory;
 
         public OctetLexerFactory(IValueRangeLexerFactory valueRangeLexerFactory)

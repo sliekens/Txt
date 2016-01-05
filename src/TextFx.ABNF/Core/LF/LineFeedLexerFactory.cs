@@ -1,10 +1,12 @@
 ﻿namespace TextFx.ABNF.Core
 {
     using System;
+    using System.Diagnostics;
 
     /// <summary>Creates instances of the <see cref="LineFeedLexer" /> class.</summary>
     public class LineFeedLexerFactory : ILexerFactory<LineFeed>
     {
+        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly ITerminalLexerFactory terminalLexerFactory;
 
         public LineFeedLexerFactory(ITerminalLexerFactory terminalLexerFactory)

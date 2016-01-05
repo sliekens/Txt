@@ -9,10 +9,12 @@
 namespace TextFx.ABNF.Core
 {
     using System;
+    using System.Diagnostics;
 
     [RuleName("CRLF")]
     public class EndOfLineLexer : Lexer<EndOfLine>
     {
+        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly ILexer<Sequence> innerLexer;
 
         /// <summary>

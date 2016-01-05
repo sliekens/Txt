@@ -8,10 +8,13 @@
 
     public class TextScanner : ITextScanner
     {
+        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly ITextSource textSource;
 
+        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private bool disposed;
 
+        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private bool endOfInput;
 
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]

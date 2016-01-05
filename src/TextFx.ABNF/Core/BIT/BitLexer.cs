@@ -9,10 +9,12 @@
 namespace TextFx.ABNF.Core
 {
     using System;
+    using System.Diagnostics;
 
     [RuleName("BIT")]
     public class BitLexer : Lexer<Bit>
     {
+        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly ILexer<Alternative> innerLexer;
 
         public BitLexer(ILexer<Alternative> innerLexer)

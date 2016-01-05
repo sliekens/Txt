@@ -9,10 +9,12 @@
 namespace TextFx.ABNF.Core
 {
     using System;
+    using System.Diagnostics;
 
     [RuleName("OCTET")]
     public class OctetLexer : Lexer<Octet>
     {
+        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly ILexer<Terminal> innerLexer;
 
         public OctetLexer(ILexer<Terminal> innerLexer)

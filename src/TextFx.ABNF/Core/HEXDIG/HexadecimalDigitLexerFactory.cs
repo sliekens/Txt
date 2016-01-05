@@ -1,14 +1,18 @@
 ﻿namespace TextFx.ABNF.Core
 {
     using System;
+    using System.Diagnostics;
 
     /// <summary>Creates instances of the <see cref="HexadecimalDigitLexer" /> class.</summary>
     public class HexadecimalDigitLexerFactory : ILexerFactory<HexadecimalDigit>
     {
+        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly IAlternativeLexerFactory alternativeLexerFactory;
 
+        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly ILexerFactory<Digit> digitLexerFactory;
 
+        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly ITerminalLexerFactory terminalLexerFactory;
 
         public HexadecimalDigitLexerFactory(

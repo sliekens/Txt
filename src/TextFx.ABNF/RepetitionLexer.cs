@@ -2,14 +2,18 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
 
     /// <summary>Provides the base class for lexers whose lexer rule is a repetition of elements.</summary>
     public class RepetitionLexer : Lexer<Repetition>
     {
+        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly int lowerBound;
 
+        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly ILexer repeatingElementLexer;
 
+        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly int upperBound;
 
         /// <summary>Initializes a new instance of the <see cref="RepetitionLexer" /> class with a specified lower and upper bound, both inclusive.</summary>

@@ -2,10 +2,14 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
 
     public class StringTextSource : TextSource
     {
+        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly Queue<char> s;
+
+        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly Stack<char> pusback;
 
         public StringTextSource(string s)

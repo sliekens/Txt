@@ -1,12 +1,15 @@
 ﻿namespace TextFx.ABNF.Core
 {
     using System;
+    using System.Diagnostics;
 
     /// <summary>Creates instances of the <see cref="AlphaLexer" /> class.</summary>
     public class AlphaLexerFactory : ILexerFactory<Alpha>
     {
+        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly IAlternativeLexerFactory alternativeLexerFactory;
 
+        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly IValueRangeLexerFactory valueRangeLexerFactory;
 
         public AlphaLexerFactory(

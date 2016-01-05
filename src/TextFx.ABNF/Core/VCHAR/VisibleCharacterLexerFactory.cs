@@ -1,10 +1,12 @@
 ﻿namespace TextFx.ABNF.Core
 {
     using System;
+    using System.Diagnostics;
 
     /// <summary>Creates instances of the <see cref="VisibleCharacterLexer" /> class.</summary>
     public class VisibleCharacterLexerFactory : ILexerFactory<VisibleCharacter>
     {
+        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly IValueRangeLexerFactory valueRangeLexer;
 
         public VisibleCharacterLexerFactory(IValueRangeLexerFactory valueRangeLexer)

@@ -3,6 +3,7 @@
 namespace TextFx.ABNF
 {
     using System;
+    using System.Diagnostics;
 
     /// <summary>
     ///     Wraps a collection of <see cref="ILexer" /> and tests their <see cref="ILexer.ReadElement" /> method until a
@@ -10,6 +11,7 @@ namespace TextFx.ABNF
     /// </summary>
     public class AlternativeLexer : Lexer<Alternative>
     {
+        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly ILexer[] lexers;
 
         public AlternativeLexer(params ILexer[] lexers)

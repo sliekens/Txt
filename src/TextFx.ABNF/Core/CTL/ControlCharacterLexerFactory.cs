@@ -1,14 +1,18 @@
 ﻿namespace TextFx.ABNF.Core
 {
     using System;
+    using System.Diagnostics;
 
     /// <summary>Creates instances of the <see cref="ControlCharacterLexer" /> class.</summary>
     public class ControlCharacterLexerFactory : ILexerFactory<ControlCharacter>
     {
+        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly IAlternativeLexerFactory alternativeLexerFactory;
 
+        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly ITerminalLexerFactory terminalLexerFactory;
 
+        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly IValueRangeLexerFactory valueRangeLexerFactory;
 
         public ControlCharacterLexerFactory(

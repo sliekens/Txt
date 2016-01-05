@@ -8,6 +8,7 @@ namespace TextFx.ABNF
 
     public class Alternative : Element
     {
+        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly int ordinal;
 
         public Alternative(Alternative alternative)

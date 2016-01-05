@@ -1,10 +1,13 @@
 ﻿namespace TextFx
 {
+    using System.Diagnostics;
+
     /// <summary>
     ///     Represents a terminal specification.
     /// </summary>
     public class Terminal : Element
     {
+        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly string value;
 
         /// <summary>

@@ -1,18 +1,24 @@
 ﻿namespace TextFx.ABNF.Core
 {
     using System;
+    using System.Diagnostics;
 
     /// <summary>Creates instances of the <see cref="LinearWhiteSpaceLexer" /> class.</summary>
     public class LinearWhiteSpaceLexerFactory : ILexerFactory<LinearWhiteSpace>
     {
+        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly IAlternativeLexerFactory alternativeLexerFactory;
 
+        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly ILexerFactory<EndOfLine> endOfLineLexerFactory;
 
+        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly IRepetitionLexerFactory repetitionLexerFactory;
 
+        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly ISequenceLexerFactory sequenceLexerFactory;
 
+        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly ILexerFactory<WhiteSpace> whiteSpaceLexerFactory;
 
         public LinearWhiteSpaceLexerFactory(

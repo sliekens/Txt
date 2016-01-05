@@ -9,10 +9,12 @@
 namespace TextFx.ABNF.Core
 {
     using System;
+    using System.Diagnostics;
 
     [RuleName("LWSP")]
     public class LinearWhiteSpaceLexer : Lexer<LinearWhiteSpace>
     {
+        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly ILexer<Repetition> innerLexer;
 
         public LinearWhiteSpaceLexer(ILexer<Repetition> innerLexer)

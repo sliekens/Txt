@@ -12,9 +12,11 @@
     public class PushbackInputStream : Stream
     {
         /// <summary>The input stream that is being wrapped.</summary>
+        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly Stream stream;
 
         /// <summary>The current pushback buffer.</summary>
+        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly Stack<byte> pushback;
 
         /// <summary>
