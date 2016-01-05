@@ -36,6 +36,9 @@
     <DocumentationFile>bin\Release\TextFx.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\Shared\JetBrains.Annotations.cs">
+      <Link>JetBrains.Annotations.cs</Link>
+    </Compile>
     <Compile Include="..\Shared\SwitchOnBuild.cs">
       <Link>SwitchOnBuild.cs</Link>
     </Compile>
