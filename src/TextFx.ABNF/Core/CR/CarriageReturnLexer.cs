@@ -11,7 +11,6 @@ namespace TextFx.ABNF.Core
     using System;
     using System.Diagnostics;
 
-    [RuleName("CR")]
     public class CarriageReturnLexer : Lexer<CarriageReturn>
     {
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]

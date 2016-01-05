@@ -11,7 +11,6 @@ namespace TextFx.ABNF.Core
     using System;
     using System.Diagnostics;
 
-    [RuleName("HTAB")]
     public class HorizontalTabLexer : Lexer<HorizontalTab>
     {
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]

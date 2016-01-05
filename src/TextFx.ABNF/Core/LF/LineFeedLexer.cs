@@ -11,7 +11,6 @@ namespace TextFx.ABNF.Core
     using System;
     using System.Diagnostics;
 
-    [RuleName("LF")]
     public class LineFeedLexer : Lexer<LineFeed>
     {
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]

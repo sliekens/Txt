@@ -11,7 +11,6 @@ namespace TextFx.ABNF.Core
     using System;
     using System.Diagnostics;
 
-    [RuleName("WSP")]
     public class WhiteSpaceLexer : Lexer<WhiteSpace>
     {
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]

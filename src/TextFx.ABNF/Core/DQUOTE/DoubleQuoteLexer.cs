@@ -11,7 +11,6 @@ namespace TextFx.ABNF.Core
     using System;
     using System.Diagnostics;
 
-    [RuleName("DQUOTE")]
     public class DoubleQuoteLexer : Lexer<DoubleQuote>
     {
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]

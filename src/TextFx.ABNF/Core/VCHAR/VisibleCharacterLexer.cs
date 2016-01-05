@@ -11,7 +11,6 @@ namespace TextFx.ABNF.Core
     using System;
     using System.Diagnostics;
 
-    [RuleName("VCHAR")]
     public class VisibleCharacterLexer : Lexer<VisibleCharacter>
     {
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]

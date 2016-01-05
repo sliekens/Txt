@@ -11,7 +11,6 @@ namespace TextFx.ABNF.Core
     using System;
     using System.Diagnostics;
 
-    [RuleName("OCTET")]
     public class OctetLexer : Lexer<Octet>
     {
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]

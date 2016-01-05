@@ -11,7 +11,6 @@ namespace TextFx.ABNF.Core
     using System;
     using System.Diagnostics;
 
-    [RuleName("BIT")]
     public class BitLexer : Lexer<Bit>
     {
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]

@@ -11,7 +11,6 @@ namespace TextFx.ABNF.Core
     using System;
     using System.Diagnostics;
 
-    [RuleName("HEXDIG")]
     public class HexadecimalDigitLexer : Lexer<HexadecimalDigit>
     {
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]

@@ -30,7 +30,6 @@ namespace TextFx
     ///         Re-use lexer classes for lexer rules that reference other lexer rules.
     ///     </para>
     /// </remarks>
-    [RuleName("unnamed")]
     public abstract class Lexer<TElement> : ILexer<TElement>
         where TElement : Element
     {

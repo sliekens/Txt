@@ -50,7 +50,6 @@
     <Compile Include="ITextSource.cs" />
     <Compile Include="MatchResult.cs" />
     <Compile Include="ReadResult.cs" />
-    <Compile Include="RuleNameAttribute.cs" />
     <Compile Include="ILexerFactory.cs" />
     <Compile Include="ILexer`1.cs" />
     <Compile Include="ITextContext.cs" />
