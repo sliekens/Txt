@@ -10,13 +10,13 @@ namespace TextFx
     /// <summary>Provides the base class for all elements.</summary>
     public abstract class Element : ITextContext, IReadOnlyList<Element>
     {
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly ITextContext context;
 
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly string text;
 
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         protected IList<Element> elements;
 
         /// <summary>Initializes a new instance of the <see cref="Element" /> class with a given element to copy.</summary>

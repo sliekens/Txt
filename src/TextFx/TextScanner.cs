@@ -14,7 +14,7 @@
 
         private bool endOfInput;
 
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private int offset;
 
         public TextScanner(ITextSource textSource)

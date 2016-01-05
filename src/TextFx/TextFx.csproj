@@ -36,6 +36,9 @@
     <DocumentationFile>bin\Release\TextFx.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\Shared\SwitchOnBuild.cs">
+      <Link>SwitchOnBuild.cs</Link>
+    </Compile>
     <Compile Include="ILexer.cs" />
     <Compile Include="ITerminalLexerFactory.cs" />
     <Compile Include="ITextSource.cs" />

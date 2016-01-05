@@ -6,10 +6,10 @@
     /// <summary>Provides methods for reading a range of alternative values.</summary>
     public class ValueRangeLexer : Lexer<Terminal>
     {
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly char lowerBound;
 
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly char upperBound;
 
         /// <summary>
