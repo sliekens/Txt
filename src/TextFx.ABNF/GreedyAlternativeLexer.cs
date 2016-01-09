@@ -4,6 +4,7 @@ namespace TextFx.ABNF
 {
     using System;
     using System.Diagnostics;
+    using System.Linq;
 
     /// <summary>
     ///     Wraps a collection of <see cref="ILexer" /> and tests their <see cref="ILexer.ReadElement" /> method until the
@@ -82,7 +83,7 @@ namespace TextFx.ABNF
             {
                 return ReadResult<Alternative>.FromError(new AggregateSyntaxError(errors)
                 {
-                    Message = "One or more syntax errors were found.",
+                    Message = "Expected one of: " + string.Join(" / ", errors.Select(syntaxError => syntaxError.RuleName ?? "(no name)")),
                     Context = context
                 });
             }
