@@ -2,33 +2,42 @@
 {
     using System;
     using System.Diagnostics;
+    using System.Text;
+    using JetBrains.Annotations;
 
     /// <summary>Provides methods for reading a range of alternative values.</summary>
     public class ValueRangeLexer : Lexer<Terminal>
     {
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly char lowerBound;
+        private readonly char[] valueRange;
 
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly char upperBound;
+        private readonly int lowerBound;
+
+        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
+        private readonly int upperBound;
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="ValueRangeLexer" /> class with a specified lower and upper bound,
-        ///     both inclusive.
+        ///     Initializes a new instance of the <see cref="ValueRangeLexer" /> class with a specified value range.
         /// </summary>
-        /// <param name="lowerBound">The lower bound of the range of alternatives (inclusive).</param>
-        /// <param name="upperBound">The upper bound of the range of alternatives (inclusive).</param>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///     The value of <paramref name="upperBound" /> is smaller than the value of
-        ///     <paramref name="lowerBound" />.
-        /// </exception>
-        public ValueRangeLexer(char lowerBound, char upperBound)
+        public ValueRangeLexer([NotNull] char[] valueRange, int lowerBound, int upperBound)
         {
+            if (valueRange == null)
+            {
+                throw new ArgumentNullException(nameof(valueRange));
+            }
+
+            if (valueRange.Length == 0)
+            {
+                throw new ArgumentException("Argument is empty collection", nameof(valueRange));
+            }
+
             if (upperBound < lowerBound)
             {
                 throw new ArgumentOutOfRangeException(nameof(upperBound), "Precondition: upperBound >= lowerBound");
             }
 
+            this.valueRange = valueRange;
             this.lowerBound = lowerBound;
             this.upperBound = upperBound;
         }
@@ -50,26 +59,32 @@
                 });
             }
 
-            char next = default(char);
-            for (var c = this.lowerBound; c <= this.upperBound; c++)
-            {
-                var result = scanner.TryMatch(c);
-                if (result.Success)
-                {
-                    var element = new Terminal(result.Text, context);
-                    if (previousElementOrNull != null)
-                    {
-                        element.PreviousElement = previousElementOrNull;
-                        previousElementOrNull.NextElement = element;
-                    }
+            MatchResult result = null;
 
-                    return ReadResult<Terminal>.FromResult(element);
+            // ReSharper disable once ForCanBeConvertedToForeach
+            for (int i = 0; i < valueRange.Length; i++)
+            {
+                var c = valueRange[i];
+                result = scanner.TryMatch(c);
+                if (!result.Success)
+                {
+                    continue;
                 }
+
+                var element = new Terminal(result.Text, context);
+                if (previousElementOrNull != null)
+                {
+                    element.PreviousElement = previousElementOrNull;
+                    previousElementOrNull.NextElement = element;
+                }
+
+                return ReadResult<Terminal>.FromResult(element);
             }
 
+            Debug.Assert(result != null, "result != null");
             return ReadResult<Terminal>.FromError(new SyntaxError
             {
-                Message = $"Unexpected symbol: '{next}'. Expected value range: '0x{(int)this.lowerBound:X2}-{(int)this.upperBound:X2}'.",
+                Message = $"Unexpected symbol: '{result.Text}'. Expected value range: '0x{(int)this.lowerBound:X2}-{(int)this.upperBound:X2}'.",
                 Context = context
             });
         }
