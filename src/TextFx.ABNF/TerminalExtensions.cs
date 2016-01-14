@@ -1,8 +1,8 @@
-﻿using System.Linq;
-
-namespace TextFx.ABNF
+﻿namespace TextFx.ABNF
 {
     using System;
+    using System.Linq;
+    using JetBrains.Annotations;
 
     public static class TerminalExtensions
     {
@@ -13,13 +13,12 @@ namespace TextFx.ABNF
         /// <param name="toBase">The base of the return value, which must be 2, 8, 10, or 16.</param>
         /// <returns>The converted value in the specified base.</returns>
         /// <exception cref="ArgumentException"><paramref name="toBase" /> is not 2, 8, 10, or 16.</exception>
-        public static string ToBase(this Terminal instance, int toBase)
+        public static string ToBase([NotNull] this Terminal instance, int toBase)
         {
             if (instance == null)
             {
-                throw new ArgumentNullException();
+                throw new ArgumentNullException(nameof(instance));
             }
-
             var values = instance.Text.ToCharArray().Select(c => Convert.ToString(c, toBase).ToUpperInvariant());
             var valuesAsString = string.Join(".", values);
             switch (toBase)

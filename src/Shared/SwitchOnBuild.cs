@@ -6,8 +6,8 @@
     internal sealed class SwitchOnBuild
     {
         /// <summary>
-        /// DEBUG: <see cref="F:DebuggerBrowsableState.Collapsed"/>.
-        /// Other: <see cref="F:DebuggerBrowsableState.Never"/>.
+        ///     DEBUG: <see cref="F:DebuggerBrowsableState.Collapsed" />.
+        ///     Other: <see cref="F:DebuggerBrowsableState.Never" />.
         /// </summary>
         internal const DebuggerBrowsableState DebuggerBrowsableState =
 #if !DEBUG

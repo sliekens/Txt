@@ -9,9 +9,11 @@
 
 namespace TextFx.ABNF.Core
 {
+    using JetBrains.Annotations;
+
     public class WhiteSpace : Alternative
     {
-        public WhiteSpace(Alternative element)
+        public WhiteSpace([NotNull] Alternative element)
             : base(element)
         {
         }

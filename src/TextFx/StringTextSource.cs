@@ -7,10 +7,10 @@
     public class StringTextSource : TextSource
     {
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly Queue<char> s;
+        private readonly Stack<char> pusback;
 
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly Stack<char> pusback;
+        private readonly Queue<char> s;
 
         public StringTextSource(string s)
         {
@@ -18,30 +18,27 @@
             {
                 throw new ArgumentNullException(nameof(s));
             }
-
             this.s = new Queue<char>(s.Length);
+
             // ReSharper disable once ForCanBeConvertedToForeach
-            for (int index = 0; index < s.Length; index++)
+            for (var index = 0; index < s.Length; index++)
             {
                 this.s.Enqueue(s[index]);
             }
-
-            this.pusback = new Stack<char>();
+            pusback = new Stack<char>();
         }
 
         public override int Read()
         {
-            if (this.pusback.Count != 0)
+            if (pusback.Count != 0)
             {
-                return this.pusback.Pop();
+                return pusback.Pop();
             }
-
-            if (this.s.Count == 0)
+            if (s.Count == 0)
             {
                 return -1;
             }
-
-            return this.s.Dequeue();
+            return s.Dequeue();
         }
 
         public override int Read(char[] buffer, int offset, int count)
@@ -50,46 +47,40 @@
             {
                 throw new ArgumentNullException(nameof(buffer));
             }
-
             if (offset < 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(offset), "Precondition: offset >= 0");
             }
-
             if (count < 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(count), "Precondition: count >= 0");
             }
-
             if (offset + count > buffer.Length)
             {
                 throw new ArgumentOutOfRangeException(nameof(count), "Precondition: offset + count <= buffer.Length");
             }
-
             int length;
             for (length = 0; length < count; length++, offset++)
             {
-                if (this.pusback.Count == 0)
+                if (pusback.Count == 0)
                 {
-                    if (this.s.Count == 0)
+                    if (s.Count == 0)
                     {
                         break;
                     }
-
-                    buffer[offset] = this.s.Dequeue();
+                    buffer[offset] = s.Dequeue();
                 }
                 else
                 {
-                    buffer[offset] = this.pusback.Pop();
+                    buffer[offset] = pusback.Pop();
                 }
             }
-
             return length;
         }
 
         public override void Unread(char c)
         {
-            this.pusback.Push(c);
+            pusback.Push(c);
         }
 
         public override void Unread(char[] buffer, int offset, int count)
@@ -98,25 +89,21 @@
             {
                 throw new ArgumentNullException(nameof(buffer));
             }
-
             if (offset < 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(offset), "Precondition: offset >= 0");
             }
-
             if (count < 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(count), "Precondition: count >= 0");
             }
-
             if (offset + count > buffer.Length)
             {
                 throw new ArgumentOutOfRangeException(nameof(count), "Precondition: offset + count <= buffer.Length");
             }
-
-            for (int i = offset + count - 1; i >= 0; i--)
+            for (var i = offset + count - 1; i >= 0; i--)
             {
-                this.pusback.Push(buffer[i]);
+                pusback.Push(buffer[i]);
             }
         }
     }

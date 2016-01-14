@@ -9,9 +9,11 @@
 
 namespace TextFx.ABNF.Core
 {
+    using JetBrains.Annotations;
+
     public class ControlCharacter : Alternative
     {
-        public ControlCharacter(Alternative element)
+        public ControlCharacter([NotNull] Alternative element)
             : base(element)
         {
         }

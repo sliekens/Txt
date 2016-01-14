@@ -20,7 +20,7 @@ namespace TextFx
             : this()
         {
             Debug.Assert(offset >= 0, "offset >= 0");
-            this.Offset = offset;
+            Offset = offset;
         }
 
         /// <summary>Gets the current position, relative to the beginning of the data source.</summary>

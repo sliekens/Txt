@@ -12,6 +12,7 @@ using System.Resources;
 [assembly: NeutralResourcesLanguage("en")]
 
 #if DEBUG
+
 [assembly: AssemblyConfiguration("Debug")]
 #else
 [assembly: AssemblyConfiguration("Release")]

@@ -10,10 +10,11 @@
 namespace TextFx.ABNF.Core
 {
     using System.Diagnostics;
+    using JetBrains.Annotations;
 
     public class Bit : Alternative
     {
-        public Bit(Alternative element)
+        public Bit([NotNull] Alternative element)
             : base(element)
         {
         }
@@ -25,12 +26,11 @@ namespace TextFx.ABNF.Core
 
         public bool ToBool()
         {
-            Debug.Assert(this.Text == "0" || this.Text == "1", "this.Text == '0' || this.Text == '1'");
-            if (this.Text == "1")
+            Debug.Assert(Text == "0" || Text == "1", "this.Text == '0' || this.Text == '1'");
+            if (Text == "1")
             {
                 return true;
             }
-
             return false;
         }
     }

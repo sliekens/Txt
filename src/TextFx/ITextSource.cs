@@ -2,6 +2,7 @@
 {
     using System;
     using System.Threading.Tasks;
+    using JetBrains.Annotations;
 
     /// <summary>
     ///     Provides the interface for data sources that contain text.
@@ -10,18 +11,18 @@
     {
         int Read();
 
+        int Read([NotNull] char[] buffer, int offset, int count);
+
+        Task<int> ReadAsync([NotNull] char[] buffer, int offset, int count);
+
+        int ReadBlock([NotNull] char[] buffer, int offset, int count);
+
+        Task<int> ReadBlockAsync([NotNull] char[] buffer, int offset, int count);
+
         void Unread(char c);
 
-        int Read(char[] buffer, int offset, int count);
+        void Unread([NotNull] char[] buffer, int offset, int count);
 
-        Task<int> ReadAsync (char[] buffer, int offset, int count);
-
-        int ReadBlock(char[] buffer, int offset, int count);
-
-        Task<int> ReadBlockAsync(char[] buffer, int offset, int count);
-
-        void Unread(char[] buffer, int offset, int count);
-
-        Task UnreadAsync(char[] buffer, int offset, int count);
+        Task UnreadAsync([NotNull] char[] buffer, int offset, int count);
     }
 }

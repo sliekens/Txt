@@ -12,6 +12,7 @@ namespace TextFx
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using JetBrains.Annotations;
 
     public interface ITextScanner : ITextContext, IDisposable
     {
@@ -46,12 +47,13 @@ namespace TextFx
         ///     match. This method performs a case-sensitive ordinal comparison.
         /// </summary>
         /// <param name="s">The string to compare to the next available string.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="s"/> is a null reference.</exception>
         /// <exception cref="ObjectDisposedException">The current text scanner is closed.</exception>
         /// <returns>
         ///     A value container that contains the next available string and another value indicating whether it matches the
         ///     given string.
         /// </returns>
-        MatchResult TryMatch(string s);
+        MatchResult TryMatch([NotNull] string s);
 
         /// <summary>
         ///     Compares the given string to the next available string and advances the scanner's position if there is a
@@ -59,21 +61,24 @@ namespace TextFx
         /// </summary>
         /// <param name="s">The string to compare to the next available string.</param>
         /// <param name="comparer">An object that checks two strings for equality.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="s"/> or <paramref name="comparer"/> is a null reference.</exception>
         /// <exception cref="ObjectDisposedException">The current text scanner is closed.</exception>
         /// <returns>
         ///     A value container that contains the next available string and another value indicating whether it matches the
         ///     given string.
         /// </returns>
-        MatchResult TryMatch(string s, IEqualityComparer<string> comparer);
+        MatchResult TryMatch([NotNull] string s, [NotNull] IEqualityComparer<string> comparer);
 
         /// <summary>Prepends the given text to the input stream.</summary>
         /// <param name="s">The text to put back.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="s"/> is a null reference.</exception>
         /// <exception cref="ObjectDisposedException">The current text scanner is closed.</exception>
-        void Unread(string s);
+        void Unread([NotNull] string s);
 
         /// <summary>Prepends the given text to the input stream.</summary>
         /// <param name="s">The text to put back.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="s"/> is a null reference.</exception>
         /// <exception cref="ObjectDisposedException">The current text scanner is closed.</exception>
-        Task UnreadAsync(string s);
+        Task UnreadAsync([NotNull] string s);
     }
 }

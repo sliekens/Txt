@@ -9,12 +9,12 @@
     {
         ~TextSource()
         {
-            this.Dispose(false);
+            Dispose(false);
         }
 
         public void Dispose()
         {
-            this.Dispose(true);
+            Dispose(true);
             GC.SuppressFinalize(this);
         }
 
@@ -28,28 +28,23 @@
             {
                 throw new ArgumentNullException(nameof(buffer));
             }
-
             if (offset < 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(offset), "Precondition: offset >= 0");
             }
-
             if (count < 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(count), "Precondition: count >= 0");
             }
-
             if (offset + count > buffer.Length)
             {
                 throw new ArgumentOutOfRangeException(nameof(count), "Precondition: offset + count <= buffer.Length");
             }
-
             if (count == 0)
             {
                 return Task.FromResult(0);
             }
-
-            return this.ReadAsyncImpl(buffer, offset, count, CancellationToken.None);
+            return ReadAsyncImpl(buffer, offset, count, CancellationToken.None);
         }
 
         public virtual int ReadBlock(char[] buffer, int offset, int count)
@@ -57,9 +52,8 @@
             int i, n = 0;
             do
             {
-                n += i = this.Read(buffer, offset + n, count - n);
-            }
-            while (i > 0 && n < count);
+                n += i = Read(buffer, offset + n, count - n);
+            } while (i > 0 && n < count);
             return n;
         }
 
@@ -69,33 +63,28 @@
             {
                 throw new ArgumentNullException(nameof(buffer));
             }
-
             if (offset < 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(offset), "Precondition: offset >= 0");
             }
-
             if (count < 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(count), "Precondition: count >= 0");
             }
-
             if (offset + count > buffer.Length)
             {
                 throw new ArgumentOutOfRangeException(nameof(count), "Precondition: offset + count <= buffer.Length");
             }
-
             if (count == 0)
             {
                 return Task.FromResult(0);
             }
-
-            return this.ReadBlockAsyncImpl(buffer, offset, count, CancellationToken.None);
+            return ReadBlockAsyncImpl(buffer, offset, count, CancellationToken.None);
         }
 
         public virtual void Unread(char c)
         {
-            this.Unread(new[] { c }, 0, 1);
+            Unread(new[] {c}, 0, 1);
         }
 
         public abstract void Unread(char[] buffer, int offset, int count);
@@ -106,28 +95,23 @@
             {
                 throw new ArgumentNullException(nameof(buffer));
             }
-
             if (offset < 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(offset), "Precondition: offset >= 0");
             }
-
             if (count < 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(count), "Precondition: count >= 0");
             }
-
             if (offset + count > buffer.Length)
             {
                 throw new ArgumentOutOfRangeException(nameof(count), "Precondition: offset + count <= buffer.Length");
             }
-
             if (count == 0)
             {
                 return TaskHelper.CompletedTask;
             }
-
-            return this.UnreadAsyncImpl(buffer, offset, count, CancellationToken.None);
+            return UnreadAsyncImpl(buffer, offset, count, CancellationToken.None);
         }
 
         protected virtual void Dispose(bool disposing)
@@ -137,14 +121,14 @@
         private static int DelegatedRead(object o)
         {
             Debug.Assert(o is InputOutputState, "o is InputOutputState");
-            var state = (InputOutputState)o;
+            var state = (InputOutputState) o;
             return state.TextSource.Read(state.Buffer, state.Offset, state.Count);
         }
 
         private static void DelegatedUnread(object o)
         {
             Debug.Assert(o is InputOutputState, "o is InputOutputState");
-            var state = (InputOutputState)o;
+            var state = (InputOutputState) o;
             state.TextSource.Unread(state.Buffer, state.Offset, state.Count);
         }
 
@@ -157,13 +141,13 @@
             return Task<int>.Factory.StartNew(
                 DelegatedRead,
                 new InputOutputState
-                    {
-                        TextSource = this,
-                        Buffer = buffer,
-                        Offset = offset,
-                        Count = count,
-                        CancellationToken = cancellationToken
-                    },
+                {
+                    TextSource = this,
+                    Buffer = buffer,
+                    Offset = offset,
+                    Count = count,
+                    CancellationToken = cancellationToken
+                },
                 cancellationToken);
         }
 
@@ -184,10 +168,9 @@
                 var currentCount = count - totalLength;
                 length =
                     await
-                    this.ReadAsyncImpl(buffer, currentOffset, currentCount, cancellationToken).ConfigureAwait(false);
+                        ReadAsyncImpl(buffer, currentOffset, currentCount, cancellationToken).ConfigureAwait(false);
                 totalLength += length;
-            }
-            while (length > 0 && totalLength < count);
+            } while (length > 0 && totalLength < count);
             return totalLength;
         }
 
@@ -200,13 +183,13 @@
             return Task.Factory.StartNew(
                 DelegatedUnread,
                 new InputOutputState
-                    {
-                        TextSource = this,
-                        Buffer = buffer,
-                        Offset = offset,
-                        Count = count,
-                        CancellationToken = cancellationToken
-                    },
+                {
+                    TextSource = this,
+                    Buffer = buffer,
+                    Offset = offset,
+                    Count = count,
+                    CancellationToken = cancellationToken
+                },
                 cancellationToken);
         }
 

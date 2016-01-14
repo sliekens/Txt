@@ -1,6 +1,8 @@
 ﻿namespace TextFx
 {
+    using System;
     using System.Diagnostics;
+    using JetBrains.Annotations;
 
     /// <summary>
     ///     Represents a terminal specification.
@@ -14,7 +16,8 @@
         ///     Creates a new instance of the <see cref="Terminal" /> class with a specified terminal to copy.
         /// </summary>
         /// <param name="terminal">The terminal element to copy.</param>
-        public Terminal(Terminal terminal)
+        /// <exception cref="ArgumentNullException">The value of <paramref name="terminal" /> is a null reference.</exception>
+        public Terminal([NotNull] Terminal terminal)
             : base(terminal)
         {
         }
@@ -24,7 +27,7 @@
         /// </summary>
         /// <param name="value">The terminal value.</param>
         /// <param name="context">An object that describes the current element's context.</param>
-        public Terminal(char value, ITextContext context)
+        public Terminal(char value, [NotNull] ITextContext context)
             : this(char.ToString(value), context)
         {
         }
@@ -34,7 +37,7 @@
         /// </summary>
         /// <param name="value">The terminal value.</param>
         /// <param name="context">An object that describes the current element's context.</param>
-        public Terminal(string value, ITextContext context)
+        public Terminal([NotNull] string value, [NotNull] ITextContext context)
             : base(value, context)
         {
             this.value = value;
@@ -43,7 +46,7 @@
         /// <inheritdoc />
         public override string GetWellFormedText()
         {
-            return this.value;
+            return value;
         }
     }
 }

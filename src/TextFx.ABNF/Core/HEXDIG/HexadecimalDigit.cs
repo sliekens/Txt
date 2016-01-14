@@ -9,9 +9,11 @@
 
 namespace TextFx.ABNF.Core
 {
+    using JetBrains.Annotations;
+
     public class HexadecimalDigit : Alternative
     {
-        public HexadecimalDigit(Alternative element)
+        public HexadecimalDigit([NotNull] Alternative element)
             : base(element)
         {
         }
@@ -19,7 +21,7 @@ namespace TextFx.ABNF.Core
         public override string GetWellFormedText()
         {
             // Well-formed HEXDIG uses upper case letters
-            return this.Text.ToUpperInvariant();
+            return Text.ToUpperInvariant();
         }
     }
 }

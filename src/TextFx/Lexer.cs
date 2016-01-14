@@ -25,7 +25,7 @@ namespace TextFx
     ///         There are a number of conventions that you should follow.
     ///         If the value of <see cref="ITextScanner.EndOfInput" /> is <c>true</c> and the grammar rule is not optional, you
     ///         should immediately return <c>false</c>.
-    ///         Do not throw any exceptions in <see cref="Read"/>.
+    ///         Do not throw any exceptions in <see cref="Read" />.
     ///         Lexer classes should be sealed.
     ///         Re-use lexer classes for lexer rules that reference other lexer rules.
     ///     </para>
@@ -37,12 +37,11 @@ namespace TextFx
 
         ReadResult<Element> ILexer.ReadElement(ITextScanner scanner, Element previousElementOrNull)
         {
-            var result = this.Read(scanner, previousElementOrNull);
+            var result = Read(scanner, previousElementOrNull);
             if (!result.Success)
             {
                 return ReadResult<Element>.FromError(result.Error);
             }
-
             return ReadResult<Element>.FromResult(result.Element);
         }
     }

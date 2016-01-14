@@ -10,6 +10,7 @@ namespace TextFx.ABNF.Core
 {
     using System;
     using System.Diagnostics;
+    using JetBrains.Annotations;
 
     public class AlphaLexer : Lexer<Alpha>
     {
@@ -19,38 +20,36 @@ namespace TextFx.ABNF.Core
         /// <summary>
         /// </summary>
         /// <param name="innerLexer">%x41-5A / %x61-7A</param>
-        public AlphaLexer(ILexer<Alternative> innerLexer)
+        public AlphaLexer([NotNull] ILexer<Alternative> innerLexer)
         {
             if (innerLexer == null)
             {
                 throw new ArgumentNullException(nameof(innerLexer));
             }
-
             this.innerLexer = innerLexer;
         }
 
         public override ReadResult<Alpha> Read(ITextScanner scanner, Element previousElementOrNull)
         {
             var context = scanner.GetContext();
-            var result = this.innerLexer.Read(scanner, null);
+            var result = innerLexer.Read(scanner, null);
             if (!result.Success)
             {
-                return ReadResult<Alpha>.FromError(new SyntaxError
-                {
-                    Message = "Expected 'ALPHA'.",
-                    RuleName = "ALPHA",
-                    Context = context,
-                    InnerError = result.Error
-                });
+                return ReadResult<Alpha>.FromError(
+                    new SyntaxError
+                    {
+                        Message = "Expected 'ALPHA'.",
+                        RuleName = "ALPHA",
+                        Context = context,
+                        InnerError = result.Error
+                    });
             }
-
             var element = new Alpha(result.Element);
             if (previousElementOrNull != null)
             {
                 element.PreviousElement = previousElementOrNull;
                 previousElementOrNull.NextElement = element;
             }
-
             return ReadResult<Alpha>.FromResult(element);
         }
     }

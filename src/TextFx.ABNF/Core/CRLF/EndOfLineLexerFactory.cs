@@ -2,6 +2,7 @@
 {
     using System;
     using System.Diagnostics;
+    using JetBrains.Annotations;
 
     /// <summary>Creates instances of the <see cref="EndOfLineLexer" /> class.</summary>
     public class EndOfLineLexerFactory : ILexerFactory<EndOfLine>
@@ -10,31 +11,35 @@
         private readonly ILexerFactory<CarriageReturn> carriageReturnLexerFactory;
 
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly ILexerFactory<LineFeed> lineFeedLexerFactory;
-
-        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly IConcatenationLexerFactory concatenationLexerFactory;
 
+        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
+        private readonly ILexerFactory<LineFeed> lineFeedLexerFactory;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="carriageReturnLexerFactory"></param>
+        /// <param name="lineFeedLexerFactory"></param>
+        /// <param name="concatenationLexerFactory"></param>
+        /// <exception cref="ArgumentNullException"></exception>
         public EndOfLineLexerFactory(
-            ILexerFactory<CarriageReturn> carriageReturnLexerFactory,
-            ILexerFactory<LineFeed> lineFeedLexerFactory,
-            IConcatenationLexerFactory concatenationLexerFactory)
+            [NotNull] ILexerFactory<CarriageReturn> carriageReturnLexerFactory,
+            [NotNull] ILexerFactory<LineFeed> lineFeedLexerFactory,
+            [NotNull] IConcatenationLexerFactory concatenationLexerFactory)
         {
             if (carriageReturnLexerFactory == null)
             {
                 throw new ArgumentNullException(nameof(carriageReturnLexerFactory));
             }
-
             if (lineFeedLexerFactory == null)
             {
                 throw new ArgumentNullException(nameof(lineFeedLexerFactory));
             }
-
             if (concatenationLexerFactory == null)
             {
                 throw new ArgumentNullException(nameof(concatenationLexerFactory));
             }
-
             this.carriageReturnLexerFactory = carriageReturnLexerFactory;
             this.lineFeedLexerFactory = lineFeedLexerFactory;
             this.concatenationLexerFactory = concatenationLexerFactory;
@@ -43,9 +48,9 @@
         /// <inheritdoc />
         public ILexer<EndOfLine> Create()
         {
-            var carriageReturnLexer = this.carriageReturnLexerFactory.Create();
-            var lineFeedLexer = this.lineFeedLexerFactory.Create();
-            var endOfLineSequenceLexer = this.concatenationLexerFactory.Create(carriageReturnLexer, lineFeedLexer);
+            var carriageReturnLexer = carriageReturnLexerFactory.Create();
+            var lineFeedLexer = lineFeedLexerFactory.Create();
+            var endOfLineSequenceLexer = concatenationLexerFactory.Create(carriageReturnLexer, lineFeedLexer);
             return new EndOfLineLexer(endOfLineSequenceLexer);
         }
     }

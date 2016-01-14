@@ -2,20 +2,19 @@
 {
     using System;
     using System.Diagnostics;
-    using System.Text;
     using JetBrains.Annotations;
 
     /// <summary>Provides methods for reading a range of alternative values.</summary>
     public class ValueRangeLexer : Lexer<Terminal>
     {
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly char[] valueRange;
-
-        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly int lowerBound;
 
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly int upperBound;
+
+        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
+        private readonly char[] valueRange;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="ValueRangeLexer" /> class with a specified value range.
@@ -26,17 +25,14 @@
             {
                 throw new ArgumentNullException(nameof(valueRange));
             }
-
             if (valueRange.Length == 0)
             {
                 throw new ArgumentException("Argument is empty collection", nameof(valueRange));
             }
-
             if (upperBound < lowerBound)
             {
                 throw new ArgumentOutOfRangeException(nameof(upperBound), "Precondition: upperBound >= lowerBound");
             }
-
             this.valueRange = valueRange;
             this.lowerBound = lowerBound;
             this.upperBound = upperBound;
@@ -48,21 +44,20 @@
             {
                 throw new ArgumentNullException(nameof(scanner));
             }
-
             var context = scanner.GetContext();
             if (scanner.EndOfInput)
             {
-                return ReadResult<Terminal>.FromError(new SyntaxError
-                {
-                    Message = $"Unexpected end of input. Expected value range: '0x{(int)this.lowerBound:X2}-{(int)this.upperBound:X2}'.",
-                    Context = context
-                });
+                return ReadResult<Terminal>.FromError(
+                    new SyntaxError
+                    {
+                        Message = $"Unexpected end of input. Expected value range: '0x{lowerBound:X2}-{upperBound:X2}'.",
+                        Context = context
+                    });
             }
-
             MatchResult result = null;
 
             // ReSharper disable once ForCanBeConvertedToForeach
-            for (int i = 0; i < valueRange.Length; i++)
+            for (var i = 0; i < valueRange.Length; i++)
             {
                 var c = valueRange[i];
                 result = scanner.TryMatch(c);
@@ -70,23 +65,22 @@
                 {
                     continue;
                 }
-
                 var element = new Terminal(result.Text, context);
                 if (previousElementOrNull != null)
                 {
                     element.PreviousElement = previousElementOrNull;
                     previousElementOrNull.NextElement = element;
                 }
-
                 return ReadResult<Terminal>.FromResult(element);
             }
-
             Debug.Assert(result != null, "result != null");
-            return ReadResult<Terminal>.FromError(new SyntaxError
-            {
-                Message = $"Unexpected symbol: '{result.Text}'. Expected value range: '0x{(int)this.lowerBound:X2}-{(int)this.upperBound:X2}'.",
-                Context = context
-            });
+            return ReadResult<Terminal>.FromError(
+                new SyntaxError
+                {
+                    Message =
+                        $"Unexpected symbol: '{result.Text}'. Expected value range: '0x{lowerBound:X2}-{upperBound:X2}'.",
+                    Context = context
+                });
         }
     }
 }

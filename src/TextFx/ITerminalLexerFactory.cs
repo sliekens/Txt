@@ -1,6 +1,8 @@
 ﻿namespace TextFx
 {
+    using System;
     using System.Collections.Generic;
+    using JetBrains.Annotations;
 
     /// <summary>Provides the interface for factory classes that create lexers for a terminal value.</summary>
     public interface ITerminalLexerFactory
@@ -11,7 +13,11 @@
         /// </summary>
         /// <param name="terminal">The terminal value.</param>
         /// <param name="comparer"></param>
+        /// <exception cref="ArgumentNullException">
+        ///     <paramref name="terminal" /> or <paramref name="comparer" /> is a null
+        ///     reference.
+        /// </exception>
         /// <returns>>An instance of a class that implements <see cref="ILexer{TElement}" /> for the given terminal value.</returns>
-        ILexer<Terminal> Create(string terminal, IEqualityComparer<string> comparer);
+        ILexer<Terminal> Create([NotNull] string terminal, [NotNull] IEqualityComparer<string> comparer);
     }
 }

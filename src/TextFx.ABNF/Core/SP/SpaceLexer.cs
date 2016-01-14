@@ -10,6 +10,7 @@ namespace TextFx.ABNF.Core
 {
     using System;
     using System.Diagnostics;
+    using JetBrains.Annotations;
 
     public class SpaceLexer : Lexer<Space>
     {
@@ -19,38 +20,36 @@ namespace TextFx.ABNF.Core
         /// <summary>
         /// </summary>
         /// <param name="innerLexer">%x20</param>
-        public SpaceLexer(ILexer<Terminal> innerLexer)
+        public SpaceLexer([NotNull] ILexer<Terminal> innerLexer)
         {
             if (innerLexer == null)
             {
                 throw new ArgumentNullException(nameof(innerLexer));
             }
-
             this.innerLexer = innerLexer;
         }
 
         public override ReadResult<Space> Read(ITextScanner scanner, Element previousElementOrNull)
         {
             var context = scanner.GetContext();
-            var result = this.innerLexer.Read(scanner, null);
+            var result = innerLexer.Read(scanner, null);
             if (!result.Success)
             {
-                return ReadResult<Space>.FromError(new SyntaxError
-                {
-                    Message = "Expected 'SP'.",
-                    RuleName = "SP",
-                    Context = context,
-                    InnerError = result.Error
-                });
+                return ReadResult<Space>.FromError(
+                    new SyntaxError
+                    {
+                        Message = "Expected 'SP'.",
+                        RuleName = "SP",
+                        Context = context,
+                        InnerError = result.Error
+                    });
             }
-
             var element = new Space(result.Element);
             if (previousElementOrNull != null)
             {
                 element.PreviousElement = previousElementOrNull;
                 previousElementOrNull.NextElement = element;
             }
-
             return ReadResult<Space>.FromResult(element);
         }
     }

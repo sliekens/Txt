@@ -1,5 +1,7 @@
 ﻿namespace TextFx.ABNF
 {
+    using JetBrains.Annotations;
+
     /// <summary>Provides the interface for factory classes that create lexers for a set of alternative elements.</summary>
     public interface IAlternativeLexerFactory
     {
@@ -10,6 +12,6 @@
         /// </summary>
         /// <param name="lexers">A collection of lexers, one for each alternative element.</param>
         /// <returns>An instance of a class that implements <see cref="ILexer{TElement}" /> for the given alternatives.</returns>
-        ILexer<Alternative> Create(params ILexer[] lexers);
+        ILexer<Alternative> Create([NotNull][ItemNotNull] params ILexer[] lexers);
     }
 }

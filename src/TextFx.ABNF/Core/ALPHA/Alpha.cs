@@ -9,9 +9,11 @@
 
 namespace TextFx.ABNF.Core
 {
+    using JetBrains.Annotations;
+
     public class Alpha : Alternative
     {
-        public Alpha(Alternative element)
+        public Alpha([NotNull] Alternative element)
             : base(element)
         {
         }

@@ -10,6 +10,7 @@ namespace TextFx.ABNF.Core
 {
     using System;
     using System.Diagnostics;
+    using JetBrains.Annotations;
 
     public class DoubleQuoteLexer : Lexer<DoubleQuote>
     {
@@ -19,38 +20,36 @@ namespace TextFx.ABNF.Core
         /// <summary>
         /// </summary>
         /// <param name="innerLexer">%x22</param>
-        public DoubleQuoteLexer(ILexer<Terminal> innerLexer)
+        public DoubleQuoteLexer([NotNull] ILexer<Terminal> innerLexer)
         {
             if (innerLexer == null)
             {
                 throw new ArgumentNullException(nameof(innerLexer));
             }
-
             this.innerLexer = innerLexer;
         }
 
         public override ReadResult<DoubleQuote> Read(ITextScanner scanner, Element previousElementOrNull)
         {
             var context = scanner.GetContext();
-            var result = this.innerLexer.Read(scanner, null);
+            var result = innerLexer.Read(scanner, null);
             if (!result.Success)
             {
-                return ReadResult<DoubleQuote>.FromError(new SyntaxError
-                {
-                    Message = "Expected 'DQUOTE'.",
-                    RuleName = "DQUOTE",
-                    Context = context,
-                    InnerError = result.Error
-                });
+                return ReadResult<DoubleQuote>.FromError(
+                    new SyntaxError
+                    {
+                        Message = "Expected 'DQUOTE'.",
+                        RuleName = "DQUOTE",
+                        Context = context,
+                        InnerError = result.Error
+                    });
             }
-
             var element = new DoubleQuote(result.Element);
             if (previousElementOrNull != null)
             {
                 element.PreviousElement = previousElementOrNull;
                 previousElementOrNull.NextElement = element;
             }
-
             return ReadResult<DoubleQuote>.FromResult(element);
         }
     }
