@@ -73,17 +73,11 @@
                 return ReadResult<Alternative>.FromError(
                     new AggregateSyntaxError(errors)
                     {
-                        Message =
-                            "Expected one of: " +
-                            string.Join(" / ", errors.Select(syntaxError => syntaxError.RuleName ?? "(no name)")),
+                        Message = "One or more syntax errors were found.",
                         Context = context
                     });
             }
-            var elements = new List<Element>(1)
-            {
-                bestCandidate.ReadElement(scanner, null).Element
-            };
-            var element = new Alternative(elements, context, ordinal);
+            var element = new Alternative(bestCandidate.ReadElement(scanner, null).Element, ordinal);
             if (previousElementOrNull != null)
             {
                 element.PreviousElement = previousElementOrNull;

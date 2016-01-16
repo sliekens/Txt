@@ -64,7 +64,7 @@
                 }
                 else
                 {
-                    var element = new Alternative(new List<Element>(1) {result.Element}, context, i + 1);
+                    var element = new Alternative(result.Element, i + 1);
                     if (previousElementOrNull != null)
                     {
                         element.PreviousElement = previousElementOrNull;
@@ -76,9 +76,7 @@
             return ReadResult<Alternative>.FromError(
                 new AggregateSyntaxError(errors)
                 {
-                    Message =
-                        "Expected one of: " +
-                        string.Join(" / ", errors.Select(syntaxError => syntaxError.RuleName ?? "(no name)")),
+                    Message = "One or more syntax errors were found.",
                     Context = context
                 });
         }

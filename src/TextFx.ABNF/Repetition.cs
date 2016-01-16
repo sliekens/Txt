@@ -4,11 +4,9 @@
     using System.Collections.Generic;
     using JetBrains.Annotations;
 
-    // TODO: this should derive from Element instead of Concatenation
-    public class Repetition : Concatenation
+    public class Repetition : Element
     {
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="repetition"></param>
         /// <exception cref="ArgumentNullException">The value of <paramref name="repetition" /> is a null reference.</exception>
@@ -18,13 +16,19 @@
         }
 
         /// <summary>
-        /// 
         /// </summary>
+        /// <param name="repetition"></param>
         /// <param name="elements"></param>
         /// <param name="context"></param>
-        /// <exception cref="ArgumentNullException">The value of <paramref name="elements" /> or <paramref name="context"/> is a null reference.</exception>
-        public Repetition([NotNull][ItemNotNull] IList<Element> elements, [NotNull] ITextContext context)
-            : base(elements, context)
+        /// <exception cref="ArgumentNullException">
+        ///     The value of <paramref name="repetition" /> or <paramref name="elements" /> or
+        ///     <paramref name="context" /> is a null reference.
+        /// </exception>
+        public Repetition(
+            [NotNull] string repetition,
+            [NotNull] IList<Element> elements,
+            [NotNull] ITextContext context)
+            : base(repetition, elements, context)
         {
         }
     }

@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Linq;
     using JetBrains.Annotations;
 
     /// <summary>Provides the base class for lexers whose lexer rule is a repetition of elements.</summary>
@@ -63,16 +64,15 @@
                 }
                 elements.Add(lastResult.Element);
             }
+
+            var repetition = string.Concat(elements.Select(element => element.Text));
             if (elements.Count >= lowerBound)
             {
-                return ReadResult<Repetition>.FromResult(new Repetition(elements, context));
+                return ReadResult<Repetition>.FromResult(new Repetition(repetition, elements, context));
             }
-            if (elements.Count != 0)
+            if (repetition.Length != 0)
             {
-                for (var i = elements.Count - 1; i >= 0; i--)
-                {
-                    scanner.Unread(elements[i].Text);
-                }
+                scanner.Unread(repetition);
             }
             return ReadResult<Repetition>.FromError(
                 new SyntaxError

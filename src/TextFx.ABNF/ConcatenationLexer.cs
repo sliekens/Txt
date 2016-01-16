@@ -48,16 +48,14 @@
                 }
                 elements.Add(lastResult.Element);
             }
+            var concatenation = string.Concat(elements.Select(element => element.Text));
             if (elements.Count == lexers.Count)
             {
-                return ReadResult<Concatenation>.FromResult(new Concatenation(elements, context));
+                return ReadResult<Concatenation>.FromResult(new Concatenation(concatenation, elements, context));
             }
-            if (elements.Count != 0)
+            if (concatenation.Length != 0)
             {
-                for (var i = elements.Count - 1; i >= 0; i--)
-                {
-                    scanner.Unread(elements[i].Text);
-                }
+                scanner.Unread(concatenation);
             }
             return ReadResult<Concatenation>.FromError(
                 new SyntaxError
