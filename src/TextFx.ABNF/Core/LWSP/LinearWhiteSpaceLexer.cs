@@ -26,10 +26,10 @@ namespace TextFx.ABNF.Core
             this.innerLexer = innerLexer;
         }
 
-        public override ReadResult<LinearWhiteSpace> Read(ITextScanner scanner, Element previousElementOrNull)
+        public override ReadResult<LinearWhiteSpace> Read(ITextScanner scanner)
         {
             var context = scanner.GetContext();
-            var result = innerLexer.Read(scanner, null);
+            var result = innerLexer.Read(scanner);
             if (!result.Success)
             {
                 return ReadResult<LinearWhiteSpace>.FromError(
@@ -41,13 +41,7 @@ namespace TextFx.ABNF.Core
                         InnerError = result.Error
                     });
             }
-            var element = new LinearWhiteSpace(result.Element);
-            if (previousElementOrNull != null)
-            {
-                element.PreviousElement = previousElementOrNull;
-                previousElementOrNull.NextElement = element;
-            }
-            return ReadResult<LinearWhiteSpace>.FromResult(element);
+            return ReadResult<LinearWhiteSpace>.FromResult(new LinearWhiteSpace(result.Element));
         }
     }
 }

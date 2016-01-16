@@ -30,7 +30,7 @@
             this.comparer = comparer;
         }
 
-        public override ReadResult<Terminal> Read(ITextScanner scanner, Element previousElementOrNull)
+        public override ReadResult<Terminal> Read(ITextScanner scanner)
         {
             if (scanner == null)
             {
@@ -57,11 +57,6 @@
                     });
             }
             var element = new Terminal(result.Text, context);
-            if (previousElementOrNull != null)
-            {
-                element.PreviousElement = previousElementOrNull;
-                previousElementOrNull.NextElement = element;
-            }
             return ReadResult<Terminal>.FromResult(element);
         }
     }

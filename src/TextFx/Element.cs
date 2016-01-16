@@ -11,7 +11,6 @@
     public abstract class Element : ITextContext, IReadOnlyList<Element>
     {
         [NotNull]
-        [ItemNotNull]
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly Element[] elements;
 
@@ -103,14 +102,8 @@
             }
         }
 
-        [CanBeNull]
-        public Element NextElement { get; set; }
-
         /// <summary>Gets the current position, relative to the beginning of the data source.</summary>
         public int Offset => context.Offset;
-
-        [CanBeNull]
-        public Element PreviousElement { get; set; }
 
         /// <summary>Gets one or more terminal values that represent the current element.</summary>
         [NotNull]
@@ -138,7 +131,6 @@
         /// </summary>
         /// <returns>A collection of terminal elements.</returns>
         [NotNull]
-        [ItemNotNull]
         public IEnumerable<Element> GetTerminals()
         {
             if (this is Terminal)

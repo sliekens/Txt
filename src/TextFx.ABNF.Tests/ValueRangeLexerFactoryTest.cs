@@ -23,7 +23,7 @@
             using (var text = new StringTextSource(s))
             using (var scanner = new TextScanner(text))
             {
-                var result = lexer.Read(scanner, null);
+                var result = lexer.Read(scanner);
                 Assert.Equal(s, result.Element.Text);
             }
         }

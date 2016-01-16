@@ -12,7 +12,7 @@
             var bitLexer = factory.Create();
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {
-                var result = bitLexer.Read(scanner, null);
+                var result = bitLexer.Read(scanner);
                 Assert.NotNull(result);
                 Assert.True(result.Success);
                 Assert.NotNull(result.Element);
@@ -28,7 +28,7 @@
             var bitLexer = factory.Create();
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {
-                var result = bitLexer.Read(scanner, null);
+                var result = bitLexer.Read(scanner);
                 Assert.NotNull(result);
                 Assert.True(result.Success);
                 Assert.NotNull(result.Element);
@@ -44,7 +44,7 @@
             var bitLexer = factory.Create();
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {
-                var result = bitLexer.Read(scanner, null);
+                var result = bitLexer.Read(scanner);
                 Assert.NotNull(result);
                 Assert.False(result.Success);
                 Assert.Null(result.Element);

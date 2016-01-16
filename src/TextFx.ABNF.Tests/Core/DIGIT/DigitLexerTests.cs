@@ -21,7 +21,7 @@
             var digitLexer = factory.Create();
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {
-                var result = digitLexer.Read(scanner, null);
+                var result = digitLexer.Read(scanner);
                 Assert.NotNull(result);
                 Assert.True(result.Success);
                 Assert.NotNull(result.Element);

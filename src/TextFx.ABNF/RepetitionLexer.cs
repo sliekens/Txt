@@ -44,7 +44,7 @@
             this.upperBound = upperBound;
         }
 
-        public override ReadResult<Repetition> Read(ITextScanner scanner, Element previousElementOrNull)
+        public override ReadResult<Repetition> Read(ITextScanner scanner)
         {
             if (scanner == null)
             {
@@ -57,7 +57,7 @@
             // ReSharper disable once ForCanBeConvertedToForeach
             for (var i = 0; i < upperBound; i++)
             {
-                lastResult = repeatingElementLexer.ReadElement(scanner, lastResult?.Element);
+                lastResult = repeatingElementLexer.ReadElement(scanner);
                 if (!lastResult.Success)
                 {
                     break;

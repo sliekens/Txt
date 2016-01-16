@@ -33,11 +33,11 @@ namespace TextFx
     public abstract class Lexer<TElement> : ILexer<TElement>
         where TElement : Element
     {
-        public abstract ReadResult<TElement> Read(ITextScanner scanner, Element previousElementOrNull);
+        public abstract ReadResult<TElement> Read(ITextScanner scanner);
 
-        ReadResult<Element> ILexer.ReadElement(ITextScanner scanner, Element previousElementOrNull)
+        ReadResult<Element> ILexer.ReadElement(ITextScanner scanner)
         {
-            var result = Read(scanner, previousElementOrNull);
+            var result = Read(scanner);
             if (!result.Success)
             {
                 return ReadResult<Element>.FromError(result.Error);

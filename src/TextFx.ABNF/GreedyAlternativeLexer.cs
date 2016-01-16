@@ -34,7 +34,7 @@
             this.lexers = lexers;
         }
 
-        public override ReadResult<Alternative> Read(ITextScanner scanner, Element previousElementOrNull)
+        public override ReadResult<Alternative> Read(ITextScanner scanner)
         {
             if (scanner == null)
             {
@@ -50,7 +50,7 @@
             for (var i = 0; i < lexers.Length; i++)
             {
                 var lexer = lexers[i];
-                var candidate = lexer.ReadElement(scanner, null);
+                var candidate = lexer.ReadElement(scanner);
                 if (candidate.Success)
                 {
                     var alternative = candidate.Element;
@@ -77,13 +77,7 @@
                         Context = context
                     });
             }
-            var element = new Alternative(bestCandidate.ReadElement(scanner, null).Element, ordinal);
-            if (previousElementOrNull != null)
-            {
-                element.PreviousElement = previousElementOrNull;
-                previousElementOrNull.NextElement = element;
-            }
-            return ReadResult<Alternative>.FromResult(element);
+            return ReadResult<Alternative>.FromResult(new Alternative(bestCandidate.ReadElement(scanner).Element, ordinal));
         }
     }
 }

@@ -17,12 +17,12 @@
 
         public FakeTryReadElement OnTryReadElement { get; set; }
 
-        public ReadResult<T> Read(ITextScanner scanner, Element previousElementOrNull)
+        public ReadResult<T> Read(ITextScanner scanner)
         {
             throw new NotImplementedException();
         }
 
-        ReadResult<Element> ILexer.ReadElement(ITextScanner scanner, Element previousElementOrNull)
+        ReadResult<Element> ILexer.ReadElement(ITextScanner scanner)
         {
             throw new NotImplementedException();
         }

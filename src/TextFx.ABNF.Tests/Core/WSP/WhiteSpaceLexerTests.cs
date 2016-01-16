@@ -20,7 +20,7 @@
             var whiteSpaceLexer = whiteSpaceLexerFactory.Create();
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {
-                var result = whiteSpaceLexer.Read(scanner, null);
+                var result = whiteSpaceLexer.Read(scanner);
                 Assert.NotNull(result);
                 Assert.True(result.Success);
                 Assert.NotNull(result.Element);

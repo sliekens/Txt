@@ -15,7 +15,7 @@
             var controlCharacterLexer = factory.Create();
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {
-                var result = controlCharacterLexer.Read(scanner, null);
+                var result = controlCharacterLexer.Read(scanner);
                 Assert.NotNull(result);
                 Assert.True(result.Success);
                 Assert.NotNull(result.Element);

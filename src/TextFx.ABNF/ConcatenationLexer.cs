@@ -28,7 +28,7 @@
             this.lexers = lexers;
         }
 
-        public override ReadResult<Concatenation> Read(ITextScanner scanner, Element previousElementOrNull)
+        public override ReadResult<Concatenation> Read(ITextScanner scanner)
         {
             if (scanner == null)
             {
@@ -41,7 +41,7 @@
             // ReSharper disable once ForCanBeConvertedToForeach
             for (var i = 0; i < lexers.Count; i++)
             {
-                lastResult = lexers[i].ReadElement(scanner, lastResult?.Element);
+                lastResult = lexers[i].ReadElement(scanner);
                 if (!lastResult.Success)
                 {
                     break;

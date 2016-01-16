@@ -12,7 +12,7 @@
             var lineFeedLexer = factory.Create();
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {
-                var result = lineFeedLexer.Read(scanner, null);
+                var result = lineFeedLexer.Read(scanner);
                 Assert.NotNull(result);
                 Assert.True(result.Success);
                 Assert.NotNull(result.Element);

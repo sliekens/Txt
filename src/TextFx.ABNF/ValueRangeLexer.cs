@@ -38,7 +38,7 @@
             this.upperBound = upperBound;
         }
 
-        public override ReadResult<Terminal> Read(ITextScanner scanner, Element previousElementOrNull)
+        public override ReadResult<Terminal> Read(ITextScanner scanner)
         {
             if (scanner == null)
             {
@@ -65,13 +65,7 @@
                 {
                     continue;
                 }
-                var element = new Terminal(result.Text, context);
-                if (previousElementOrNull != null)
-                {
-                    element.PreviousElement = previousElementOrNull;
-                    previousElementOrNull.NextElement = element;
-                }
-                return ReadResult<Terminal>.FromResult(element);
+                return ReadResult<Terminal>.FromResult(new Terminal(result.Text, context));
             }
             Debug.Assert(result != null, "result != null");
             return ReadResult<Terminal>.FromError(

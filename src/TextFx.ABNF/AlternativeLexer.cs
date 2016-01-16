@@ -42,10 +42,9 @@
         /// 
         /// </summary>
         /// <param name="scanner"></param>
-        /// <param name="previousElementOrNull"></param>
         /// <exception cref="ArgumentNullException"></exception>
         /// <returns></returns>
-        public override ReadResult<Alternative> Read(ITextScanner scanner, Element previousElementOrNull)
+        public override ReadResult<Alternative> Read(ITextScanner scanner)
         {
             if (scanner == null)
             {
@@ -57,20 +56,14 @@
             // ReSharper disable once ForCanBeConvertedToForeach
             for (var i = 0; i < lexers.Length; i++)
             {
-                var result = lexers[i].ReadElement(scanner, null);
+                var result = lexers[i].ReadElement(scanner);
                 if (!result.Success)
                 {
                     errors.Add(result.Error);
                 }
                 else
                 {
-                    var element = new Alternative(result.Element, i + 1);
-                    if (previousElementOrNull != null)
-                    {
-                        element.PreviousElement = previousElementOrNull;
-                        previousElementOrNull.NextElement = element;
-                    }
-                    return ReadResult<Alternative>.FromResult(element);
+                    return ReadResult<Alternative>.FromResult(new Alternative(result.Element, i + 1));
                 }
             }
             return ReadResult<Alternative>.FromError(
