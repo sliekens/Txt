@@ -17,18 +17,11 @@ namespace TextFx
     /// </summary>
     /// <typeparam name="TElement">The type of the element that represents the lexer rule.</typeparam>
     /// <remarks>
-    ///     <para>The terms "lexer rule" and "grammar rule" are used interchangeably.</para>
-    ///     <para>
     ///         Notes to inheritors.
-    ///         The name of grammar rules are case insensitive.
     ///         At minimum, you must provide an implementation for the <see cref="Read" /> method.
-    ///         There are a number of conventions that you should follow.
-    ///         If the value of <see cref="ITextScanner.EndOfInput" /> is <c>true</c> and the grammar rule is not optional, you
-    ///         should immediately return <c>false</c>.
-    ///         Do not throw any exceptions in <see cref="Read" />.
+    ///         There are conventions that you should follow.
+    ///         Do not throw exceptions.
     ///         Lexer classes should be sealed.
-    ///         Re-use lexer classes for lexer rules that reference other lexer rules.
-    ///     </para>
     /// </remarks>
     public abstract class Lexer<TElement> : ILexer<TElement>
         where TElement : Element
@@ -38,11 +31,11 @@ namespace TextFx
         ReadResult<Element> ILexer.ReadElement(ITextScanner scanner)
         {
             var result = Read(scanner);
-            if (!result.Success)
+            if (result.Success)
             {
-                return ReadResult<Element>.FromError(result.Error);
+                return ReadResult<Element>.FromResult(result.Element);
             }
-            return ReadResult<Element>.FromResult(result.Element);
+            return ReadResult<Element>.FromSyntaxError(result.Error);
         }
     }
 }

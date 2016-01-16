@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
+    using System.Text;
     using JetBrains.Annotations;
 
     public class ConcatenationLexer : Lexer<Concatenation>
@@ -11,7 +12,7 @@
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly IList<ILexer> lexers;
 
-        public ConcatenationLexer([NotNull][ItemNotNull] params ILexer[] lexers)
+        public ConcatenationLexer([NotNull] [ItemNotNull] params ILexer[] lexers)
         {
             if (lexers == null)
             {
@@ -34,36 +35,37 @@
             {
                 throw new ArgumentNullException(nameof(scanner));
             }
+            var stringBuilder = new StringBuilder();
             var context = scanner.GetContext();
             IList<Element> elements = new List<Element>(lexers.Count);
-            ReadResult<Element> lastResult = null;
 
             // ReSharper disable once ForCanBeConvertedToForeach
             for (var i = 0; i < lexers.Count; i++)
             {
-                lastResult = lexers[i].ReadElement(scanner);
-                if (!lastResult.Success)
+                var readResult = lexers[i].ReadElement(scanner);
+                if (readResult.Success)
                 {
-                    break;
+                    stringBuilder.Append(readResult.Text);
+                    elements.Add(readResult.Element);
                 }
-                elements.Add(lastResult.Element);
-            }
-            var concatenation = string.Concat(elements.Select(element => element.Text));
-            if (elements.Count == lexers.Count)
-            {
-                return ReadResult<Concatenation>.FromResult(new Concatenation(concatenation, elements, context));
-            }
-            if (concatenation.Length != 0)
-            {
-                scanner.Unread(concatenation);
-            }
-            return ReadResult<Concatenation>.FromError(
-                new SyntaxError
+                else
                 {
-                    Message = "A syntax error was found.",
-                    InnerError = lastResult?.Error,
-                    Context = context
-                });
+                    var partialMatch = stringBuilder.ToString();
+                    if (partialMatch.Length != 0)
+                    {
+                        scanner.Unread(partialMatch);
+                    }
+                    return
+                        ReadResult<Concatenation>.FromSyntaxError(
+                            new SyntaxError(
+                                readResult.EndOfInput,
+                                partialMatch,
+                                readResult.ErrorText,
+                                context,
+                                readResult.Error));
+                }
+            }
+            return ReadResult<Concatenation>.FromResult(new Concatenation(stringBuilder.ToString(), elements, context));
         }
     }
 }

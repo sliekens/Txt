@@ -33,18 +33,11 @@ namespace TextFx.ABNF.Core
         {
             var context = scanner.GetContext();
             var result = innerLexer.Read(scanner);
-            if (!result.Success)
+            if (result.Success)
             {
-                return ReadResult<Space>.FromError(
-                    new SyntaxError
-                    {
-                        Message = "Expected 'SP'.",
-                        RuleName = "SP",
-                        Context = context,
-                        InnerError = result.Error
-                    });
+                return ReadResult<Space>.FromResult(new Space(result.Element));
             }
-            return ReadResult<Space>.FromResult(new Space(result.Element));
+            return ReadResult<Space>.FromSyntaxError(SyntaxError.FromReadResult(result, context));
         }
     }
 }

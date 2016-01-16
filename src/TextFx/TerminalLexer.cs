@@ -37,27 +37,12 @@
                 throw new ArgumentNullException(nameof(scanner));
             }
             var context = scanner.GetContext();
-            if (scanner.EndOfInput)
-            {
-                return ReadResult<Terminal>.FromError(
-                    new SyntaxError
-                    {
-                        Message = $"Unexpected end of input. Expected symbol: '{terminal}'",
-                        Context = context
-                    });
-            }
             var result = scanner.TryMatch(terminal, comparer);
-            if (!result.Success)
+            if (result.Success)
             {
-                return ReadResult<Terminal>.FromError(
-                    new SyntaxError
-                    {
-                        Message = $"Unexpected symbol: '{result.Text}'. Expected symbol: '{terminal}'",
-                        Context = context
-                    });
+                return ReadResult<Terminal>.FromResult(new Terminal(result.Text, context));
             }
-            var element = new Terminal(result.Text, context);
-            return ReadResult<Terminal>.FromResult(element);
+            return ReadResult<Terminal>.FromSyntaxError(SyntaxError.FromMatchResult(result, context));
         }
     }
 }

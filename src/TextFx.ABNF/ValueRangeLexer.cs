@@ -45,15 +45,6 @@
                 throw new ArgumentNullException(nameof(scanner));
             }
             var context = scanner.GetContext();
-            if (scanner.EndOfInput)
-            {
-                return ReadResult<Terminal>.FromError(
-                    new SyntaxError
-                    {
-                        Message = $"Unexpected end of input. Expected value range: '0x{lowerBound:X2}-{upperBound:X2}'.",
-                        Context = context
-                    });
-            }
             MatchResult result = null;
 
             // ReSharper disable once ForCanBeConvertedToForeach
@@ -61,20 +52,17 @@
             {
                 var c = valueRange[i];
                 result = scanner.TryMatch(c);
-                if (!result.Success)
+                if (result.EndOfInput)
                 {
-                    continue;
+                    return ReadResult<Terminal>.FromSyntaxError(SyntaxError.FromMatchResult(result, context));
                 }
-                return ReadResult<Terminal>.FromResult(new Terminal(result.Text, context));
+                if (result.Success)
+                {
+                    return ReadResult<Terminal>.FromResult(new Terminal(result.Text, context));
+                }
             }
             Debug.Assert(result != null, "result != null");
-            return ReadResult<Terminal>.FromError(
-                new SyntaxError
-                {
-                    Message =
-                        $"Unexpected symbol: '{result.Text}'. Expected value range: '0x{lowerBound:X2}-{upperBound:X2}'.",
-                    Context = context
-                });
+            return ReadResult<Terminal>.FromSyntaxError(SyntaxError.FromMatchResult(result, context));
         }
     }
 }

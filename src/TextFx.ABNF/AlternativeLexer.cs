@@ -52,26 +52,26 @@
             }
             var context = scanner.GetContext();
             IList<SyntaxError> errors = new List<SyntaxError>(lexers.Length);
+            SyntaxError partialMatch = null;
 
             // ReSharper disable once ForCanBeConvertedToForeach
             for (var i = 0; i < lexers.Length; i++)
             {
                 var result = lexers[i].ReadElement(scanner);
-                if (!result.Success)
-                {
-                    errors.Add(result.Error);
-                }
-                else
+                if (result.Success)
                 {
                     return ReadResult<Alternative>.FromResult(new Alternative(result.Element, i + 1));
                 }
-            }
-            return ReadResult<Alternative>.FromError(
-                new AggregateSyntaxError(errors)
+
+                errors.Add(result.Error);
+                if (partialMatch == null || result.Text.Length > partialMatch.Text.Length)
                 {
-                    Message = "One or more syntax errors were found.",
-                    Context = context
-                });
+                    partialMatch = result.Error;
+                }
+            }
+
+            Debug.Assert(partialMatch != null, "partialMatch != null");
+            return ReadResult<Alternative>.FromSyntaxError(partialMatch);
         }
     }
 }

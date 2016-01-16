@@ -89,7 +89,7 @@
             }
             if (s.Length == 0)
             {
-                return MatchResult.FromMatch(string.Empty);
+                return MatchResult.FromMatch(string.Empty, s);
             }
             var buffer = new char[s.Length];
             var len = textSource.ReadBlock(buffer, 0, buffer.Length);
@@ -97,15 +97,15 @@
             if (len == 0)
             {
                 endOfInput = true;
-                return MatchResult.FromEndOfInput();
+                return MatchResult.FromEndOfInput(s);
             }
             if (!comparer.Equals(s, next))
             {
                 textSource.Unread(buffer, 0, len);
-                return MatchResult.FromMismatch(next);
+                return MatchResult.FromMismatch(next, s);
             }
             Interlocked.Add(ref offset, len);
-            return MatchResult.FromMatch(next);
+            return MatchResult.FromMatch(next, s);
         }
 
         /// <inheritdoc />
@@ -116,19 +116,21 @@
                 throw new ObjectDisposedException(GetType().FullName);
             }
             var head = textSource.Read();
+            var expected = char.ToString(c);
             if (head == -1)
             {
                 endOfInput = true;
-                return MatchResult.FromEndOfInput();
+                return MatchResult.FromEndOfInput(expected);
             }
             var next = (char) head;
+            var text = char.ToString(next);
             if (c != next)
             {
                 textSource.Unread(next);
-                return MatchResult.FromMismatch(char.ToString(next));
+                return MatchResult.FromMismatch(text, expected);
             }
             Interlocked.Increment(ref offset);
-            return MatchResult.FromMatch(char.ToString(next));
+            return MatchResult.FromMatch(text, expected);
         }
 
         public void Unread(string s)

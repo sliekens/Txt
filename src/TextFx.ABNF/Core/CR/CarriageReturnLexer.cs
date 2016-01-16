@@ -33,18 +33,11 @@ namespace TextFx.ABNF.Core
         {
             var context = scanner.GetContext();
             var result = innerLexer.Read(scanner);
-            if (!result.Success)
+            if (result.Success)
             {
-                return ReadResult<CarriageReturn>.FromError(
-                    new SyntaxError
-                    {
-                        Message = "Expected 'CR'.",
-                        RuleName = "CR",
-                        Context = context,
-                        InnerError = result.Error
-                    });
+                return ReadResult<CarriageReturn>.FromResult(new CarriageReturn(result.Element));
             }
-            return ReadResult<CarriageReturn>.FromResult(new CarriageReturn(result.Element));
+            return ReadResult<CarriageReturn>.FromSyntaxError(SyntaxError.FromReadResult(result, context));
         }
     }
 }

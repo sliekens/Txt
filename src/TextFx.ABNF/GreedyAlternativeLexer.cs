@@ -45,6 +45,7 @@
             var bestCandidateLength = -1;
             var ordinal = 0;
             IList<SyntaxError> errors = new List<SyntaxError>(lexers.Length);
+            SyntaxError partialMatch = null;
 
             // ReSharper disable once ForCanBeConvertedToForeach
             for (var i = 0; i < lexers.Length; i++)
@@ -61,21 +62,25 @@
                         bestCandidateLength = length;
                         ordinal = i + 1;
                     }
-                    scanner.Unread(alternative.Text);
+
+                    if (length != 0)
+                    {
+                        scanner.Unread(alternative.Text);
+                    }
                 }
                 else
                 {
                     errors.Add(candidate.Error);
+                    if (partialMatch == null || candidate.Text.Length > partialMatch.Text.Length)
+                    {
+                        partialMatch = candidate.Error;
+                    }
                 }
             }
             if (bestCandidate == null)
             {
-                return ReadResult<Alternative>.FromError(
-                    new AggregateSyntaxError(errors)
-                    {
-                        Message = "One or more syntax errors were found.",
-                        Context = context
-                    });
+                Debug.Assert(partialMatch != null, "partialMatch != null");
+                return ReadResult<Alternative>.FromSyntaxError(partialMatch);
             }
             return ReadResult<Alternative>.FromResult(new Alternative(bestCandidate.ReadElement(scanner).Element, ordinal));
         }

@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
-    using System.Linq;
+    using System.Text;
     using JetBrains.Annotations;
 
     /// <summary>Provides the base class for lexers whose lexer rule is a repetition of elements.</summary>
@@ -50,37 +50,43 @@
             {
                 throw new ArgumentNullException(nameof(scanner));
             }
+            var stringBuilder = new StringBuilder();
             var context = scanner.GetContext();
             IList<Element> elements = new List<Element>(lowerBound);
-            ReadResult<Element> lastResult = null;
 
             // ReSharper disable once ForCanBeConvertedToForeach
             for (var i = 0; i < upperBound; i++)
             {
-                lastResult = repeatingElementLexer.ReadElement(scanner);
-                if (!lastResult.Success)
+                var readResult = repeatingElementLexer.ReadElement(scanner);
+                if (readResult.Success)
                 {
-                    break;
+                    elements.Add(readResult.Element);
+                    stringBuilder.Append(readResult.Text);
                 }
-                elements.Add(lastResult.Element);
-            }
-
-            var repetition = string.Concat(elements.Select(element => element.Text));
-            if (elements.Count >= lowerBound)
-            {
-                return ReadResult<Repetition>.FromResult(new Repetition(repetition, elements, context));
-            }
-            if (repetition.Length != 0)
-            {
-                scanner.Unread(repetition);
-            }
-            return ReadResult<Repetition>.FromError(
-                new SyntaxError
+                else
                 {
-                    Message = "A syntax error was found.",
-                    InnerError = lastResult?.Error,
-                    Context = context
-                });
+                    if (elements.Count >= lowerBound)
+                    {
+                        return
+                            ReadResult<Repetition>.FromResult(
+                                new Repetition(stringBuilder.ToString(), elements, context));
+                    }
+                    var partialMatch = stringBuilder.ToString();
+                    if (partialMatch.Length != 0)
+                    {
+                        scanner.Unread(partialMatch);
+                    }
+                    return
+                        ReadResult<Repetition>.FromSyntaxError(
+                            new SyntaxError(
+                                readResult.EndOfInput,
+                                partialMatch,
+                                readResult.ErrorText,
+                                context,
+                                readResult.Error));
+                }
+            }
+            return ReadResult<Repetition>.FromResult(new Repetition(stringBuilder.ToString(), elements, context));
         }
     }
 }

@@ -1,30 +1,59 @@
 ﻿namespace TextFx
 {
-    public class ReadResult<T>
+    using System;
+    using JetBrains.Annotations;
+
+    public sealed class ReadResult<T>
         where T : Element
     {
-        public T Element { get; set; }
-
-        public SyntaxError Error { get; set; }
-
-        public bool Success { get; set; }
-
-        public static ReadResult<T> FromError(SyntaxError error)
+        private ReadResult([NotNull] SyntaxError error)
         {
-            return new ReadResult<T>
+            if (error == null)
             {
-                Success = false,
-                Error = error
-            };
+                throw new ArgumentNullException(nameof(error));
+            }
+            Error = error;
+            Text = string.Empty;
+            ErrorText = error.Text;
+            EndOfInput = error.EndOfInput;
+            Success = false;
+            Text = error.Text;
         }
 
-        public static ReadResult<T> FromResult(T result)
+        private ReadResult([NotNull] T element)
         {
-            return new ReadResult<T>
+            if (element == null)
             {
-                Success = true,
-                Element = result
-            };
+                throw new ArgumentNullException(nameof(element));
+            }
+            Success = true;
+            Text = element.Text;
+            ErrorText = string.Empty;
+            Element = element;
+        }
+
+        public T Element { get; }
+
+        public bool EndOfInput { get; }
+
+        public SyntaxError Error { get; }
+
+        [NotNull]
+        public string ErrorText { get; }
+
+        public bool Success { get; }
+
+        [NotNull]
+        public string Text { get; }
+
+        public static ReadResult<T> FromResult([NotNull] T result)
+        {
+            return new ReadResult<T>(result);
+        }
+
+        public static ReadResult<T> FromSyntaxError([NotNull] SyntaxError error)
+        {
+            return new ReadResult<T>(error);
         }
     }
 }

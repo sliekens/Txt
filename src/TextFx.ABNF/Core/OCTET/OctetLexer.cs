@@ -30,18 +30,11 @@ namespace TextFx.ABNF.Core
         {
             var context = scanner.GetContext();
             var result = innerLexer.Read(scanner);
-            if (!result.Success)
+            if (result.Success)
             {
-                return ReadResult<Octet>.FromError(
-                    new SyntaxError
-                    {
-                        Message = "Expected 'OCTET'.",
-                        RuleName = "OCTET",
-                        Context = context,
-                        InnerError = result.Error
-                    });
+                return ReadResult<Octet>.FromResult(new Octet(result.Element));
             }
-            return ReadResult<Octet>.FromResult(new Octet(result.Element));
+            return ReadResult<Octet>.FromSyntaxError(SyntaxError.FromReadResult(result, context));
         }
     }
 }

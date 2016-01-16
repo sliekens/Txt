@@ -41,7 +41,6 @@
     <Compile Include="..\Shared\SwitchOnBuild.cs">
       <Link>SwitchOnBuild.cs</Link>
     </Compile>
-    <Compile Include="AggregateSyntaxError.cs" />
     <Compile Include="Alternative.cs" />
     <Compile Include="AlternativeLexer.cs" />
     <Compile Include="AlternativeLexerFactory.cs" />

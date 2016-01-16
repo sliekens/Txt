@@ -30,18 +30,11 @@ namespace TextFx.ABNF.Core
         {
             var context = scanner.GetContext();
             var result = innerLexer.Read(scanner);
-            if (!result.Success)
+            if (result.Success)
             {
-                return ReadResult<Bit>.FromError(
-                    new SyntaxError
-                    {
-                        Message = "Expected 'BIT'.",
-                        RuleName = "BIT",
-                        Context = context,
-                        InnerError = result.Error
-                    });
+                return ReadResult<Bit>.FromResult(new Bit(result.Element));
             }
-            return ReadResult<Bit>.FromResult(new Bit(result.Element));
+            return ReadResult<Bit>.FromSyntaxError(SyntaxError.FromReadResult(result, context));
         }
     }
 }
