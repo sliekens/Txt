@@ -85,7 +85,7 @@
                 throw new ArgumentNullException(nameof(context));
             }
             text = sequence;
-            this.elements = elements.Count == 0 ? EmptyElements : new ReadOnlyCollection<Element>(new List<Element>(ele));
+            this.elements = elements.Count == 0 ? EmptyElements : new ReadOnlyCollection<Element>(new List<Element>(elements));
             this.elements = elements.ToArray();
             this.context = context;
         }
