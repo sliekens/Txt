@@ -14,7 +14,7 @@
             }
             Error = error;
             Text = string.Empty;
-            ErrorText = error.Text;
+            ErrorText = error.ErrorText;
             EndOfInput = error.EndOfInput;
             Success = false;
             Text = error.Text;
