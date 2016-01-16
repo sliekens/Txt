@@ -23,7 +23,7 @@
         }
 
         /// <summary>
-        ///     Creates a new instance of the <see cref="Terminal" /> class with a specified character and context.
+        ///     Creates a new instance of the <see cref="Terminal" /> class with a specified string of terminal values and its context.
         /// </summary>
         /// <param name="text">The terminal value.</param>
         /// <param name="context">An object that describes the current element's context.</param>

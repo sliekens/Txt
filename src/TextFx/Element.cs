@@ -3,6 +3,7 @@
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.Diagnostics;
     using System.Linq;
     using JetBrains.Annotations;
@@ -12,10 +13,10 @@
     {
         [NotNull]
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly Element[] elements;
+        private readonly IReadOnlyList<Element> elements;
 
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private static readonly Element[] EmptyElements = new Element[0];
+        private static readonly IReadOnlyList<Element> EmptyElements = new Element[0];
 
         [NotNull]
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
@@ -39,29 +40,29 @@
             context = element.context;
         }
 
-        /// <summary>Initializes a new instance of the <see cref="Element" /> class with a given terminal and context.</summary>
-        /// <param name="terminal">The terminal value.</param>
+        /// <summary>Initializes a new instance of the <see cref="Element" /> class with a given string of terminal values and its context.</summary>
+        /// <param name="terminals">The terminal values.</param>
         /// <param name="context">An object that describes the current element's context.</param>
         /// <exception cref="ArgumentNullException">
-        ///     The value of  <paramref name="terminal" /> or <paramref name="context" /> is a
+        ///     The value of  <paramref name="terminals" /> or <paramref name="context" /> is a
         ///     null reference.
         /// </exception>
-        protected Element([NotNull] string terminal, [NotNull] ITextContext context)
+        protected Element([NotNull] string terminals, [NotNull] ITextContext context)
         {
-            if (terminal == null)
+            if (terminals == null)
             {
-                throw new ArgumentNullException(nameof(terminal));
+                throw new ArgumentNullException(nameof(terminals));
             }
             if (context == null)
             {
                 throw new ArgumentNullException(nameof(context));
             }
-            text = terminal;
+            text = terminals;
             elements = new Element[0];
             this.context = context;
         }
 
-        /// <summary>Initializes a new instance of the <see cref="Element" /> class with a given sequence and context.</summary>
+        /// <summary>Initializes a new instance of the <see cref="Element" /> class with a given sequence and its context.</summary>
         /// <param name="sequence">The text in the sequence.</param>
         /// <param name="elements">The collection of elements that represent the sequence.</param>
         /// <param name="context">An object that describes the current element's context.</param>
@@ -84,16 +85,17 @@
                 throw new ArgumentNullException(nameof(context));
             }
             text = sequence;
-            this.elements = elements.Count == 0 ? EmptyElements : elements.ToArray();
+            this.elements = elements.Count == 0 ? EmptyElements : new ReadOnlyCollection<Element>(new List<Element>(ele));
             this.elements = elements.ToArray();
             this.context = context;
         }
 
         /// <inheritdoc />
-        public int Count => elements.Length;
+        public int Count => elements.Count;
 
+        /// <summary>Returns the sequence of elements that represent the current element. If the current element is a string of terminal values then this collection is empty.</summary>
         [NotNull]
-        public IList<Element> Elements
+        public IReadOnlyList<Element> Elements
         {
             get
             {
@@ -122,7 +124,7 @@
         /// <inheritdoc />
         public IEnumerator<Element> GetEnumerator()
         {
-            return ((IEnumerable<Element>)elements).GetEnumerator();
+            return elements.GetEnumerator();
         }
 
         /// <summary>
@@ -167,7 +169,7 @@
         /// <inheritdoc />
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return ((IEnumerable)elements).GetEnumerator();
+            return elements.GetEnumerator();
         }
     }
 }
