@@ -50,7 +50,6 @@
             {
                 throw new ArgumentNullException(nameof(scanner));
             }
-            var context = scanner.GetContext();
             IList<SyntaxError> errors = new List<SyntaxError>(lexers.Length);
             SyntaxError partialMatch = null;
 

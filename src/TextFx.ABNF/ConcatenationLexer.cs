@@ -35,8 +35,8 @@
             {
                 throw new ArgumentNullException(nameof(scanner));
             }
-            var stringBuilder = new StringBuilder();
             var context = scanner.GetContext();
+            var stringBuilder = new StringBuilder();
             IList<Element> elements = new List<Element>(lexers.Count);
 
             // ReSharper disable once ForCanBeConvertedToForeach

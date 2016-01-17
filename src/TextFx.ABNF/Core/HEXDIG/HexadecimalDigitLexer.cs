@@ -31,13 +31,16 @@ namespace TextFx.ABNF.Core
 
         public override ReadResult<HexadecimalDigit> Read(ITextScanner scanner)
         {
-            var context = scanner.GetContext();
+            if (scanner == null)
+            {
+                throw new ArgumentNullException(nameof(scanner));
+            }
             var result = innerLexer.Read(scanner);
             if (result.Success)
             {
                 return ReadResult<HexadecimalDigit>.FromResult(new HexadecimalDigit(result.Element));
             }
-            return ReadResult<HexadecimalDigit>.FromSyntaxError(SyntaxError.FromReadResult(result, context));
+            return ReadResult<HexadecimalDigit>.FromSyntaxError(SyntaxError.FromReadResult(result, scanner.GetContext()));
         }
     }
 }

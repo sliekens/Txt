@@ -13,7 +13,7 @@
         private readonly int lowerBound;
 
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly ILexer repeatingElementLexer;
+        private readonly ILexer lexer;
 
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly int upperBound;
@@ -22,14 +22,14 @@
         ///     Initializes a new instance of the <see cref="RepetitionLexer" /> class with a specified lower and upper bound,
         ///     both inclusive.
         /// </summary>
-        /// <param name="repeatingElementLexer">The lexer for the repeating element.</param>
+        /// <param name="lexer">The lexer for the repeating element.</param>
         /// <param name="lowerBound">A number that indicates the minimum number of occurrences (inclusive).</param>
         /// <param name="upperBound">A number that indicates the maximum number of occurrences (inclusive).</param>
-        public RepetitionLexer([NotNull] ILexer repeatingElementLexer, int lowerBound, int upperBound)
+        public RepetitionLexer([NotNull] ILexer lexer, int lowerBound, int upperBound)
         {
-            if (repeatingElementLexer == null)
+            if (lexer == null)
             {
-                throw new ArgumentNullException(nameof(repeatingElementLexer));
+                throw new ArgumentNullException(nameof(lexer));
             }
             if (lowerBound < 0)
             {
@@ -39,7 +39,7 @@
             {
                 throw new ArgumentOutOfRangeException(nameof(upperBound), "Precondition: upperBound >= lowerBound");
             }
-            this.repeatingElementLexer = repeatingElementLexer;
+            this.lexer = lexer;
             this.lowerBound = lowerBound;
             this.upperBound = upperBound;
         }
@@ -50,14 +50,14 @@
             {
                 throw new ArgumentNullException(nameof(scanner));
             }
-            var stringBuilder = new StringBuilder();
             var context = scanner.GetContext();
+            var stringBuilder = new StringBuilder();
             IList<Element> elements = new List<Element>(lowerBound);
 
             // ReSharper disable once ForCanBeConvertedToForeach
             for (var i = 0; i < upperBound; i++)
             {
-                var readResult = repeatingElementLexer.ReadElement(scanner);
+                var readResult = lexer.ReadElement(scanner);
                 if (readResult.Success)
                 {
                     elements.Add(readResult.Element);

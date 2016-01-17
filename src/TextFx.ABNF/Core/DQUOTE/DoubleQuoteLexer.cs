@@ -31,13 +31,16 @@ namespace TextFx.ABNF.Core
 
         public override ReadResult<DoubleQuote> Read(ITextScanner scanner)
         {
-            var context = scanner.GetContext();
+            if (scanner == null)
+            {
+                throw new ArgumentNullException(nameof(scanner));
+            }
             var result = innerLexer.Read(scanner);
             if (result.Success)
             {
                 return ReadResult<DoubleQuote>.FromResult(new DoubleQuote(result.Element));
             }
-            return ReadResult<DoubleQuote>.FromSyntaxError(SyntaxError.FromReadResult(result, context));
+            return ReadResult<DoubleQuote>.FromSyntaxError(SyntaxError.FromReadResult(result, scanner.GetContext()));
         }
     }
 }

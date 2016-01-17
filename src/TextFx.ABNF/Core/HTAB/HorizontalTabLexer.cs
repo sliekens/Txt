@@ -31,13 +31,16 @@ namespace TextFx.ABNF.Core
 
         public override ReadResult<HorizontalTab> Read(ITextScanner scanner)
         {
-            var context = scanner.GetContext();
+            if (scanner == null)
+            {
+                throw new ArgumentNullException(nameof(scanner));
+            }
             var result = innerLexer.Read(scanner);
             if (result.Success)
             {
                 return ReadResult<HorizontalTab>.FromResult(new HorizontalTab(result.Element));
             }
-            return ReadResult<HorizontalTab>.FromSyntaxError(SyntaxError.FromReadResult(result, context));
+            return ReadResult<HorizontalTab>.FromSyntaxError(SyntaxError.FromReadResult(result, scanner.GetContext()));
         }
     }
 }

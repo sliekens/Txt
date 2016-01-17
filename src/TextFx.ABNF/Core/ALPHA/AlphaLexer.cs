@@ -31,6 +31,10 @@ namespace TextFx.ABNF.Core
 
         public override ReadResult<Alpha> Read(ITextScanner scanner)
         {
+            if (scanner == null)
+            {
+                throw new ArgumentNullException(nameof(scanner));
+            }
             var context = scanner.GetContext();
             var result = innerLexer.Read(scanner);
             if (result.Success)

@@ -31,13 +31,16 @@ namespace TextFx.ABNF.Core
 
         public override ReadResult<CarriageReturn> Read(ITextScanner scanner)
         {
-            var context = scanner.GetContext();
+            if (scanner == null)
+            {
+                throw new ArgumentNullException(nameof(scanner));
+            }
             var result = innerLexer.Read(scanner);
             if (result.Success)
             {
                 return ReadResult<CarriageReturn>.FromResult(new CarriageReturn(result.Element));
             }
-            return ReadResult<CarriageReturn>.FromSyntaxError(SyntaxError.FromReadResult(result, context));
+            return ReadResult<CarriageReturn>.FromSyntaxError(SyntaxError.FromReadResult(result, scanner.GetContext()));
         }
     }
 }

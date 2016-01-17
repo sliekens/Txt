@@ -40,7 +40,6 @@
             {
                 throw new ArgumentNullException(nameof(scanner));
             }
-            var context = scanner.GetContext();
             ILexer bestCandidate = null;
             var bestCandidateLength = -1;
             var ordinal = 0;

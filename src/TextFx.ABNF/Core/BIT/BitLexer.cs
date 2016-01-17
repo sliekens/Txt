@@ -28,13 +28,16 @@ namespace TextFx.ABNF.Core
 
         public override ReadResult<Bit> Read(ITextScanner scanner)
         {
-            var context = scanner.GetContext();
+            if (scanner == null)
+            {
+                throw new ArgumentNullException(nameof(scanner));
+            }
             var result = innerLexer.Read(scanner);
             if (result.Success)
             {
                 return ReadResult<Bit>.FromResult(new Bit(result.Element));
             }
-            return ReadResult<Bit>.FromSyntaxError(SyntaxError.FromReadResult(result, context));
+            return ReadResult<Bit>.FromSyntaxError(SyntaxError.FromReadResult(result, scanner.GetContext()));
         }
     }
 }

@@ -28,13 +28,16 @@ namespace TextFx.ABNF.Core
 
         public override ReadResult<WhiteSpace> Read(ITextScanner scanner)
         {
-            var context = scanner.GetContext();
+            if (scanner == null)
+            {
+                throw new ArgumentNullException(nameof(scanner));
+            }
             var result = innerLexer.Read(scanner);
             if (result.Success)
             {
                 return ReadResult<WhiteSpace>.FromResult(new WhiteSpace(result.Element));
             }
-            return ReadResult<WhiteSpace>.FromSyntaxError(SyntaxError.FromReadResult(result, context));
+            return ReadResult<WhiteSpace>.FromSyntaxError(SyntaxError.FromReadResult(result, scanner.GetContext()));
         }
     }
 }
