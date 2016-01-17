@@ -80,9 +80,6 @@
     <Compile Include="Core\LWSP\LinearWhiteSpace.cs" />
     <Compile Include="Core\LWSP\LinearWhiteSpaceLexer.cs" />
     <Compile Include="Core\LWSP\LinearWhiteSpaceLexerFactory.cs" />
-    <Compile Include="Core\OCTET\Octet.cs" />
-    <Compile Include="Core\OCTET\OctetLexer.cs" />
-    <Compile Include="Core\OCTET\OctetLexerFactory.cs" />
     <Compile Include="Core\SP\Space.cs" />
     <Compile Include="Core\SP\SpaceLexer.cs" />
     <Compile Include="Core\SP\SpaceLexerFactory.cs" />
