@@ -34,7 +34,7 @@ TextFx provides an implementation of ABNF (Augmented BNF) as a separate download
 
 The ABNF specification defines a set of core grammar rules that are in common use.
 
-```abnf
+```
 ALPHA          =  %x41-5A / %x61-7A   ; A-Z / a-z
 
 BIT            =  "0" / "1"
@@ -98,7 +98,7 @@ Custom syntax specifications can define rules that build upon these core rules.
 The solution contains a sample program that reads numbers from console input and calculates their sum.
 The program uses the following grammar:
 
-```abnf
+```
 DIGIT     = "0" / "1" / "2" / "3" / "4"  ; DIGIT is a core ABNF rule
           / "5" / "6" / "7" / "8" / "9"
 
