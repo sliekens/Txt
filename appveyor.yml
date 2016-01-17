@@ -10,7 +10,7 @@ assembly_info:
   file: SharedAssemblyInfo.cs
   assembly_version: 2.0
   assembly_file_version: 2.0.{build}
-  assembly_informational_version: 2.0.0-CI{APPVEYOR_BUILD_NUMBER_PADDED}
+  assembly_informational_version: 2.0.0-CI$(APPVEYOR_BUILD_NUMBER_PADDED)
 before_build:
 - cmd: nuget restore
 build:
