@@ -1,14 +1,10 @@
 ﻿namespace TextFx.ABNF
 {
     using System;
-    using System.Diagnostics;
     using JetBrains.Annotations;
 
     public class Alternative : Element
     {
-        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly int ordinal;
-
         /// <summary>
         /// </summary>
         /// <param name="alternative"></param>
@@ -16,27 +12,30 @@
         public Alternative([NotNull] Alternative alternative)
             : base(alternative)
         {
-            ordinal = alternative.ordinal;
+            Ordinal = alternative.Ordinal;
+            Element = alternative.Element;
         }
 
         /// <summary>
         /// </summary>
-        /// <param name="alternative">The text in the alternative.</param>
-        /// <param name="ordinal"></param>
+        /// <param name="sequence">The text in the alternative sequence.</param>
+        /// <param name="alternative">The matching alternative.</param>
+        /// <param name="context">An object that describes the current element's context.</param>
+        /// <param name="ordinal">The ordinal position of the matching alternative.</param>
         /// <exception cref="ArgumentNullException">The value of <paramref name="alternative" /> is a null reference.</exception>
-        public Alternative([NotNull] Element alternative, int ordinal)
-            : base(alternative)
+        public Alternative(
+            [NotNull] string sequence,
+            [NotNull] Element alternative,
+            [NotNull] ITextContext context,
+            int ordinal)
+            : base(sequence, new[] {alternative}, context)
         {
-            this.ordinal = ordinal;
+            Element = alternative;
+            Ordinal = ordinal;
         }
 
-        public int Ordinal
-        {
-            get
-            {
-                Debug.Assert(ordinal > 0, "this.ordinal > 0");
-                return ordinal;
-            }
-        }
+        public Element Element { get; }
+
+        public int Ordinal { get; }
     }
 }

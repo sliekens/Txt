@@ -50,6 +50,7 @@
             {
                 throw new ArgumentNullException(nameof(scanner));
             }
+            var context = scanner.GetContext();
             IList<SyntaxError> errors = new List<SyntaxError>(lexers.Length);
             SyntaxError partialMatch = null;
 
@@ -59,7 +60,7 @@
                 var result = lexers[i].ReadElement(scanner);
                 if (result.Success)
                 {
-                    return ReadResult<Alternative>.FromResult(new Alternative(result.Element, i + 1));
+                    return ReadResult<Alternative>.FromResult(new Alternative(result.Text, result.Element, context, i + 1));
                 }
 
                 errors.Add(result.Error);

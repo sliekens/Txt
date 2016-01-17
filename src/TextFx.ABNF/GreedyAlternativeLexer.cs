@@ -40,6 +40,7 @@
             {
                 throw new ArgumentNullException(nameof(scanner));
             }
+            var context = scanner.GetContext();
             ILexer bestCandidate = null;
             var bestCandidateLength = -1;
             var ordinal = 0;
@@ -81,7 +82,9 @@
                 Debug.Assert(partialMatch != null, "partialMatch != null");
                 return ReadResult<Alternative>.FromSyntaxError(partialMatch);
             }
-            return ReadResult<Alternative>.FromResult(new Alternative(bestCandidate.ReadElement(scanner).Element, ordinal));
+            var readResult = bestCandidate.ReadElement(scanner);
+            Debug.Assert(readResult.Success, "readResult.Success");
+            return ReadResult<Alternative>.FromResult(new Alternative(readResult.Text, readResult.Element, context, ordinal));
         }
     }
 }
