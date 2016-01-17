@@ -46,7 +46,6 @@
       <Link>TaskHelper.cs</Link>
     </Compile>
     <Compile Include="ILexer.cs" />
-    <Compile Include="ITerminalLexerFactory.cs" />
     <Compile Include="ITextSource.cs" />
     <Compile Include="MatchResult.cs" />
     <Compile Include="ReadResult.cs" />
@@ -59,9 +58,6 @@
     <Compile Include="StreamTextSource.cs" />
     <Compile Include="StringTextSource.cs" />
     <Compile Include="SyntaxError.cs" />
-    <Compile Include="Terminal.cs" />
-    <Compile Include="TerminalLexer.cs" />
-    <Compile Include="TerminalLexerFactory.cs" />
     <Compile Include="TextContext.cs" />
     <Compile Include="Element.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,4 +1,4 @@
-﻿namespace TextFx
+﻿namespace TextFx.ABNF
 {
     using System;
     using System.Diagnostics;

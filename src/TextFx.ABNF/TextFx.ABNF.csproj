@@ -95,6 +95,7 @@
     <Compile Include="IOptionLexerFactory.cs" />
     <Compile Include="IRepetitionLexerFactory.cs" />
     <Compile Include="IConcatenationLexerFactory.cs" />
+    <Compile Include="ITerminalLexerFactory.cs" />
     <Compile Include="IValueRangeLexerFactory.cs" />
     <Compile Include="OptionLexer.cs" />
     <Compile Include="OptionLexerFactory.cs" />
@@ -108,6 +109,9 @@
     <Compile Include="Concatenation.cs" />
     <Compile Include="ConcatenationLexer.cs" />
     <Compile Include="ConcatenationLexerFactory.cs" />
+    <Compile Include="Terminal.cs" />
+    <Compile Include="TerminalLexer.cs" />
+    <Compile Include="TerminalLexerFactory.cs" />
     <Compile Include="ValueRangeLexer.cs" />
     <Compile Include="ValueRangeLexerFactory.cs" />
   </ItemGroup>

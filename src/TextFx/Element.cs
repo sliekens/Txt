@@ -135,7 +135,7 @@
         [NotNull]
         public IEnumerable<Element> GetTerminals()
         {
-            if (this is Terminal)
+            if (this.Elements.Count == 0)
             {
                 yield return this;
             }
