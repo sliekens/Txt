@@ -29,7 +29,7 @@ namespace TextFx.ABNF
             {
                 range[i] = c;
             }
-            return new ValueRangeLexer(range, lowerBound, upperBound);
+            return new ValueRangeLexer(range);
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace TextFx.ABNF
                 var values = Encoding.Unicode.GetChars(bytes);
                 range[i] = values[0];
             }
-            return new ValueRangeLexer(range, lowerBound, upperBound);
+            return new ValueRangeLexer(range);
         }
     }
 }

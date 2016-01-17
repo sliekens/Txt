@@ -8,18 +8,12 @@
     public class ValueRangeLexer : Lexer<Terminal>
     {
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly int lowerBound;
-
-        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly int upperBound;
-
-        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly char[] valueRange;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="ValueRangeLexer" /> class with a specified value range.
         /// </summary>
-        public ValueRangeLexer([NotNull] char[] valueRange, int lowerBound, int upperBound)
+        public ValueRangeLexer([NotNull] char[] valueRange)
         {
             if (valueRange == null)
             {
@@ -29,13 +23,7 @@
             {
                 throw new ArgumentException("Argument is empty collection", nameof(valueRange));
             }
-            if (upperBound < lowerBound)
-            {
-                throw new ArgumentOutOfRangeException(nameof(upperBound), "Precondition: upperBound >= lowerBound");
-            }
             this.valueRange = valueRange;
-            this.lowerBound = lowerBound;
-            this.upperBound = upperBound;
         }
 
         public override ReadResult<Terminal> Read(ITextScanner scanner)
