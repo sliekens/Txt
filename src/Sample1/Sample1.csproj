@@ -34,7 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Autofac">
-      <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
+      <HintPath>$(SolutionDir)packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -65,11 +65,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\src\TextFx.ABNF\TextFx.ABNF.csproj">
+    <ProjectReference Include="..\TextFx.ABNF\TextFx.ABNF.csproj">
       <Project>{556a92c9-eacf-4353-9a89-900303140428}</Project>
       <Name>TextFx.ABNF</Name>
     </ProjectReference>
-    <ProjectReference Include="..\src\TextFx\TextFx.csproj">
+    <ProjectReference Include="..\TextFx\TextFx.csproj">
       <Project>{f889024e-5c62-49ac-ac9f-c17bc1cb9621}</Project>
       <Name>TextFx</Name>
     </ProjectReference>

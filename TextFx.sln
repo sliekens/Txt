@@ -23,7 +23,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextFx.ABNF", "src\TextFx.A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextFx.Tests", "src\TextFx.Tests\TextFx.Tests.csproj", "{899F2747-5709-4794-9212-FC4B88DD7588}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample1", "Sample1\Sample1.csproj", "{043C2EF6-C0F9-40C7-BECB-B4AD11763383}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample1", "src\Sample1\Sample1.csproj", "{043C2EF6-C0F9-40C7-BECB-B4AD11763383}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
