@@ -1,4 +1,4 @@
-﻿{
+{
   "version": "1.0.0-*",
   "description": "TextFx.ABNF.Tests Class Library",
   "authors": [ "Steven Liekens" ],
@@ -24,7 +24,7 @@
   "dependencies": {
     "TextFx": "1.0.0-*",
     "TextFx.ABNF": "1.0.0-*",
-    "xunit": "2.2.0-beta1-build3239",
-    "xunit.runner.dnx": "2.1.0-rc1-build204"
+    "xunit": "2.1.0",
+    "xunit.runner.dnx": "2.1.0-*"
   }
 }
