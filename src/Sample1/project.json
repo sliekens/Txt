@@ -1,0 +1,43 @@
+{
+  "version": "1.0.0-*",
+  "description": "Sample1 Console Application",
+  "authors": [ "Steven Liekens" ],
+  "tags": [ "" ],
+  "projectUrl": "",
+  "licenseUrl": "",
+
+  "compilationOptions": {
+    "emitEntryPoint": true
+  },
+
+  "dependencies": {
+    "TextFx": "1.0.0-*",
+    "TextFx.ABNF": "1.0.0-*"
+  },
+
+  "commands": {
+    "Sample1": "Sample1"
+  },
+
+  "frameworks": {
+    "dnx451": {
+      "dependencies": {
+        "Autofac": "3.5.2"
+      },
+      "frameworkAssemblies": {
+        "System.Numerics": "4.0.0.0"
+      }
+    },
+    "dnxcore50": {
+      "dependencies": {
+        "Microsoft.CSharp": "4.0.1-beta-23516",
+        "System.Collections": "4.0.11-beta-23516",
+        "System.Console": "4.0.0-beta-23516",
+        "System.Linq": "4.0.1-beta-23516",
+        "System.Threading": "4.0.11-beta-23516",
+        "System.Runtime.Numerics": "4.0.1-beta-23516",
+        "Autofac.Dnx": "4.0.0-alpha2"
+      }
+    }
+  }
+}
