@@ -1,6 +1,5 @@
 version: '{build}'
-init:
- - ps: $Env:APPVEYOR_BUILD_NUMBER_PADDED = $Env:APPVEYOR_BUILD_NUMBER.PadLeft(5, "0")
+os: Visual Studio 2015
 configuration:
 - Debug
 - Release
@@ -11,15 +10,18 @@ assembly_info:
   assembly_version: 2.0
   assembly_file_version: 2.0.{build}
   assembly_informational_version: 2.0.0-CI$(APPVEYOR_BUILD_NUMBER_PADDED)
-before_build:
-#- cmd: nuget restore
+init:
+ - ps: $Env:APPVEYOR_BUILD_NUMBER_PADDED = $Env:APPVEYOR_BUILD_NUMBER.PadLeft(5, "0")
+install:
+- dnvm upgrade -r clr
+- dnu restore
 build:
   project: TextFx.sln
+  parallel: true
+  verbosity: detailed
 #  publish_nuget: true
 #  publish_nuget_symbols: true
 #  include_nuget_references: true
-  parallel: true
-  verbosity: detailed
 # deploy:
 # - provider: NuGet
 #   server: https://www.myget.org/F/textfx/api/v2/package
