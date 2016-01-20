@@ -18,7 +18,7 @@ install:
 build:
   project: TextFx.sln
   parallel: true
-  verbosity: detailed
+  verbosity: d
 #  publish_nuget: true
 #  publish_nuget_symbols: true
 #  include_nuget_references: true

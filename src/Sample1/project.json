@@ -11,6 +11,7 @@
   },
 
   "dependencies": {
+    "Autofac": "4.0.0-rc1-177",
     "TextFx": "1.0.0-*",
     "TextFx.ABNF": "1.0.0-*"
   },
@@ -22,7 +23,6 @@
   "frameworks": {
     "dnx451": {
       "dependencies": {
-        "Autofac": "3.5.2"
       },
       "frameworkAssemblies": {
         "System.Numerics": "4.0.0.0"
