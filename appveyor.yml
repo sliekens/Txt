@@ -1,40 +1,32 @@
-version: '{build}'
+version: '2.0.{build}'
 configuration:
 - Debug
 - Release
 platform: Any CPU
-assembly_info:
-  patch: true
-  file: SolutionInfo.cs
-  assembly_version: 2.0
-  assembly_file_version: 2.0.{build}
-  assembly_informational_version: 2.0.0-CI$(APPVEYOR_BUILD_NUMBER_PADDED)
 init:
- - ps: $Env:APPVEYOR_BUILD_NUMBER_PADDED = $Env:APPVEYOR_BUILD_NUMBER.PadLeft(5, "0")
+ - ps: $Env:DNX_BUILD_VERSION = "CI" + $Env:APPVEYOR_BUILD_NUMBER.PadLeft(5, "0")
 install:
 - dnvm upgrade -r clr
 - dnu restore
 build:
-  project: TextFx.sln
   parallel: true
-  verbosity: d
 test: off
-#  publish_nuget: true
-#  publish_nuget_symbols: true
-#  include_nuget_references: true
-# deploy:
-# - provider: NuGet
-#   server: https://www.myget.org/F/textfx/api/v2/package
-#   api_key:
-#     secure: Qwf1a1BP2lCg6c9F5xt7hwDVciba1FhiYewLIAGzAVLeNh0TiAamxz78W06ij4tp
-#   skip_symbols: false
-#   symbol_server: https://www.myget.org/F/textfx/api/v2/package
-#   on:
-#     configuration: Debug
-# - provider: NuGet
-#   server: https://www.myget.org/F/textfx/api/v2/package
-#   api_key:
-#     secure: Qwf1a1BP2lCg6c9F5xt7hwDVciba1FhiYewLIAGzAVLeNh0TiAamxz78W06ij4tp
-#   skip_symbols: true
-#   on:
-#     configuration: Release
+artifacts:
+  - path: artifacts\bin\TextFx\**\*.nupkg
+  - path: artifacts\bin\TextFx.ABNF\**\*.nupkg
+deploy:
+ - provider: NuGet
+   server: https://www.myget.org/F/textfx/api/v2/package
+   api_key:
+     secure: Qwf1a1BP2lCg6c9F5xt7hwDVciba1FhiYewLIAGzAVLeNh0TiAamxz78W06ij4tp
+   skip_symbols: false
+   symbol_server: https://www.myget.org/F/textfx/api/v2/package
+   on:
+     configuration: Debug
+ - provider: NuGet
+   server: https://www.myget.org/F/textfx/api/v2/package
+   api_key:
+     secure: Qwf1a1BP2lCg6c9F5xt7hwDVciba1FhiYewLIAGzAVLeNh0TiAamxz78W06ij4tp
+   skip_symbols: true
+   on:
+     configuration: Release

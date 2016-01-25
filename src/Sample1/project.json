@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0-*",
+  "version": "2.0.0-*",
   "description": "Sample1 Console Application",
   "authors": [ "Steven Liekens" ],
   "tags": [ "" ],
@@ -12,8 +12,8 @@
 
   "dependencies": {
     "Autofac": "4.0.0-rc1-177",
-    "TextFx": "1.0.0-*",
-    "TextFx.ABNF": "1.0.0-*"
+    "TextFx": "2.0.0-*",
+    "TextFx.ABNF": "2.0.0-*"
   },
 
   "commands": {

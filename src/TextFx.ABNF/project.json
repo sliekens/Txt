@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0-*",
+  "version": "2.0.0-*",
   "description": "Implements RFC 5234",
   "authors": [ "Steven Liekens" ],
   "tags": [ "" ],
@@ -20,7 +20,7 @@
     }
   },
   "dependencies": {
-    "Common": "1.0.0-*",
-    "TextFx": "1.0.0-*"
+    "Common": "2.0.0-*",
+    "TextFx": "2.0.0-*"
   }
 }

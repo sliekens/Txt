@@ -1,5 +1,5 @@
 ﻿{
-  "version": "1.0.0-*",
+  "version": "2.0.0-*",
   "description": "TextFx is a text framework for .NET",
   "authors": [ "Steven Liekens" ],
   "tags": [ "" ],
@@ -22,6 +22,6 @@
   },
   "shared": "compiler/shared/**/*.cs",
   "dependencies": {
-    "Common": "1.0.0-*"
+    "Common": "2.0.0-*"
   }
 }
