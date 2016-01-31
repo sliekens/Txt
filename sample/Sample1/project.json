@@ -21,12 +21,6 @@
   },
 
   "frameworks": {
-    "dnx451": {
-      "frameworkAssemblies": {
-        "System.Runtime": "4.0.10.0",
-        "System.Numerics": "4.0.0.0"
-      }
-    },
     "dnxcore50": {
       "dependencies": {
         "Microsoft.CSharp": "4.0.1-beta-23516",
