@@ -22,6 +22,9 @@
   },
   "shared": "compiler/shared/**/*.cs",
   "dependencies": {
-    "Common": "2.0.0-*"
+    "Common": {
+      "version": "2.0.0-*",
+      "type": "build"
+    }
   }
 }
