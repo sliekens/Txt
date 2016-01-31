@@ -8,7 +8,7 @@
   "copyright": "The MIT License (MIT)",
   "frameworks": {
     "net451": {},
-    "dotnet5.2": {
+    "dotnet5.1": {
       "dependencies": {
         "Microsoft.CSharp": "4.0.1-beta-23516",
         "System.Collections": "4.0.11-beta-23516",
