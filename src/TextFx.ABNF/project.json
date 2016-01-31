@@ -7,7 +7,7 @@
   "licenseUrl": "https://raw.githubusercontent.com/StevenLiekens/TextFx/master/LICENSE",
   "copyright": "The MIT License (MIT)",
   "frameworks": {
-    "net451": {},
+    ".NETPortable,Version=v4.5,Profile=Profile259": { },
     "dotnet5.1": {
       "dependencies": {
         "Microsoft.CSharp": "4.0.1-beta-23516",

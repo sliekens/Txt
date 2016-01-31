@@ -22,9 +22,8 @@
 
   "frameworks": {
     "dnx451": {
-      "dependencies": {
-      },
       "frameworkAssemblies": {
+        "System.Runtime": "4.0.10.0",
         "System.Numerics": "4.0.0.0"
       }
     },
