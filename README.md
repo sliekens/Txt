@@ -1,36 +1,38 @@
-TextFx
+Txt
 ===========
-[![Build status](https://ci.appveyor.com/api/projects/status/2ijyc3cck1ddlurt?svg=true)](https://ci.appveyor.com/project/StevenLiekens/textfx)
-[![Open Issues](https://img.shields.io/github/issues/StevenLiekens/TextFx.svg)](https://github.com/StevenLiekens/TextFx/issues?q=is%3Aopen)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/StevenLiekens/TextFx/master/LICENSE)
+[![Build status](https://ci.appveyor.com/api/projects/status/13pl63g6qt14boi9?svg=true)](https://ci.appveyor.com/project/StevenLiekens/txt)
+[![Open Issues](https://img.shields.io/github/issues/StevenLiekens/Txt.svg)](https://github.com/StevenLiekens/Txt/issues?q=is%3Aopen)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/StevenLiekens/Txt/master/LICENSE)
 
 
-TextFx is a collection of code that provides a foundation for text parsers.
+Txt (tɛkst) is a collection of code that provides a foundation for text parsers.
 
 This repository contains two libraries: 
-* TextFx
-* TextFx.ABNF
+* Txt
+* Txt.ABNF
 
 Both are available as separate packages on NuGet (stable builds &  pre-release builds) and MyGet (continuous integration builds).
 
 
-# Package: TextFx
+# Package: Txt (previously TextFx)
 
 [![TextFx Stable](https://img.shields.io/nuget/v/TextFx.svg)](https://www.nuget.org/packages/TextFx/)
 [![TextFx CI](https://img.shields.io/myget/textfx/vpre/TextFx.svg)](https://www.myget.org/gallery/textfx)
+[![Txt CI](https://img.shields.io/myget/ci/vpre/ci.svg)](https://www.myget.org/gallery/ci)
 
 All structured languages have one thing in common: each language has a formal syntax specification that describes the grammar rules for that language. Programmers use these grammar rules to create programs that parse the language.
 
 The TextFx code library assists you with creating parsers for any given language. You create your own tokens and token parsers by deriving from classes in this library.
 
-# Package: TextFx.ABNF
+# Package: Txt.ABNF (previously TextFx.ABNF)
 
 [![TextFx.ABNF Stable](https://img.shields.io/nuget/v/TextFx.ABNF.svg)](https://www.nuget.org/packages/TextFx.ABNF/)
 [![TextFx.ABNF CI](https://img.shields.io/myget/textfx/vpre/TextFx.ABNF.svg)](https://www.myget.org/gallery/textfx)
+[![Txt.ABNF CI](https://img.shields.io/myget/ci/vpre/ci.svg)](https://www.myget.org/gallery/ci)
 
 Syntax specifications are most commonly defined in a flavor of BNF (Backus-Naur Form).
 
-TextFx provides an implementation of ABNF (Augmented BNF) as a separate download.
+Txt provides an implementation of ABNF (Augmented BNF) as a separate download.
 
 The ABNF specification defines a set of core grammar rules that are in common use.
 
@@ -111,7 +113,7 @@ In English: an `INTEGER` has an optional `SIGN`, followed by at least one `DIGIT
 A `SIGN` can be either `"+"` or `"-"`.
 A `DIGIT` can be any decimal digit, and is a core rule.
 
-The `DIGIT` rule is a core rule in namespace `TextFx.ABNF.Core`.
+The `DIGIT` rule is a core rule in namespace `Txt.ABNF.Core`.
 The sample program adds two custom rules:
  - the `SIGN` rule is represented by the `Sign` class
  - the `INTEGER` rule is represented by the `Integer` class
@@ -159,7 +161,7 @@ using (var container = BuildContainer())
 
 This `integerLexer` object has a `Read()` method that reads integers from a text source. A text source can be any class that implements `ITextSource`.
 
-TextFx includes `ITextSource` implementations for `System.String` or `System.IO.Stream`.
+Txt includes `ITextSource` implementations for `System.String` or `System.IO.Stream`.
 
 StringTextSource:
 ```c#

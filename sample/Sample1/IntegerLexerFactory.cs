@@ -1,9 +1,11 @@
-﻿namespace Sample1
+﻿using Text.ABNF.Core.DIGIT;
+using Txt;
+
+namespace Sample1
 {
     using System;
-    using TextFx;
-    using TextFx.ABNF;
-    using TextFx.ABNF.Core;
+    using Text;
+    using Text.ABNF;
 
     public sealed class IntegerLexerFactory : ILexerFactory<Integer>
     {

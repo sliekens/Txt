@@ -1,8 +1,10 @@
-﻿namespace Sample1
+﻿using Txt;
+
+namespace Sample1
 {
     using System;
-    using TextFx;
-    using TextFx.ABNF;
+    using Text;
+    using Text.ABNF;
 
     public sealed class IntegerLexer : Lexer<Integer>
     {

@@ -1,13 +1,15 @@
-﻿namespace Sample1
+﻿using System.IO;
+using Text.ABNF.Core.DIGIT;
+using Txt;
+
+namespace Sample1
 {
     using System;
     using System.Collections.Generic;
-    using System.IO;
     using System.Linq;
     using Autofac;
-    using TextFx;
-    using TextFx.ABNF;
-    using TextFx.ABNF.Core;
+    using Text;
+    using Text.ABNF;
 
     internal class Program
     {

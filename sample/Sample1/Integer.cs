@@ -1,7 +1,7 @@
 ﻿namespace Sample1
 {
     using System.Numerics;
-    using TextFx.ABNF;
+    using Text.ABNF;
 
     public class Integer : Concatenation
     {

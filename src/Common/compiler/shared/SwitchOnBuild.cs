@@ -1,7 +1,7 @@
-﻿namespace TextFx
-{
-    using System.Diagnostics;
+﻿using System.Diagnostics;
 
+namespace Txt
+{
     /// <summary>Constains compile-time constants whose value is determined by the build configuration.</summary>
     internal sealed class SwitchOnBuild
     {

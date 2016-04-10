@@ -12,19 +12,19 @@ build:
   parallel: true
 test: off
 artifacts:
-  - path: artifacts\bin\TextFx\**\*.nupkg
-  - path: artifacts\bin\TextFx.ABNF\**\*.nupkg
+  - path: artifacts\bin\Txt\**\*.nupkg
+  - path: artifacts\bin\Txt.ABNF\**\*.nupkg
 deploy:
  - provider: NuGet
-   server: https://www.myget.org/F/textfx/api/v2/package
+   server: https://www.myget.org/F/ci/api/v2/package
    api_key:
      secure: Qwf1a1BP2lCg6c9F5xt7hwDVciba1FhiYewLIAGzAVLeNh0TiAamxz78W06ij4tp
    skip_symbols: false
-   symbol_server: https://www.myget.org/F/textfx/api/v2/package
+   symbol_server: https://www.myget.org/F/ci/api/v2/package
    on:
      configuration: Debug
  - provider: NuGet
-   server: https://www.myget.org/F/textfx/api/v2/package
+   server: https://www.myget.org/F/ci/api/v2/package
    api_key:
      secure: Qwf1a1BP2lCg6c9F5xt7hwDVciba1FhiYewLIAGzAVLeNh0TiAamxz78W06ij4tp
    skip_symbols: true

@@ -1,6 +1,6 @@
 ﻿namespace Sample1
 {
-    using TextFx.ABNF;
+    using Text.ABNF;
 
     public class Sign : Alternative
     {
