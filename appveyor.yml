@@ -8,6 +8,7 @@ init:
  - ps: $Env:DNX_BUILD_VERSION = "CI" + $Env:APPVEYOR_BUILD_NUMBER.PadLeft(5, "0")
 install:
 - dnvm upgrade -r clr
+- dnvm install 1.0.0-rc1-update2
 - dnu restore
 build:
   parallel: true
