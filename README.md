@@ -16,9 +16,9 @@ Both are available as separate packages on NuGet (stable builds &  pre-release b
 
 # Package: Txt (previously TextFx)
 
-[![TextFx Stable](https://img.shields.io/nuget/v/TextFx.svg)](https://www.nuget.org/packages/TextFx/)
-[![TextFx CI](https://img.shields.io/myget/textfx/vpre/TextFx.svg)](https://www.myget.org/gallery/textfx)
-[![Txt CI](https://img.shields.io/myget/ci/vpre/ci.svg)](https://www.myget.org/gallery/ci)
+[![NuGet](https://img.shields.io/nuget/v/TextFx.svg?maxAge=2592000?style=plastic)](https://www.nuget.org/packages/TextFx)
+[![MyGet Pre Release](https://img.shields.io/myget/textfx/vpre/TextFx.svg?maxAge=2592000?style=plastic)](https://www.myget.org/feed/textfx/package/nuget/TextFx)
+[![MyGet Pre Release](https://img.shields.io/myget/ci/vpre/Txt.svg?maxAge=2592000?style=plastic)](https://www.myget.org/feed/ci/package/nuget/Txt)
 
 All structured languages have one thing in common: each language has a formal syntax specification that describes the grammar rules for that language. Programmers use these grammar rules to create programs that parse the language.
 
@@ -26,9 +26,9 @@ The TextFx code library assists you with creating parsers for any given language
 
 # Package: Txt.ABNF (previously TextFx.ABNF)
 
-[![TextFx.ABNF Stable](https://img.shields.io/nuget/v/TextFx.ABNF.svg)](https://www.nuget.org/packages/TextFx.ABNF/)
-[![TextFx.ABNF CI](https://img.shields.io/myget/textfx/vpre/TextFx.ABNF.svg)](https://www.myget.org/gallery/textfx)
-[![Txt.ABNF CI](https://img.shields.io/myget/ci/vpre/ci.svg)](https://www.myget.org/gallery/ci)
+[![NuGet](https://img.shields.io/nuget/v/TextFx.ABNF.svg?maxAge=2592000?style=plastic)](https://www.nuget.org/packages/TextFx.ABNF)
+[![MyGet Pre Release](https://img.shields.io/myget/textfx/vpre/TextFx.ABNF.svg?maxAge=2592000?style=plastic)](https://www.myget.org/feed/textfx/package/nuget/TextFx.ABNF)
+[![MyGet Pre Release](https://img.shields.io/myget/ci/vpre/Txt.ABNF.svg?maxAge=2592000?style=plastic)](https://www.myget.org/feed/ci/package/nuget/Txt.ABNF)
 
 Syntax specifications are most commonly defined in a flavor of BNF (Backus-Naur Form).
 
