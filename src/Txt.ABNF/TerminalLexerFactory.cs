@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Txt;
 
-namespace Text.ABNF
+namespace Txt.ABNF
 {
     /// <summary>Creates instances of the <see cref="TerminalLexer" /> class.</summary>
     public class TerminalLexerFactory : ITerminalLexerFactory

@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using Jetbrains.Annotations;
-using Txt;
 
-namespace Text.ABNF.Core.ALPHA
+namespace Txt.ABNF.Core.ALPHA
 {
     /// <summary>Creates instances of the <see cref="AlphaLexer" /> class.</summary>
     public class AlphaLexerFactory : ILexerFactory<Alpha>

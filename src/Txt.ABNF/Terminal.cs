@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using Jetbrains.Annotations;
-using Txt;
 
-namespace Text.ABNF
+namespace Txt.ABNF
 {
     /// <summary>
     ///     Represents a terminal specification.

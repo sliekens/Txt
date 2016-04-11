@@ -9,9 +9,8 @@
 using System;
 using System.Diagnostics;
 using Jetbrains.Annotations;
-using Txt;
 
-namespace Text.ABNF.Core.CTL
+namespace Txt.ABNF.Core.CTL
 {
     public class ControlCharacterLexer : Lexer<ControlCharacter>
     {

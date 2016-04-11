@@ -9,9 +9,8 @@
 using System;
 using System.Diagnostics;
 using Jetbrains.Annotations;
-using Txt;
 
-namespace Text.ABNF.Core.HEXDIG
+namespace Txt.ABNF.Core.HEXDIG
 {
     public class HexadecimalDigitLexer : Lexer<HexadecimalDigit>
     {

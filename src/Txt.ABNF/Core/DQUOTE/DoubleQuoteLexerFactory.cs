@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using Jetbrains.Annotations;
-using Txt;
 
-namespace Text.ABNF.Core.DQUOTE
+namespace Txt.ABNF.Core.DQUOTE
 {
     /// <summary>Creates instances of the <see cref="DoubleQuoteLexer" /> class.</summary>
     public class DoubleQuoteLexerFactory : ILexerFactory<DoubleQuote>

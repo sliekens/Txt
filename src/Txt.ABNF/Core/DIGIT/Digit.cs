@@ -10,7 +10,7 @@
 using System;
 using Jetbrains.Annotations;
 
-namespace Text.ABNF.Core.DIGIT
+namespace Txt.ABNF.Core.DIGIT
 {
     public class Digit : Terminal
     {

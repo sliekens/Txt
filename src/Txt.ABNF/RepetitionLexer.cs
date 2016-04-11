@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 using Jetbrains.Annotations;
-using Txt;
 
-namespace Text.ABNF
+namespace Txt.ABNF
 {
     /// <summary>Provides the base class for lexers whose lexer rule is a repetition of elements.</summary>
     public class RepetitionLexer : Lexer<Repetition>

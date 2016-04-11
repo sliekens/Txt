@@ -10,7 +10,7 @@
 using System;
 using Jetbrains.Annotations;
 
-namespace Text.ABNF.Core.CR
+namespace Txt.ABNF.Core.CR
 {
     public class CarriageReturn : Terminal
     {

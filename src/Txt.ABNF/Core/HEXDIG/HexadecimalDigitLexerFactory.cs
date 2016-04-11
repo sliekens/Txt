@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
 using Jetbrains.Annotations;
-using Text.ABNF.Core.DIGIT;
-using Txt;
+using Txt.ABNF.Core.DIGIT;
 
-namespace Text.ABNF.Core.HEXDIG
+namespace Txt.ABNF.Core.HEXDIG
 {
     /// <summary>Creates instances of the <see cref="HexadecimalDigitLexer" /> class.</summary>
     public class HexadecimalDigitLexerFactory : ILexerFactory<HexadecimalDigit>

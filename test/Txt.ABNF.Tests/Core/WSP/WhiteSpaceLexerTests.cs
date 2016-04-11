@@ -1,9 +1,8 @@
-﻿using Text.ABNF.Core.HTAB;
-using Text.ABNF.Core.SP;
-using Txt;
+﻿using Txt.ABNF.Core.HTAB;
+using Txt.ABNF.Core.SP;
 using Xunit;
 
-namespace Text.ABNF.Core.WSP
+namespace Txt.ABNF.Core.WSP
 {
     public class WhiteSpaceLexerTests
     {

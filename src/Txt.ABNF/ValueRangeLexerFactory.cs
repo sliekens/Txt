@@ -1,8 +1,7 @@
 using System;
 using System.Text;
-using Txt;
 
-namespace Text.ABNF
+namespace Txt.ABNF
 {
     /// <summary>Creates instances of the <see cref="ValueRangeLexer" /> class.</summary>
     public class ValueRangeLexerFactory : IValueRangeLexerFactory

@@ -9,9 +9,8 @@
 using System;
 using System.Diagnostics;
 using Jetbrains.Annotations;
-using Txt;
 
-namespace Text.ABNF.Core.ALPHA
+namespace Txt.ABNF.Core.ALPHA
 {
     public class AlphaLexer : Lexer<Alpha>
     {

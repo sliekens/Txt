@@ -9,7 +9,7 @@
 
 using Jetbrains.Annotations;
 
-namespace Text.ABNF.Core.CTL
+namespace Txt.ABNF.Core.CTL
 {
     public class ControlCharacter : Alternative
     {

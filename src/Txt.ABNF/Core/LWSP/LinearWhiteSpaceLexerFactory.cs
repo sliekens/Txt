@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
 using Jetbrains.Annotations;
-using Text.ABNF.Core.CRLF;
-using Text.ABNF.Core.WSP;
-using Txt;
+using Txt.ABNF.Core.CRLF;
+using Txt.ABNF.Core.WSP;
 
-namespace Text.ABNF.Core.LWSP
+namespace Txt.ABNF.Core.LWSP
 {
     /// <summary>Creates instances of the <see cref="LinearWhiteSpaceLexer" /> class.</summary>
     public class LinearWhiteSpaceLexerFactory : ILexerFactory<LinearWhiteSpace>

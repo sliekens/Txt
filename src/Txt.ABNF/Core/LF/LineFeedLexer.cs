@@ -9,9 +9,8 @@
 using System;
 using System.Diagnostics;
 using Jetbrains.Annotations;
-using Txt;
 
-namespace Text.ABNF.Core.LF
+namespace Txt.ABNF.Core.LF
 {
     public class LineFeedLexer : Lexer<LineFeed>
     {

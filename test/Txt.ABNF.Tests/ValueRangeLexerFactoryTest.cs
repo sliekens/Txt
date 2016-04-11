@@ -1,8 +1,7 @@
 ﻿using System.Text;
-using Txt;
 using Xunit;
 
-namespace Text.ABNF
+namespace Txt.ABNF
 {
     public class ValueRangeLexerFactoryTest
     {

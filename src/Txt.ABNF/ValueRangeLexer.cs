@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using Jetbrains.Annotations;
-using Txt;
 
-namespace Text.ABNF
+namespace Txt.ABNF
 {
     /// <summary>Provides methods for reading a range of alternative values.</summary>
     public class ValueRangeLexer : Lexer<Terminal>

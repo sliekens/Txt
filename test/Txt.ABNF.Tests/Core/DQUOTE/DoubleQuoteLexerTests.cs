@@ -1,7 +1,6 @@
-﻿using Txt;
-using Xunit;
+﻿using Xunit;
 
-namespace Text.ABNF.Core.DQUOTE
+namespace Txt.ABNF.Core.DQUOTE
 {
     public class DoubleQuoteLexerTests
     {

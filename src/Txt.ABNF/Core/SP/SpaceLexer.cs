@@ -9,9 +9,8 @@
 using System;
 using System.Diagnostics;
 using Jetbrains.Annotations;
-using Txt;
 
-namespace Text.ABNF.Core.SP
+namespace Txt.ABNF.Core.SP
 {
     public class SpaceLexer : Lexer<Space>
     {

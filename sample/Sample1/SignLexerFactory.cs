@@ -1,10 +1,11 @@
 ﻿using Txt;
+using Txt.ABNF;
 
 namespace Sample1
 {
     using System;
-    using Text;
-    using Text.ABNF;
+    
+    
 
     public sealed class SignLexerFactory : ILexerFactory<Sign>
     {

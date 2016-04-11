@@ -9,9 +9,8 @@
 using System;
 using System.Diagnostics;
 using Jetbrains.Annotations;
-using Txt;
 
-namespace Text.ABNF.Core.HTAB
+namespace Txt.ABNF.Core.HTAB
 {
     public class HorizontalTabLexer : Lexer<HorizontalTab>
     {

@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using Jetbrains.Annotations;
-using Txt;
 
-namespace Text.ABNF
+namespace Txt.ABNF
 {
     /// <summary>
     ///     Provides methods for reading a terminal value using the specified casing rules.

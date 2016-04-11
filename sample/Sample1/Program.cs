@@ -1,6 +1,7 @@
 ﻿using System.IO;
-using Text.ABNF.Core.DIGIT;
 using Txt;
+using Txt.ABNF;
+using Txt.ABNF.Core.DIGIT;
 
 namespace Sample1
 {
@@ -8,8 +9,7 @@ namespace Sample1
     using System.Collections.Generic;
     using System.Linq;
     using Autofac;
-    using Text;
-    using Text.ABNF;
+    
 
     internal class Program
     {

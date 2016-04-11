@@ -10,7 +10,7 @@
 using System;
 using Jetbrains.Annotations;
 
-namespace Text.ABNF.Core.CHAR
+namespace Txt.ABNF.Core.CHAR
 {
     public class Character : Terminal
     {

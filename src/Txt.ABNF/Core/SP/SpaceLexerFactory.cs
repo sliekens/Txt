@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using Jetbrains.Annotations;
-using Txt;
 
-namespace Text.ABNF.Core.SP
+namespace Txt.ABNF.Core.SP
 {
     /// <summary>Creates instances of the <see cref="SpaceLexer" /> class.</summary>
     public class SpaceLexerFactory : ILexerFactory<Space>

@@ -3,7 +3,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Text
+namespace Txt
 {
     internal class FakeStream : Stream
     {

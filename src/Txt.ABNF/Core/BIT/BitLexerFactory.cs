@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using Jetbrains.Annotations;
-using Txt;
 
-namespace Text.ABNF.Core.BIT
+namespace Txt.ABNF.Core.BIT
 {
     /// <summary>Creates instances of the <see cref="BitLexer" /> class.</summary>
     public class BitLexerFactory : ILexerFactory<Bit>

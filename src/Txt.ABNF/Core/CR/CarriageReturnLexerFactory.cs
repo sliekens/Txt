@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using Jetbrains.Annotations;
-using Txt;
 
-namespace Text.ABNF.Core.CR
+namespace Txt.ABNF.Core.CR
 {
     /// <summary>Creates instances of the <see cref="CarriageReturnLexer" /> class.</summary>
     public class CarriageReturnLexerFactory : ILexerFactory<CarriageReturn>

@@ -10,7 +10,7 @@
 using System;
 using Jetbrains.Annotations;
 
-namespace Text.ABNF.Core.VCHAR
+namespace Txt.ABNF.Core.VCHAR
 {
     public class VisibleCharacter : Terminal
     {

@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using Jetbrains.Annotations;
-using Txt;
 
-namespace Text.ABNF.Core.DIGIT
+namespace Txt.ABNF.Core.DIGIT
 {
     /// <summary>Creates instances of the <see cref="DigitLexer" /> class.</summary>
     public class DigitLexerFactory : ILexerFactory<Digit>

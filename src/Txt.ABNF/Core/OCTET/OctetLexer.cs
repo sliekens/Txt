@@ -9,9 +9,8 @@
 using System;
 using System.Diagnostics;
 using Jetbrains.Annotations;
-using Txt;
 
-namespace Text.ABNF.Core.OCTET
+namespace Txt.ABNF.Core.OCTET
 {
     public class OctetLexer : Lexer<Octet>
     {

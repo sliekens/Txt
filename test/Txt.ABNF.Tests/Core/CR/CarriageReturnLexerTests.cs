@@ -1,7 +1,6 @@
-﻿using Txt;
-using Xunit;
+﻿using Xunit;
 
-namespace Text.ABNF.Core.CR
+namespace Txt.ABNF.Core.CR
 {
     public class CarriageReturnLexerTests
     {

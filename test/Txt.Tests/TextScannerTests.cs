@@ -1,8 +1,7 @@
 ﻿using System;
-using Txt;
 using Xunit;
 
-namespace Text
+namespace Txt
 {
     public class TextScannerTests
     {

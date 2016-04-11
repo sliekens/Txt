@@ -1,7 +1,6 @@
-﻿using Txt;
-using Xunit;
+﻿using Xunit;
 
-namespace Text.ABNF.Core.BIT
+namespace Txt.ABNF.Core.BIT
 {
     public class BitLexerTests
     {

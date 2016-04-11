@@ -9,9 +9,8 @@
 using System;
 using System.Diagnostics;
 using Jetbrains.Annotations;
-using Txt;
 
-namespace Text.ABNF.Core.DIGIT
+namespace Txt.ABNF.Core.DIGIT
 {
     public class DigitLexer : Lexer<Digit>
     {

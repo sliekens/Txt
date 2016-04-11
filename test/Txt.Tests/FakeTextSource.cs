@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Text;
 using System.Threading.Tasks;
-using Txt;
 
-namespace Text
+namespace Txt
 {
     public class FakeTextSource : ITextSource
     {

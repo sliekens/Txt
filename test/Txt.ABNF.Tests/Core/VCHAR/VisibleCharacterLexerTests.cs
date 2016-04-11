@@ -1,7 +1,6 @@
-﻿using Txt;
-using Xunit;
+﻿using Xunit;
 
-namespace Text.ABNF.Core.VCHAR
+namespace Txt.ABNF.Core.VCHAR
 {
     public class VisibleCharacterLexerTests
     {

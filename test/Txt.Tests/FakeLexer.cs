@@ -1,7 +1,6 @@
 ﻿using System;
-using Txt;
 
-namespace Text
+namespace Txt
 {
     public class FakeLexer<T> : ILexer<T>
         where T : Element

@@ -10,7 +10,7 @@
 using System;
 using Jetbrains.Annotations;
 
-namespace Text.ABNF.Core.SP
+namespace Txt.ABNF.Core.SP
 {
     public class Space : Terminal
     {

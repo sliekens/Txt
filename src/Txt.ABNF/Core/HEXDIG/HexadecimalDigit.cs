@@ -9,7 +9,7 @@
 
 using Jetbrains.Annotations;
 
-namespace Text.ABNF.Core.HEXDIG
+namespace Txt.ABNF.Core.HEXDIG
 {
     public class HexadecimalDigit : Alternative
     {

@@ -9,9 +9,8 @@
 using System;
 using System.Diagnostics;
 using Jetbrains.Annotations;
-using Txt;
 
-namespace Text.ABNF.Core.DQUOTE
+namespace Txt.ABNF.Core.DQUOTE
 {
     public class DoubleQuoteLexer : Lexer<DoubleQuote>
     {

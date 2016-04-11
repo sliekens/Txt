@@ -1,13 +1,12 @@
-﻿using Text.ABNF.Core.CR;
-using Text.ABNF.Core.CRLF;
-using Text.ABNF.Core.HTAB;
-using Text.ABNF.Core.LF;
-using Text.ABNF.Core.SP;
-using Text.ABNF.Core.WSP;
-using Txt;
+﻿using Txt.ABNF.Core.CR;
+using Txt.ABNF.Core.CRLF;
+using Txt.ABNF.Core.HTAB;
+using Txt.ABNF.Core.LF;
+using Txt.ABNF.Core.SP;
+using Txt.ABNF.Core.WSP;
 using Xunit;
 
-namespace Text.ABNF.Core.LWSP
+namespace Txt.ABNF.Core.LWSP
 {
     public class LinearWhiteSpaceLexerTests
     {

@@ -1,7 +1,6 @@
-﻿using Txt;
-using Xunit;
+﻿using Xunit;
 
-namespace Text.ABNF.Core.HTAB
+namespace Txt.ABNF.Core.HTAB
 {
     public class HorizontalTabLexerTests
     {

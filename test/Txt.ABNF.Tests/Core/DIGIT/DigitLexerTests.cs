@@ -1,7 +1,6 @@
-﻿using Txt;
-using Xunit;
+﻿using Xunit;
 
-namespace Text.ABNF.Core.DIGIT
+namespace Txt.ABNF.Core.DIGIT
 {
     public class DigitLexerTests
     {

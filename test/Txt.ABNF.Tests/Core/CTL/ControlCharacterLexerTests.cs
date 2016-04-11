@@ -1,7 +1,6 @@
-﻿using Txt;
-using Xunit;
+﻿using Xunit;
 
-namespace Text.ABNF.Core.CTL
+namespace Txt.ABNF.Core.CTL
 {
     public class ControlCharacterLexerTests
     {

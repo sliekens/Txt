@@ -1,7 +1,6 @@
 ﻿using Jetbrains.Annotations;
-using Txt;
 
-namespace Text.ABNF
+namespace Txt.ABNF
 {
     /// <summary>Provides the base class for lexers whose lexer rule is an optional element.</summary>
     public class OptionLexer : RepetitionLexer

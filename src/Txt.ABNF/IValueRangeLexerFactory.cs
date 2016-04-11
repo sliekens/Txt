@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Text;
 using Jetbrains.Annotations;
-using Txt;
 
-namespace Text.ABNF
+namespace Txt.ABNF
 {
     /// <summary>Provides the interface for factory classes that create lexers for a range of alternative values.</summary>
     public interface IValueRangeLexerFactory

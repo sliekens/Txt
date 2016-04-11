@@ -1,7 +1,6 @@
 ﻿using Jetbrains.Annotations;
-using Txt;
 
-namespace Text.ABNF
+namespace Txt.ABNF
 {
     /// <summary>Provides the interface for factory classes that create lexers for a set of alternative elements.</summary>
     public interface IAlternativeLexerFactory

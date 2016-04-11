@@ -1,8 +1,7 @@
 ﻿using System;
 using Jetbrains.Annotations;
-using Txt;
 
-namespace Text.ABNF
+namespace Txt.ABNF
 {
     public class Alternative : Element
     {

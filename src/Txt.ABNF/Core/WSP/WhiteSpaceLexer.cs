@@ -9,9 +9,8 @@
 using System;
 using System.Diagnostics;
 using Jetbrains.Annotations;
-using Txt;
 
-namespace Text.ABNF.Core.WSP
+namespace Txt.ABNF.Core.WSP
 {
     public class WhiteSpaceLexer : Lexer<WhiteSpace>
     {

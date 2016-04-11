@@ -9,9 +9,8 @@
 using System;
 using System.Diagnostics;
 using Jetbrains.Annotations;
-using Txt;
 
-namespace Text.ABNF.Core.VCHAR
+namespace Txt.ABNF.Core.VCHAR
 {
     public class VisibleCharacterLexer : Lexer<VisibleCharacter>
     {

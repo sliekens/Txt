@@ -1,9 +1,8 @@
-﻿using Text.ABNF.Core.CR;
-using Text.ABNF.Core.LF;
-using Txt;
+﻿using Txt.ABNF.Core.CR;
+using Txt.ABNF.Core.LF;
 using Xunit;
 
-namespace Text.ABNF.Core.CRLF
+namespace Txt.ABNF.Core.CRLF
 {
     public class EndOfLineLexerTests
     {

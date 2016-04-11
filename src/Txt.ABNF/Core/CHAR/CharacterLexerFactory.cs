@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using Jetbrains.Annotations;
-using Txt;
 
-namespace Text.ABNF.Core.CHAR
+namespace Txt.ABNF.Core.CHAR
 {
     /// <summary>Creates instances of the <see cref="CharacterLexer" /> class.</summary>
     public class CharacterLexerFactory : ILexerFactory<Character>

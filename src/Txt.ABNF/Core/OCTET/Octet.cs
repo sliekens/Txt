@@ -10,7 +10,7 @@
 using System;
 using Jetbrains.Annotations;
 
-namespace Text.ABNF.Core.OCTET
+namespace Txt.ABNF.Core.OCTET
 {
     public class Octet : Terminal
     {

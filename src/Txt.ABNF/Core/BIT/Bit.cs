@@ -10,7 +10,7 @@
 using System.Diagnostics;
 using Jetbrains.Annotations;
 
-namespace Text.ABNF.Core.BIT
+namespace Txt.ABNF.Core.BIT
 {
     public class Bit : Alternative
     {

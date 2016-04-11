@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
 using Jetbrains.Annotations;
-using Text.ABNF.Core.HTAB;
-using Text.ABNF.Core.SP;
-using Txt;
+using Txt.ABNF.Core.HTAB;
+using Txt.ABNF.Core.SP;
 
-namespace Text.ABNF.Core.WSP
+namespace Txt.ABNF.Core.WSP
 {
     /// <summary>Creates instances of the <see cref="WhiteSpaceLexer" /> class.</summary>
     public class WhiteSpaceLexerFactory : ILexerFactory<WhiteSpace>

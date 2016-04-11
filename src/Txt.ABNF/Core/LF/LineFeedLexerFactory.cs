@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using Jetbrains.Annotations;
-using Txt;
 
-namespace Text.ABNF.Core.LF
+namespace Txt.ABNF.Core.LF
 {
     /// <summary>Creates instances of the <see cref="LineFeedLexer" /> class.</summary>
     public class LineFeedLexerFactory : ILexerFactory<LineFeed>

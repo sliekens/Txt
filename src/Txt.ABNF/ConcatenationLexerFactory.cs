@@ -1,8 +1,7 @@
 ﻿using System;
 using Jetbrains.Annotations;
-using Txt;
 
-namespace Text.ABNF
+namespace Txt.ABNF
 {
     /// <summary>Creates instances of the <see cref="ConcatenationLexer" /> class.</summary>
     public class ConcatenationLexerFactory : IConcatenationLexerFactory

@@ -9,7 +9,7 @@
 
 using Jetbrains.Annotations;
 
-namespace Text.ABNF.Core.WSP
+namespace Txt.ABNF.Core.WSP
 {
     public class WhiteSpace : Alternative
     {

@@ -10,7 +10,7 @@
 using System;
 using Jetbrains.Annotations;
 
-namespace Text.ABNF.Core.LF
+namespace Txt.ABNF.Core.LF
 {
     public class LineFeed : Terminal
     {

@@ -1,7 +1,6 @@
-﻿using Txt;
-using Xunit;
+﻿using Xunit;
 
-namespace Text.ABNF.Core.LF
+namespace Txt.ABNF.Core.LF
 {
     public class LineFeedLexerTests
     {

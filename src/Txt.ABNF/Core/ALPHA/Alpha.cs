@@ -9,7 +9,7 @@
 
 using Jetbrains.Annotations;
 
-namespace Text.ABNF.Core.ALPHA
+namespace Txt.ABNF.Core.ALPHA
 {
     public class Alpha : Alternative
     {

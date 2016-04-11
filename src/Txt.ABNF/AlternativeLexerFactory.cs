@@ -1,8 +1,7 @@
 ﻿using System;
 using Jetbrains.Annotations;
-using Txt;
 
-namespace Text.ABNF
+namespace Txt.ABNF
 {
     /// <summary>Creates instances of the <see cref="AlternativeLexer" /> class.</summary>
     public class AlternativeLexerFactory : IAlternativeLexerFactory

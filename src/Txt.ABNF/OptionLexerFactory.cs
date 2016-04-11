@@ -1,7 +1,6 @@
 ﻿using System;
-using Txt;
 
-namespace Text.ABNF
+namespace Txt.ABNF
 {
     /// <summary>Creates instances of the <see cref="OptionLexer" /> class.</summary>
     public class OptionLexerFactory : IOptionLexerFactory

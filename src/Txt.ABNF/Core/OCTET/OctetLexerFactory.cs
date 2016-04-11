@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using Jetbrains.Annotations;
-using Txt;
 
-namespace Text.ABNF.Core.OCTET
+namespace Txt.ABNF.Core.OCTET
 {
     /// <summary>Creates instances of the <see cref="OctetLexer" /> class.</summary>
     public class OctetLexerFactory : ILexerFactory<Octet>

@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using Jetbrains.Annotations;
-using Txt;
 
-namespace Text.ABNF.Core.VCHAR
+namespace Txt.ABNF.Core.VCHAR
 {
     /// <summary>Creates instances of the <see cref="VisibleCharacterLexer" /> class.</summary>
     public class VisibleCharacterLexerFactory : ILexerFactory<VisibleCharacter>

@@ -9,7 +9,7 @@
 using System;
 using Jetbrains.Annotations;
 
-namespace Text.ABNF.Core.DQUOTE
+namespace Txt.ABNF.Core.DQUOTE
 {
     public class DoubleQuote : Terminal
     {

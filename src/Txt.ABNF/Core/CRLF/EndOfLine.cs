@@ -10,7 +10,7 @@
 using System;
 using Jetbrains.Annotations;
 
-namespace Text.ABNF.Core.CRLF
+namespace Txt.ABNF.Core.CRLF
 {
     public class EndOfLine : Concatenation
     {

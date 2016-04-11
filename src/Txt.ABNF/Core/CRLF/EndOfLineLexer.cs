@@ -9,9 +9,8 @@
 using System;
 using System.Diagnostics;
 using Jetbrains.Annotations;
-using Txt;
 
-namespace Text.ABNF.Core.CRLF
+namespace Txt.ABNF.Core.CRLF
 {
     public class EndOfLineLexer : Lexer<EndOfLine>
     {

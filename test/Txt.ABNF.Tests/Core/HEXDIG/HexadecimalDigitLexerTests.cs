@@ -1,8 +1,7 @@
-﻿using Text.ABNF.Core.DIGIT;
-using Txt;
+﻿using Txt.ABNF.Core.DIGIT;
 using Xunit;
 
-namespace Text.ABNF.Core.HEXDIG
+namespace Txt.ABNF.Core.HEXDIG
 {
     public class HexadecimalDigitLexerTests
     {

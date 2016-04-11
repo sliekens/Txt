@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
 using Jetbrains.Annotations;
-using Text.ABNF.Core.CR;
-using Text.ABNF.Core.LF;
-using Txt;
+using Txt.ABNF.Core.CR;
+using Txt.ABNF.Core.LF;
 
-namespace Text.ABNF.Core.CRLF
+namespace Txt.ABNF.Core.CRLF
 {
     /// <summary>Creates instances of the <see cref="EndOfLineLexer" /> class.</summary>
     public class EndOfLineLexerFactory : ILexerFactory<EndOfLine>

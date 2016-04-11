@@ -1,10 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Text;
-using Txt;
 using Xunit;
 
-namespace Text
+namespace Txt
 {
     public class StreamTextSourceTests
     {

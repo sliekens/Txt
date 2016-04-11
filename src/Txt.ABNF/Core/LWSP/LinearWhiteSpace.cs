@@ -10,7 +10,7 @@
 using System;
 using Jetbrains.Annotations;
 
-namespace Text.ABNF.Core.LWSP
+namespace Txt.ABNF.Core.LWSP
 {
     public class LinearWhiteSpace : Repetition
     {

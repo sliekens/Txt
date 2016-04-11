@@ -1,7 +1,6 @@
-﻿using Txt;
-using Xunit;
+﻿using Xunit;
 
-namespace Text.ABNF.Core.SP
+namespace Txt.ABNF.Core.SP
 {
     public class SpaceLexerTests
     {

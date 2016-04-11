@@ -1,7 +1,9 @@
-﻿namespace Sample1
+﻿using Txt.ABNF;
+
+namespace Sample1
 {
     using System.Numerics;
-    using Text.ABNF;
+    
 
     public class Integer : Concatenation
     {

@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Jetbrains.Annotations;
-using Txt;
 
-namespace Text.ABNF
+namespace Txt.ABNF
 {
     public class Repetition : Element
     {

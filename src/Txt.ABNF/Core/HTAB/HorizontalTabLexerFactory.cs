@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using Jetbrains.Annotations;
-using Txt;
 
-namespace Text.ABNF.Core.HTAB
+namespace Txt.ABNF.Core.HTAB
 {
     /// <summary>Creates instances of the <see cref="HorizontalTabLexer" /> class.</summary>
     public class HorizontalTabLexerFactory : ILexerFactory<HorizontalTab>

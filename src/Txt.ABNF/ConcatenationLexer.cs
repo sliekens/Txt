@@ -4,9 +4,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using Jetbrains.Annotations;
-using Txt;
 
-namespace Text.ABNF
+namespace Txt.ABNF
 {
     public class ConcatenationLexer : Lexer<Concatenation>
     {

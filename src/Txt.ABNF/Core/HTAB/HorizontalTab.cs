@@ -10,7 +10,7 @@
 using System;
 using Jetbrains.Annotations;
 
-namespace Text.ABNF.Core.HTAB
+namespace Txt.ABNF.Core.HTAB
 {
     public class HorizontalTab : Terminal
     {
