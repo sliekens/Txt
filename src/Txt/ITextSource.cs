@@ -9,8 +9,6 @@ namespace Txt
     /// </summary>
     public interface ITextSource : IDisposable
     {
-        event EventHandler<PositionChangedEventArgs> OnPositionChanged;
-
         int Read();
 
         int Read([NotNull] char[] buffer, int offset, int count);

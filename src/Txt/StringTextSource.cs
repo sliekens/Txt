@@ -28,7 +28,7 @@ namespace Txt
             pusback = new Stack<char>();
         }
 
-        protected override int ReadImpl()
+        public override int Read()
         {
             if (pusback.Count != 0)
             {
@@ -41,7 +41,7 @@ namespace Txt
             return s.Dequeue();
         }
 
-        protected override int ReadImpl(char[] buffer, int offset, int count)
+        public override int Read(char[] buffer, int offset, int count)
         {
             if (buffer == null)
             {
@@ -78,12 +78,12 @@ namespace Txt
             return length;
         }
 
-        protected override void UnreadImpl(char c)
+        public override void Unread(char c)
         {
             pusback.Push(c);
         }
 
-        protected override void UnreadImpl(char[] buffer, int offset, int count)
+        public override void Unread(char[] buffer, int offset, int count)
         {
             if (buffer == null)
             {
