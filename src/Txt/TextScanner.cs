@@ -78,8 +78,12 @@ namespace Txt
             {
                 throw new ObjectDisposedException(GetType().FullName);
             }
-
-            return textSource.Peek();
+            var peek = textSource.Peek();
+            if (peek == -1)
+            {
+                endOfInput = true;
+            }
+            return peek;
         }
 
         public virtual MatchResult TryMatch(string s)
@@ -99,6 +103,11 @@ namespace Txt
             }
             if (s.Length == 0)
             {
+                if (textSource.Peek() == -1)
+                {
+                    return MatchResult.FromEndOfInput(s);
+                }
+
                 return MatchResult.FromMatch(string.Empty, s);
             }
             var buffer = new char[s.Length];

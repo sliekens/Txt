@@ -43,7 +43,9 @@ namespace Txt
             {
                 throw new ArgumentNullException(nameof(expected));
             }
-            return new MatchResult(true, false, string.Empty, expected);
+
+            // Success is true if 'expected' is the empty string; otherwise, false
+            return new MatchResult(true, expected == string.Empty, string.Empty, expected);
         }
 
         [NotNull]
