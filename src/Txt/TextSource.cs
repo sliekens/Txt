@@ -12,17 +12,35 @@ namespace Txt
             Dispose(false);
         }
 
+        public event EventHandler<PositionChangedEventArgs> OnPositionChanged;
+
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
 
-        public abstract int Read();
+        public int Read()
+        {
+            var n = ReadImpl();
+            if (n != -1)
+            {
+                OnPositionChanged?.Invoke(this, new PositionChangedEventArgs { Offset = 1 });
+            }
+            return n;
+        }
 
-        public abstract int Read(char[] buffer, int offset, int count);
+        public int Read(char[] buffer, int offset, int count)
+        {
+            var n = ReadImpl(buffer, offset, count);
+            if (n != 0)
+            {
+                OnPositionChanged?.Invoke(this, new PositionChangedEventArgs { Offset = n });
+            }
+            return n;
+        }
 
-        public virtual Task<int> ReadAsync(char[] buffer, int offset, int count)
+        public virtual async Task<int> ReadAsync(char[] buffer, int offset, int count)
         {
             if (buffer == null)
             {
@@ -42,22 +60,31 @@ namespace Txt
             }
             if (count == 0)
             {
-                return Task.FromResult(0);
+                return 0;
             }
-            return ReadAsyncImpl(buffer, offset, count, CancellationToken.None);
+            var n = await ReadAsyncImpl(buffer, offset, count, CancellationToken.None).ConfigureAwait(false);
+            if (n != 0)
+            {
+                OnPositionChanged?.Invoke(this, new PositionChangedEventArgs { Offset = n });
+            }
+            return n;
         }
 
-        public virtual int ReadBlock(char[] buffer, int offset, int count)
+        public int ReadBlock(char[] buffer, int offset, int count)
         {
             int i, n = 0;
             do
             {
-                n += i = Read(buffer, offset + n, count - n);
-            } while (i > 0 && n < count);
+                n += i = ReadImpl(buffer, offset + n, count - n);
+            } while ((i > 0) && (n < count));
+            if (n != 0)
+            {
+                OnPositionChanged?.Invoke(this, new PositionChangedEventArgs { Offset = n });
+            }
             return n;
         }
 
-        public virtual Task<int> ReadBlockAsync(char[] buffer, int offset, int count)
+        public async Task<int> ReadBlockAsync(char[] buffer, int offset, int count)
         {
             if (buffer == null)
             {
@@ -77,19 +104,33 @@ namespace Txt
             }
             if (count == 0)
             {
-                return Task.FromResult(0);
+                return 0;
             }
-            return ReadBlockAsyncImpl(buffer, offset, count, CancellationToken.None);
+            var n = await ReadBlockAsyncImpl(buffer, offset, count, CancellationToken.None).ConfigureAwait(false);
+            if (n != 0)
+            {
+                OnPositionChanged?.Invoke(this, new PositionChangedEventArgs { Offset = n });
+            }
+            return n;
         }
 
-        public virtual void Unread(char c)
+        public void Unread(char c)
         {
-            Unread(new[] {c}, 0, 1);
+            UnreadImpl(c);
         }
 
-        public abstract void Unread(char[] buffer, int offset, int count);
+        protected abstract void UnreadImpl(char c);
 
-        public Task UnreadAsync(char[] buffer, int offset, int count)
+        public void Unread(char[] buffer, int offset, int count)
+        {
+            UnreadImpl(buffer, offset, count);
+            if (count != 0)
+            {
+                OnPositionChanged?.Invoke(this, new PositionChangedEventArgs { Offset = -count });
+            }
+        }
+
+        public async Task UnreadAsync(char[] buffer, int offset, int count)
         {
             if (buffer == null)
             {
@@ -107,29 +148,35 @@ namespace Txt
             {
                 throw new ArgumentOutOfRangeException(nameof(count), "Precondition: offset + count <= buffer.Length");
             }
-            if (count == 0)
+            await UnreadAsyncImpl(buffer, offset, count, CancellationToken.None).ConfigureAwait(false);
+            if (count != 0)
             {
-                return TaskHelper.CompletedTask;
+                OnPositionChanged?.Invoke(this, new PositionChangedEventArgs { Offset = -count });
             }
-            return UnreadAsyncImpl(buffer, offset, count, CancellationToken.None);
         }
 
         protected virtual void Dispose(bool disposing)
         {
         }
 
+        protected abstract int ReadImpl();
+
+        protected abstract int ReadImpl(char[] buffer, int offset, int count);
+
+        protected abstract void UnreadImpl(char[] buffer, int offset, int count);
+
         private static int DelegatedRead(object o)
         {
             Debug.Assert(o is InputOutputState, "o is InputOutputState");
-            var state = (InputOutputState) o;
-            return state.TextSource.Read(state.Buffer, state.Offset, state.Count);
+            var state = (InputOutputState)o;
+            return state.TextSource.ReadImpl(state.Buffer, state.Offset, state.Count);
         }
 
         private static void DelegatedUnread(object o)
         {
             Debug.Assert(o is InputOutputState, "o is InputOutputState");
-            var state = (InputOutputState) o;
-            state.TextSource.Unread(state.Buffer, state.Offset, state.Count);
+            var state = (InputOutputState)o;
+            state.TextSource.UnreadImpl(state.Buffer, state.Offset, state.Count);
         }
 
         private Task<int> ReadAsyncImpl(char[] buffer, int offset, int count, CancellationToken cancellationToken)
@@ -167,10 +214,9 @@ namespace Txt
                 var currentOffset = offset + totalLength;
                 var currentCount = count - totalLength;
                 length =
-                    await
-                        ReadAsyncImpl(buffer, currentOffset, currentCount, cancellationToken).ConfigureAwait(false);
+                    await ReadAsyncImpl(buffer, currentOffset, currentCount, cancellationToken).ConfigureAwait(false);
                 totalLength += length;
-            } while (length > 0 && totalLength < count);
+            } while ((length > 0) && (totalLength < count));
             return totalLength;
         }
 
@@ -203,7 +249,7 @@ namespace Txt
 
             public int Offset { get; set; }
 
-            public ITextSource TextSource { get; set; }
+            public TextSource TextSource { get; set; }
         }
     }
 }

@@ -30,12 +30,21 @@ namespace Txt
 
         public Encoding Encoding { get; }
 
-        public override int Read()
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                binaryReader.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        protected override int ReadImpl()
         {
             return binaryReader.Read();
         }
 
-        public override int Read(char[] buffer, int offset, int count)
+        protected override int ReadImpl(char[] buffer, int offset, int count)
         {
             if (buffer == null)
             {
@@ -60,7 +69,7 @@ namespace Txt
             return binaryReader.Read(buffer, offset, count);
         }
 
-        public override void Unread(char[] buffer, int offset, int count)
+        protected override void UnreadImpl(char[] buffer, int offset, int count)
         {
             if (buffer == null)
             {
@@ -94,13 +103,9 @@ namespace Txt
             }
         }
 
-        protected override void Dispose(bool disposing)
+        protected override void UnreadImpl(char c)
         {
-            if (disposing)
-            {
-                binaryReader.Dispose();
-            }
-            base.Dispose(disposing);
+            Unread(new[] { c }, 0, 1);
         }
     }
 }

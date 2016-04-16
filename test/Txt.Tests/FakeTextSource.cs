@@ -49,6 +49,8 @@ namespace Txt
             this.OnDispose();
         }
 
+        public event EventHandler<PositionChangedEventArgs> OnPositionChanged;
+
         public int Read()
         {
             if (this.OnRead == null)
