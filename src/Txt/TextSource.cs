@@ -23,14 +23,10 @@ namespace Txt
             return PeekImpl();
         }
 
-        protected abstract int PeekImpl();
-
         public int Read()
         {
             return ReadImpl();
         }
-
-        protected abstract int ReadImpl();
 
         public int Read(char[] buffer, int offset, int count)
         {
@@ -56,8 +52,6 @@ namespace Txt
             }
             return ReadImpl(buffer, offset, count);
         }
-
-        protected abstract int ReadImpl(char[] buffer, int offset, int count);
 
         public Task<int> ReadAsync(char[] buffer, int offset, int count)
         {
@@ -87,16 +81,6 @@ namespace Txt
         public int ReadBlock(char[] buffer, int offset, int count)
         {
             return ReadBlockImpl(buffer, offset, count);
-        }
-
-        protected virtual int ReadBlockImpl(char[] buffer, int offset, int count)
-        {
-            int i, n = 0;
-            do
-            {
-                n += i = Read(buffer, offset + n, count - n);
-            } while ((i > 0) && (n < count));
-            return n;
         }
 
         public Task<int> ReadBlockAsync(char[] buffer, int offset, int count)
@@ -129,8 +113,6 @@ namespace Txt
             UnreadImpl(c);
         }
 
-        protected abstract void UnreadImpl(char c);
-
         public void Unread(char[] buffer, int offset, int count)
         {
             if (buffer == null)
@@ -155,7 +137,6 @@ namespace Txt
             }
             UnreadImpl(buffer, offset, count);
         }
-        protected abstract void UnreadImpl(char[] buffer, int offset, int count);
 
         public Task UnreadAsync(char[] buffer, int offset, int count)
         {
@@ -186,21 +167,13 @@ namespace Txt
         {
         }
 
-        private static int DelegatedRead(object o)
-        {
-            Debug.Assert(o is InputOutputState, "o is InputOutputState");
-            var state = (InputOutputState)o;
-            return state.TextSource.ReadImpl(state.Buffer, state.Offset, state.Count);
-        }
+        protected abstract int PeekImpl();
 
-        private static void DelegatedUnread(object o)
-        {
-            Debug.Assert(o is InputOutputState, "o is InputOutputState");
-            var state = (InputOutputState)o;
-            state.TextSource.UnreadImpl(state.Buffer, state.Offset, state.Count);
-        }
-
-        protected virtual Task<int> ReadAsyncImpl(char[] buffer, int offset, int count, CancellationToken cancellationToken)
+        protected virtual Task<int> ReadAsyncImpl(
+            char[] buffer,
+            int offset,
+            int count,
+            CancellationToken cancellationToken)
         {
             Debug.Assert(buffer != null, "buffer != null");
             Debug.Assert(offset >= 0);
@@ -242,7 +215,25 @@ namespace Txt
             return totalLength;
         }
 
-        protected virtual Task UnreadAsyncImpl(char[] buffer, int offset, int count, CancellationToken cancellationToken)
+        protected virtual int ReadBlockImpl(char[] buffer, int offset, int count)
+        {
+            int i, n = 0;
+            do
+            {
+                n += i = Read(buffer, offset + n, count - n);
+            } while ((i > 0) && (n < count));
+            return n;
+        }
+
+        protected abstract int ReadImpl();
+
+        protected abstract int ReadImpl(char[] buffer, int offset, int count);
+
+        protected virtual Task UnreadAsyncImpl(
+            char[] buffer,
+            int offset,
+            int count,
+            CancellationToken cancellationToken)
         {
             Debug.Assert(buffer != null, "buffer != null");
             Debug.Assert(offset >= 0);
@@ -259,6 +250,24 @@ namespace Txt
                     CancellationToken = cancellationToken
                 },
                 cancellationToken);
+        }
+
+        protected abstract void UnreadImpl(char c);
+
+        protected abstract void UnreadImpl(char[] buffer, int offset, int count);
+
+        private static int DelegatedRead(object o)
+        {
+            Debug.Assert(o is InputOutputState, "o is InputOutputState");
+            var state = (InputOutputState)o;
+            return state.TextSource.ReadImpl(state.Buffer, state.Offset, state.Count);
+        }
+
+        private static void DelegatedUnread(object o)
+        {
+            Debug.Assert(o is InputOutputState, "o is InputOutputState");
+            var state = (InputOutputState)o;
+            state.TextSource.UnreadImpl(state.Buffer, state.Offset, state.Count);
         }
 
         private class InputOutputState

@@ -2,8 +2,6 @@
 using System.Diagnostics;
 using System.IO;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Txt
 {
@@ -31,6 +29,15 @@ namespace Txt
         }
 
         public Encoding Encoding { get; }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                binaryReader.Dispose();
+            }
+            base.Dispose(disposing);
+        }
 
         protected override int PeekImpl()
         {
@@ -64,15 +71,6 @@ namespace Txt
                 var pushbackBuffer = Encoding.GetBytes(buffer, offset, count);
                 inputStream.Write(pushbackBuffer, 0, pushbackBuffer.Length);
             }
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                binaryReader.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }
