@@ -24,6 +24,7 @@ namespace Txt
         public Func<Encoding> OnEncodingGet { get; set; }
 
         public Func<int> OnRead { get; set; }
+        public Func<int> OnPeek { get; set; }
 
         public Func<char[], int, int, Task<int>> OnReadAsyncCharArrayInt32Int32 { get; set; }
 
@@ -47,6 +48,16 @@ namespace Txt
             }
 
             this.OnDispose();
+        }
+
+        public int Peek()
+        {
+            if (this.OnPeek == null)
+            {
+                throw new NotImplementedException();
+            }
+
+            return OnPeek();
         }
 
         public int Read()
