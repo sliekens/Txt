@@ -41,7 +41,7 @@ namespace Txt
             return -1;
         }
 
-        public override int Read()
+        protected override int ReadImpl()
         {
             if (pushback.Count != 0)
             {
@@ -54,24 +54,8 @@ namespace Txt
             return -1;
         }
 
-        public override int Read(char[] buffer, int offset, int count)
+        protected override int ReadImpl(char[] buffer, int offset, int count)
         {
-            if (buffer == null)
-            {
-                throw new ArgumentNullException(nameof(buffer));
-            }
-            if (offset < 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(offset), "Precondition: offset >= 0");
-            }
-            if (count < 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(count), "Precondition: count >= 0");
-            }
-            if (offset + count > buffer.Length)
-            {
-                throw new ArgumentOutOfRangeException(nameof(count), "Precondition: offset + count <= buffer.Length");
-            }
             int length;
             for (length = 0; length < count; length++, offset++)
             {
@@ -91,29 +75,13 @@ namespace Txt
             return length;
         }
 
-        public override void Unread(char c)
+        protected override void UnreadImpl(char c)
         {
             pushback.Push(c);
         }
 
-        public override void Unread(char[] buffer, int offset, int count)
+        protected override void UnreadImpl(char[] buffer, int offset, int count)
         {
-            if (buffer == null)
-            {
-                throw new ArgumentNullException(nameof(buffer));
-            }
-            if (offset < 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(offset), "Precondition: offset >= 0");
-            }
-            if (count < 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(count), "Precondition: count >= 0");
-            }
-            if (offset + count > buffer.Length)
-            {
-                throw new ArgumentOutOfRangeException(nameof(count), "Precondition: offset + count <= buffer.Length");
-            }
             for (var i = offset + count - 1; i >= 0; i--)
             {
                 pushback.Push(buffer[i]);

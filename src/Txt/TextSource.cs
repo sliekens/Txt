@@ -25,11 +25,41 @@ namespace Txt
 
         protected abstract int PeekImpl();
 
-        public abstract int Read();
+        public int Read()
+        {
+            return ReadImpl();
+        }
 
-        public abstract int Read(char[] buffer, int offset, int count);
+        protected abstract int ReadImpl();
 
-        public virtual Task<int> ReadAsync(char[] buffer, int offset, int count)
+        public int Read(char[] buffer, int offset, int count)
+        {
+            if (buffer == null)
+            {
+                throw new ArgumentNullException(nameof(buffer));
+            }
+            if (offset < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(offset), "Precondition: offset >= 0");
+            }
+            if (count < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(count), "Precondition: count >= 0");
+            }
+            if (offset + count > buffer.Length)
+            {
+                throw new ArgumentOutOfRangeException(nameof(count), "Precondition: offset + count <= buffer.Length");
+            }
+            if (count == 0)
+            {
+                return 0;
+            }
+            return ReadImpl(buffer, offset, count);
+        }
+
+        protected abstract int ReadImpl(char[] buffer, int offset, int count);
+
+        public Task<int> ReadAsync(char[] buffer, int offset, int count)
         {
             if (buffer == null)
             {
@@ -54,17 +84,22 @@ namespace Txt
             return ReadAsyncImpl(buffer, offset, count, CancellationToken.None);
         }
 
-        public virtual int ReadBlock(char[] buffer, int offset, int count)
+        public int ReadBlock(char[] buffer, int offset, int count)
+        {
+            return ReadBlockImpl(buffer, offset, count);
+        }
+
+        protected virtual int ReadBlockImpl(char[] buffer, int offset, int count)
         {
             int i, n = 0;
             do
             {
                 n += i = Read(buffer, offset + n, count - n);
-            } while (i > 0 && n < count);
+            } while ((i > 0) && (n < count));
             return n;
         }
 
-        public virtual Task<int> ReadBlockAsync(char[] buffer, int offset, int count)
+        public Task<int> ReadBlockAsync(char[] buffer, int offset, int count)
         {
             if (buffer == null)
             {
@@ -89,12 +124,38 @@ namespace Txt
             return ReadBlockAsyncImpl(buffer, offset, count, CancellationToken.None);
         }
 
-        public virtual void Unread(char c)
+        public void Unread(char c)
         {
-            Unread(new[] {c}, 0, 1);
+            UnreadImpl(c);
         }
 
-        public abstract void Unread(char[] buffer, int offset, int count);
+        protected abstract void UnreadImpl(char c);
+
+        public void Unread(char[] buffer, int offset, int count)
+        {
+            if (buffer == null)
+            {
+                throw new ArgumentNullException(nameof(buffer));
+            }
+            if (offset < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(offset), "Precondition: offset >= 0");
+            }
+            if (count < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(count), "Precondition: count >= 0");
+            }
+            if (offset + count > buffer.Length)
+            {
+                throw new ArgumentOutOfRangeException(nameof(count), "Precondition: offset + count <= buffer.Length");
+            }
+            if (count == 0)
+            {
+                return;
+            }
+            UnreadImpl(buffer, offset, count);
+        }
+        protected abstract void UnreadImpl(char[] buffer, int offset, int count);
 
         public Task UnreadAsync(char[] buffer, int offset, int count)
         {
@@ -128,18 +189,18 @@ namespace Txt
         private static int DelegatedRead(object o)
         {
             Debug.Assert(o is InputOutputState, "o is InputOutputState");
-            var state = (InputOutputState) o;
-            return state.TextSource.Read(state.Buffer, state.Offset, state.Count);
+            var state = (InputOutputState)o;
+            return state.TextSource.ReadImpl(state.Buffer, state.Offset, state.Count);
         }
 
         private static void DelegatedUnread(object o)
         {
             Debug.Assert(o is InputOutputState, "o is InputOutputState");
-            var state = (InputOutputState) o;
-            state.TextSource.Unread(state.Buffer, state.Offset, state.Count);
+            var state = (InputOutputState)o;
+            state.TextSource.UnreadImpl(state.Buffer, state.Offset, state.Count);
         }
 
-        private Task<int> ReadAsyncImpl(char[] buffer, int offset, int count, CancellationToken cancellationToken)
+        protected virtual Task<int> ReadAsyncImpl(char[] buffer, int offset, int count, CancellationToken cancellationToken)
         {
             Debug.Assert(buffer != null, "buffer != null");
             Debug.Assert(offset >= 0);
@@ -158,7 +219,7 @@ namespace Txt
                 cancellationToken);
         }
 
-        private async Task<int> ReadBlockAsyncImpl(
+        protected virtual async Task<int> ReadBlockAsyncImpl(
             char[] buffer,
             int offset,
             int count,
@@ -177,11 +238,11 @@ namespace Txt
                     await
                         ReadAsyncImpl(buffer, currentOffset, currentCount, cancellationToken).ConfigureAwait(false);
                 totalLength += length;
-            } while (length > 0 && totalLength < count);
+            } while ((length > 0) && (totalLength < count));
             return totalLength;
         }
 
-        private Task UnreadAsyncImpl(char[] buffer, int offset, int count, CancellationToken cancellationToken)
+        protected virtual Task UnreadAsyncImpl(char[] buffer, int offset, int count, CancellationToken cancellationToken)
         {
             Debug.Assert(buffer != null, "buffer != null");
             Debug.Assert(offset >= 0);
@@ -210,7 +271,7 @@ namespace Txt
 
             public int Offset { get; set; }
 
-            public ITextSource TextSource { get; set; }
+            public TextSource TextSource { get; set; }
         }
     }
 }

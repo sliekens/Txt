@@ -2,6 +2,8 @@
 using System.Diagnostics;
 using System.IO;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Txt
 {
@@ -35,58 +37,23 @@ namespace Txt
             return binaryReader.PeekChar();
         }
 
-        public override int Read()
+        protected override int ReadImpl()
         {
             return binaryReader.Read();
         }
 
-        public override int Read(char[] buffer, int offset, int count)
+        protected override int ReadImpl(char[] buffer, int offset, int count)
         {
-            if (buffer == null)
-            {
-                throw new ArgumentNullException(nameof(buffer));
-            }
-            if (offset < 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(offset), "Precondition: offset >= 0");
-            }
-            if (count < 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(count), "Precondition: count >= 0");
-            }
-            if (offset + count > buffer.Length)
-            {
-                throw new ArgumentOutOfRangeException(nameof(count), "Precondition: offset + count <= buffer.Length");
-            }
-            if (count == 0)
-            {
-                return 0;
-            }
             return binaryReader.Read(buffer, offset, count);
         }
 
-        public override void Unread(char[] buffer, int offset, int count)
+        protected override void UnreadImpl(char c)
         {
-            if (buffer == null)
-            {
-                throw new ArgumentNullException(nameof(buffer));
-            }
-            if (offset < 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(offset), "Precondition: offset >= 0");
-            }
-            if (count < 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(count), "Precondition: count >= 0");
-            }
-            if (offset + count > buffer.Length)
-            {
-                throw new ArgumentOutOfRangeException(nameof(count), "Precondition: offset + count <= buffer.Length");
-            }
-            if (count == 0)
-            {
-                return;
-            }
+            Unread(new[] { c }, 0, 1);
+        }
+
+        protected override void UnreadImpl(char[] buffer, int offset, int count)
+        {
             if (inputStream.CanSeek)
             {
                 var length = Encoding.GetByteCount(buffer, offset, count);
