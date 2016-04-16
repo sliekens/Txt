@@ -72,6 +72,16 @@ namespace Txt
             return new TextContext(offset);
         }
 
+        public int Peek()
+        {
+            if (disposed)
+            {
+                throw new ObjectDisposedException(GetType().FullName);
+            }
+
+            return textSource.Peek();
+        }
+
         public virtual MatchResult TryMatch(string s)
         {
             return TryMatch(s, StringComparer.Ordinal);

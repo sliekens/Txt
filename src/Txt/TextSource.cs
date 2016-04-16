@@ -18,6 +18,13 @@ namespace Txt
             GC.SuppressFinalize(this);
         }
 
+        public int Peek()
+        {
+            return PeekImpl();
+        }
+
+        protected abstract int PeekImpl();
+
         public abstract int Read();
 
         public abstract int Read(char[] buffer, int offset, int count);

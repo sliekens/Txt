@@ -30,6 +30,11 @@ namespace Txt
 
         public Encoding Encoding { get; }
 
+        protected override int PeekImpl()
+        {
+            return binaryReader.PeekChar();
+        }
+
         public override int Read()
         {
             return binaryReader.Read();

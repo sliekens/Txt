@@ -9,6 +9,8 @@ namespace Txt
     /// </summary>
     public interface ITextSource : IDisposable
     {
+        int Peek();
+
         int Read();
 
         int Read([NotNull] char[] buffer, int offset, int count);

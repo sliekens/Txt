@@ -42,6 +42,8 @@ namespace Txt
         /// </returns>
         MatchResult TryMatch(char c);
 
+        int Peek();
+
         /// <summary>
         ///     Compares the given string to the next available string and advances the scanner's position if there is a
         ///     match. This method performs a case-sensitive ordinal comparison.

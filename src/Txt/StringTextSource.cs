@@ -7,7 +7,7 @@ namespace Txt
     public class StringTextSource : TextSource
     {
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly Stack<char> pusback;
+        private readonly Stack<char> pushback;
 
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly Queue<char> s;
@@ -25,20 +25,33 @@ namespace Txt
             {
                 this.s.Enqueue(s[index]);
             }
-            pusback = new Stack<char>();
+            pushback = new Stack<char>();
+        }
+
+        protected override int PeekImpl()
+        {
+            if (pushback.Count != 0)
+            {
+                return pushback.Peek();
+            }
+            if (s.Count != 0)
+            {
+                return s.Peek();
+            }
+            return -1;
         }
 
         public override int Read()
         {
-            if (pusback.Count != 0)
+            if (pushback.Count != 0)
             {
-                return pusback.Pop();
+                return pushback.Pop();
             }
-            if (s.Count == 0)
+            if (s.Count != 0)
             {
-                return -1;
+                return s.Dequeue();
             }
-            return s.Dequeue();
+            return -1;
         }
 
         public override int Read(char[] buffer, int offset, int count)
@@ -62,7 +75,7 @@ namespace Txt
             int length;
             for (length = 0; length < count; length++, offset++)
             {
-                if (pusback.Count == 0)
+                if (pushback.Count == 0)
                 {
                     if (s.Count == 0)
                     {
@@ -72,7 +85,7 @@ namespace Txt
                 }
                 else
                 {
-                    buffer[offset] = pusback.Pop();
+                    buffer[offset] = pushback.Pop();
                 }
             }
             return length;
@@ -80,7 +93,7 @@ namespace Txt
 
         public override void Unread(char c)
         {
-            pusback.Push(c);
+            pushback.Push(c);
         }
 
         public override void Unread(char[] buffer, int offset, int count)
@@ -103,7 +116,7 @@ namespace Txt
             }
             for (var i = offset + count - 1; i >= 0; i--)
             {
-                pusback.Push(buffer[i]);
+                pushback.Push(buffer[i]);
             }
         }
     }
