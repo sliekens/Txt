@@ -8,9 +8,9 @@ namespace Sample1
 
     public sealed class SignLexer : Lexer<Sign>
     {
-        private readonly ILexer<Alternative> innerLexer;
+        private readonly ILexer<Alternation> innerLexer;
 
-        public SignLexer(ILexer<Alternative> innerLexer)
+        public SignLexer(ILexer<Alternation> innerLexer)
         {
             if (innerLexer == null)
             {

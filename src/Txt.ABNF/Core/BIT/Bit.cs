@@ -12,9 +12,9 @@ using Jetbrains.Annotations;
 
 namespace Txt.ABNF.Core.BIT
 {
-    public class Bit : Alternative
+    public class Bit : Alternation
     {
-        public Bit([NotNull] Alternative element)
+        public Bit([NotNull] Alternation element)
             : base(element)
         {
         }

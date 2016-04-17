@@ -10,7 +10,7 @@ namespace Txt.ABNF.Core.WSP
     public class WhiteSpaceLexerFactory : ILexerFactory<WhiteSpace>
     {
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly IAlternativeLexerFactory alternativeLexerFactory;
+        private readonly IAlternationLexerFactory alternationLexerFactory;
 
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly ILexerFactory<HorizontalTab> horizontalTabLexerFactory;
@@ -23,12 +23,12 @@ namespace Txt.ABNF.Core.WSP
         /// </summary>
         /// <param name="spaceLexerFactory"></param>
         /// <param name="horizontalTabLexerFactory"></param>
-        /// <param name="alternativeLexerFactory"></param>
+        /// <param name="alternationLexerFactory"></param>
         /// <exception cref="ArgumentNullException"></exception>
         public WhiteSpaceLexerFactory(
             [NotNull] ILexerFactory<Space> spaceLexerFactory,
             [NotNull] ILexerFactory<HorizontalTab> horizontalTabLexerFactory,
-            [NotNull] IAlternativeLexerFactory alternativeLexerFactory)
+            [NotNull] IAlternationLexerFactory alternationLexerFactory)
         {
             if (spaceLexerFactory == null)
             {
@@ -38,13 +38,13 @@ namespace Txt.ABNF.Core.WSP
             {
                 throw new ArgumentNullException(nameof(horizontalTabLexerFactory));
             }
-            if (alternativeLexerFactory == null)
+            if (alternationLexerFactory == null)
             {
-                throw new ArgumentNullException(nameof(alternativeLexerFactory));
+                throw new ArgumentNullException(nameof(alternationLexerFactory));
             }
             this.spaceLexerFactory = spaceLexerFactory;
             this.horizontalTabLexerFactory = horizontalTabLexerFactory;
-            this.alternativeLexerFactory = alternativeLexerFactory;
+            this.alternationLexerFactory = alternationLexerFactory;
         }
 
         /// <inheritdoc />
@@ -52,7 +52,7 @@ namespace Txt.ABNF.Core.WSP
         {
             var sp = spaceLexerFactory.Create();
             var htab = horizontalTabLexerFactory.Create();
-            var innerLexer = alternativeLexerFactory.Create(sp, htab);
+            var innerLexer = alternationLexerFactory.Create(sp, htab);
             return new WhiteSpaceLexer(innerLexer);
         }
     }

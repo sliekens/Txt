@@ -11,7 +11,7 @@ namespace Txt.ABNF
     ///     match is found. This class implements a first-match-wins algorithm. For a greedy algorithm, use the
     ///     <see cref="GreedyAlternativeLexer" /> class instead.
     /// </summary>
-    public class AlternativeLexer : Lexer<Alternative>
+    public class AlternationLexer : Lexer<Alternation>
     {
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly ILexer[] lexers;
@@ -21,7 +21,7 @@ namespace Txt.ABNF
         /// </summary>
         /// <param name="lexers"></param>
         /// <exception cref="ArgumentNullException"></exception>
-        public AlternativeLexer([NotNull][ItemNotNull] params ILexer[] lexers)
+        public AlternationLexer([NotNull][ItemNotNull] params ILexer[] lexers)
         {
             if (lexers == null)
             {
@@ -44,7 +44,7 @@ namespace Txt.ABNF
         /// <param name="scanner"></param>
         /// <exception cref="ArgumentNullException"></exception>
         /// <returns></returns>
-        public override ReadResult<Alternative> Read(ITextScanner scanner)
+        public override ReadResult<Alternation> Read(ITextScanner scanner)
         {
             if (scanner == null)
             {
@@ -60,7 +60,7 @@ namespace Txt.ABNF
                 var result = lexers[i].ReadElement(scanner);
                 if (result.Success)
                 {
-                    return ReadResult<Alternative>.FromResult(new Alternative(result.Text, result.Element, context, i + 1));
+                    return ReadResult<Alternation>.FromResult(new Alternation(result.Text, result.Element, context, i + 1));
                 }
 
                 errors.Add(result.Error);
@@ -71,7 +71,7 @@ namespace Txt.ABNF
             }
 
             Debug.Assert(partialMatch != null, "partialMatch != null");
-            return ReadResult<Alternative>.FromSyntaxError(partialMatch);
+            return ReadResult<Alternation>.FromSyntaxError(partialMatch);
         }
     }
 }

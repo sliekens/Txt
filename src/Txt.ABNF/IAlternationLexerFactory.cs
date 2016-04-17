@@ -3,7 +3,7 @@
 namespace Txt.ABNF
 {
     /// <summary>Provides the interface for factory classes that create lexers for a set of alternative elements.</summary>
-    public interface IAlternativeLexerFactory
+    public interface IAlternationLexerFactory
     {
         /// <summary>
         ///     Initializes a new instance of a class that implements the <see cref="ILexer{TElement}" /> interface for a
@@ -12,6 +12,6 @@ namespace Txt.ABNF
         /// </summary>
         /// <param name="lexers">A collection of lexers, one for each alternative element.</param>
         /// <returns>An instance of a class that implements <see cref="ILexer{TElement}" /> for the given alternatives.</returns>
-        ILexer<Alternative> Create([NotNull][ItemNotNull] params ILexer[] lexers);
+        ILexer<Alternation> Create([NotNull][ItemNotNull] params ILexer[] lexers);
     }
 }

@@ -9,23 +9,23 @@ namespace Sample1
 
     public sealed class SignLexerFactory : ILexerFactory<Sign>
     {
-        private readonly IAlternativeLexerFactory alternativeLexerFactory;
+        private readonly IAlternationLexerFactory alternationLexerFactory;
 
         private readonly ITerminalLexerFactory terminalLexerFactory;
 
         public SignLexerFactory(
-            IAlternativeLexerFactory alternativeLexerFactory,
+            IAlternationLexerFactory alternationLexerFactory,
             ITerminalLexerFactory terminalLexerFactory)
         {
-            if (alternativeLexerFactory == null)
+            if (alternationLexerFactory == null)
             {
-                throw new ArgumentNullException(nameof(alternativeLexerFactory));
+                throw new ArgumentNullException(nameof(alternationLexerFactory));
             }
             if (terminalLexerFactory == null)
             {
                 throw new ArgumentNullException(nameof(terminalLexerFactory));
             }
-            this.alternativeLexerFactory = alternativeLexerFactory;
+            this.alternationLexerFactory = alternationLexerFactory;
             this.terminalLexerFactory = terminalLexerFactory;
         }
 
@@ -33,7 +33,7 @@ namespace Sample1
         {
             var plusLexer = terminalLexerFactory.Create("+", StringComparer.Ordinal);
             var minusLexer = terminalLexerFactory.Create("-", StringComparer.Ordinal);
-            var plusOrMinusLexer = alternativeLexerFactory.Create(plusLexer, minusLexer);
+            var plusOrMinusLexer = alternationLexerFactory.Create(plusLexer, minusLexer);
             return new SignLexer(plusOrMinusLexer);
         }
     }

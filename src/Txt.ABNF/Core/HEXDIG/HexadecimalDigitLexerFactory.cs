@@ -9,7 +9,7 @@ namespace Txt.ABNF.Core.HEXDIG
     public class HexadecimalDigitLexerFactory : ILexerFactory<HexadecimalDigit>
     {
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly IAlternativeLexerFactory alternativeLexerFactory;
+        private readonly IAlternationLexerFactory alternationLexerFactory;
 
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly ILexerFactory<Digit> digitLexerFactory;
@@ -22,12 +22,12 @@ namespace Txt.ABNF.Core.HEXDIG
         /// </summary>
         /// <param name="digitLexerFactory"></param>
         /// <param name="terminalLexerFactory"></param>
-        /// <param name="alternativeLexerFactory"></param>
+        /// <param name="alternationLexerFactory"></param>
         /// <exception cref="ArgumentNullException"></exception>
         public HexadecimalDigitLexerFactory(
             [NotNull] ILexerFactory<Digit> digitLexerFactory,
             [NotNull] ITerminalLexerFactory terminalLexerFactory,
-            [NotNull] IAlternativeLexerFactory alternativeLexerFactory)
+            [NotNull] IAlternationLexerFactory alternationLexerFactory)
         {
             if (digitLexerFactory == null)
             {
@@ -37,19 +37,19 @@ namespace Txt.ABNF.Core.HEXDIG
             {
                 throw new ArgumentNullException(nameof(terminalLexerFactory));
             }
-            if (alternativeLexerFactory == null)
+            if (alternationLexerFactory == null)
             {
-                throw new ArgumentNullException(nameof(alternativeLexerFactory));
+                throw new ArgumentNullException(nameof(alternationLexerFactory));
             }
             this.digitLexerFactory = digitLexerFactory;
             this.terminalLexerFactory = terminalLexerFactory;
-            this.alternativeLexerFactory = alternativeLexerFactory;
+            this.alternationLexerFactory = alternationLexerFactory;
         }
 
         /// <inheritdoc />
         public ILexer<HexadecimalDigit> Create()
         {
-            var hexadecimalDigitAlternativeLexer = alternativeLexerFactory.Create(
+            var innerLexer = alternationLexerFactory.Create(
                 digitLexerFactory.Create(),
                 terminalLexerFactory.Create("A", StringComparer.OrdinalIgnoreCase),
                 terminalLexerFactory.Create("B", StringComparer.OrdinalIgnoreCase),
@@ -57,7 +57,7 @@ namespace Txt.ABNF.Core.HEXDIG
                 terminalLexerFactory.Create("D", StringComparer.OrdinalIgnoreCase),
                 terminalLexerFactory.Create("E", StringComparer.OrdinalIgnoreCase),
                 terminalLexerFactory.Create("F", StringComparer.OrdinalIgnoreCase));
-            return new HexadecimalDigitLexer(hexadecimalDigitAlternativeLexer);
+            return new HexadecimalDigitLexer(innerLexer);
         }
     }
 }

@@ -3,9 +3,9 @@ using Jetbrains.Annotations;
 
 namespace Txt.ABNF
 {
-    public class GreedyAlternativeLexerFactory : IAlternativeLexerFactory
+    public class GreedyAlternationLexerFactory : IAlternationLexerFactory
     {
-        public ILexer<Alternative> Create([ItemNotNull] params ILexer[] lexers)
+        public ILexer<Alternation> Create([ItemNotNull] params ILexer[] lexers)
         {
             if (lexers == null)
             {

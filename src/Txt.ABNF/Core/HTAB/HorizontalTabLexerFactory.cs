@@ -27,8 +27,8 @@ namespace Txt.ABNF.Core.HTAB
         /// <inheritdoc />
         public ILexer<HorizontalTab> Create()
         {
-            var horizontalTabTerminalLexer = terminalLexerFactory.Create("\x09", StringComparer.Ordinal);
-            return new HorizontalTabLexer(horizontalTabTerminalLexer);
+            var innerLexer = terminalLexerFactory.Create("\x09", StringComparer.Ordinal);
+            return new HorizontalTabLexer(innerLexer);
         }
     }
 }

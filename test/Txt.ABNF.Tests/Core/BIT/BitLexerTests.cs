@@ -8,7 +8,7 @@ namespace Txt.ABNF.Core.BIT
         public void CanReadZero()
         {
             var input = "0";
-            var factory = new BitLexerFactory(new AlternativeLexerFactory(), new TerminalLexerFactory());
+            var factory = new BitLexerFactory(new AlternationLexerFactory(), new TerminalLexerFactory());
             var bitLexer = factory.Create();
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {
@@ -24,7 +24,7 @@ namespace Txt.ABNF.Core.BIT
         public void CanReadOne()
         {
             var input = "1";
-            var factory = new BitLexerFactory(new AlternativeLexerFactory(), new TerminalLexerFactory());
+            var factory = new BitLexerFactory(new AlternationLexerFactory(), new TerminalLexerFactory());
             var bitLexer = factory.Create();
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {
@@ -40,7 +40,7 @@ namespace Txt.ABNF.Core.BIT
         public void CannotReadNegativeOne()
         {
             var input = "-1";
-            var factory = new BitLexerFactory(new AlternativeLexerFactory(), new TerminalLexerFactory());
+            var factory = new BitLexerFactory(new AlternationLexerFactory(), new TerminalLexerFactory());
             var bitLexer = factory.Create();
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {

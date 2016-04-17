@@ -27,7 +27,8 @@ namespace Txt.ABNF.Core.VCHAR
         /// <inheritdoc />
         public ILexer<VisibleCharacter> Create()
         {
-            return new VisibleCharacterLexer(valueRangeLexer.Create('\x21', '\x7E'));
+            var innerLexer = valueRangeLexer.Create('\x21', '\x7E');
+            return new VisibleCharacterLexer(innerLexer);
         }
     }
 }

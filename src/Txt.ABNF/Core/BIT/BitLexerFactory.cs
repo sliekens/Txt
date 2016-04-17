@@ -8,7 +8,7 @@ namespace Txt.ABNF.Core.BIT
     public class BitLexerFactory : ILexerFactory<Bit>
     {
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly IAlternativeLexerFactory alternativeLexerFactory;
+        private readonly IAlternationLexerFactory alternationLexerFactory;
 
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly ITerminalLexerFactory terminalLexerFactory;
@@ -16,22 +16,22 @@ namespace Txt.ABNF.Core.BIT
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="alternativeLexerFactory"></param>
+        /// <param name="alternationLexerFactory"></param>
         /// <param name="terminalLexerFactory"></param>
         /// <exception cref="ArgumentNullException"></exception>
         public BitLexerFactory(
-            [NotNull] IAlternativeLexerFactory alternativeLexerFactory,
+            [NotNull] IAlternationLexerFactory alternationLexerFactory,
             [NotNull] ITerminalLexerFactory terminalLexerFactory)
         {
-            if (alternativeLexerFactory == null)
+            if (alternationLexerFactory == null)
             {
-                throw new ArgumentNullException(nameof(alternativeLexerFactory));
+                throw new ArgumentNullException(nameof(alternationLexerFactory));
             }
             if (terminalLexerFactory == null)
             {
                 throw new ArgumentNullException(nameof(terminalLexerFactory));
             }
-            this.alternativeLexerFactory = alternativeLexerFactory;
+            this.alternationLexerFactory = alternationLexerFactory;
             this.terminalLexerFactory = terminalLexerFactory;
         }
 
@@ -40,8 +40,8 @@ namespace Txt.ABNF.Core.BIT
         {
             var bit0TerminalLexer = terminalLexerFactory.Create("0", StringComparer.Ordinal);
             var bit1TerminalLexer = terminalLexerFactory.Create("1", StringComparer.Ordinal);
-            var bitAlternativeLexer = alternativeLexerFactory.Create(bit0TerminalLexer, bit1TerminalLexer);
-            return new BitLexer(bitAlternativeLexer);
+            var innerLexer = alternationLexerFactory.Create(bit0TerminalLexer, bit1TerminalLexer);
+            return new BitLexer(innerLexer);
         }
     }
 }

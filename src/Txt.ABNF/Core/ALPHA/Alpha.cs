@@ -11,9 +11,9 @@ using Jetbrains.Annotations;
 
 namespace Txt.ABNF.Core.ALPHA
 {
-    public class Alpha : Alternative
+    public class Alpha : Alternation
     {
-        public Alpha([NotNull] Alternative element)
+        public Alpha([NotNull] Alternation element)
             : base(element)
         {
         }

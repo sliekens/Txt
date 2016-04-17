@@ -15,9 +15,9 @@ namespace Txt.ABNF.Core.BIT
     public class BitLexer : Lexer<Bit>
     {
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly ILexer<Alternative> innerLexer;
+        private readonly ILexer<Alternation> innerLexer;
 
-        public BitLexer([NotNull] ILexer<Alternative> innerLexer)
+        public BitLexer([NotNull] ILexer<Alternation> innerLexer)
         {
             if (innerLexer == null)
             {

@@ -22,7 +22,7 @@ namespace Txt.ABNF.Core.LWSP
         {
             // General
             var terminalLexerFactory = new TerminalLexerFactory();
-            var alternativeLexerFactory = new AlternativeLexerFactory();
+            var alternativeLexerFactory = new AlternationLexerFactory();
             var sequenceLexerFactory = new ConcatenationLexerFactory();
             var repetitionLexerFactory = new RepetitionLexerFactory();
 

@@ -8,7 +8,7 @@ namespace Txt.ABNF.Core.ALPHA
     public class AlphaLexerFactory : ILexerFactory<Alpha>
     {
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly IAlternativeLexerFactory alternativeLexerFactory;
+        private readonly IAlternationLexerFactory alternationLexerFactory;
 
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly IValueRangeLexerFactory valueRangeLexerFactory;
@@ -17,22 +17,22 @@ namespace Txt.ABNF.Core.ALPHA
         /// 
         /// </summary>
         /// <param name="valueRangeLexerFactory"></param>
-        /// <param name="alternativeLexerFactory"></param>
+        /// <param name="alternationLexerFactory"></param>
         /// <exception cref="ArgumentNullException"></exception>
         public AlphaLexerFactory(
             [NotNull] IValueRangeLexerFactory valueRangeLexerFactory,
-            [NotNull] IAlternativeLexerFactory alternativeLexerFactory)
+            [NotNull] IAlternationLexerFactory alternationLexerFactory)
         {
             if (valueRangeLexerFactory == null)
             {
                 throw new ArgumentNullException(nameof(valueRangeLexerFactory));
             }
-            if (alternativeLexerFactory == null)
+            if (alternationLexerFactory == null)
             {
-                throw new ArgumentNullException(nameof(alternativeLexerFactory));
+                throw new ArgumentNullException(nameof(alternationLexerFactory));
             }
             this.valueRangeLexerFactory = valueRangeLexerFactory;
-            this.alternativeLexerFactory = alternativeLexerFactory;
+            this.alternationLexerFactory = alternationLexerFactory;
         }
 
         /// <inheritdoc />
@@ -40,10 +40,10 @@ namespace Txt.ABNF.Core.ALPHA
         {
             var upperCaseValueRangeLexer = valueRangeLexerFactory.Create('\x41', '\x5A');
             var lowerCaseValueRangeLexer = valueRangeLexerFactory.Create('\x61', '\x7A');
-            var upperOrLowerCaseAlphaLexer = alternativeLexerFactory.Create(
+            var innerLexer = alternationLexerFactory.Create(
                 upperCaseValueRangeLexer,
                 lowerCaseValueRangeLexer);
-            return new AlphaLexer(upperOrLowerCaseAlphaLexer);
+            return new AlphaLexer(innerLexer);
         }
     }
 }

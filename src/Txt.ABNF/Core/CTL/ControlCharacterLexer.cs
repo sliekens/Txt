@@ -15,12 +15,12 @@ namespace Txt.ABNF.Core.CTL
     public class ControlCharacterLexer : Lexer<ControlCharacter>
     {
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly ILexer<Alternative> innerLexer;
+        private readonly ILexer<Alternation> innerLexer;
 
         /// <summary>
         /// </summary>
         /// <param name="innerLexer">%x00-1F / %x7F</param>
-        public ControlCharacterLexer([NotNull] ILexer<Alternative> innerLexer)
+        public ControlCharacterLexer([NotNull] ILexer<Alternation> innerLexer)
         {
             if (innerLexer == null)
             {

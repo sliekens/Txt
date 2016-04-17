@@ -27,8 +27,8 @@ namespace Txt.ABNF.Core.CR
         /// <inheritdoc />
         public ILexer<CarriageReturn> Create()
         {
-            var carriageReturnTerminalLexer = terminalLexerFactory.Create("\x0D", StringComparer.Ordinal);
-            return new CarriageReturnLexer(carriageReturnTerminalLexer);
+            var innerLexer = terminalLexerFactory.Create("\x0D", StringComparer.Ordinal);
+            return new CarriageReturnLexer(innerLexer);
         }
     }
 }

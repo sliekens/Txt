@@ -10,7 +10,7 @@ namespace Txt.ABNF.Core.LWSP
     public class LinearWhiteSpaceLexerFactory : ILexerFactory<LinearWhiteSpace>
     {
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly IAlternativeLexerFactory alternativeLexerFactory;
+        private readonly IAlternationLexerFactory alternationLexerFactory;
 
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly IConcatenationLexerFactory concatenationLexerFactory;
@@ -30,14 +30,14 @@ namespace Txt.ABNF.Core.LWSP
         /// <param name="whiteSpaceLexerFactory"></param>
         /// <param name="endOfLineLexerFactory"></param>
         /// <param name="concatenationLexerFactory"></param>
-        /// <param name="alternativeLexerFactory"></param>
+        /// <param name="alternationLexerFactory"></param>
         /// <param name="repetitionLexerFactory"></param>
         /// <exception cref="ArgumentNullException"></exception>
         public LinearWhiteSpaceLexerFactory(
             [NotNull] ILexerFactory<WhiteSpace> whiteSpaceLexerFactory,
             [NotNull] ILexerFactory<EndOfLine> endOfLineLexerFactory,
             [NotNull] IConcatenationLexerFactory concatenationLexerFactory,
-            [NotNull] IAlternativeLexerFactory alternativeLexerFactory,
+            [NotNull] IAlternationLexerFactory alternationLexerFactory,
             [NotNull] IRepetitionLexerFactory repetitionLexerFactory)
         {
             if (whiteSpaceLexerFactory == null)
@@ -52,9 +52,9 @@ namespace Txt.ABNF.Core.LWSP
             {
                 throw new ArgumentNullException(nameof(concatenationLexerFactory));
             }
-            if (alternativeLexerFactory == null)
+            if (alternationLexerFactory == null)
             {
-                throw new ArgumentNullException(nameof(alternativeLexerFactory));
+                throw new ArgumentNullException(nameof(alternationLexerFactory));
             }
             if (repetitionLexerFactory == null)
             {
@@ -62,7 +62,7 @@ namespace Txt.ABNF.Core.LWSP
             }
             this.whiteSpaceLexerFactory = whiteSpaceLexerFactory;
             this.endOfLineLexerFactory = endOfLineLexerFactory;
-            this.alternativeLexerFactory = alternativeLexerFactory;
+            this.alternationLexerFactory = alternationLexerFactory;
             this.repetitionLexerFactory = repetitionLexerFactory;
             this.concatenationLexerFactory = concatenationLexerFactory;
         }
@@ -73,7 +73,7 @@ namespace Txt.ABNF.Core.LWSP
             var endOfLineLexer = endOfLineLexerFactory.Create();
             var whiteSpaceLexer = whiteSpaceLexerFactory.Create();
             var foldLexer = concatenationLexerFactory.Create(endOfLineLexer, whiteSpaceLexer);
-            var breakingWhiteSpaceLexer = alternativeLexerFactory.Create(whiteSpaceLexer, foldLexer);
+            var breakingWhiteSpaceLexer = alternationLexerFactory.Create(whiteSpaceLexer, foldLexer);
             var innerLexer = repetitionLexerFactory.Create(breakingWhiteSpaceLexer, 0, int.MaxValue);
             return new LinearWhiteSpaceLexer(innerLexer);
         }

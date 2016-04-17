@@ -10,9 +10,9 @@ namespace Txt.ABNF
     ///     Wraps a collection of <see cref="ILexer" /> and tests their <see cref="ILexer.ReadElement" /> method until the
     ///     longest match is found.
     ///     This class implements a greedy algorithm. For a first-match-wins algorithm, use the
-    ///     <see cref="AlternativeLexer" /> class instead.
+    ///     <see cref="AlternationLexer" /> class instead.
     /// </summary>
-    public class GreedyAlternativeLexer : Lexer<Alternative>
+    public class GreedyAlternativeLexer : Lexer<Alternation>
     {
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly ILexer[] lexers;
@@ -34,7 +34,7 @@ namespace Txt.ABNF
             this.lexers = lexers;
         }
 
-        public override ReadResult<Alternative> Read(ITextScanner scanner)
+        public override ReadResult<Alternation> Read(ITextScanner scanner)
         {
             if (scanner == null)
             {
@@ -80,11 +80,11 @@ namespace Txt.ABNF
             if (bestCandidate == null)
             {
                 Debug.Assert(partialMatch != null, "partialMatch != null");
-                return ReadResult<Alternative>.FromSyntaxError(partialMatch);
+                return ReadResult<Alternation>.FromSyntaxError(partialMatch);
             }
             var readResult = bestCandidate.ReadElement(scanner);
             Debug.Assert(readResult.Success, "readResult.Success");
-            return ReadResult<Alternative>.FromResult(new Alternative(readResult.Text, readResult.Element, context, ordinal));
+            return ReadResult<Alternation>.FromResult(new Alternation(readResult.Text, readResult.Element, context, ordinal));
         }
     }
 }

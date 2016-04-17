@@ -27,8 +27,8 @@ namespace Txt.ABNF.Core.DIGIT
         /// <inheritdoc />
         public ILexer<Digit> Create()
         {
-            var digitValueRangeLexer = valueRangeLexerFactory.Create('\x30', '\x39');
-            return new DigitLexer(digitValueRangeLexer);
+            var innerLexer = valueRangeLexerFactory.Create('\x30', '\x39');
+            return new DigitLexer(innerLexer);
         }
     }
 }

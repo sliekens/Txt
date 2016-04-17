@@ -15,12 +15,12 @@ namespace Txt.ABNF.Core.HEXDIG
     public class HexadecimalDigitLexer : Lexer<HexadecimalDigit>
     {
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly ILexer<Alternative> innerLexer;
+        private readonly ILexer<Alternation> innerLexer;
 
         /// <summary>
         /// </summary>
         /// <param name="innerLexer">DIGIT / "A" / "B" / "C" / "D" / "E" / "F"</param>
-        public HexadecimalDigitLexer([NotNull] ILexer<Alternative> innerLexer)
+        public HexadecimalDigitLexer([NotNull] ILexer<Alternation> innerLexer)
         {
             if (innerLexer == null)
             {

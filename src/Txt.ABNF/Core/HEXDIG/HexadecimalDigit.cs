@@ -11,9 +11,9 @@ using Jetbrains.Annotations;
 
 namespace Txt.ABNF.Core.HEXDIG
 {
-    public class HexadecimalDigit : Alternative
+    public class HexadecimalDigit : Alternation
     {
-        public HexadecimalDigit([NotNull] Alternative element)
+        public HexadecimalDigit([NotNull] Alternation element)
             : base(element)
         {
         }

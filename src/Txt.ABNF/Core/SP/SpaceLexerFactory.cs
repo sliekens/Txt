@@ -27,8 +27,8 @@ namespace Txt.ABNF.Core.SP
         /// <inheritdoc />
         public ILexer<Space> Create()
         {
-            var spaceTerminalLexer = terminalLexerFactory.Create("\x20", StringComparer.Ordinal);
-            return new SpaceLexer(spaceTerminalLexer);
+            var innerLexer = terminalLexerFactory.Create("\x20", StringComparer.Ordinal);
+            return new SpaceLexer(innerLexer);
         }
     }
 }

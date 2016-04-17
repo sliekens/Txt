@@ -27,8 +27,8 @@ namespace Txt.ABNF.Core.CHAR
         /// <inheritdoc />
         public ILexer<Character> Create()
         {
-            var valueRangeLexer = valueRangeLexerFactory.Create('\x01', '\x7F');
-            return new CharacterLexer(valueRangeLexer);
+            var innerLexer = valueRangeLexerFactory.Create('\x01', '\x7F');
+            return new CharacterLexer(innerLexer);
         }
     }
 }

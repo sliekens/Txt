@@ -52,8 +52,8 @@ namespace Txt.ABNF.Core.CRLF
         {
             var carriageReturnLexer = carriageReturnLexerFactory.Create();
             var lineFeedLexer = lineFeedLexerFactory.Create();
-            var endOfLineSequenceLexer = concatenationLexerFactory.Create(carriageReturnLexer, lineFeedLexer);
-            return new EndOfLineLexer(endOfLineSequenceLexer);
+            var innerLexer = concatenationLexerFactory.Create(carriageReturnLexer, lineFeedLexer);
+            return new EndOfLineLexer(innerLexer);
         }
     }
 }

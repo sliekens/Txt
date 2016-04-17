@@ -4,10 +4,10 @@ namespace Sample1
 {
     
 
-    public class Sign : Alternative
+    public class Sign : Alternation
     {
-        public Sign(Alternative alternative)
-            : base(alternative)
+        public Sign(Alternation alternation)
+            : base(alternation)
         {
         }
     }

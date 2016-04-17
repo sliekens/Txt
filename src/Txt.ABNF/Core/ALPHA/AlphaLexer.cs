@@ -15,12 +15,12 @@ namespace Txt.ABNF.Core.ALPHA
     public class AlphaLexer : Lexer<Alpha>
     {
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly ILexer<Alternative> innerLexer;
+        private readonly ILexer<Alternation> innerLexer;
 
         /// <summary>
         /// </summary>
         /// <param name="innerLexer">%x41-5A / %x61-7A</param>
-        public AlphaLexer([NotNull] ILexer<Alternative> innerLexer)
+        public AlphaLexer([NotNull] ILexer<Alternation> innerLexer)
         {
             if (innerLexer == null)
             {

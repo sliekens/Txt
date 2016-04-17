@@ -15,9 +15,9 @@ namespace Txt.ABNF.Core.WSP
     public class WhiteSpaceLexer : Lexer<WhiteSpace>
     {
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly ILexer<Alternative> innerLexer;
+        private readonly ILexer<Alternation> innerLexer;
 
-        public WhiteSpaceLexer([NotNull] ILexer<Alternative> innerLexer)
+        public WhiteSpaceLexer([NotNull] ILexer<Alternation> innerLexer)
         {
             if (innerLexer == null)
             {

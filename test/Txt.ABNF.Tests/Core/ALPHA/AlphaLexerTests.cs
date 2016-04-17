@@ -33,7 +33,7 @@ namespace Txt.ABNF.Core.ALPHA
         [InlineData("z")]
         public void CanReadLowercaseAsciiLetters(string input)
         {
-            var factory = new AlphaLexerFactory(new ValueRangeLexerFactory(), new AlternativeLexerFactory());
+            var factory = new AlphaLexerFactory(new ValueRangeLexerFactory(), new AlternationLexerFactory());
             var alphaLexer = factory.Create();
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {
@@ -74,7 +74,7 @@ namespace Txt.ABNF.Core.ALPHA
         [InlineData("Z")]
         public void CanReadUppercaseAsciiLetters(string input)
         {
-            var factory = new AlphaLexerFactory(new ValueRangeLexerFactory(), new AlternativeLexerFactory());
+            var factory = new AlphaLexerFactory(new ValueRangeLexerFactory(), new AlternationLexerFactory());
             var alphaLexer = factory.Create();
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {

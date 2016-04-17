@@ -8,7 +8,7 @@ namespace Txt.ABNF.Core.CTL
     public class ControlCharacterLexerFactory : ILexerFactory<ControlCharacter>
     {
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly IAlternativeLexerFactory alternativeLexerFactory;
+        private readonly IAlternationLexerFactory alternationLexerFactory;
 
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly ITerminalLexerFactory terminalLexerFactory;
@@ -21,12 +21,12 @@ namespace Txt.ABNF.Core.CTL
         /// </summary>
         /// <param name="valueRangeLexerFactory"></param>
         /// <param name="terminalLexerFactory"></param>
-        /// <param name="alternativeLexerFactory"></param>
+        /// <param name="alternationLexerFactory"></param>
         /// <exception cref="ArgumentNullException"></exception>
         public ControlCharacterLexerFactory(
             [NotNull] IValueRangeLexerFactory valueRangeLexerFactory,
             [NotNull] ITerminalLexerFactory terminalLexerFactory,
-            [NotNull] IAlternativeLexerFactory alternativeLexerFactory)
+            [NotNull] IAlternationLexerFactory alternationLexerFactory)
         {
             if (valueRangeLexerFactory == null)
             {
@@ -36,13 +36,13 @@ namespace Txt.ABNF.Core.CTL
             {
                 throw new ArgumentNullException(nameof(terminalLexerFactory));
             }
-            if (alternativeLexerFactory == null)
+            if (alternationLexerFactory == null)
             {
-                throw new ArgumentNullException(nameof(alternativeLexerFactory));
+                throw new ArgumentNullException(nameof(alternationLexerFactory));
             }
             this.valueRangeLexerFactory = valueRangeLexerFactory;
             this.terminalLexerFactory = terminalLexerFactory;
-            this.alternativeLexerFactory = alternativeLexerFactory;
+            this.alternationLexerFactory = alternationLexerFactory;
         }
 
         /// <inheritdoc />
@@ -50,8 +50,8 @@ namespace Txt.ABNF.Core.CTL
         {
             var controlsValueRange = valueRangeLexerFactory.Create('\x00', '\x1F');
             var delete = terminalLexerFactory.Create("\x7F", StringComparer.Ordinal);
-            var controlCharacterAlternativeLexer = alternativeLexerFactory.Create(controlsValueRange, delete);
-            return new ControlCharacterLexer(controlCharacterAlternativeLexer);
+            var innerLexer = alternationLexerFactory.Create(controlsValueRange, delete);
+            return new ControlCharacterLexer(innerLexer);
         }
     }
 }

@@ -27,8 +27,8 @@ namespace Txt.ABNF.Core.DQUOTE
         /// <inheritdoc />
         public ILexer<DoubleQuote> Create()
         {
-            var doubleQuoteTerminalLexer = terminalLexerFactory.Create("\x22", StringComparer.Ordinal);
-            return new DoubleQuoteLexer(doubleQuoteTerminalLexer);
+            var innerLexer = terminalLexerFactory.Create("\x22", StringComparer.Ordinal);
+            return new DoubleQuoteLexer(innerLexer);
         }
     }
 }

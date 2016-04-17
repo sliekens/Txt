@@ -11,7 +11,7 @@ namespace Txt.ABNF.Core.CTL
         [InlineData("\x7F")]
         public void ReadSuccess(string input)
         {
-            var factory = new ControlCharacterLexerFactory(new ValueRangeLexerFactory(), new TerminalLexerFactory(), new AlternativeLexerFactory());
+            var factory = new ControlCharacterLexerFactory(new ValueRangeLexerFactory(), new TerminalLexerFactory(), new AlternationLexerFactory());
             var controlCharacterLexer = factory.Create();
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {

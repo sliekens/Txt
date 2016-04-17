@@ -27,8 +27,8 @@ namespace Txt.ABNF.Core.LF
         /// <inheritdoc />
         public ILexer<LineFeed> Create()
         {
-            var lineFeedTerminalLexer = terminalLexerFactory.Create("\x0A", StringComparer.Ordinal);
-            return new LineFeedLexer(lineFeedTerminalLexer);
+            var innerLexer = terminalLexerFactory.Create("\x0A", StringComparer.Ordinal);
+            return new LineFeedLexer(innerLexer);
         }
     }
 }

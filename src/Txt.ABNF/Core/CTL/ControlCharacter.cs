@@ -11,9 +11,9 @@ using Jetbrains.Annotations;
 
 namespace Txt.ABNF.Core.CTL
 {
-    public class ControlCharacter : Alternative
+    public class ControlCharacter : Alternation
     {
-        public ControlCharacter([NotNull] Alternative element)
+        public ControlCharacter([NotNull] Alternation element)
             : base(element)
         {
         }

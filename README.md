@@ -130,7 +130,7 @@ private static IContainer BuildContainer()
     builder.RegisterType<ValueRangeLexerFactory>().As<IValueRangeLexerFactory>().SingleInstance();
     builder.RegisterType<ConcatenationLexerFactory>().As<IConcatenationLexerFactory>().SingleInstance();
     builder.RegisterType<RepetitionLexerFactory>().As<IRepetitionLexerFactory>().SingleInstance();
-    builder.RegisterType<AlternativeLexerFactory>().As<IAlternativeLexerFactory>().SingleInstance();
+    builder.RegisterType<AlternationLexerFactory>().As<IAlternationLexerFactory>().SingleInstance();
     builder.RegisterType<OptionLexerFactory>().As<IOptionLexerFactory>().SingleInstance();
     builder.RegisterType<SignLexerFactory>().As<ILexerFactory<Sign>>().SingleInstance();
     builder.RegisterType<DigitLexerFactory>().As<ILexerFactory<Digit>>().SingleInstance();

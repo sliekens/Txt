@@ -33,7 +33,7 @@ namespace Txt.ABNF.Core.HEXDIG
             var valueRangeLexerFactory = new ValueRangeLexerFactory();
             var digitLexerFactory = new DigitLexerFactory(valueRangeLexerFactory);
             var terminalLexerFactory = new TerminalLexerFactory();
-            var alternativeLexerFactory = new AlternativeLexerFactory();
+            var alternativeLexerFactory = new AlternationLexerFactory();
             var factory = new HexadecimalDigitLexerFactory(digitLexerFactory, terminalLexerFactory, alternativeLexerFactory);
             var lexer = factory.Create();
             using (var scanner = new TextScanner(new StringTextSource(input)))
