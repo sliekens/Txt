@@ -19,7 +19,7 @@ namespace Txt.ABNF
                                 where type.Name.EndsWith("LexerFactory", StringComparison.Ordinal)
                                 let implementedInterfaces = type.GetTypeInfo().ImplementedInterfaces.ToList()
                                 where implementedInterfaces.Count == 1
-                                select new { Service = implementedInterfaces[01], Implementation = type };
+                                select new { Service = implementedInterfaces[0], Implementation = type };
             foreach (var registration in registrations)
             {
                 callback(registration.Service, registration.Implementation, "singleton");
