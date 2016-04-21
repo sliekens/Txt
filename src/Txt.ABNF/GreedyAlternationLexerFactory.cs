@@ -3,7 +3,7 @@ using Jetbrains.Annotations;
 
 namespace Txt.ABNF
 {
-    public class GreedyAlternationLexerFactory : IAlternationLexerFactory
+    public class GreedyAlternationLexerFactory : IGreedyAlternationLexerFactory
     {
         public ILexer<Alternation> Create([ItemNotNull] params ILexer[] lexers)
         {
