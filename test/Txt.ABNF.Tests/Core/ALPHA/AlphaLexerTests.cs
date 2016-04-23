@@ -4,7 +4,7 @@ namespace Txt.ABNF.Core.ALPHA
 {
     public class AlphaLexerTests
     {
-        [Theory]
+         [Theory]
         [InlineData("a")]
         [InlineData("b")]
         [InlineData("c")]

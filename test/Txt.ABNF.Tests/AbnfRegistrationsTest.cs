@@ -1,5 +1,4 @@
-﻿using System;
-using SimpleInjector;
+﻿using SimpleInjector;
 using Xunit;
 
 namespace Txt.ABNF
@@ -11,7 +10,7 @@ namespace Txt.ABNF
         [Fact]
         public void Test()
         {
-            foreach (var registration in AbnfRegistrations.GetRegistrations(GetInstance))
+            foreach (var registration in AbnfRegistrations.GetRegistrations(container.GetInstance))
             {
                 if (registration.Implementation != null)
                 {
@@ -27,21 +26,6 @@ namespace Txt.ABNF
                 }
             }
             container.Verify();
-        }
-
-        private object GetInstance(Type service)
-        {
-            return container.GetInstance(service);
-        }
-
-        private void Register(Type service, Type implementation)
-        {
-            container.Register(service, implementation, Lifestyle.Singleton);
-        }
-
-        private void RegisterFactory(Type service, Func<object> implementationFactory)
-        {
-            container.Register(service, implementationFactory, Lifestyle.Singleton);
         }
     }
 }
