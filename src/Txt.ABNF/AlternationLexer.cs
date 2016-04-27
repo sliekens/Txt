@@ -17,11 +17,10 @@ namespace Txt.ABNF
         private readonly ILexer[] lexers;
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="lexers"></param>
         /// <exception cref="ArgumentNullException"></exception>
-        public AlternationLexer([NotNull][ItemNotNull] params ILexer[] lexers)
+        public AlternationLexer([NotNull] [ItemNotNull] params ILexer[] lexers)
         {
             if (lexers == null)
             {
@@ -39,7 +38,6 @@ namespace Txt.ABNF
         }
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="scanner"></param>
         /// <exception cref="ArgumentNullException"></exception>
@@ -60,16 +58,15 @@ namespace Txt.ABNF
                 var result = lexers[i].ReadElement(scanner);
                 if (result.Success)
                 {
-                    return ReadResult<Alternation>.FromResult(new Alternation(result.Text, result.Element, context, i + 1));
+                    return
+                        ReadResult<Alternation>.FromResult(new Alternation(result.Text, result.Element, context, i + 1));
                 }
-
                 errors.Add(result.Error);
-                if (partialMatch == null || result.Text.Length > partialMatch.Text.Length)
+                if ((partialMatch == null) || (result.Text.Length > partialMatch.Text.Length))
                 {
                     partialMatch = result.Error;
                 }
             }
-
             Debug.Assert(partialMatch != null, "partialMatch != null");
             return ReadResult<Alternation>.FromSyntaxError(partialMatch);
         }

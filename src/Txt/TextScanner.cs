@@ -107,7 +107,6 @@ namespace Txt
                 {
                     return MatchResult.FromEndOfInput(s);
                 }
-
                 return MatchResult.FromMatch(string.Empty, s);
             }
             var buffer = new char[s.Length];
@@ -141,7 +140,7 @@ namespace Txt
                 endOfInput = true;
                 return MatchResult.FromEndOfInput(expected);
             }
-            var next = (char) head;
+            var next = (char)head;
             var text = char.ToString(next);
             if (c != next)
             {

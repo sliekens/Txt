@@ -11,7 +11,6 @@ namespace Txt.ABNF.Core.DIGIT
         private readonly IValueRangeLexerFactory valueRangeLexerFactory;
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="valueRangeLexerFactory"></param>
         /// <exception cref="ArgumentNullException"></exception>

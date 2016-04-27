@@ -215,7 +215,7 @@ if (stream.CanSeek)
     stream.Seek(-{count}, SeekOrigin.Current)
 }}");
             }
-            for (var i = buffer.Length - 1; i >= offset && count != 0; i--, count--)
+            for (var i = buffer.Length - 1; (i >= offset) && (count != 0); i--, count--)
             {
                 pushback.Push(buffer[i]);
             }

@@ -1,8 +1,8 @@
 ﻿{
   "version": "1.0.0-*",
   "description": "Common Class Library",
-  "authors": [ "Steven Liekens" ],
-  "tags": [ "" ],
+  "authors": ["Steven Liekens"],
+  "tags": [""],
   "projectUrl": "https://github.com/StevenLiekens/Text",
   "licenseUrl": "https://raw.githubusercontent.com/StevenLiekens/Text/master/LICENSE",
 

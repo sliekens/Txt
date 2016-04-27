@@ -14,7 +14,6 @@ namespace Txt.ABNF.Core.BIT
         private readonly ITerminalLexerFactory terminalLexerFactory;
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="alternationLexerFactory"></param>
         /// <param name="terminalLexerFactory"></param>

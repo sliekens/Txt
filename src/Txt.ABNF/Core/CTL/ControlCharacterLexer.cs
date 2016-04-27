@@ -40,7 +40,8 @@ namespace Txt.ABNF.Core.CTL
             {
                 return ReadResult<ControlCharacter>.FromResult(new ControlCharacter(result.Element));
             }
-            return ReadResult<ControlCharacter>.FromSyntaxError(SyntaxError.FromReadResult(result, scanner.GetContext()));
+            return ReadResult<ControlCharacter>.FromSyntaxError(
+                SyntaxError.FromReadResult(result, scanner.GetContext()));
         }
     }
 }

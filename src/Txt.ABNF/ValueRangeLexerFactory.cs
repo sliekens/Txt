@@ -63,7 +63,7 @@ namespace Txt.ABNF
             for (i = 0, c = lowerBound; c <= upperBound; i++, c++)
             {
                 var bytes = BitConverter.GetBytes(c);
-                if (!(encoding is System.Text.UnicodeEncoding))
+                if (!(encoding is UnicodeEncoding))
                 {
                     bytes = Encoding.Convert(encoding, Encoding.Unicode, bytes);
                 }

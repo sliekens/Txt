@@ -40,7 +40,8 @@ namespace Txt.ABNF.Core.VCHAR
             {
                 return ReadResult<VisibleCharacter>.FromResult(new VisibleCharacter(result.Element));
             }
-            return ReadResult<VisibleCharacter>.FromSyntaxError(SyntaxError.FromReadResult(result, scanner.GetContext()));
+            return ReadResult<VisibleCharacter>.FromSyntaxError(
+                SyntaxError.FromReadResult(result, scanner.GetContext()));
         }
     }
 }

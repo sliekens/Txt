@@ -26,7 +26,7 @@ namespace Txt.ABNF.Core.BIT
 
         public bool ToBool()
         {
-            Debug.Assert(Text == "0" || Text == "1", "this.Text == '0' || this.Text == '1'");
+            Debug.Assert((Text == "0") || (Text == "1"), "this.Text == '0' || this.Text == '1'");
             if (Text == "1")
             {
                 return true;

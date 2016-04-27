@@ -11,7 +11,6 @@ namespace Txt.ABNF.Core.VCHAR
         private readonly IValueRangeLexerFactory valueRangeLexer;
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="valueRangeLexer"></param>
         /// <exception cref="ArgumentNullException"></exception>

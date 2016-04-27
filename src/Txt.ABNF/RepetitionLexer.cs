@@ -10,10 +10,10 @@ namespace Txt.ABNF
     public class RepetitionLexer : Lexer<Repetition>
     {
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly int lowerBound;
+        private readonly ILexer lexer;
 
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly ILexer lexer;
+        private readonly int lowerBound;
 
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly int upperBound;

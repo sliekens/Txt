@@ -1,8 +1,8 @@
 ﻿{
   "version": "2.0.0-*",
   "description": "Text Class Library",
-  "authors": [ "Steven Liekens" ],
-  "tags": [ "" ],
+  "authors": ["Steven Liekens"],
+  "tags": [""],
   "projectUrl": "",
   "licenseUrl": "",
   "frameworks": {

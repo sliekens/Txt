@@ -17,7 +17,7 @@ namespace Txt.ABNF
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly ILexer[] lexers;
 
-        public GreedyAlternativeLexer([NotNull][ItemNotNull] ILexer[] lexers)
+        public GreedyAlternativeLexer([NotNull] [ItemNotNull] ILexer[] lexers)
         {
             if (lexers == null)
             {
@@ -62,7 +62,6 @@ namespace Txt.ABNF
                         bestCandidateLength = length;
                         ordinal = i + 1;
                     }
-
                     if (length != 0)
                     {
                         scanner.Unread(alternative.Text);
@@ -71,7 +70,7 @@ namespace Txt.ABNF
                 else
                 {
                     errors.Add(candidate.Error);
-                    if (partialMatch == null || candidate.Text.Length > partialMatch.Text.Length)
+                    if ((partialMatch == null) || (candidate.Text.Length > partialMatch.Text.Length))
                     {
                         partialMatch = candidate.Error;
                     }
@@ -84,7 +83,9 @@ namespace Txt.ABNF
             }
             var readResult = bestCandidate.ReadElement(scanner);
             Debug.Assert(readResult.Success, "readResult.Success");
-            return ReadResult<Alternation>.FromResult(new Alternation(readResult.Text, readResult.Element, context, ordinal));
+            return
+                ReadResult<Alternation>.FromResult(
+                    new Alternation(readResult.Text, readResult.Element, context, ordinal));
         }
     }
 }

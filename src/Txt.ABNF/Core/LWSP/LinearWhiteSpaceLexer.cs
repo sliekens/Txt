@@ -37,7 +37,8 @@ namespace Txt.ABNF.Core.LWSP
             {
                 return ReadResult<LinearWhiteSpace>.FromResult(new LinearWhiteSpace(result.Element));
             }
-            return ReadResult<LinearWhiteSpace>.FromSyntaxError(SyntaxError.FromReadResult(result, scanner.GetContext()));
+            return ReadResult<LinearWhiteSpace>.FromSyntaxError(
+                SyntaxError.FromReadResult(result, scanner.GetContext()));
         }
     }
 }

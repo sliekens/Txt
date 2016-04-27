@@ -30,6 +30,8 @@ namespace Txt
         /// </remarks>
         ITextContext GetContext();
 
+        int Peek();
+
         /// <summary>
         ///     Compares the given character to the next available character and advances the scanner's position if there is a
         ///     match. This method performs a case-sensitive ordinal comparison.
@@ -42,14 +44,12 @@ namespace Txt
         /// </returns>
         MatchResult TryMatch(char c);
 
-        int Peek();
-
         /// <summary>
         ///     Compares the given string to the next available string and advances the scanner's position if there is a
         ///     match. This method performs a case-sensitive ordinal comparison.
         /// </summary>
         /// <param name="s">The string to compare to the next available string.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="s"/> is a null reference.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="s" /> is a null reference.</exception>
         /// <exception cref="ObjectDisposedException">The current text scanner is closed.</exception>
         /// <returns>
         ///     A value container that contains the next available string and another value indicating whether it matches the
@@ -63,7 +63,7 @@ namespace Txt
         /// </summary>
         /// <param name="s">The string to compare to the next available string.</param>
         /// <param name="comparer">An object that checks two strings for equality.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="s"/> or <paramref name="comparer"/> is a null reference.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="s" /> or <paramref name="comparer" /> is a null reference.</exception>
         /// <exception cref="ObjectDisposedException">The current text scanner is closed.</exception>
         /// <returns>
         ///     A value container that contains the next available string and another value indicating whether it matches the
@@ -73,13 +73,13 @@ namespace Txt
 
         /// <summary>Prepends the given text to the input stream.</summary>
         /// <param name="s">The text to put back.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="s"/> is a null reference.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="s" /> is a null reference.</exception>
         /// <exception cref="ObjectDisposedException">The current text scanner is closed.</exception>
         void Unread([NotNull] string s);
 
         /// <summary>Prepends the given text to the input stream.</summary>
         /// <param name="s">The text to put back.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="s"/> is a null reference.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="s" /> is a null reference.</exception>
         /// <exception cref="ObjectDisposedException">The current text scanner is closed.</exception>
         Task UnreadAsync([NotNull] string s);
     }

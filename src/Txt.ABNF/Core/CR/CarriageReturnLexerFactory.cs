@@ -11,7 +11,6 @@ namespace Txt.ABNF.Core.CR
         private readonly ITerminalLexerFactory terminalLexerFactory;
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="terminalLexerFactory"></param>
         /// <exception cref="ArgumentNullException"></exception>

@@ -11,16 +11,16 @@ namespace Txt
     /// <summary>Provides the base class for all elements.</summary>
     public abstract class Element : ITextContext, IReadOnlyList<Element>
     {
-        [NotNull]
-        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly IReadOnlyList<Element> elements;
-
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private static readonly IReadOnlyList<Element> EmptyElements = new Element[0];
 
         [NotNull]
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly ITextContext context;
+
+        [NotNull]
+        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
+        private readonly IReadOnlyList<Element> elements;
 
         [NotNull]
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
@@ -40,7 +40,10 @@ namespace Txt
             context = element.context;
         }
 
-        /// <summary>Initializes a new instance of the <see cref="Element" /> class with a given string of terminal values and its context.</summary>
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="Element" /> class with a given string of terminal values and its
+        ///     context.
+        /// </summary>
         /// <param name="terminals">The terminal values.</param>
         /// <param name="context">An object that describes the current element's context.</param>
         /// <exception cref="ArgumentNullException">
@@ -85,7 +88,9 @@ namespace Txt
                 throw new ArgumentNullException(nameof(context));
             }
             text = sequence;
-            this.elements = elements.Count == 0 ? EmptyElements : new ReadOnlyCollection<Element>(new List<Element>(elements));
+            this.elements = elements.Count == 0
+                ? EmptyElements
+                : new ReadOnlyCollection<Element>(new List<Element>(elements));
             this.elements = elements.ToArray();
             this.context = context;
         }
@@ -93,7 +98,10 @@ namespace Txt
         /// <inheritdoc />
         public int Count => elements.Count;
 
-        /// <summary>Returns the sequence of elements that represent the current element. If the current element is a string of terminal values then this collection is empty.</summary>
+        /// <summary>
+        ///     Returns the sequence of elements that represent the current element. If the current element is a string of
+        ///     terminal values then this collection is empty.
+        /// </summary>
         [NotNull]
         public IReadOnlyList<Element> Elements
         {
@@ -135,7 +143,7 @@ namespace Txt
         [NotNull]
         public IEnumerable<Element> GetTerminals()
         {
-            if (this.Elements.Count == 0)
+            if (Elements.Count == 0)
             {
                 yield return this;
             }

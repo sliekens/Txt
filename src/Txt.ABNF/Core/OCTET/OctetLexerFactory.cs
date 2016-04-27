@@ -11,7 +11,6 @@ namespace Txt.ABNF.Core.OCTET
         private readonly IValueRangeLexerFactory valueRangeLexerFactory;
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="valueRangeLexerFactory"></param>
         /// <exception cref="ArgumentNullException"></exception>

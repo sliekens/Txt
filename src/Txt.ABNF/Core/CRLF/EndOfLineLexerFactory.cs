@@ -19,13 +19,15 @@ namespace Txt.ABNF.Core.CRLF
         private readonly ILexer<LineFeed> lineFeedLexer;
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="concatenationLexerFactory"></param>
         /// <param name="carriageReturnLexer"></param>
         /// <param name="lineFeedLexer"></param>
         /// <exception cref="ArgumentNullException"></exception>
-        public EndOfLineLexerFactory([NotNull] IConcatenationLexerFactory concatenationLexerFactory, [NotNull] ILexer<CarriageReturn> carriageReturnLexer, [NotNull] ILexer<LineFeed> lineFeedLexer)
+        public EndOfLineLexerFactory(
+            [NotNull] IConcatenationLexerFactory concatenationLexerFactory,
+            [NotNull] ILexer<CarriageReturn> carriageReturnLexer,
+            [NotNull] ILexer<LineFeed> lineFeedLexer)
         {
             if (concatenationLexerFactory == null)
             {

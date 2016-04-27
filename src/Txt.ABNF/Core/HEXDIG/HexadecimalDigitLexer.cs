@@ -40,7 +40,8 @@ namespace Txt.ABNF.Core.HEXDIG
             {
                 return ReadResult<HexadecimalDigit>.FromResult(new HexadecimalDigit(result.Element));
             }
-            return ReadResult<HexadecimalDigit>.FromSyntaxError(SyntaxError.FromReadResult(result, scanner.GetContext()));
+            return ReadResult<HexadecimalDigit>.FromSyntaxError(
+                SyntaxError.FromReadResult(result, scanner.GetContext()));
         }
     }
 }

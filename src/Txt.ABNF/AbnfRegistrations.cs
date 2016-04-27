@@ -15,11 +15,13 @@ namespace Txt.ABNF
             yield return new Registration(typeof(ITerminalLexerFactory), typeof(TerminalLexerFactory));
             yield return new Registration(typeof(IValueRangeLexerFactory), typeof(ValueRangeLexerFactory));
             yield return new Registration(typeof(IAlternationLexerFactory), typeof(AlternationLexerFactory));
-            yield return new Registration(typeof(IGreedyAlternationLexerFactory), typeof(GreedyAlternationLexerFactory));
+            yield return new Registration(typeof(IGreedyAlternationLexerFactory), typeof(GreedyAlternationLexerFactory))
+                ;
             yield return new Registration(typeof(IConcatenationLexerFactory), typeof(ConcatenationLexerFactory));
             yield return new Registration(typeof(IRepetitionLexerFactory), typeof(RepetitionLexerFactory));
             yield return new Registration(typeof(IOptionLexerFactory), typeof(OptionLexerFactory));
-            foreach (var registration in GetRegistrations(typeof(AbnfRegistrations).GetTypeInfo().Assembly, getInstance))
+            foreach (var registration in GetRegistrations(typeof(AbnfRegistrations).GetTypeInfo().Assembly, getInstance)
+                )
             {
                 yield return registration;
             }

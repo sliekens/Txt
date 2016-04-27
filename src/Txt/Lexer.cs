@@ -17,11 +17,11 @@ namespace Txt
     /// </summary>
     /// <typeparam name="TElement">The type of the element that represents the lexer rule.</typeparam>
     /// <remarks>
-    ///         Notes to inheritors.
-    ///         At minimum, you must provide an implementation for the <see cref="Read" /> method.
-    ///         There are conventions that you should follow.
-    ///         Do not throw exceptions.
-    ///         Lexer classes should be sealed.
+    ///     Notes to inheritors.
+    ///     At minimum, you must provide an implementation for the <see cref="Read" /> method.
+    ///     There are conventions that you should follow.
+    ///     Do not throw exceptions.
+    ///     Lexer classes should be sealed.
     /// </remarks>
     public abstract class Lexer<TElement> : ILexer<TElement>
         where TElement : Element

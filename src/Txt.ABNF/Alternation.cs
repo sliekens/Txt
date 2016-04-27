@@ -28,7 +28,7 @@ namespace Txt.ABNF
             [NotNull] Element alternative,
             [NotNull] ITextContext context,
             int ordinal)
-            : base(sequence, new[] {alternative}, context)
+            : base(sequence, new[] { alternative }, context)
         {
             Element = alternative;
             Ordinal = ordinal;
