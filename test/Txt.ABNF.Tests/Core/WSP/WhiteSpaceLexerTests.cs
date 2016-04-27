@@ -18,7 +18,7 @@ namespace Txt.ABNF.Core.WSP
             var spaceLexerFactory = new SpaceLexerFactory(terminalLexerFactory);
             var horizontalTabLexerFactory = new HorizontalTabLexerFactory(terminalLexerFactory);
             var alternativeLexerFactory = new AlternationLexerFactory();
-            var whiteSpaceLexerFactory = new WhiteSpaceLexerFactory(spaceLexerFactory, horizontalTabLexerFactory, alternativeLexerFactory);
+            var whiteSpaceLexerFactory = new WhiteSpaceLexerFactory(alternativeLexerFactory, spaceLexerFactory.Create(), horizontalTabLexerFactory.Create());
             var whiteSpaceLexer = whiteSpaceLexerFactory.Create();
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {

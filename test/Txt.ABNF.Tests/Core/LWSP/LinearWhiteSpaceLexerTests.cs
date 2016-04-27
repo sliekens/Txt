@@ -33,10 +33,7 @@ namespace Txt.ABNF.Core.LWSP
             var horizontalTabLexerFactory = new HorizontalTabLexerFactory(terminalLexerFactory);
 
             // WSP
-            var whiteSpaceLexerFactory = new WhiteSpaceLexerFactory(
-                spaceLexerFactory,
-                horizontalTabLexerFactory,
-                alternativeLexerFactory);
+            var whiteSpaceLexerFactory = new WhiteSpaceLexerFactory(alternativeLexerFactory, spaceLexerFactory.Create(), horizontalTabLexerFactory.Create());
 
             // CR
             var carriageReturnLexerFactory = new CarriageReturnLexerFactory(terminalLexerFactory);
@@ -45,18 +42,11 @@ namespace Txt.ABNF.Core.LWSP
             var lineFeedLexerFactory = new LineFeedLexerFactory(terminalLexerFactory);
 
             // CRLF
-            var endOfLineLexerFactory = new EndOfLineLexerFactory(
-                carriageReturnLexerFactory,
-                lineFeedLexerFactory,
-                sequenceLexerFactory);
+            var endOfLineLexerFactory = new EndOfLineLexerFactory(sequenceLexerFactory, carriageReturnLexerFactory.Create(), lineFeedLexerFactory.Create());
 
             // LWSP
-            var linearWhiteSpaceLexerFactory = new LinearWhiteSpaceLexerFactory(
-                whiteSpaceLexerFactory,
-                endOfLineLexerFactory,
-                sequenceLexerFactory,
-                alternativeLexerFactory,
-                repetitionLexerFactory);
+            var linearWhiteSpaceLexerFactory = new LinearWhiteSpaceLexerFactory(alternativeLexerFactory,
+                sequenceLexerFactory, repetitionLexerFactory, whiteSpaceLexerFactory.Create(), endOfLineLexerFactory.Create());
             var linearWhiteSpaceLexer = linearWhiteSpaceLexerFactory.Create();
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {

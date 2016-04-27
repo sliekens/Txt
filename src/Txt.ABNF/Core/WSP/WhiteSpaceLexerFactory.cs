@@ -13,46 +13,43 @@ namespace Txt.ABNF.Core.WSP
         private readonly IAlternationLexerFactory alternationLexerFactory;
 
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly ILexerFactory<HorizontalTab> horizontalTabLexerFactory;
+        private readonly ILexer<HorizontalTab> horizontalTabLexer;
 
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly ILexerFactory<Space> spaceLexerFactory;
+        private readonly ILexer<Space> spaceLexer;
 
         /// <summary>
-        /// 
         /// </summary>
-        /// <param name="spaceLexerFactory"></param>
-        /// <param name="horizontalTabLexerFactory"></param>
         /// <param name="alternationLexerFactory"></param>
+        /// <param name="spaceLexer"></param>
+        /// <param name="horizontalTabLexer"></param>
         /// <exception cref="ArgumentNullException"></exception>
         public WhiteSpaceLexerFactory(
-            [NotNull] ILexerFactory<Space> spaceLexerFactory,
-            [NotNull] ILexerFactory<HorizontalTab> horizontalTabLexerFactory,
-            [NotNull] IAlternationLexerFactory alternationLexerFactory)
+            [NotNull] IAlternationLexerFactory alternationLexerFactory,
+            [NotNull] ILexer<Space> spaceLexer,
+            [NotNull] ILexer<HorizontalTab> horizontalTabLexer)
         {
-            if (spaceLexerFactory == null)
-            {
-                throw new ArgumentNullException(nameof(spaceLexerFactory));
-            }
-            if (horizontalTabLexerFactory == null)
-            {
-                throw new ArgumentNullException(nameof(horizontalTabLexerFactory));
-            }
             if (alternationLexerFactory == null)
             {
                 throw new ArgumentNullException(nameof(alternationLexerFactory));
             }
-            this.spaceLexerFactory = spaceLexerFactory;
-            this.horizontalTabLexerFactory = horizontalTabLexerFactory;
+            if (spaceLexer == null)
+            {
+                throw new ArgumentNullException(nameof(spaceLexer));
+            }
+            if (horizontalTabLexer == null)
+            {
+                throw new ArgumentNullException(nameof(horizontalTabLexer));
+            }
             this.alternationLexerFactory = alternationLexerFactory;
+            this.spaceLexer = spaceLexer;
+            this.horizontalTabLexer = horizontalTabLexer;
         }
 
         /// <inheritdoc />
         public ILexer<WhiteSpace> Create()
         {
-            var sp = spaceLexerFactory.Create();
-            var htab = horizontalTabLexerFactory.Create();
-            var innerLexer = alternationLexerFactory.Create(sp, htab);
+            var innerLexer = alternationLexerFactory.Create(spaceLexer, horizontalTabLexer);
             return new WhiteSpaceLexer(innerLexer);
         }
     }

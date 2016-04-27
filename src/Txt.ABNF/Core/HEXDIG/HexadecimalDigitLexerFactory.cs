@@ -12,45 +12,44 @@ namespace Txt.ABNF.Core.HEXDIG
         private readonly IAlternationLexerFactory alternationLexerFactory;
 
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly ILexerFactory<Digit> digitLexerFactory;
+        private readonly ILexer<Digit> digitLexer;
 
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly ITerminalLexerFactory terminalLexerFactory;
 
         /// <summary>
-        /// 
         /// </summary>
-        /// <param name="digitLexerFactory"></param>
-        /// <param name="terminalLexerFactory"></param>
         /// <param name="alternationLexerFactory"></param>
+        /// <param name="terminalLexerFactory"></param>
+        /// <param name="digitLexer"></param>
         /// <exception cref="ArgumentNullException"></exception>
         public HexadecimalDigitLexerFactory(
-            [NotNull] ILexerFactory<Digit> digitLexerFactory,
+            [NotNull] IAlternationLexerFactory alternationLexerFactory,
             [NotNull] ITerminalLexerFactory terminalLexerFactory,
-            [NotNull] IAlternationLexerFactory alternationLexerFactory)
+            [NotNull] ILexer<Digit> digitLexer)
         {
-            if (digitLexerFactory == null)
+            if (alternationLexerFactory == null)
             {
-                throw new ArgumentNullException(nameof(digitLexerFactory));
+                throw new ArgumentNullException(nameof(alternationLexerFactory));
             }
             if (terminalLexerFactory == null)
             {
                 throw new ArgumentNullException(nameof(terminalLexerFactory));
             }
-            if (alternationLexerFactory == null)
+            if (digitLexer == null)
             {
-                throw new ArgumentNullException(nameof(alternationLexerFactory));
+                throw new ArgumentNullException(nameof(digitLexer));
             }
-            this.digitLexerFactory = digitLexerFactory;
-            this.terminalLexerFactory = terminalLexerFactory;
             this.alternationLexerFactory = alternationLexerFactory;
+            this.terminalLexerFactory = terminalLexerFactory;
+            this.digitLexer = digitLexer;
         }
 
         /// <inheritdoc />
         public ILexer<HexadecimalDigit> Create()
         {
             var innerLexer = alternationLexerFactory.Create(
-                digitLexerFactory.Create(),
+                digitLexer,
                 terminalLexerFactory.Create("A", StringComparer.OrdinalIgnoreCase),
                 terminalLexerFactory.Create("B", StringComparer.OrdinalIgnoreCase),
                 terminalLexerFactory.Create("C", StringComparer.OrdinalIgnoreCase),

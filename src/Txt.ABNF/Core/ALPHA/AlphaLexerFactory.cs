@@ -14,7 +14,6 @@ namespace Txt.ABNF.Core.ALPHA
         private readonly IValueRangeLexerFactory valueRangeLexerFactory;
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="valueRangeLexerFactory"></param>
         /// <param name="alternationLexerFactory"></param>

@@ -14,7 +14,7 @@ namespace Txt.ABNF.Core.CRLF
             var sequenceLexerFactory = new ConcatenationLexerFactory();
             var carriageReturnLexerFactory = new CarriageReturnLexerFactory(terminalsLexerFactory);
             var lineFeedLexerFactory = new LineFeedLexerFactory(terminalsLexerFactory);
-            var factory = new EndOfLineLexerFactory(carriageReturnLexerFactory, lineFeedLexerFactory, sequenceLexerFactory);
+            var factory = new EndOfLineLexerFactory(sequenceLexerFactory, carriageReturnLexerFactory.Create(), lineFeedLexerFactory.Create());
             var endOfLineLexer = factory.Create();
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {
