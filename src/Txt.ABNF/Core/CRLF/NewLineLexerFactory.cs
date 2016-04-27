@@ -6,8 +6,8 @@ using Txt.ABNF.Core.LF;
 
 namespace Txt.ABNF.Core.CRLF
 {
-    /// <summary>Creates instances of the <see cref="EndOfLineLexer" /> class.</summary>
-    public class EndOfLineLexerFactory : ILexerFactory<EndOfLine>
+    /// <summary>Creates instances of the <see cref="NewLineLexer" /> class.</summary>
+    public class NewLineLexerFactory : ILexerFactory<NewLine>
     {
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly ILexer<CarriageReturn> carriageReturnLexer;
@@ -24,7 +24,7 @@ namespace Txt.ABNF.Core.CRLF
         /// <param name="carriageReturnLexer"></param>
         /// <param name="lineFeedLexer"></param>
         /// <exception cref="ArgumentNullException"></exception>
-        public EndOfLineLexerFactory(
+        public NewLineLexerFactory(
             [NotNull] IConcatenationLexerFactory concatenationLexerFactory,
             [NotNull] ILexer<CarriageReturn> carriageReturnLexer,
             [NotNull] ILexer<LineFeed> lineFeedLexer)
@@ -47,10 +47,10 @@ namespace Txt.ABNF.Core.CRLF
         }
 
         /// <inheritdoc />
-        public ILexer<EndOfLine> Create()
+        public ILexer<NewLine> Create()
         {
             var innerLexer = concatenationLexerFactory.Create(carriageReturnLexer, lineFeedLexer);
-            return new EndOfLineLexer(innerLexer);
+            return new NewLineLexer(innerLexer);
         }
     }
 }

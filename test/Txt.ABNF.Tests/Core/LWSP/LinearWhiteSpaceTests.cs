@@ -49,11 +49,11 @@ namespace Txt.ABNF.Core.LWSP
             var lineFeedLexerFactory = new LineFeedLexerFactory(terminalLexerFactory);
 
             // CRLF
-            var endOfLineLexerFactory = new EndOfLineLexerFactory(sequenceLexerFactory, carriageReturnLexerFactory.Create(), lineFeedLexerFactory.Create());
+            var newLineLexerFactory = new NewLineLexerFactory(sequenceLexerFactory, carriageReturnLexerFactory.Create(), lineFeedLexerFactory.Create());
 
             // LWSP
             var linearWhiteSpaceLexerFactory = new LinearWhiteSpaceLexerFactory(alternativeLexerFactory,
-                sequenceLexerFactory, repetitionLexerFactory, whiteSpaceLexerFactory.Create(), endOfLineLexerFactory.Create());
+                sequenceLexerFactory, repetitionLexerFactory, whiteSpaceLexerFactory.Create(), newLineLexerFactory.Create());
             var linearWhiteSpaceLexer = linearWhiteSpaceLexerFactory.Create();
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {

@@ -14,11 +14,11 @@ namespace Txt.ABNF.Core.CRLF
             var sequenceLexerFactory = new ConcatenationLexerFactory();
             var carriageReturnLexerFactory = new CarriageReturnLexerFactory(terminalsLexerFactory);
             var lineFeedLexerFactory = new LineFeedLexerFactory(terminalsLexerFactory);
-            var factory = new EndOfLineLexerFactory(sequenceLexerFactory, carriageReturnLexerFactory.Create(), lineFeedLexerFactory.Create());
-            var endOfLineLexer = factory.Create();
+            var factory = new NewLineLexerFactory(sequenceLexerFactory, carriageReturnLexerFactory.Create(), lineFeedLexerFactory.Create());
+            var newLineLexer = factory.Create();
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {
-                var result = endOfLineLexer.Read(scanner);
+                var result = newLineLexer.Read(scanner);
                 Assert.NotNull(result);
                 Assert.True(result.Success);
                 Assert.NotNull(result.Element);

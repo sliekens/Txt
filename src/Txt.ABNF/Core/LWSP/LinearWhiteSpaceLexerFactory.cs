@@ -16,7 +16,7 @@ namespace Txt.ABNF.Core.LWSP
         private readonly IConcatenationLexerFactory concatenationLexerFactory;
 
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly ILexer<EndOfLine> endOfLineLexer;
+        private readonly ILexer<NewLine> newLineLexer;
 
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly IRepetitionLexerFactory repetitionLexerFactory;
@@ -30,14 +30,14 @@ namespace Txt.ABNF.Core.LWSP
         /// <param name="concatenationLexerFactory"></param>
         /// <param name="repetitionLexerFactory"></param>
         /// <param name="whiteSpaceLexer"></param>
-        /// <param name="endOfLineLexer"></param>
+        /// <param name="newLineLexer"></param>
         /// <exception cref="ArgumentNullException"></exception>
         public LinearWhiteSpaceLexerFactory(
             [NotNull] IAlternationLexerFactory alternationLexerFactory,
             [NotNull] IConcatenationLexerFactory concatenationLexerFactory,
             [NotNull] IRepetitionLexerFactory repetitionLexerFactory,
             [NotNull] ILexer<WhiteSpace> whiteSpaceLexer,
-            [NotNull] ILexer<EndOfLine> endOfLineLexer)
+            [NotNull] ILexer<NewLine> newLineLexer)
         {
             if (alternationLexerFactory == null)
             {
@@ -55,21 +55,21 @@ namespace Txt.ABNF.Core.LWSP
             {
                 throw new ArgumentNullException(nameof(whiteSpaceLexer));
             }
-            if (endOfLineLexer == null)
+            if (newLineLexer == null)
             {
-                throw new ArgumentNullException(nameof(endOfLineLexer));
+                throw new ArgumentNullException(nameof(newLineLexer));
             }
             this.alternationLexerFactory = alternationLexerFactory;
             this.concatenationLexerFactory = concatenationLexerFactory;
             this.repetitionLexerFactory = repetitionLexerFactory;
             this.whiteSpaceLexer = whiteSpaceLexer;
-            this.endOfLineLexer = endOfLineLexer;
+            this.newLineLexer = newLineLexer;
         }
 
         /// <inheritdoc />
         public ILexer<LinearWhiteSpace> Create()
         {
-            var foldLexer = concatenationLexerFactory.Create(endOfLineLexer, whiteSpaceLexer);
+            var foldLexer = concatenationLexerFactory.Create(newLineLexer, whiteSpaceLexer);
             var breakingWhiteSpaceLexer = alternationLexerFactory.Create(whiteSpaceLexer, foldLexer);
             var innerLexer = repetitionLexerFactory.Create(breakingWhiteSpaceLexer, 0, int.MaxValue);
             return new LinearWhiteSpaceLexer(innerLexer);

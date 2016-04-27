@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="EndOfLineLexer.cs" company="Steven Liekens">
+// <copyright file="NewLineLexer.cs" company="Steven Liekens">
 //   The MIT License (MIT)
 // </copyright>
 // <summary>
@@ -12,7 +12,7 @@ using Jetbrains.Annotations;
 
 namespace Txt.ABNF.Core.CRLF
 {
-    public class EndOfLineLexer : Lexer<EndOfLine>
+    public class NewLineLexer : Lexer<NewLine>
     {
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly ILexer<Concatenation> innerLexer;
@@ -20,7 +20,7 @@ namespace Txt.ABNF.Core.CRLF
         /// <summary>
         /// </summary>
         /// <param name="innerLexer">CR LF</param>
-        public EndOfLineLexer([NotNull] ILexer<Concatenation> innerLexer)
+        public NewLineLexer([NotNull] ILexer<Concatenation> innerLexer)
         {
             if (innerLexer == null)
             {
@@ -29,7 +29,7 @@ namespace Txt.ABNF.Core.CRLF
             this.innerLexer = innerLexer;
         }
 
-        public override ReadResult<EndOfLine> Read(ITextScanner scanner)
+        public override ReadResult<NewLine> Read(ITextScanner scanner)
         {
             if (scanner == null)
             {
@@ -38,9 +38,9 @@ namespace Txt.ABNF.Core.CRLF
             var result = innerLexer.Read(scanner);
             if (result.Success)
             {
-                return ReadResult<EndOfLine>.FromResult(new EndOfLine(result.Element));
+                return ReadResult<NewLine>.FromResult(new NewLine(result.Element));
             }
-            return ReadResult<EndOfLine>.FromSyntaxError(SyntaxError.FromReadResult(result, scanner.GetContext()));
+            return ReadResult<NewLine>.FromSyntaxError(SyntaxError.FromReadResult(result, scanner.GetContext()));
         }
     }
 }
