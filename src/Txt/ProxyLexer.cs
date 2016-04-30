@@ -18,6 +18,7 @@ namespace Txt
                 throw new InvalidOperationException(
                     "Initialize(ILexer`1) has already been called. Changing the rule after it has been initialized is not allowed.");
             }
+            innerLexer = lexer;
         }
 
         public override ReadResult<TElement> Read(ITextScanner scanner)
