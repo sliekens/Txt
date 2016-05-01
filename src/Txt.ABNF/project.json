@@ -1,26 +1,28 @@
 ﻿{
-  "version": "2.0.0-*",
-  "description": "Text.ABNF Class Library",
-  "authors": ["Steven Liekens"],
-  "tags": [""],
-  "projectUrl": "",
-  "licenseUrl": "",
-  "frameworks": {
-    "dotnet5.1": {
-      "dependencies": {
-        "Microsoft.CSharp": "4.0.1-beta-23516",
-        "System.Collections": "4.0.11-beta-23516",
-        "System.Linq": "4.0.1-beta-23516",
-        "System.Runtime": "4.0.21-beta-23516",
-        "System.Threading": "4.0.11-beta-23516",
-        "System.Text.Encoding.Extensions": "4.0.11-beta-23516"
-      }
-    }
-  },
-  "dependencies": {
-    "Common": {
-      "type": "build"
+    "version": "2.0.0-*",
+    "description": "Text.ABNF Class Library",
+    "authors": ["Steven Liekens"],
+    "tags": [""],
+    "projectUrl": "",
+    "licenseUrl": "",
+    "frameworks": {
+        "dotnet5.1": {
+            "dependencies": {
+                "Microsoft.CSharp": "4.0.1-beta-23516",
+                "System.Collections": "4.0.11-beta-23516",
+                "System.Linq": "4.0.1-beta-23516",
+                "System.Runtime": "4.0.21-beta-23516",
+                "System.Threading": "4.0.11-beta-23516",
+                "System.Text.Encoding.Extensions": "4.0.11-beta-23516"
+            }
+        }
     },
-    "Txt": {}
-  }
+    "dependencies": {
+        "Common": {
+            "type": "build"
+        },
+        "Txt": {
+            "target": "project"
+        }
+    }
 }

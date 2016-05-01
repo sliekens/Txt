@@ -1,21 +1,22 @@
 ﻿{
-  "version": "1.0.0-*",
-  "description": "Txt.Tests Class Library",
-  "authors": [ "Steven Liekens" ],
-  "tags": [ "" ],
-  "projectUrl": "",
-  "licenseUrl": "",
-  "commands": {
-    "test": "xunit.runner.dnx"
-  },
-  "frameworks": {
-    "dnxcore50": { }
-  },
-  "dependencies": {
-    "xunit": "2.1.0",
-    "xunit.runner.dnx": "2.1.0-rc1-build204",
-    "Txt": {
-      "target": "project"
+    "version": "1.0.0-*",
+    "description": "Txt.Tests Class Library",
+    "authors": ["Steven Liekens"],
+    "tags": [""],
+    "projectUrl": "",
+    "licenseUrl": "",
+    "commands": {
+        "test": "xunit.runner.dnx"
+    },
+    "frameworks": {
+        "dnxcore50": {
+            "dependencies": {
+                "xunit": "2.1.0",
+                "xunit.runner.dnx": "2.1.0-rc1-build204",
+                "Txt": {
+                    "target": "project"
+                }
+            }
+        }
     }
-  }
 }
