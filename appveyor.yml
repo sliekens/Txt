@@ -9,6 +9,7 @@ init:
 install:
 - dnvm upgrade -u -r clr
 - choco install dotnetcli
+- set PATH=%PATH%;%PROGRAMFILES%\dotnet\
 - dotnet restore
 build:
   parallel: true
