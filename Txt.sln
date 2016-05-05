@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{6AFE5181-DC35-4668-92B7-13C7D06686D7}"
 EndProject
@@ -11,6 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Core.abnf = Core.abnf
 		global.json = global.json
 		LICENSE = LICENSE
+		NuGet.Config = NuGet.Config
 		README.md = README.md
 		RFC5234.abnf = RFC5234.abnf
 	EndProjectSection
