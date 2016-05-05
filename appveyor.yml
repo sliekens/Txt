@@ -14,9 +14,8 @@ install:
   $Env:PATH += ';%PROGRAMFILES%\dotnet\'
   dotnet restore
 build_script:
-- cmd: |
-  dotnet pack -o artifacts\. -c $Env:CONFIGURATION --version-suffix $Env:PRERELEASE .\src\Txt\
-  dotnet pack -o artifacts\. -c $Env:CONFIGURATION --version-suffix $Env:PRERELEASE .\src\Txt.ABNF\
+- dotnet pack -o artifacts\. -c $Env:CONFIGURATION --version-suffix $Env:PRERELEASE .\src\Txt\
+- dotnet pack -o artifacts\. -c $Env:CONFIGURATION --version-suffix $Env:PRERELEASE .\src\Txt.ABNF\
 test: off
 artifacts:
   - path: artifacts\*.nupkg
