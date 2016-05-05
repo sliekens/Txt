@@ -5,21 +5,21 @@ configuration:
 - Release
 platform: Any CPU
 init:
- - ps: $Env:DNX_BUILD_VERSION = "CI" + $Env:APPVEYOR_BUILD_NUMBER.PadLeft(5, "0")
+ - ps: $Env:PRERELEASE = "CI" + $Env:APPVEYOR_BUILD_NUMBER.PadLeft(5, "0")
 install:
-- dnvm upgrade -u -r clr
-- ps: Start-FileDownload 'https://dotnetcli.blob.core.windows.net/dotnet/beta/Installers/Latest/dotnet-dev-win-x64.latest.exe' -FileName 'dotnetcli.exe'
-- dotnetcli.exe /quiet /log dotnetcli.txt
-- ps: Get-Content dotnetcli.txt
-- set PATH=%PATH%;%PROGRAMFILES%\dotnet\
-- set PATH=%PATH%;%PROGRAMFILES%\dotnet\bin\
-- dotnet restore
-build:
-  parallel: true
+- ps: |
+  dnvm upgrade -u -r clr
+  Start-FileDownload 'https://dotnetcli.blob.core.windows.net/dotnet/beta/Installers/Latest/dotnet-dev-win-x64.latest.exe' -FileName 'dotnetcli.exe'
+  dotnetcli.exe /quiet
+  $Env:PATH += ';%PROGRAMFILES%\dotnet\'
+  dotnet restore
+build_script:
+- cmd: |
+  dotnet pack -o artifacts\. -c $Env:CONFIGURATION --version-suffix $Env:PRERELEASE .\src\Txt\
+  dotnet pack -o artifacts\. -c $Env:CONFIGURATION --version-suffix $Env:PRERELEASE .\src\Txt.ABNF\
 test: off
 artifacts:
-  - path: artifacts\bin\Txt\**\*.nupkg
-  - path: artifacts\bin\Txt.ABNF\**\*.nupkg
+  - path: artifacts\*.nupkg
 deploy:
  - provider: NuGet
    server: https://www.myget.org/F/ci/api/v2/package
