@@ -8,8 +8,11 @@ init:
  - ps: $Env:DNX_BUILD_VERSION = "CI" + $Env:APPVEYOR_BUILD_NUMBER.PadLeft(5, "0")
 install:
 - dnvm upgrade -u -r clr
-- choco install dotnetcli
+- ps: Start-FileDownload 'https://dotnetcli.blob.core.windows.net/dotnet/beta/Installers/Latest/dotnet-dev-win-x64.latest.exe' -FileName 'dotnetcli.exe'
+- dotnetcli.exe /quiet /log dotnetcli.txt
+- ps: Get-Content dotnetcli.txt
 - set PATH=%PATH%;%PROGRAMFILES%\dotnet\
+- set PATH=%PATH%;%PROGRAMFILES%\dotnet\bin\
 - dotnet restore
 build:
   parallel: true
