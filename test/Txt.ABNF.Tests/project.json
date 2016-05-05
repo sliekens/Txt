@@ -1,23 +1,15 @@
 ﻿{
     "version": "1.0.0-*",
     "description": "Txt.ABNF.Tests Class Library",
-    "tags": [""],
-    "projectUrl": "",
-    "licenseUrl": "",
-    "commands": {
-        "test": "xunit.runner.dnx"
-    },
     "frameworks": {
-        "dnxcore50": {
-            "dependencies": {
-                "xunit": "2.1.0",
-                "xunit.runner.dnx": "2.1.0-rc1-build204",
-                "SimpleInjector": "3.1.4",
-                "System.Runtime": "4.0.21-beta-23516",
-                "Txt": { "target": "project" },
-                "Txt.ABNF": { "target": "project" }
-            }
-        }
+        "net46": { }
+    },
+    "dependencies": {
+        "xunit": "2.1.0",
+        "SimpleInjector": "3.1.4",
+        "Txt": {
+            "target": "project"
+        },
+        "Txt.ABNF": { "target": "project" }
     }
-
 }

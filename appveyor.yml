@@ -9,7 +9,7 @@ init:
 install:
 - dnvm upgrade -r clr
 - dnvm install 1.0.0-rc1-update2
-- dnu restore
+- dotnet restore
 build:
   parallel: true
 test: off

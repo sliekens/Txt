@@ -1,38 +1,23 @@
 ﻿{
     "version": "1.0.0-*",
-    "description": "Sample1 Console Application",
-    "authors": ["Steven Liekens"],
-    "tags": [""],
-    "projectUrl": "",
-    "licenseUrl": "",
-
-    "compilationOptions": {
-        "emitEntryPoint": true
-    },
-
-
-    "commands": {
-        "Sample1": "Sample1"
-    },
-    "dependencies": {
-        "SimpleInjector": "3.1.4",
-        "Txt": { "target": "project" },
-        "Txt.ABNF": {
-            "target": "project"
-        }
+    "buildOptions": {
+        "emitEntryPoint": true,
+        "copyToOutput": "**/*.abnf"
     },
     "frameworks": {
-        "dnxcore50": {
-            "dependencies": {
-                "Microsoft.CSharp": "4.0.1-beta-23516",
-                "System.Collections": "4.0.11-beta-23516",
-                "System.Console": "4.0.0-beta-23516",
-                "System.IO.FileSystem": "4.0.1-beta-23516",
-                "System.Linq": "4.0.1-beta-23516",
-                "System.Runtime.Numerics": "4.0.1-beta-23516",
-                "System.Threading": "4.0.11-beta-23516",
-                "System.ComponentModel": "4.0.1-beta-23516"
-            }
+        "netcoreapp1.0": {
+            "imports": "dnxcore50"
         }
+    },
+    "dependencies": {
+        "Microsoft.NETCore.App": {
+            "type": "platform",
+            "version": "1.0.0-rc2-*"
+        },
+        "SimpleInjector": "3.1.4",
+        "System.Runtime.Numerics": "4.0.1-rc2-*",
+        "System.ComponentModel": "4.0.1-rc2-*",
+        "Txt": { "target": "project" },
+        "Txt.ABNF": { "target": "project" }
     }
 }
