@@ -1,41 +1,30 @@
-﻿using System.IO;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using SimpleInjector;
 using Txt;
 using Txt.ABNF;
-using Txt.ABNF.Core.DIGIT;
+using Registration = Txt.Registration;
 
 namespace Sample1
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using Autofac;
-    
-
     internal class Program
     {
-        private static IContainer BuildContainer()
+        private static Container BuildContainer()
         {
-            var builder = new ContainerBuilder();
-            builder.RegisterType<TerminalLexerFactory>().As<ITerminalLexerFactory>().SingleInstance();
-            builder.RegisterType<ValueRangeLexerFactory>().As<IValueRangeLexerFactory>().SingleInstance();
-            builder.RegisterType<ConcatenationLexerFactory>().As<IConcatenationLexerFactory>().SingleInstance();
-            builder.RegisterType<RepetitionLexerFactory>().As<IRepetitionLexerFactory>().SingleInstance();
-            builder.RegisterType<AlternationLexerFactory>().As<IAlternationLexerFactory>().SingleInstance();
-            builder.RegisterType<OptionLexerFactory>().As<IOptionLexerFactory>().SingleInstance();
-            builder.RegisterType<SignLexerFactory>().As<ILexerFactory<Sign>>().SingleInstance();
-            builder.RegisterType<DigitLexerFactory>().As<ILexerFactory<Digit>>().SingleInstance();
-            builder.RegisterType<IntegerLexerFactory>().As<ILexerFactory<Integer>>().SingleInstance();
-
-            // With all dependencies wired up, register a delegate that returns a new IntegerLexer by calling IntegerLexerFactory.Create()
-            builder.Register(
-                ctx =>
-                {
-                    var integerLexerFactory = ctx.Resolve<ILexerFactory<Integer>>();
-                    return integerLexerFactory.Create();
-                })
-                .As<ILexer<Integer>>()
-                .SingleInstance();
-            return builder.Build();
+            var container = new Container();
+            foreach (var registration in AbnfRegistrations.GetRegistrations(container.GetInstance))
+            {
+                Register(registration, container);
+            }
+            foreach (var registration in Registrations.GetRegistrations(typeof(Program).GetTypeInfo().Assembly, container.GetInstance))
+            {
+                Register(registration, container);
+            }
+            container.Verify();
+            return container;
         }
 
         private static void Main(string[] args)
@@ -43,7 +32,7 @@ namespace Sample1
             ILexer<Integer> integerLexer;
             using (var container = BuildContainer())
             {
-                integerLexer = container.Resolve<ILexer<Integer>>();
+                integerLexer = container.GetInstance<ILexer<Integer>>();
             }
             Console.WriteLine("This sample program reads numbers and calculates their sum.");
             Console.WriteLine(
@@ -92,7 +81,7 @@ namespace Sample1
                         }
                     }
                 }
-            } while (readResult.Success || inputs.Count < 2);
+            } while (readResult.Success || (inputs.Count < 2));
             Console.WriteLine("===============================================");
             var bigIntegers = inputs.Select(x => x.ToBigInteger()).ToList();
             var sum = bigIntegers.Aggregate((x, y) => x + y);
@@ -100,6 +89,22 @@ namespace Sample1
             Console.Write(" = ");
             Console.Write(sum);
             Console.ReadLine();
+        }
+
+        private static void Register(Registration registration, Container container)
+        {
+            if (registration.Implementation != null)
+            {
+                container.RegisterSingleton(registration.Service, registration.Implementation);
+            }
+            else if (registration.Factory != null)
+            {
+                container.RegisterSingleton(registration.Service, registration.Factory);
+            }
+            else if (registration.Instance != null)
+            {
+                container.RegisterSingleton(registration.Service, registration.Instance);
+            }
         }
     }
 }
