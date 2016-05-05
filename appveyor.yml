@@ -9,7 +9,7 @@ init:
 install:
 - ps: dnvm upgrade -u -r clr
 - ps: Start-FileDownload 'https://dotnetcli.blob.core.windows.net/dotnet/beta/Installers/Latest/dotnet-dev-win-x64.latest.exe' -FileName 'dotnetcli.exe'
-- ps: dotnetcli.exe /quiet
+- ps: .\dotnetcli.exe /quiet
 - ps: $Env:PATH += ';%PROGRAMFILES%\dotnet\'
 - ps: dotnet restore
 build_script:
