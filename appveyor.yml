@@ -7,16 +7,14 @@ platform: Any CPU
 init:
  - ps: $Env:PRERELEASE = "CI" + $Env:APPVEYOR_BUILD_NUMBER.PadLeft(5, "0")
 install:
-- ps: |
-    dnvm upgrade -u -r clr
-    Start-FileDownload 'https://dotnetcli.blob.core.windows.net/dotnet/beta/Installers/Latest/dotnet-dev-win-x64.latest.exe' -FileName 'dotnetcli.exe'
-    dotnetcli.exe /quiet
-    $Env:PATH += ';%PROGRAMFILES%\dotnet\'
-    dotnet restore
+- ps: dnvm upgrade -u -r clr
+- ps: Start-FileDownload 'https://dotnetcli.blob.core.windows.net/dotnet/beta/Installers/Latest/dotnet-dev-win-x64.latest.exe' -FileName 'dotnetcli.exe'
+- ps: dotnetcli.exe /quiet
+- ps: $Env:PATH += ';%PROGRAMFILES%\dotnet\'
+- ps: dotnet restore
 build_script:
-- cmd: |
-    dotnet pack -o artifacts\. -c $Env:CONFIGURATION --version-suffix $Env:PRERELEASE .\src\Txt\
-    dotnet pack -o artifacts\. -c $Env:CONFIGURATION --version-suffix $Env:PRERELEASE .\src\Txt.ABNF\
+- dotnet pack -o artifacts\. -c $Env:CONFIGURATION --version-suffix $Env:PRERELEASE .\src\Txt\
+- dotnet pack -o artifacts\. -c $Env:CONFIGURATION --version-suffix $Env:PRERELEASE .\src\Txt.ABNF\
 test: off
 artifacts:
   - path: artifacts\*.nupkg
