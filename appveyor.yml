@@ -11,7 +11,7 @@ install:
 - ps: Start-FileDownload 'https://dotnetcli.blob.core.windows.net/dotnet/beta/Installers/Latest/dotnet-dev-win-x64.latest.exe' -FileName 'dotnetcli.exe'
 - cmd: dotnetcli.exe /quiet
 - cmd: PATH = %PATH%;%PROGRAMFILES%\dotnet\
-- cmd: dotnet restore
+- cmd: appveyor-retry dotnet restore
 build_script:
 - dotnet pack -o artifacts\. -c %CONFIGURATION% --version-suffix %PRERELEASE% .\src\Txt\
 - dotnet pack -o artifacts\. -c %CONFIGURATION% --version-suffix %PRERELEASE% .\src\Txt.ABNF\
