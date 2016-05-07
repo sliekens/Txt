@@ -13,8 +13,10 @@ install:
 - cmd: dnvm upgrade -u -r clr
 build_script:
 - appveyor-retry nuget restore
-- dotnet pack -o artifacts\. -c %CONFIGURATION% --version-suffix %PRERELEASE% .\src\Txt\
-- dotnet pack -o artifacts\. -c %CONFIGURATION% --version-suffix %PRERELEASE% .\src\Txt.ABNF\
+- ps: ls -Recurse project.json | %{ dotnet build $_ -c %CONFIGURATION% --version-suffix %PRERELEASE% }
+- dotnet pack --no-build -o artifacts\. .\src\Txt.Core\
+- dotnet pack --no-build -o artifacts\. .\src\Txt.ABNF\
+- dotnet pack --no-build -o artifacts\. .\src\Txt\
 test: off
 artifacts:
   - path: artifacts\*.nupkg
