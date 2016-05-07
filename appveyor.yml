@@ -13,7 +13,7 @@ install:
 - cmd: dnvm upgrade -u -r clr
 build_script:
 - appveyor-retry nuget restore
-- ps: ls -Recurse project.json | %{ dotnet build $_ -c %CONFIGURATION% --version-suffix %PRERELEASE% }
+- ps: ls -Recurse project.json | %{ dotnet build $_ -c $Env:CONFIGURATION --version-suffix $Env:PRERELEASE }
 - dotnet pack --no-build -o artifacts\. .\src\Txt.Core\
 - dotnet pack --no-build -o artifacts\. .\src\Txt.ABNF\
 - dotnet pack --no-build -o artifacts\. .\src\Txt\
