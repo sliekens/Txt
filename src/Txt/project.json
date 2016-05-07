@@ -1,0 +1,12 @@
+﻿{
+    "version": "2.0.0-*",
+    "description": "",
+    "authors": [ "Steven Liekens" ],
+    "frameworks": {
+        "netstandard1.0": { }
+    },
+    "dependencies": {
+        "Txt.ABNF": { "target": "project" },
+        "Txt.Core": { "target": "project" }
+    }
+}

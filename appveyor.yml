@@ -7,12 +7,12 @@ platform: Any CPU
 init:
  - ps: $Env:PRERELEASE = "CI" + $Env:APPVEYOR_BUILD_NUMBER.PadLeft(5, "0")
 install:
-- cmd: dnvm upgrade -u -r clr
 - ps: Start-FileDownload 'https://dotnetcli.blob.core.windows.net/dotnet/beta/Installers/1.0.0.001598/dotnet-win-x64.1.0.0.001598.exe' -FileName 'dotnetcli.exe'
 - cmd: dotnetcli.exe /quiet
 - cmd: PATH = %PATH%;%PROGRAMFILES%\dotnet\bin\
-- cmd: appveyor-retry dotnet restore
+- cmd: dnvm upgrade -u -r clr
 build_script:
+- appveyor-retry nuget restore
 - dotnet pack -o artifacts\. -c %CONFIGURATION% --version-suffix %PRERELEASE% .\src\Txt\
 - dotnet pack -o artifacts\. -c %CONFIGURATION% --version-suffix %PRERELEASE% .\src\Txt.ABNF\
 test: off
