@@ -1,5 +1,6 @@
 ﻿using Txt.ABNF.Core.HTAB;
 using Txt.ABNF.Core.SP;
+using Txt.Core;
 using Xunit;
 
 namespace Txt.ABNF.Core.WSP

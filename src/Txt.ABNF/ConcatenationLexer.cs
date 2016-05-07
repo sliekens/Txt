@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using Jetbrains.Annotations;
+using Txt.Core;
 
 namespace Txt.ABNF
 {

@@ -3,6 +3,7 @@ using System.Diagnostics;
 using Jetbrains.Annotations;
 using Txt.ABNF.Core.CRLF;
 using Txt.ABNF.Core.WSP;
+using Txt.Core;
 
 namespace Txt.ABNF.Core.LWSP
 {

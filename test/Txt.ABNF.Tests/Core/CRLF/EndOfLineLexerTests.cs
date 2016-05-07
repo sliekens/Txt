@@ -1,4 +1,5 @@
-﻿using Txt.ABNF.Core.CR;
+﻿using Txt.Core;
+using Txt.ABNF.Core.CR;
 using Txt.ABNF.Core.LF;
 using Xunit;
 

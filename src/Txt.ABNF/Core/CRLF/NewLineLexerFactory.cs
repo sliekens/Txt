@@ -3,6 +3,7 @@ using System.Diagnostics;
 using Jetbrains.Annotations;
 using Txt.ABNF.Core.CR;
 using Txt.ABNF.Core.LF;
+using Txt.Core;
 
 namespace Txt.ABNF.Core.CRLF
 {

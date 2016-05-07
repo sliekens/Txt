@@ -1,0 +1,12 @@
+﻿{
+    "version": "1.0.0-*",
+    "description": "",
+    "authors": [ "Steven Liekens" ],
+    "frameworks": {
+        "dnx451": { }
+    },
+    "dependencies": {
+        "xunit": "2.1.0",
+        "Txt.Core": { "target": "project" }
+    }
+}

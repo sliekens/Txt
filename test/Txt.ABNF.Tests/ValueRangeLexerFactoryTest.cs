@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using Txt.Core;
 using Xunit;
 
 namespace Txt.ABNF

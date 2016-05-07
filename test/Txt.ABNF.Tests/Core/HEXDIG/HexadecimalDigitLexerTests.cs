@@ -1,4 +1,5 @@
-﻿using Txt.ABNF.Core.DIGIT;
+﻿using Txt.Core;
+using Txt.ABNF.Core.DIGIT;
 using Xunit;
 
 namespace Txt.ABNF.Core.HEXDIG

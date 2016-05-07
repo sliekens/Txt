@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using Jetbrains.Annotations;
 using Txt.ABNF.Core.DIGIT;
+using Txt.Core;
 
 namespace Txt.ABNF.Core.HEXDIG
 {

@@ -1,6 +1,6 @@
 ﻿{
     "version": "1.0.0-*",
-    "description": "Common Class Library",
+    "description": "",
     "authors": [ "Steven Liekens" ],
     "packOptions": {
         "projectUrl": "https://github.com/StevenLiekens/Text",

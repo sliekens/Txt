@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using Txt.Core;
+using Xunit;
 
 namespace Txt.ABNF.Core.DIGIT
 {
