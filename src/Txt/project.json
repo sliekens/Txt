@@ -6,7 +6,8 @@
         "netstandard1.0": { }
     },
     "dependencies": {
+        "Txt.Core": { "target": "project" },
         "Txt.ABNF": { "target": "project" },
-        "Txt.Core": { "target": "project" }
+        "Txt.UTF8": { "target": "project" }
     }
 }

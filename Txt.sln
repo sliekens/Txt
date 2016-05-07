@@ -13,6 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		LICENSE = LICENSE
 		NuGet.Config = NuGet.Config
 		README.md = README.md
+		rfc3629.abnf = rfc3629.abnf
 		RFC5234.abnf = RFC5234.abnf
 	EndProjectSection
 EndProject
@@ -33,6 +34,8 @@ EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Txt.Core.Tests", "test\Txt.Core.Tests\Txt.Core.Tests.xproj", "{B6421C49-53B7-48A4-8913-95191E7F6A23}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Txt", "src\Txt\Txt.xproj", "{FA27D053-B091-433B-8D33-D28082B68BBA}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Txt.UTF8", "src\Txt.UTF8\Txt.UTF8.xproj", "{793414DC-3DD7-4E64-AD3A-6C3C8B4CEBA4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -68,6 +71,10 @@ Global
 		{FA27D053-B091-433B-8D33-D28082B68BBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA27D053-B091-433B-8D33-D28082B68BBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA27D053-B091-433B-8D33-D28082B68BBA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{793414DC-3DD7-4E64-AD3A-6C3C8B4CEBA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{793414DC-3DD7-4E64-AD3A-6C3C8B4CEBA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{793414DC-3DD7-4E64-AD3A-6C3C8B4CEBA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{793414DC-3DD7-4E64-AD3A-6C3C8B4CEBA4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -80,5 +87,6 @@ Global
 		{B0EBCE28-C62B-4169-9051-C9C0B1F17B52} = {6AFE5181-DC35-4668-92B7-13C7D06686D7}
 		{B6421C49-53B7-48A4-8913-95191E7F6A23} = {1C65ACFA-CF2F-4922-A7B5-9FB745B469B9}
 		{FA27D053-B091-433B-8D33-D28082B68BBA} = {6AFE5181-DC35-4668-92B7-13C7D06686D7}
+		{793414DC-3DD7-4E64-AD3A-6C3C8B4CEBA4} = {6AFE5181-DC35-4668-92B7-13C7D06686D7}
 	EndGlobalSection
 EndGlobal
