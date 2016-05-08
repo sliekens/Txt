@@ -14,10 +14,10 @@ install:
 build_script:
 - appveyor-retry dotnet restore
 - ps: ls -Recurse project.json | %{ dotnet build $_ -c $Env:CONFIGURATION }
-- dotnet pack --no-build --version-suffix $Env:PRERELEASE -o artifacts\. .\src\Txt.Core\
-- dotnet pack --no-build --version-suffix $Env:PRERELEASE -o artifacts\. .\src\Txt.ABNF\
-- dotnet pack --no-build --version-suffix $Env:PRERELEASE -o artifacts\. .\src\Txt.UTF8\
-- dotnet pack --no-build --version-suffix $Env:PRERELEASE -o artifacts\. .\src\Txt\
+- dotnet pack --no-build --version-suffix %PRERELEASE% -o artifacts\. .\src\Txt.Core\
+- dotnet pack --no-build --version-suffix %PRERELEASE% -o artifacts\. .\src\Txt.ABNF\
+- dotnet pack --no-build --version-suffix %PRERELEASE% -o artifacts\. .\src\Txt.UTF8\
+- dotnet pack --no-build --version-suffix %PRERELEASE% -o artifacts\. .\src\Txt\
 test: off
 artifacts:
   - path: artifacts\*.nupkg
