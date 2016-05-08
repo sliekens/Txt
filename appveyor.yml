@@ -9,7 +9,6 @@ init:
 install:
 - ps: Start-FileDownload 'https://dotnetcli.blob.core.windows.net/dotnet/beta/Installers/Latest/dotnet-win-x64.latest.exe' -FileName 'dotnetcli.exe'
 - cmd: dotnetcli.exe /quiet
-- cmd: PATH = %PATH%;%PROGRAMFILES%\dotnet\bin\
 - cmd: dnvm upgrade -u -r clr
 build_script:
 - appveyor-retry dotnet restore
