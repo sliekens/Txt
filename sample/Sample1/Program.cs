@@ -4,9 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using SimpleInjector;
-using Txt;
+using Txt.Core;
 using Txt.ABNF;
-using Registration = Txt.Registration;
+using Registration = Txt.Core.Registration;
 
 namespace Sample1
 {
