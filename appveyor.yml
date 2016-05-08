@@ -7,7 +7,7 @@ platform: Any CPU
 init:
  - ps: $Env:PRERELEASE = "CI" + $Env:APPVEYOR_BUILD_NUMBER.PadLeft(5, "0")
 install:
-- ps: Start-FileDownload 'https://dotnetcli.blob.core.windows.net/dotnet/beta/Installers/1.0.0.001598/dotnet-win-x64.1.0.0.001598.exe' -FileName 'dotnetcli.exe'
+- ps: Start-FileDownload 'https://dotnetcli.blob.core.windows.net/dotnet/beta/Installers/Latest/dotnet-win-x64.latest.exe' -FileName 'dotnetcli.exe'
 - cmd: dotnetcli.exe /quiet
 - cmd: PATH = %PATH%;%PROGRAMFILES%\dotnet\bin\
 - cmd: dnvm upgrade -u -r clr
