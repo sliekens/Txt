@@ -1,6 +1,6 @@
 ﻿{
     "version": "2.0.0-*",
-    "description": "",
+    "description": "Txt Foundation",
     "authors": [ "Steven Liekens" ],
     "frameworks": {
         "netstandard1.0": {

@@ -1,6 +1,6 @@
 ﻿{
     "version": "1.0.0-*",
-    "description": "",
+    "description": "Tests",
     "authors": [ "Steven Liekens" ],
     "frameworks": {
         "dnx451": { }

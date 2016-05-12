@@ -1,5 +1,6 @@
 ﻿{
     "version": "1.0.0-*",
+    "description": "Sample1", 
     "buildOptions": {
         "emitEntryPoint": true,
         "copyToOutput": "**/*.abnf"
