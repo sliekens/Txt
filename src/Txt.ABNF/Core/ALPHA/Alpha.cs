@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using Jetbrains.Annotations;
+using JetBrains.Annotations;
 
 namespace Txt.ABNF.Core.ALPHA
 {

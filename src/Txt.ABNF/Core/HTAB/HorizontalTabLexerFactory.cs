@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
-using Jetbrains.Annotations;
+using JetBrains.Annotations;
 using Txt.Core;
 
 namespace Txt.ABNF.Core.HTAB

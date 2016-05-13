@@ -1,5 +1,5 @@
 using System;
-using Jetbrains.Annotations;
+using JetBrains.Annotations;
 
 namespace Txt.Core
 {

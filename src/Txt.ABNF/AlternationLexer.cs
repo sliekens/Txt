@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using Jetbrains.Annotations;
+using JetBrains.Annotations;
 using Txt.Core;
 
 namespace Txt.ABNF

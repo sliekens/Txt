@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Jetbrains.Annotations;
+using JetBrains.Annotations;
 
 namespace Txt.Core
 {

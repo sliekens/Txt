@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Jetbrains.Annotations;
+using JetBrains.Annotations;
 using Txt.Core;
 
 namespace Txt.ABNF
