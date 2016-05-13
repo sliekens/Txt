@@ -9,8 +9,8 @@
             }
         }
     },
-    "dependencies": {
-        "Common": {
+	"dependencies": {
+	    "Common": {
             "type": "build",
             "target": "project"
         }
