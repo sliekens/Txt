@@ -37,7 +37,7 @@ namespace Txt.Core
             {
                 if (disposed)
                 {
-                    throw new ObjectDisposedException(GetType().FullName);
+                    throw new ObjectDisposedException(nameof(TextScanner));
                 }
                 return endOfInput;
             }
@@ -50,7 +50,7 @@ namespace Txt.Core
             {
                 if (disposed)
                 {
-                    throw new ObjectDisposedException(GetType().FullName);
+                    throw new ObjectDisposedException(nameof(TextScanner));
                 }
                 return offset;
             }
@@ -68,7 +68,7 @@ namespace Txt.Core
         {
             if (disposed)
             {
-                throw new ObjectDisposedException(GetType().FullName);
+                throw new ObjectDisposedException(nameof(TextScanner));
             }
             return new TextContext(offset);
         }
@@ -77,7 +77,7 @@ namespace Txt.Core
         {
             if (disposed)
             {
-                throw new ObjectDisposedException(GetType().FullName);
+                throw new ObjectDisposedException(nameof(TextScanner));
             }
             var peek = textSource.Peek();
             if (peek == -1)
@@ -85,6 +85,20 @@ namespace Txt.Core
                 endOfInput = true;
             }
             return peek;
+        }
+
+        public int Read()
+        {
+            if (disposed)
+            {
+                throw new ObjectDisposedException(nameof(TextScanner));
+            }
+            var read = textSource.Read();
+            if (read == -1)
+            {
+                endOfInput = true;
+            }
+            return read;
         }
 
         public virtual MatchResult TryMatch(string s)
@@ -100,7 +114,7 @@ namespace Txt.Core
             }
             if (disposed)
             {
-                throw new ObjectDisposedException(GetType().FullName);
+                throw new ObjectDisposedException(nameof(TextScanner));
             }
             if (s.Length == 0)
             {
@@ -132,7 +146,7 @@ namespace Txt.Core
         {
             if (disposed)
             {
-                throw new ObjectDisposedException(GetType().FullName);
+                throw new ObjectDisposedException(nameof(TextScanner));
             }
             var head = textSource.Read();
             var expected = char.ToString(c);
@@ -156,7 +170,7 @@ namespace Txt.Core
         {
             if (disposed)
             {
-                throw new ObjectDisposedException(GetType().FullName);
+                throw new ObjectDisposedException(nameof(TextScanner));
             }
             if (s == null)
             {
@@ -191,7 +205,7 @@ namespace Txt.Core
         {
             if (disposed)
             {
-                throw new ObjectDisposedException(GetType().FullName);
+                throw new ObjectDisposedException(nameof(TextScanner));
             }
             if (s == null)
             {

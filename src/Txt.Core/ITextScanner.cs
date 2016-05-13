@@ -32,6 +32,8 @@ namespace Txt.Core
 
         int Peek();
 
+        int Read();
+
         /// <summary>
         ///     Compares the given character to the next available character and advances the scanner's position if there is a
         ///     match. This method performs a case-sensitive ordinal comparison.
