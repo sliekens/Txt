@@ -1,4 +1,5 @@
 ﻿using System;
+using JetBrains.Annotations;
 
 namespace Txt.Core
 {
@@ -7,7 +8,7 @@ namespace Txt.Core
     {
         private ILexer<TElement> innerLexer;
 
-        public void Initialize(ILexer<TElement> lexer)
+        public void Initialize([NotNull] ILexer<TElement> lexer)
         {
             if (lexer == null)
             {

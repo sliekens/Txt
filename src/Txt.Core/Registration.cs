@@ -1,10 +1,11 @@
 using System;
+using JetBrains.Annotations;
 
 namespace Txt.Core
 {
     public class Registration
     {
-        public Registration(Type service, Type implementation)
+        public Registration([NotNull] Type service, [NotNull] Type implementation)
         {
             if (service == null)
             {
@@ -18,7 +19,7 @@ namespace Txt.Core
             Implementation = implementation;
         }
 
-        public Registration(Type service, object instance)
+        public Registration([NotNull] Type service, [NotNull] object instance)
         {
             if (service == null)
             {
@@ -32,7 +33,7 @@ namespace Txt.Core
             Instance = instance;
         }
 
-        public Registration(Type service, Func<object> factory)
+        public Registration([NotNull] Type service, [NotNull] Func<object> factory)
         {
             if (service == null)
             {

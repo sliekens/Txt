@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using JetBrains.Annotations;
 
 namespace Txt.Core
 {
@@ -12,7 +13,7 @@ namespace Txt.Core
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly Queue<char> s;
 
-        public StringTextSource(string s)
+        public StringTextSource([NotNull] string s)
         {
             if (s == null)
             {

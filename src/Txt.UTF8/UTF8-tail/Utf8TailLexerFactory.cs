@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using JetBrains.Annotations;
 using Txt.ABNF;
 using Txt.Core;
 
@@ -9,7 +10,7 @@ namespace Txt.UTF8.UTF8_tail
     {
         private readonly IValueRangeLexerFactory valueRangeLexerFactory;
 
-        public Utf8TailLexerFactory(IValueRangeLexerFactory valueRangeLexerFactory)
+        public Utf8TailLexerFactory([NotNull] IValueRangeLexerFactory valueRangeLexerFactory)
         {
             if (valueRangeLexerFactory == null)
             {

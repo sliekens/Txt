@@ -1,4 +1,5 @@
 ﻿using System;
+using JetBrains.Annotations;
 using Txt.ABNF;
 using Txt.Core;
 using Txt.UTF8.UTF8_1;
@@ -21,11 +22,11 @@ namespace Txt.UTF8.UTF8_char
         private readonly ILexer<Utf8Octet4> utf8Octet4Lexer;
 
         public Utf8CharacterLexerFactory(
-            IAlternationLexerFactory alternationLexerFactory,
-            ILexer<Utf8Octet1> utf8Octet1Lexer,
-            ILexer<Utf8Octet2> utf8Octet2Lexer,
-            ILexer<Utf8Octet3> utf8Octet3Lexer,
-            ILexer<Utf8Octet4> utf8Octet4Lexer)
+            [NotNull] IAlternationLexerFactory alternationLexerFactory,
+            [NotNull] ILexer<Utf8Octet1> utf8Octet1Lexer,
+            [NotNull] ILexer<Utf8Octet2> utf8Octet2Lexer,
+            [NotNull] ILexer<Utf8Octet3> utf8Octet3Lexer,
+            [NotNull] ILexer<Utf8Octet4> utf8Octet4Lexer)
         {
             if (alternationLexerFactory == null)
             {

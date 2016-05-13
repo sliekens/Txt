@@ -1,4 +1,5 @@
 ﻿using System;
+using JetBrains.Annotations;
 using Txt.ABNF;
 using Txt.Core;
 
@@ -8,7 +9,7 @@ namespace Txt.UTF8.UTF8_char
     {
         private readonly ILexer<Alternation> innerLexer;
 
-        public Utf8CharacterLexer(ILexer<Alternation> innerLexer)
+        public Utf8CharacterLexer([NotNull] ILexer<Alternation> innerLexer)
         {
             if (innerLexer == null)
             {

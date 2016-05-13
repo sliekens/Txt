@@ -1,4 +1,5 @@
 ﻿using System;
+using JetBrains.Annotations;
 using Txt.ABNF;
 using Txt.Core;
 
@@ -8,7 +9,7 @@ namespace Txt.UTF8.UTF8_2
     {
         private readonly ILexer<Concatenation> innerLexer;
 
-        public Utf8Octet2Lexer(ILexer<Concatenation> innerLexer)
+        public Utf8Octet2Lexer([NotNull] ILexer<Concatenation> innerLexer)
         {
             if (innerLexer == null)
             {

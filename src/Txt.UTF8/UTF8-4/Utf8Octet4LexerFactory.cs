@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using JetBrains.Annotations;
 using Txt.ABNF;
 using Txt.Core;
 using Txt.UTF8.UTF8_tail;
@@ -17,10 +18,10 @@ namespace Txt.UTF8.UTF8_4
         private readonly IValueRangeLexerFactory valueRangeLexerFactory;
 
         public Utf8Octet4LexerFactory(
-            IAlternationLexerFactory alternationLexerFactory,
-            IConcatenationLexerFactory concatenationLexerFactory,
-            IValueRangeLexerFactory valueRangeLexerFactory,
-            ILexer<Utf8Tail> utf8TailLexer)
+            [NotNull] IAlternationLexerFactory alternationLexerFactory,
+            [NotNull] IConcatenationLexerFactory concatenationLexerFactory,
+            [NotNull] IValueRangeLexerFactory valueRangeLexerFactory,
+            [NotNull] ILexer<Utf8Tail> utf8TailLexer)
         {
             if (alternationLexerFactory == null)
             {

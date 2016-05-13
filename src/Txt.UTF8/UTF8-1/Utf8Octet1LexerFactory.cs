@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using JetBrains.Annotations;
 using Txt.ABNF;
 using Txt.Core;
 
@@ -9,7 +10,7 @@ namespace Txt.UTF8.UTF8_1
     {
         private readonly IValueRangeLexerFactory valueRangeLexerFactory;
 
-        public Utf8Octet1LexerFactory(IValueRangeLexerFactory valueRangeLexerFactory)
+        public Utf8Octet1LexerFactory([NotNull] IValueRangeLexerFactory valueRangeLexerFactory)
         {
             if (valueRangeLexerFactory == null)
             {

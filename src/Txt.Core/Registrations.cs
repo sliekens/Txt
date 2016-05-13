@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using JetBrains.Annotations;
 
 namespace Txt.Core
 {
@@ -10,8 +11,8 @@ namespace Txt.Core
         public delegate object GetInstanceDelegate(Type service);
 
         public static IEnumerable<Registration> GetRegistrations(
-            Assembly assembly,
-            GetInstanceDelegate getInstance)
+            [NotNull] Assembly assembly,
+            [NotNull] GetInstanceDelegate getInstance)
         {
             if (assembly == null)
             {

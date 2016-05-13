@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Text;
+using JetBrains.Annotations;
 
 namespace Txt.Core
 {
@@ -13,7 +14,7 @@ namespace Txt.Core
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly PushbackInputStream inputStream;
 
-        public StreamTextSource(PushbackInputStream inputStream, Encoding encoding)
+        public StreamTextSource([NotNull] PushbackInputStream inputStream, [NotNull] Encoding encoding)
         {
             if (inputStream == null)
             {

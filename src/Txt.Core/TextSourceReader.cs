@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 
 namespace Txt.Core
 {
@@ -10,7 +11,7 @@ namespace Txt.Core
 
         private bool disposed;
 
-        public TextSourceReader(ITextSource textSource)
+        public TextSourceReader([NotNull] ITextSource textSource)
         {
             if (textSource == null)
             {

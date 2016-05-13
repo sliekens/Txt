@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 
 namespace Txt.Core
 {
@@ -20,7 +21,7 @@ namespace Txt.Core
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private int offset;
 
-        public TextScanner(ITextSource textSource)
+        public TextScanner([NotNull] ITextSource textSource)
         {
             if (textSource == null)
             {

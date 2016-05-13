@@ -1,4 +1,5 @@
 ﻿using System;
+using JetBrains.Annotations;
 using Txt.ABNF;
 using Txt.Core;
 
@@ -8,7 +9,7 @@ namespace Txt.UTF8.UTF8_tail
     {
         private readonly ILexer<Terminal> innerLexer;
 
-        public Utf8TailLexer(ILexer<Terminal> innerLexer)
+        public Utf8TailLexer([NotNull] ILexer<Terminal> innerLexer)
         {
             if (innerLexer == null)
             {

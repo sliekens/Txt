@@ -1,4 +1,5 @@
 ﻿using System;
+using JetBrains.Annotations;
 using Txt.ABNF;
 using Txt.Core;
 using Txt.UTF8.UTF8_char;
@@ -12,8 +13,8 @@ namespace Txt.UTF8.UTF8_octets
         private readonly ILexer<Utf8Character> utf8CharacterLexer;
 
         public Utf8OctetsLexerFactory(
-            IRepetitionLexerFactory repetitionLexerFactory,
-            ILexer<Utf8Character> utf8CharacterLexer)
+            [NotNull] IRepetitionLexerFactory repetitionLexerFactory,
+            [NotNull] ILexer<Utf8Character> utf8CharacterLexer)
         {
             if (repetitionLexerFactory == null)
             {

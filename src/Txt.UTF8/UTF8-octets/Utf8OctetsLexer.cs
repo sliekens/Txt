@@ -1,4 +1,5 @@
 ﻿using System;
+using JetBrains.Annotations;
 using Txt.ABNF;
 using Txt.Core;
 
@@ -8,7 +9,7 @@ namespace Txt.UTF8.UTF8_octets
     {
         private readonly ILexer<Repetition> innerLexer;
 
-        public Utf8OctetsLexer(ILexer<Repetition> innerLexer)
+        public Utf8OctetsLexer([NotNull] ILexer<Repetition> innerLexer)
         {
             if (innerLexer == null)
             {

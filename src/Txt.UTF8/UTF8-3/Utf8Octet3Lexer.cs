@@ -1,4 +1,5 @@
 ﻿using System;
+using JetBrains.Annotations;
 using Txt.ABNF;
 using Txt.Core;
 
@@ -8,7 +9,7 @@ namespace Txt.UTF8.UTF8_3
     {
         private readonly ILexer<Alternation> innerLexer;
 
-        public Utf8Octet3Lexer(ILexer<Alternation> innerLexer)
+        public Utf8Octet3Lexer([NotNull] ILexer<Alternation> innerLexer)
         {
             if (innerLexer == null)
             {
