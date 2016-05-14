@@ -13,11 +13,9 @@
     "dependencies": {
         "Microsoft.NETCore.App": {
           "type": "platform",
-          "version": "1.0.0-rc2-3002702"
+          "version": "1.0.0-rc2-*"
         },
         "SimpleInjector": "3.1.4",
-        "System.Runtime.Numerics": "4.0.1-rc2-*",
-        "System.ComponentModel": "4.0.1-rc2-*",
         "Txt": { "target": "project" }
     }
 }

@@ -19,7 +19,9 @@ build_script:
 - dotnet pack --no-build --version-suffix %PRERELEASE% -o artifacts\. .\src\Txt.ABNF\
 - dotnet pack --no-build --version-suffix %PRERELEASE% -o artifacts\. .\src\Txt.UTF8\
 - dotnet pack --no-build --version-suffix %PRERELEASE% -o artifacts\. .\src\Txt\
-test: off
+test_script:
+- dotnet test .\test\Txt.Core.Tests
+- dotnet test .\test\Txt.ABNF.Tests
 artifacts:
   - path: artifacts\*.nupkg
 deploy:

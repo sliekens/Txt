@@ -2,13 +2,23 @@
     "version": "1.0.0-*",
     "description": "Tests",
     "frameworks": {
-        "dnx451": { }
+        "netcoreapp1.0": {
+            "imports": [
+                "dotnet5.4",
+                "portable-net451+win8"
+            ]
+        }
     },
     "dependencies": {
-        "xunit": "2.1.0",
-        "xunit.runner.dnx": "2.1.0-*", 
+        "Microsoft.NETCore.App": {
+          "type": "platform",
+          "version": "1.0.0-rc2-*"
+        },
+        "xunit": "2.1.0-rc2-*",
+        "dotnet-test-xunit": "1.0.0-rc2-*",
         "SimpleInjector": "3.1.4",
         "Txt.Core": { "target": "project" },
         "Txt.ABNF": { "target": "project" }
-    }
+    },
+    "testRunner": "xunit"
 }
