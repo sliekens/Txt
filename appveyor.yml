@@ -12,7 +12,7 @@ install:
 - cmd: PATH = %PATH%;%PROGRAMFILES%\dotnet\
 - cmd: dnvm upgrade -u -r clr
 build_script:
-- appveyor-retry dotnet restore
+- appveyor-retry dotnet restore -v Minimal
 - dotnet build **\project.json -c %CONFIGURATION%
 - dotnet pack --no-build --version-suffix %PRERELEASE% -o artifacts\. .\src\Txt.Core\
 - dotnet pack --no-build --version-suffix %PRERELEASE% -o artifacts\. .\src\Txt.ABNF\
