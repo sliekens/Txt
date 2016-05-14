@@ -22,7 +22,7 @@ namespace Txt.Core
             innerLexer = lexer;
         }
 
-        public override ReadResult<TElement> Read(ITextScanner scanner)
+        public override ReadResult<TElement> ReadImpl(ITextScanner scanner)
         {
             if (scanner == null)
             {

@@ -30,7 +30,7 @@ namespace Txt.ABNF.Core.CHAR
             this.innerLexer = innerLexer;
         }
 
-        public override ReadResult<Character> Read(ITextScanner scanner)
+        public override ReadResult<Character> ReadImpl(ITextScanner scanner)
         {
             if (scanner == null)
             {

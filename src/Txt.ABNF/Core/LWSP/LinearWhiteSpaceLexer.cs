@@ -27,7 +27,7 @@ namespace Txt.ABNF.Core.LWSP
             this.innerLexer = innerLexer;
         }
 
-        public override ReadResult<LinearWhiteSpace> Read(ITextScanner scanner)
+        public override ReadResult<LinearWhiteSpace> ReadImpl(ITextScanner scanner)
         {
             if (scanner == null)
             {

@@ -18,7 +18,7 @@ namespace Sample1
             this.innerLexer = innerLexer;
         }
 
-        public override ReadResult<Integer> Read(ITextScanner scanner)
+        public override ReadResult<Integer> ReadImpl(ITextScanner scanner)
         {
             var result = innerLexer.Read(scanner);
             if (result.Success)

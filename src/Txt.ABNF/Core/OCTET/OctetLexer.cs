@@ -27,7 +27,7 @@ namespace Txt.ABNF.Core.OCTET
             this.innerLexer = innerLexer;
         }
 
-        public override ReadResult<Octet> Read(ITextScanner scanner)
+        public override ReadResult<Octet> ReadImpl(ITextScanner scanner)
         {
             if (scanner == null)
             {

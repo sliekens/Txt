@@ -18,7 +18,7 @@ namespace Txt.UTF8.UTF8_char
             this.innerLexer = innerLexer;
         }
 
-        public override ReadResult<Utf8Character> Read(ITextScanner scanner)
+        public override ReadResult<Utf8Character> ReadImpl(ITextScanner scanner)
         {
             if (scanner == null)
             {

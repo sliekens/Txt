@@ -30,7 +30,7 @@ namespace Txt.ABNF.Core.DQUOTE
             this.innerLexer = innerLexer;
         }
 
-        public override ReadResult<DoubleQuote> Read(ITextScanner scanner)
+        public override ReadResult<DoubleQuote> ReadImpl(ITextScanner scanner)
         {
             if (scanner == null)
             {

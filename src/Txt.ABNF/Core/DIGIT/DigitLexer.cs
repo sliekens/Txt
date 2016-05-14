@@ -30,7 +30,7 @@ namespace Txt.ABNF.Core.DIGIT
             this.innerLexer = innerLexer;
         }
 
-        public override ReadResult<Digit> Read(ITextScanner scanner)
+        public override ReadResult<Digit> ReadImpl(ITextScanner scanner)
         {
             if (scanner == null)
             {

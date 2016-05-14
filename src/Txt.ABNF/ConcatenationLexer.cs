@@ -30,7 +30,7 @@ namespace Txt.ABNF
             this.lexers = lexers;
         }
 
-        public override ReadResult<Concatenation> Read(ITextScanner scanner)
+        public override ReadResult<Concatenation> ReadImpl(ITextScanner scanner)
         {
             if (scanner == null)
             {

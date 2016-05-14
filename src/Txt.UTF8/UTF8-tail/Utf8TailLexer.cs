@@ -18,7 +18,7 @@ namespace Txt.UTF8.UTF8_tail
             this.innerLexer = innerLexer;
         }
 
-        public override ReadResult<Utf8Tail> Read(ITextScanner scanner)
+        public override ReadResult<Utf8Tail> ReadImpl(ITextScanner scanner)
         {
             if (scanner == null)
             {

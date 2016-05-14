@@ -43,7 +43,7 @@ namespace Txt.ABNF
         /// <param name="scanner"></param>
         /// <exception cref="ArgumentNullException"></exception>
         /// <returns></returns>
-        public override ReadResult<Alternation> Read(ITextScanner scanner)
+        public override ReadResult<Alternation> ReadImpl(ITextScanner scanner)
         {
             if (scanner == null)
             {

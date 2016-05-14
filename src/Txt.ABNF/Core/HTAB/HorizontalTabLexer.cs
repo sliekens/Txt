@@ -30,7 +30,7 @@ namespace Txt.ABNF.Core.HTAB
             this.innerLexer = innerLexer;
         }
 
-        public override ReadResult<HorizontalTab> Read(ITextScanner scanner)
+        public override ReadResult<HorizontalTab> ReadImpl(ITextScanner scanner)
         {
             if (scanner == null)
             {

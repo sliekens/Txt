@@ -45,7 +45,7 @@ namespace Txt.ABNF
             this.upperBound = upperBound;
         }
 
-        public override ReadResult<Repetition> Read(ITextScanner scanner)
+        public override ReadResult<Repetition> ReadImpl(ITextScanner scanner)
         {
             if (scanner == null)
             {

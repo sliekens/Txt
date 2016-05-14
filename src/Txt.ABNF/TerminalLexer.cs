@@ -31,7 +31,7 @@ namespace Txt.ABNF
             this.comparer = comparer;
         }
 
-        public override ReadResult<Terminal> Read(ITextScanner scanner)
+        public override ReadResult<Terminal> ReadImpl(ITextScanner scanner)
         {
             if (scanner == null)
             {

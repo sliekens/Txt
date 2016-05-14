@@ -19,7 +19,7 @@ namespace Sample1
             this.innerLexer = innerLexer;
         }
 
-        public override ReadResult<Sign> Read(ITextScanner scanner)
+        public override ReadResult<Sign> ReadImpl(ITextScanner scanner)
         {
             var result = innerLexer.Read(scanner);
             if (result.Success)

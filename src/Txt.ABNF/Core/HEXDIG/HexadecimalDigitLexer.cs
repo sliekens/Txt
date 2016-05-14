@@ -30,7 +30,7 @@ namespace Txt.ABNF.Core.HEXDIG
             this.innerLexer = innerLexer;
         }
 
-        public override ReadResult<HexadecimalDigit> Read(ITextScanner scanner)
+        public override ReadResult<HexadecimalDigit> ReadImpl(ITextScanner scanner)
         {
             if (scanner == null)
             {

@@ -35,7 +35,7 @@ namespace Txt.ABNF
             this.lexers = lexers;
         }
 
-        public override ReadResult<Alternation> Read(ITextScanner scanner)
+        public override ReadResult<Alternation> ReadImpl(ITextScanner scanner)
         {
             if (scanner == null)
             {

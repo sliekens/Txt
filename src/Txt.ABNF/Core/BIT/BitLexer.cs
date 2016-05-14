@@ -27,7 +27,7 @@ namespace Txt.ABNF.Core.BIT
             this.innerLexer = innerLexer;
         }
 
-        public override ReadResult<Bit> Read(ITextScanner scanner)
+        public override ReadResult<Bit> ReadImpl(ITextScanner scanner)
         {
             if (scanner == null)
             {
