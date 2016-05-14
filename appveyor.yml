@@ -5,7 +5,7 @@ configuration:
 - Release
 platform: Any CPU
 init:
- - ps: $Env:PRERELEASE = "CI" + $Env:APPVEYOR_BUILD_NUMBER.PadLeft(5, "0")
+ - ps: $Env:LABEL = "CI" + $Env:APPVEYOR_BUILD_NUMBER.PadLeft(5, "0")
 install:
 - ps: Start-FileDownload 'https://dotnetcli.blob.core.windows.net/dotnet/beta/Installers/Latest/dotnet-dev-win-x64.latest.exe'
 - dotnet-dev-win-x64.latest.exe /quiet
@@ -15,10 +15,10 @@ environment:
 build_script:
 - appveyor-retry dotnet restore -v Minimal
 - dotnet build **\project.json -c %CONFIGURATION%
-- dotnet pack --no-build --version-suffix %PRERELEASE% -o artifacts\. .\src\Txt.Core\
-- dotnet pack --no-build --version-suffix %PRERELEASE% -o artifacts\. .\src\Txt.ABNF\
-- dotnet pack --no-build --version-suffix %PRERELEASE% -o artifacts\. .\src\Txt.UTF8\
-- dotnet pack --no-build --version-suffix %PRERELEASE% -o artifacts\. .\src\Txt\
+- dotnet pack --no-build --version-suffix %LABEL% -o artifacts\. .\src\Txt.Core\project.json
+- dotnet pack --no-build --version-suffix %LABEL% -o artifacts\. .\src\Txt.ABNF\project.json
+- dotnet pack --no-build --version-suffix %LABEL% -o artifacts\. .\src\Txt.UTF8\project.json
+- dotnet pack --no-build --version-suffix %LABEL% -o artifacts\. .\src\Txt\project.json
 test_script:
 - dotnet test .\test\Txt.Core.Tests
 - dotnet test .\test\Txt.ABNF.Tests
