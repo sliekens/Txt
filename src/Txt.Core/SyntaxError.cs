@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using JetBrains.Annotations;
 
 namespace Txt.Core
@@ -47,6 +48,30 @@ namespace Txt.Core
 
         [NotNull]
         public string Text { get; }
+
+        public IList<SyntaxError> MakeFlat()
+        {
+            var result = new List<SyntaxError>(1);
+            var current = this;
+            while (current != null)
+            {
+                result.Add(this);
+                current = current.InnerError;
+            }
+
+            return result;
+        }
+
+        public SyntaxError GetBaseError()
+        {
+            var current = this;
+            while (current.InnerError != null)
+            {
+                current = current.InnerError;
+            }
+
+            return current;
+        }
 
         public static SyntaxError FromMatchResult([NotNull] MatchResult matchResult, [NotNull] ITextContext context)
         {
