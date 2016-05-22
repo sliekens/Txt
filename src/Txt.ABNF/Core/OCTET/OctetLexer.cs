@@ -7,38 +7,25 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
-using System.Diagnostics;
-using JetBrains.Annotations;
 using Txt.Core;
 
 namespace Txt.ABNF.Core.OCTET
 {
     public class OctetLexer : Lexer<Octet>
     {
-        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly ILexer<Terminal> innerLexer;
-
-        public OctetLexer([NotNull] ILexer<Terminal> innerLexer)
-        {
-            if (innerLexer == null)
-            {
-                throw new ArgumentNullException(nameof(innerLexer));
-            }
-            this.innerLexer = innerLexer;
-        }
-
         public override ReadResult<Octet> ReadImpl(ITextScanner scanner)
         {
             if (scanner == null)
             {
                 throw new ArgumentNullException(nameof(scanner));
             }
-            var result = innerLexer.Read(scanner);
-            if (result.Success)
+            var context = scanner.GetContext();
+            var read = scanner.Read();
+            if (read != -1)
             {
-                return ReadResult<Octet>.FromResult(new Octet(result.Element));
+                return ReadResult<Octet>.FromResult(new Octet(read, context));
             }
-            return ReadResult<Octet>.FromSyntaxError(SyntaxError.FromReadResult(result, scanner.GetContext()));
+            return ReadResult<Octet>.FromSyntaxError(new SyntaxError(true, "", "", context));
         }
     }
 }
