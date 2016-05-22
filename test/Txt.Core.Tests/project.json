@@ -1,23 +1,23 @@
 ﻿{
     "version": "1.0.0-*",
-    "description": "Tests",
-    "authors": [ "Steven Liekens" ],
+    "testRunner": "xunit",
+    "dependencies": {
+        "xunit": "2.1.0",
+        "dotnet-test-xunit": "1.0.0-rc2-build10015",
+        "Txt.Core": { "target": "project" }
+    },
     "frameworks": {
         "netcoreapp1.0": {
             "imports": [
                 "dotnet5.4",
-                "portable-net451+win8"
-            ]
+                "portable-net45+win8"
+            ],
+            "dependencies": {
+                "Microsoft.NETCore.App": {
+                    "type": "platform",
+                    "version": "1.0.0-rc2-3002702"
+                }
+            }
         }
-    },
-    "dependencies": {
-        "Microsoft.NETCore.App": {
-          "type": "platform",
-          "version": "1.0.0-rc2-*"
-        },
-        "xunit": "2.1.0-rc2-*",
-        "dotnet-test-xunit": "1.0.0-rc2-*",
-        "Txt.Core": { "target": "project" }
-    },
-    "testRunner": "xunit"
+    }
 }

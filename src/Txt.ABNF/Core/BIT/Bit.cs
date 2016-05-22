@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Diagnostics;
+using System;
 using JetBrains.Annotations;
 
 namespace Txt.ABNF.Core.BIT
@@ -17,21 +17,19 @@ namespace Txt.ABNF.Core.BIT
         public Bit([NotNull] Alternation element)
             : base(element)
         {
-        }
-
-        public static explicit operator bool(Bit instance)
-        {
-            return instance.ToBool();
-        }
-
-        public bool ToBool()
-        {
-            Debug.Assert((Text == "0") || (Text == "1"), "this.Text == '0' || this.Text == '1'");
-            if (Text == "1")
+            switch (element.Ordinal)
             {
-                return true;
+                case 1:
+                    Value = false;
+                    break;
+                case 2:
+                    Value = true;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
-            return false;
         }
+
+        public bool Value { get; }
     }
 }
