@@ -174,7 +174,8 @@ namespace Txt.Core
             {
                 throw new ArgumentNullException(nameof(evaluator));
             }
-            if (!evaluator.Evaluate((dynamic)this))
+            dynamic dynamicEvaluator = evaluator;
+            if (!dynamicEvaluator.Evaluate((dynamic)this))
             {
                 return;
             }
