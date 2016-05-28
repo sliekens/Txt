@@ -174,14 +174,18 @@ namespace Txt.Core
             {
                 throw new ArgumentNullException(nameof(evaluator));
             }
-            dynamic dynamicEvaluator = evaluator;
-            if (!dynamicEvaluator.Evaluate((dynamic)this))
+            EvaluateImpl(evaluator);
+        }
+
+        private void EvaluateImpl(dynamic evaluator)
+        {
+            if (!evaluator.Evaluate((dynamic)this))
             {
                 return;
             }
-            foreach (var element in Elements)
+            foreach (dynamic element in Elements)
             {
-                element.Evaluate(evaluator);
+                element.EvaluateImpl(evaluator);
             }
         }
 
