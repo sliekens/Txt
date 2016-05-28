@@ -168,6 +168,22 @@ namespace Txt.Core
             return string.Concat(Elements.Select(element => element.GetWellFormedText()));
         }
 
+        public void Evaluate([NotNull] IEvaluator evaluator)
+        {
+            if (evaluator == null)
+            {
+                throw new ArgumentNullException(nameof(evaluator));
+            }
+            if (!evaluator.Evaluate((dynamic)this))
+            {
+                return;
+            }
+            foreach (var element in Elements)
+            {
+                evaluator.Evaluate((dynamic)element);
+            }
+        }
+
         /// <inheritdoc />
         public sealed override string ToString()
         {
