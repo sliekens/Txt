@@ -180,7 +180,7 @@ namespace Txt.Core
             }
             foreach (var element in Elements)
             {
-                evaluator.Evaluate((dynamic)element);
+                element.Evaluate(evaluator);
             }
         }
 
