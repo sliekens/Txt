@@ -5,15 +5,15 @@
     /// </summary>
     /// <remarks>
     ///     Implementers must declare at least one method named
-    ///     <c>Evaluate</c> that takes an <see cref="Element" /> and returns a <see cref="bool" />. Implementers may optionally
-    ///     declare an unlimited number of additional <c>Evaluate</c> methods that take any argument that derives from
-    ///     <see cref="Element" />. When walking an element tree, the <c>Evaluate</c> method that gets called is bound at runtime
+    ///     <c>Walk</c> that takes an <see cref="Element" /> and returns a <see cref="bool" />. Implementers may optionally
+    ///     declare an unlimited number of additional <c>Walk</c> methods that take any argument that derives from
+    ///     <see cref="Element" />. When walking an element tree, the <c>Walk</c> method that gets called is bound at runtime
     ///     by using dynamic language runtime features.
     /// <example>
-    ///    public class ExampleWalker : IEvaluator
+    ///    public class ExampleWalker : IWalker
     ///    {
     ///        // Implementers MUST implement the following method
-    ///        public bool Evaluate(Element element)
+    ///        public bool Walk(Element element)
     ///        {
     ///            // Do something with the current node (e.g. logging)
     ///            Console.WriteLine(
@@ -28,7 +28,7 @@
     ///    
     ///        // Implementers MAY implement overloads that take a more derived element type
     ///        // The most specific overload will be automatically selected at runtime
-    ///        public bool Evaluate(Alpha alpha)
+    ///        public bool Walk(Alpha alpha)
     ///        {
     ///            // Log the letter of the alphabet
     ///            Console.WriteLine(
@@ -42,13 +42,13 @@
     ///    }
     /// </example>
     /// </remarks>
-    public interface IEvaluator
+    public interface IWalker
     {
         /// <summary>
         /// Evaluates a given element. A return value indicates whether its descendant nodes should be evaluated as well.
         /// </summary>
         /// <param name="element">The element to evaluate.</param>
         /// <returns><c>true</c> if descendant nodes should be evaluated; otherwise, <c>false</c>.</returns>
-        bool Evaluate(Element element);
+        bool Walk(Element element);
     }
 }

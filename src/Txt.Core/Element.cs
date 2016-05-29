@@ -168,24 +168,24 @@ namespace Txt.Core
             return string.Concat(Elements.Select(element => element.GetWellFormedText()));
         }
 
-        public void Evaluate([NotNull] IEvaluator evaluator)
+        public void Walk([NotNull] IWalker walker)
         {
-            if (evaluator == null)
+            if (walker == null)
             {
-                throw new ArgumentNullException(nameof(evaluator));
+                throw new ArgumentNullException(nameof(walker));
             }
-            EvaluateImpl(evaluator);
+            WalkImpl(walker);
         }
 
-        private void EvaluateImpl(dynamic evaluator)
+        private void WalkImpl([NotNull] dynamic walker)
         {
-            if (!evaluator.Evaluate((dynamic)this))
+            if (!walker.Walk((dynamic)this))
             {
                 return;
             }
             foreach (dynamic element in Elements)
             {
-                element.EvaluateImpl(evaluator);
+                element?.WalkImpl(walker);
             }
         }
 
