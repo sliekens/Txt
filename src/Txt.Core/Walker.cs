@@ -44,7 +44,17 @@
     public abstract class Walker
     {
         /// <summary>
-        /// Evaluates a given element. A return value indicates whether its descendant nodes should be evaluated as well.
+        /// Evaluates a given element. A return value indicates whether its descendant nodes should be evaluated as well. This method is always called, regardless of the type of element.
+        /// </summary>
+        /// <param name="element">The element to evaluate.</param>
+        /// <returns><c>true</c> if descendant nodes should be evaluated; otherwise, <c>false</c>.</returns>
+        public virtual bool WalkAny(Element element)
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// Evaluates a given element. A return value indicates whether its descendant nodes should be evaluated as well. This method is only called when this is the most specific overload for any element type.
         /// </summary>
         /// <param name="element">The element to evaluate.</param>
         /// <returns><c>true</c> if descendant nodes should be evaluated; otherwise, <c>false</c>.</returns>

@@ -179,6 +179,10 @@ namespace Txt.Core
 
         private void WalkImpl([NotNull] dynamic walker)
         {
+            if (!walker.WalkAny(this))
+            {
+                return;
+            }
             if (!walker.Walk((dynamic)this))
             {
                 return;
