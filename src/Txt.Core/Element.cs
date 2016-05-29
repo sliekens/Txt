@@ -179,17 +179,28 @@ namespace Txt.Core
 
         private void WalkImpl([NotNull] dynamic walker)
         {
-            if (!walker.WalkAny(this))
+            walker.EnterAny(this);
+            walker.Enter((dynamic)this);
+            try
             {
-                return;
+                if (!walker.WalkAny(this))
+                {
+                    return;
+                }
+                if (!walker.Walk((dynamic)this))
+                {
+                    return;
+                }
+                foreach (dynamic element in Elements)
+                {
+                    element?.WalkImpl(walker);
+                }
+
             }
-            if (!walker.Walk((dynamic)this))
+            finally
             {
-                return;
-            }
-            foreach (dynamic element in Elements)
-            {
-                element?.WalkImpl(walker);
+                walker.Exit((dynamic)this);
+                walker.ExitAny(this);
             }
         }
 

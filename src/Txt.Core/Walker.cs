@@ -43,6 +43,22 @@
     /// </remarks>
     public abstract class Walker
     {
+        public virtual void Enter(Element element)
+        {
+        }
+
+        public virtual void EnterAny(Element element)
+        {
+        }
+
+        public virtual void Exit(Element element)
+        {
+        }
+
+        public virtual void ExitAny(Element element)
+        {
+        }
+
         /// <summary>
         /// Evaluates a given element. A return value indicates whether its descendant nodes should be evaluated as well. This method is always called, regardless of the type of element.
         /// </summary>
