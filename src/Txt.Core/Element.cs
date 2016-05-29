@@ -168,7 +168,7 @@ namespace Txt.Core
             return string.Concat(Elements.Select(element => element.GetWellFormedText()));
         }
 
-        public void Walk([NotNull] IWalker walker)
+        public void Walk([NotNull] Walker walker)
         {
             if (walker == null)
             {

@@ -1,7 +1,7 @@
 ﻿namespace Txt.Core
 {
     /// <summary>
-    ///     Providers the interface for element tree walkers, such as parsers, compilers, interpreters or syntax highlighters.
+    ///     Providers the base class for element tree walkers, such as parsers, compilers, interpreters or syntax highlighters.
     /// </summary>
     /// <remarks>
     ///     Implementers must declare at least one method named
@@ -10,10 +10,9 @@
     ///     <see cref="Element" />. When walking an element tree, the <c>Walk</c> method that gets called is bound at runtime
     ///     by using dynamic language runtime features.
     /// <example>
-    ///    public class ExampleWalker : IWalker
+    ///    public class ExampleWalker : Walker
     ///    {
-    ///        // Implementers MUST implement the following method
-    ///        public bool Walk(Element element)
+    ///        public override bool Walk(Element element)
     ///        {
     ///            // Do something with the current node (e.g. logging)
     ///            Console.WriteLine(
@@ -23,10 +22,10 @@
     ///                element.Offset);
     ///    
     ///            // return true to indicate that the element's descendant nodes (if any) should be evaluated
-    ///            return true;
+    ///            return base.Walk(element);
     ///        }
-    ///    
-    ///        // Implementers MAY implement overloads that take a more derived element type
+    ///
+    ///        // Implementers MAY add overloads that take a more derived element type
     ///        // The most specific overload will be automatically selected at runtime
     ///        public bool Walk(Alpha alpha)
     ///        {
@@ -42,13 +41,16 @@
     ///    }
     /// </example>
     /// </remarks>
-    public interface IWalker
+    public abstract class Walker
     {
         /// <summary>
         /// Evaluates a given element. A return value indicates whether its descendant nodes should be evaluated as well.
         /// </summary>
         /// <param name="element">The element to evaluate.</param>
         /// <returns><c>true</c> if descendant nodes should be evaluated; otherwise, <c>false</c>.</returns>
-        bool Walk(Element element);
+        public virtual bool Walk(Element element)
+        {
+            return true;
+        }
     }
 }
