@@ -34,7 +34,7 @@ namespace Txt.ABNF.Core.OCTET
         ///     null reference.
         /// </exception>
         public Octet(int value, [NotNull] ITextContext context)
-            : base("?", context)
+            : base("\uFFFD", context)
         {
             Value = value;
         }
