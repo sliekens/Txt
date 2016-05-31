@@ -8,33 +8,20 @@ Txt
 Txt (tɛkst) is a collection of code that provides a foundation for text parsers.
 
 This repository contains two libraries: 
-* Txt
+* Txt.Core
 * Txt.ABNF
 
-Both are available as separate packages on NuGet (stable builds &  pre-release builds) and MyGet (continuous integration builds).
-
+Txt is still under active development. Pre-release versions are available on MyGet. 
 
 # Package: Txt (previously TextFx)
 
-[![NuGet](https://img.shields.io/nuget/v/TextFx.svg?maxAge=2592000?style=plastic)](https://www.nuget.org/packages/TextFx)
-[![MyGet Pre Release](https://img.shields.io/myget/textfx/vpre/TextFx.svg?maxAge=2592000?style=plastic)](https://www.myget.org/feed/textfx/package/nuget/TextFx)
 [![MyGet Pre Release](https://img.shields.io/myget/ci/vpre/Txt.svg?maxAge=2592000?style=plastic)](https://www.myget.org/feed/ci/package/nuget/Txt)
 
 All structured languages have one thing in common: each language has a formal syntax specification that describes the grammar rules for that language. Programmers use these grammar rules to create programs that parse the language.
 
-The TextFx code library assists you with creating parsers for any given language. You create your own tokens and token parsers by deriving from classes in this library.
+The Txt code library assists you with creating parsers for any given language. You create your own tokens and token parsers by deriving from classes in this library.
 
-# Package: Txt.ABNF (previously TextFx.ABNF)
-
-[![NuGet](https://img.shields.io/nuget/v/TextFx.ABNF.svg?maxAge=2592000?style=plastic)](https://www.nuget.org/packages/TextFx.ABNF)
-[![MyGet Pre Release](https://img.shields.io/myget/textfx/vpre/TextFx.ABNF.svg?maxAge=2592000?style=plastic)](https://www.myget.org/feed/textfx/package/nuget/TextFx.ABNF)
-[![MyGet Pre Release](https://img.shields.io/myget/ci/vpre/Txt.ABNF.svg?maxAge=2592000?style=plastic)](https://www.myget.org/feed/ci/package/nuget/Txt.ABNF)
-
-Syntax specifications are most commonly defined in a flavor of BNF (Backus-Naur Form).
-
-Txt provides an implementation of ABNF (Augmented BNF) as a separate download.
-
-The ABNF specification defines a set of core grammar rules that are in common use.
+Syntax specifications are most commonly defined in a flavor of BNF (Backus-Naur Form). Txt provides an implementation of ABNF (Augmented BNF). The ABNF specification defines a set of core grammar rules that are in common use.
 
 ```
 ALPHA          =  %x41-5A / %x61-7A   ; A-Z / a-z
@@ -97,78 +84,25 @@ Custom syntax specifications can define rules that build upon these core rules.
 
 ## How to use the code
 
-The solution contains a sample program that reads numbers from console input and calculates their sum.
-The program uses the following grammar:
-
-```
-DIGIT     = "0" / "1" / "2" / "3" / "4"  ; DIGIT is a core ABNF rule
-          / "5" / "6" / "7" / "8" / "9"
-
-SIGN      = "+" / "-"                    ; "+" or "-"
-
-INTEGER   = [ SIGN ] 1*DIGIT             ; An optional sign, followed by 1 or more digits
-```
-
-In English: an `INTEGER` has an optional `SIGN`, followed by at least one `DIGIT`.
-A `SIGN` can be either `"+"` or `"-"`.
-A `DIGIT` can be any decimal digit, and is a core rule.
-
-The `DIGIT` rule is a core rule in namespace `Txt.ABNF.Core`.
-The sample program adds two custom rules:
- - the `SIGN` rule is represented by the `Sign` class
- - the `INTEGER` rule is represented by the `Integer` class
-
-The program uses AutoFac to wire up all dependencies that are required to build a reader object for the `INTEGER` rule.
-
-Feel free to use a different IoC container for your program, or no IoC container at all.
-
-```c#
-private static IContainer BuildContainer()
-{
-    var builder = new ContainerBuilder();
-    builder.RegisterType<TerminalLexerFactory>().As<ITerminalLexerFactory>().SingleInstance();
-    builder.RegisterType<ValueRangeLexerFactory>().As<IValueRangeLexerFactory>().SingleInstance();
-    builder.RegisterType<ConcatenationLexerFactory>().As<IConcatenationLexerFactory>().SingleInstance();
-    builder.RegisterType<RepetitionLexerFactory>().As<IRepetitionLexerFactory>().SingleInstance();
-    builder.RegisterType<AlternationLexerFactory>().As<IAlternationLexerFactory>().SingleInstance();
-    builder.RegisterType<OptionLexerFactory>().As<IOptionLexerFactory>().SingleInstance();
-    builder.RegisterType<SignLexerFactory>().As<ILexerFactory<Sign>>().SingleInstance();
-    builder.RegisterType<DigitLexerFactory>().As<ILexerFactory<Digit>>().SingleInstance();
-    builder.RegisterType<IntegerLexerFactory>().As<ILexerFactory<Integer>>().SingleInstance();
-
-    // With all dependencies wired up, register a delegate that creates a new IntegerLexer
-    builder.Register(
-        ctx =>
-        {
-            var integerLexerFactory = ctx.Resolve<ILexerFactory<Integer>>();
-            return integerLexerFactory.Create();
-        })
-        .As<ILexer<Integer>>()
-        .SingleInstance();
-    return builder.Build();
-}
-```
-
-The final reader object is instantiated by AutoFac.
-
-```c#
-ILexer<Integer> integerLexer;
-using (var container = BuildContainer())
-{
-    integerLexer = container.Resolve<ILexer<Integer>>();
-}
-```
-
-This `integerLexer` object has a `Read()` method that reads integers from a text source. A text source can be any class that implements `ITextSource`.
+Building a parser using Txt begins with defining a text source. A text source can be any class that implements `ITextSource` and `IDisposable`.
 
 Txt includes `ITextSource` implementations for `System.String` or `System.IO.Stream`.
 
-StringTextSource:
+A text source object is passed to a text scanner, which provides methods for reading and matching character data. A text scanner can be any class that implements `ITextScanner` and `IDisposable`.
+
+Txt includes a `TextScanner` class that is intended to fullfill every need.
+
+A text scanner is passed to a lexer, which reads grammar elements from the text source and converts them to `Element` objects. A lexer can be any class that implements `ILexer<T>`.
+
+Txt includes an abstract `Lexer` class that you should derive from.
+
+StringTextSource example:
 ```c#
 string input = "123";
 using (ITextSource textSource = new StringTextSource(input))
 using (ITextScanner textScanner = new TextScanner(textSource))
 {
+    ILexer<Integer> integerLexer = new IntegerLexer(...);
     ReadResult<Integer> readResult = integerLexer.Read(textScanner);
 }
 ```
@@ -179,16 +113,15 @@ using (PushbackInputStream inputStream = new PushbackInputStream(fileStream))
 using (ITextSource textSource = new StreamTextSource(inputStream, Encoding.UTF8))
 using (ITextScanner textScanner = new TextScanner(textSource))
 {
+    ILexer<Integer> integerLexer = new IntegerLexer(...);
     ReadResult<Integer> readResult = integerLexer.Read(textScanner);
 }
 ```
 
+Notes:
+
 The `PushbackInputStream` wrapper class exists to enable support for forward-only streams such as `System.Net.Sockets.NetworkStream`. When seeking is not supported, the `Write(...)` method can be used to write bytes to a pushback buffer. The next time the `Read(...)` method is called, bytes are read from the buffer instead of the underlying stream.
 
-
-```c#
-ReadResult<Integer> readResult = integerLexer.Read(textScanner);
-```
 
 The `ReadResult<>` object contains properties that describe the read operations:
  - `Success` indicates whether the read operation succeeded
