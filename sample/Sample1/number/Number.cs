@@ -8,5 +8,10 @@ namespace Sample1.number
             : base(repetition)
         {
         }
+
+        public int GetValue()
+        {
+            return int.Parse(Text);
+        }
     }
 }
