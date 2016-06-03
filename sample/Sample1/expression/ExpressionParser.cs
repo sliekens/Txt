@@ -4,33 +4,34 @@ using Txt.Core;
 
 namespace Sample1.expression
 {
-    public class ExpressionParser : Parser<Expression, decimal>
+    public class ExpressionParser : Parser<Expression, double>
     {
-        private readonly IParser<Term, decimal> termParser;
+        private readonly IParser<Term, double> termParser;
 
-        public ExpressionParser(IParser<Term, decimal> termParser)
+        public ExpressionParser(IParser<Term, double> termParser)
         {
             this.termParser = termParser;
         }
 
-        protected override decimal ParseImpl(Expression expression)
+        protected override double ParseImpl(Expression expression)
         {
-            var value = termParser.Parse((Term)expression[0]);
+            var left = termParser.Parse((Term)expression[0]);
             var repetition = (Repetition)expression[1];
             foreach (Concatenation concatenation in repetition)
             {
                 var sign = concatenation[0];
                 var term = (Term)concatenation[1];
+                var right = termParser.Parse(term);
                 if (sign.Text == "+")
                 {
-                    value += termParser.Parse(term);
+                    left += right;
                 }
                 else if (sign.Text == "-")
                 {
-                    value -= termParser.Parse(term);
+                    left -= right;
                 }
             }
-            return value;
+            return left;
         }
     }
 }

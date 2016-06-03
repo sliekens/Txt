@@ -5,21 +5,21 @@ using Txt.Core;
 
 namespace Sample1.factor
 {
-    public class FactorParser : Parser<Factor, decimal>
+    public class FactorParser : Parser<Factor, double>
     {
-        private readonly IParser<Expression, decimal> expressionParser;
+        private readonly IParser<Expression, double> expressionParser;
 
         private readonly IParser<Number, int> numberParser;
 
-        public FactorParser(IParser<Number, int> numberParser, IParser<Expression, decimal> expressionParser)
+        public FactorParser(IParser<Number, int> numberParser, IParser<Expression, double> expressionParser)
         {
             this.numberParser = numberParser;
             this.expressionParser = expressionParser;
         }
 
-        protected override decimal ParseImpl(Factor factor)
+        protected override double ParseImpl(Factor factor)
         {
-            decimal value = 0;
+            double value = 0;
             var alt = factor[1] as Alternation;
             if (alt.Ordinal == 1)
             {

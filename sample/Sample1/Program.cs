@@ -65,7 +65,7 @@ namespace Sample1
 
         private static ExpressionParser GetExpressionParser()
         {
-            var expressionParser = new ProxyParser<Expression, decimal>();
+            var expressionParser = new ProxyParser<Expression, double>();
             var parser = new ExpressionParser(new TermParser(new FactorParser(new NumberParser(), expressionParser)));
             expressionParser.Initialize(parser);
             return parser;
