@@ -14,6 +14,8 @@ namespace Sample1
     {
         private static void Main(string[] args)
         {
+            var lexer = GetExpressionLexer();
+            var parser = GetExpressionParser();
             CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
             var foregroundColor = Console.ForegroundColor;
             Console.WriteLine("This sample implements a grammar and parser for simple arithmetic expressions!");
@@ -38,8 +40,6 @@ namespace Sample1
                 {
                     return;
                 }
-
-                var lexer = GetExpressionLexer();
                 using (var stringTextSource = new StringTextSource(expression))
                 using (var textScanner = new TextScanner(stringTextSource))
                 {
@@ -49,18 +49,26 @@ namespace Sample1
                         Console.WriteLine(
                             "{0}={1}",
                             expression,
-                            readResult.Element.GetValue());
+                            parser.Parse(readResult.Element));
                     }
                     else
                     {
                         Console.WriteLine("Invalid input detected");
                         Console.Write(readResult.Text);
                         Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine(readResult.ErrorText);
+                        Console.Write(readResult.ErrorText);
                         Console.ForegroundColor = foregroundColor;
                     }
                 }
             }
+        }
+
+        private static ExpressionParser GetExpressionParser()
+        {
+            var expressionParser = new ProxyParser<Expression, decimal>();
+            var parser = new ExpressionParser(new TermParser(new FactorParser(new NumberParser(), expressionParser)));
+            expressionParser.Initialize(parser);
+            return parser;
         }
 
         private static ILexer<Expression> GetExpressionLexer()
