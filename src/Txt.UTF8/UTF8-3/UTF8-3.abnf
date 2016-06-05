@@ -1,1 +1,0 @@
-UTF8-3 = %xE0 %xA0-BF UTF8-tail / %xE1-EC UTF8-tail UTF8-tail / %xED %x80-9F UTF8-tail / %xEE-EF UTF8-tail UTF8-tail
