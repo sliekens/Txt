@@ -101,6 +101,44 @@ namespace Txt.Core
             return read;
         }
 
+        /// <summary>
+        ///     Advances the scanner's position if the next available character matches the conditions defined by the specified
+        ///     predicate.
+        /// </summary>
+        /// <param name="predicate">The <see cref="Predicate{T}" /> that defines the conditions of the character to match.</param>
+        /// <returns>
+        ///     A value container that contains the next available character and another value indicating whether it matches
+        ///     the conditions defined by the predicate.
+        /// </returns>
+        public MatchResult TryMatch([NotNull] Predicate<char> predicate)
+        {
+            if (predicate == null)
+            {
+                throw new ArgumentNullException(nameof(predicate));
+            }
+            if (disposed)
+            {
+                throw new ObjectDisposedException(nameof(TextScanner));
+            }
+            var head = textSource.Peek();
+            if (head == -1)
+            {
+                endOfInput = true;
+                return new MatchResult(true, false, string.Empty, string.Empty);
+            }
+
+            var next = (char)head;
+            var text = char.ToString(next);
+            if (!predicate(next))
+            {
+                return new MatchResult(false, false, text, string.Empty);
+            }
+
+            textSource.Read();
+            Interlocked.Increment(ref offset);
+            return new MatchResult(false, true, text, text);
+        }
+
         public virtual MatchResult TryMatch(string s)
         {
             return TryMatch(s, StringComparer.Ordinal);

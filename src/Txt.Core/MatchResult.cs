@@ -5,7 +5,7 @@ namespace Txt.Core
 {
     public sealed class MatchResult
     {
-        private MatchResult(bool endOfInput, bool success, [NotNull] string text, [NotNull] string expected)
+        public MatchResult(bool endOfInput, bool success, [NotNull] string text, [NotNull] string expected)
         {
             if (text == null)
             {

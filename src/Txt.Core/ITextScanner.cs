@@ -47,6 +47,17 @@ namespace Txt.Core
         MatchResult TryMatch(char c);
 
         /// <summary>
+        ///     Advances the scanner's position if the next available character matches the conditions defined by the specified
+        ///     predicate.
+        /// </summary>
+        /// <param name="predicate">The <see cref="Predicate{T}" /> that defines the conditions of the character to match.</param>
+        /// <returns>
+        ///     A value container that contains the next available character and another value indicating whether it matches
+        ///     the conditions defined by the predicate.
+        /// </returns>
+        MatchResult TryMatch(Predicate<char> predicate);
+
+        /// <summary>
         ///     Compares the given string to the next available string and advances the scanner's position if there is a
         ///     match. This method performs a case-sensitive ordinal comparison.
         /// </summary>
