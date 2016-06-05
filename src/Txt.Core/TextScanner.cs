@@ -186,7 +186,7 @@ namespace Txt.Core
             {
                 throw new ObjectDisposedException(nameof(TextScanner));
             }
-            var head = textSource.Read();
+            var head = textSource.Peek();
             var expected = char.ToString(c);
             if (head == -1)
             {
@@ -197,9 +197,9 @@ namespace Txt.Core
             var text = char.ToString(next);
             if (c != next)
             {
-                textSource.Unread(next);
                 return MatchResult.FromMismatch(text, expected);
             }
+            textSource.Read();
             Interlocked.Increment(ref offset);
             return MatchResult.FromMatch(text, expected);
         }
