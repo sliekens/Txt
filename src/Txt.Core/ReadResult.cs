@@ -6,7 +6,7 @@ namespace Txt.Core
     public sealed class ReadResult<T>
         where T : Element
     {
-        private ReadResult([NotNull] SyntaxError error)
+        public ReadResult([NotNull] SyntaxError error)
         {
             if (error == null)
             {
@@ -20,7 +20,7 @@ namespace Txt.Core
             Text = error.Text;
         }
 
-        private ReadResult([NotNull] T element)
+        public ReadResult([NotNull] T element)
         {
             if (element == null)
             {
@@ -46,11 +46,13 @@ namespace Txt.Core
         [NotNull]
         public string Text { get; }
 
+        [Obsolete]
         public static ReadResult<T> FromResult([NotNull] T result)
         {
             return new ReadResult<T>(result);
         }
 
+        [Obsolete]
         public static ReadResult<T> FromSyntaxError([NotNull] SyntaxError error)
         {
             return new ReadResult<T>(error);

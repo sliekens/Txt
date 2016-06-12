@@ -35,9 +35,9 @@ namespace Txt.ABNF.Core.HTAB
             var result = innerLexer.Read(scanner);
             if (result.Success)
             {
-                return ReadResult<HorizontalTab>.FromResult(new HorizontalTab(result.Element));
+                return new ReadResult<HorizontalTab>(new HorizontalTab(result.Element));
             }
-            return ReadResult<HorizontalTab>.FromSyntaxError(SyntaxError.FromReadResult(result, context));
+            return new ReadResult<HorizontalTab>(SyntaxError.FromReadResult(result, context));
         }
     }
 }

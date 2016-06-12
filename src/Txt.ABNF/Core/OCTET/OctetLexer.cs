@@ -17,9 +17,9 @@ namespace Txt.ABNF.Core.OCTET
             var read = scanner.Read();
             if (read != -1)
             {
-                return ReadResult<Octet>.FromResult(new Octet(read, context));
+                return new ReadResult<Octet>(new Octet(read, context));
             }
-            return ReadResult<Octet>.FromSyntaxError(new SyntaxError(true, "", "", context));
+            return new ReadResult<Octet>(new SyntaxError(true, "", "", context));
         }
     }
 }

@@ -32,9 +32,9 @@ namespace Txt.ABNF.Core.WSP
             var result = innerLexer.Read(scanner);
             if (result.Success)
             {
-                return ReadResult<WhiteSpace>.FromResult(new WhiteSpace(result.Element));
+                return new ReadResult<WhiteSpace>(new WhiteSpace(result.Element));
             }
-            return ReadResult<WhiteSpace>.FromSyntaxError(SyntaxError.FromReadResult(result, context));
+            return new ReadResult<WhiteSpace>(SyntaxError.FromReadResult(result, context));
         }
     }
 }

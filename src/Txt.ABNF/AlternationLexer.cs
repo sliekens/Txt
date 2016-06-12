@@ -56,7 +56,7 @@ namespace Txt.ABNF
                 if (result.Success)
                 {
                     return
-                        ReadResult<Alternation>.FromResult(new Alternation(result.Text, result.Element, context, i + 1));
+                        new ReadResult<Alternation>(new Alternation(result.Text, result.Element, context, i + 1));
                 }
                 errors.Add(result.Error);
                 if ((partialMatch == null) || (result.Text.Length > partialMatch.Text.Length))
@@ -65,7 +65,7 @@ namespace Txt.ABNF
                 }
             }
             Debug.Assert(partialMatch != null, "partialMatch != null");
-            return ReadResult<Alternation>.FromSyntaxError(partialMatch);
+            return new ReadResult<Alternation>(partialMatch);
         }
     }
 }

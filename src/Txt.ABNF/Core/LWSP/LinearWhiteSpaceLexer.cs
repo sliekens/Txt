@@ -32,9 +32,9 @@ namespace Txt.ABNF.Core.LWSP
             var result = innerLexer.Read(scanner);
             if (result.Success)
             {
-                return ReadResult<LinearWhiteSpace>.FromResult(new LinearWhiteSpace(result.Element));
+                return new ReadResult<LinearWhiteSpace>(new LinearWhiteSpace(result.Element));
             }
-            return ReadResult<LinearWhiteSpace>.FromSyntaxError(SyntaxError.FromReadResult(result, context));
+            return new ReadResult<LinearWhiteSpace>(SyntaxError.FromReadResult(result, context));
         }
     }
 }

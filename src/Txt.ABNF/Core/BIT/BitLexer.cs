@@ -32,9 +32,9 @@ namespace Txt.ABNF.Core.BIT
             var result = innerLexer.Read(scanner);
             if (result.Success)
             {
-                return ReadResult<Bit>.FromResult(new Bit(result.Element));
+                return new ReadResult<Bit>(new Bit(result.Element));
             }
-            return ReadResult<Bit>.FromSyntaxError(SyntaxError.FromReadResult(result, context));
+            return new ReadResult<Bit>(SyntaxError.FromReadResult(result, context));
         }
     }
 }

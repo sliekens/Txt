@@ -35,9 +35,9 @@ namespace Txt.ABNF.Core.ALPHA
             var result = innerLexer.Read(scanner);
             if (result.Success)
             {
-                return ReadResult<Alpha>.FromResult(new Alpha(result.Element));
+                return new ReadResult<Alpha>(new Alpha(result.Element));
             }
-            return ReadResult<Alpha>.FromSyntaxError(SyntaxError.FromReadResult(result, context));
+            return new ReadResult<Alpha>(SyntaxError.FromReadResult(result, context));
         }
     }
 }

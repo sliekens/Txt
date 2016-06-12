@@ -22,9 +22,9 @@ namespace Sample1.number
             var result = innerLexer.Read(scanner);
             if (result.Success)
             {
-                return ReadResult<Number>.FromResult(new Number(result.Element));
+                return new ReadResult<Number>(new Number(result.Element));
             }
-            return ReadResult<Number>.FromSyntaxError(SyntaxError.FromReadResult(result, context));
+            return new ReadResult<Number>(SyntaxError.FromReadResult(result, context));
         }
     }
 }

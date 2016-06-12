@@ -52,16 +52,15 @@ namespace Txt.ABNF
                         scanner.Unread(partialMatch);
                     }
                     return
-                        ReadResult<Concatenation>.FromSyntaxError(
-                            new SyntaxError(
-                                readResult.EndOfInput,
-                                partialMatch,
-                                readResult.ErrorText,
-                                context,
-                                readResult.Error));
+                        new ReadResult<Concatenation>(new SyntaxError(
+                            readResult.EndOfInput,
+                            partialMatch,
+                            readResult.ErrorText,
+                            context,
+                            readResult.Error));
                 }
             }
-            return ReadResult<Concatenation>.FromResult(new Concatenation(stringBuilder.ToString(), elements, context));
+            return new ReadResult<Concatenation>(new Concatenation(stringBuilder.ToString(), elements, context));
         }
     }
 }

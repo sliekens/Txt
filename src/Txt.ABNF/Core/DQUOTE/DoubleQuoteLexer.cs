@@ -35,9 +35,9 @@ namespace Txt.ABNF.Core.DQUOTE
             var result = innerLexer.Read(scanner);
             if (result.Success)
             {
-                return ReadResult<DoubleQuote>.FromResult(new DoubleQuote(result.Element));
+                return new ReadResult<DoubleQuote>(new DoubleQuote(result.Element));
             }
-            return ReadResult<DoubleQuote>.FromSyntaxError(SyntaxError.FromReadResult(result, context));
+            return new ReadResult<DoubleQuote>(SyntaxError.FromReadResult(result, context));
         }
     }
 }

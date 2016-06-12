@@ -38,15 +38,15 @@ namespace Txt.ABNF
                 result = scanner.TryMatch(c);
                 if (result.EndOfInput)
                 {
-                    return ReadResult<Terminal>.FromSyntaxError(SyntaxError.FromMatchResult(result, context));
+                    return new ReadResult<Terminal>(SyntaxError.FromMatchResult(result, context));
                 }
                 if (result.Success)
                 {
-                    return ReadResult<Terminal>.FromResult(new Terminal(result.Text, context));
+                    return new ReadResult<Terminal>(new Terminal(result.Text, context));
                 }
             }
             Debug.Assert(result != null, "result != null");
-            return ReadResult<Terminal>.FromSyntaxError(SyntaxError.FromMatchResult(result, context));
+            return new ReadResult<Terminal>(SyntaxError.FromMatchResult(result, context));
         }
     }
 }

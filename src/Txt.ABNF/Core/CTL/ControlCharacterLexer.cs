@@ -35,9 +35,9 @@ namespace Txt.ABNF.Core.CTL
             var result = innerLexer.Read(scanner);
             if (result.Success)
             {
-                return ReadResult<ControlCharacter>.FromResult(new ControlCharacter(result.Element));
+                return new ReadResult<ControlCharacter>(new ControlCharacter(result.Element));
             }
-            return ReadResult<ControlCharacter>.FromSyntaxError(SyntaxError.FromReadResult(result, context));
+            return new ReadResult<ControlCharacter>(SyntaxError.FromReadResult(result, context));
         }
     }
 }

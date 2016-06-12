@@ -35,9 +35,9 @@ namespace Txt.ABNF.Core.HEXDIG
             var result = innerLexer.Read(scanner);
             if (result.Success)
             {
-                return ReadResult<HexadecimalDigit>.FromResult(new HexadecimalDigit(result.Element));
+                return new ReadResult<HexadecimalDigit>(new HexadecimalDigit(result.Element));
             }
-            return ReadResult<HexadecimalDigit>.FromSyntaxError(SyntaxError.FromReadResult(result, context));
+            return new ReadResult<HexadecimalDigit>(SyntaxError.FromReadResult(result, context));
         }
     }
 }

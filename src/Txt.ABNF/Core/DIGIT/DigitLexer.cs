@@ -35,9 +35,9 @@ namespace Txt.ABNF.Core.DIGIT
             var result = innerLexer.Read(scanner);
             if (result.Success)
             {
-                return ReadResult<Digit>.FromResult(new Digit(result.Element));
+                return new ReadResult<Digit>(new Digit(result.Element));
             }
-            return ReadResult<Digit>.FromSyntaxError(SyntaxError.FromReadResult(result, context));
+            return new ReadResult<Digit>(SyntaxError.FromReadResult(result, context));
         }
     }
 }

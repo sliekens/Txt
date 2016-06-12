@@ -24,8 +24,8 @@ namespace Sample1.term
             var result = innerLexer.Read(scanner);
             if (result.Success)
             {
-                return ReadResult<Term>.FromResult(new Term(result.Element));
+                return new ReadResult<Term>(new Term(result.Element));
             }
-            return ReadResult<Term>.FromSyntaxError(SyntaxError.FromReadResult(result, context));
+            return new ReadResult<Term>(SyntaxError.FromReadResult(result, context));
         }
     }}

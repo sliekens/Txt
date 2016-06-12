@@ -64,8 +64,7 @@ namespace Txt.ABNF
                     if (elements.Count >= lowerBound)
                     {
                         return
-                            ReadResult<Repetition>.FromResult(
-                                new Repetition(stringBuilder.ToString(), elements, context));
+                            new ReadResult<Repetition>(new Repetition(stringBuilder.ToString(), elements, context));
                     }
                     var partialMatch = stringBuilder.ToString();
                     if (partialMatch.Length != 0)
@@ -73,16 +72,15 @@ namespace Txt.ABNF
                         scanner.Unread(partialMatch);
                     }
                     return
-                        ReadResult<Repetition>.FromSyntaxError(
-                            new SyntaxError(
-                                readResult.EndOfInput,
-                                partialMatch,
-                                readResult.ErrorText,
-                                context,
-                                readResult.Error));
+                        new ReadResult<Repetition>(new SyntaxError(
+                            readResult.EndOfInput,
+                            partialMatch,
+                            readResult.ErrorText,
+                            context,
+                            readResult.Error));
                 }
             }
-            return ReadResult<Repetition>.FromResult(new Repetition(stringBuilder.ToString(), elements, context));
+            return new ReadResult<Repetition>(new Repetition(stringBuilder.ToString(), elements, context));
         }
     }
 }

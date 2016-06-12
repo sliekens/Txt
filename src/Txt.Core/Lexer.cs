@@ -76,9 +76,9 @@ namespace Txt.Core
             var result = Read(scanner);
             if (result.Success)
             {
-                return ReadResult<Element>.FromResult(result.Element);
+                return new ReadResult<Element>(result.Element);
             }
-            return ReadResult<Element>.FromSyntaxError(result.Error);
+            return new ReadResult<Element>(result.Error);
         }
 
         /// <summary>

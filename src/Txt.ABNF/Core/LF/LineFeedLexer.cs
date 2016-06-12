@@ -35,9 +35,9 @@ namespace Txt.ABNF.Core.LF
             var result = innerLexer.Read(scanner);
             if (result.Success)
             {
-                return ReadResult<LineFeed>.FromResult(new LineFeed(result.Element));
+                return new ReadResult<LineFeed>(new LineFeed(result.Element));
             }
-            return ReadResult<LineFeed>.FromSyntaxError(SyntaxError.FromReadResult(result, context));
+            return new ReadResult<LineFeed>(SyntaxError.FromReadResult(result, context));
         }
     }
 }

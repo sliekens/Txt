@@ -23,8 +23,8 @@ namespace Sample1.expression
             var result = innerLexer.Read(scanner);
             if (result.Success)
             {
-                return ReadResult<Expression>.FromResult(new Expression(result.Element));
+                return new ReadResult<Expression>(new Expression(result.Element));
             }
-            return ReadResult<Expression>.FromSyntaxError(SyntaxError.FromReadResult(result, context));
+            return new ReadResult<Expression>(SyntaxError.FromReadResult(result, context));
         }
     }}

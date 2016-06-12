@@ -36,9 +36,9 @@ namespace Txt.ABNF
             var result = scanner.TryMatch(terminal, comparer);
             if (result.Success)
             {
-                return ReadResult<Terminal>.FromResult(new Terminal(result.Text, context));
+                return new ReadResult<Terminal>(new Terminal(result.Text, context));
             }
-            return ReadResult<Terminal>.FromSyntaxError(SyntaxError.FromMatchResult(result, context));
+            return new ReadResult<Terminal>(SyntaxError.FromMatchResult(result, context));
         }
     }
 }

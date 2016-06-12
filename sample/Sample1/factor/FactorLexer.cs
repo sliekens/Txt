@@ -23,9 +23,9 @@ namespace Sample1.factor
             var result = innerLexer.Read(scanner);
             if (result.Success)
             {
-                return ReadResult<Factor>.FromResult(new Factor(result.Element));
+                return new ReadResult<Factor>(new Factor(result.Element));
             }
-            return ReadResult<Factor>.FromSyntaxError(SyntaxError.FromReadResult(result, context));
+            return new ReadResult<Factor>(SyntaxError.FromReadResult(result, context));
         }
     }
 }

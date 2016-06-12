@@ -75,13 +75,12 @@ namespace Txt.ABNF
             if (bestCandidate == null)
             {
                 Debug.Assert(partialMatch != null, "partialMatch != null");
-                return ReadResult<Alternation>.FromSyntaxError(partialMatch);
+                return new ReadResult<Alternation>(partialMatch);
             }
             var readResult = bestCandidate.ReadElement(scanner);
             Debug.Assert(readResult.Success, "readResult.Success");
             return
-                ReadResult<Alternation>.FromResult(
-                    new Alternation(readResult.Text, readResult.Element, context, ordinal));
+                new ReadResult<Alternation>(new Alternation(readResult.Text, readResult.Element, context, ordinal));
         }
     }
 }
