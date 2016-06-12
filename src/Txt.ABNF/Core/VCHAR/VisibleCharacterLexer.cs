@@ -30,19 +30,14 @@ namespace Txt.ABNF.Core.VCHAR
             this.innerLexer = innerLexer;
         }
 
-        public override ReadResult<VisibleCharacter> ReadImpl(ITextScanner scanner)
+        protected override ReadResult<VisibleCharacter> ReadImpl(ITextScanner scanner, ITextContext context)
         {
-            if (scanner == null)
-            {
-                throw new ArgumentNullException(nameof(scanner));
-            }
             var result = innerLexer.Read(scanner);
             if (result.Success)
             {
                 return ReadResult<VisibleCharacter>.FromResult(new VisibleCharacter(result.Element));
             }
-            return ReadResult<VisibleCharacter>.FromSyntaxError(
-                SyntaxError.FromReadResult(result, scanner.GetContext()));
+            return ReadResult<VisibleCharacter>.FromSyntaxError(SyntaxError.FromReadResult(result, context));
         }
     }
 }

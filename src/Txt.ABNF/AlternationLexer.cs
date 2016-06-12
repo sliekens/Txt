@@ -41,15 +41,11 @@ namespace Txt.ABNF
         /// <summary>
         /// </summary>
         /// <param name="scanner"></param>
+        /// <param name="context"></param>
         /// <exception cref="ArgumentNullException"></exception>
         /// <returns></returns>
-        public override ReadResult<Alternation> ReadImpl(ITextScanner scanner)
+        protected override ReadResult<Alternation> ReadImpl(ITextScanner scanner, ITextContext context)
         {
-            if (scanner == null)
-            {
-                throw new ArgumentNullException(nameof(scanner));
-            }
-            var context = scanner.GetContext();
             IList<SyntaxError> errors = new List<SyntaxError>(lexers.Length);
             SyntaxError partialMatch = null;
 

@@ -30,18 +30,14 @@ namespace Txt.ABNF.Core.DQUOTE
             this.innerLexer = innerLexer;
         }
 
-        public override ReadResult<DoubleQuote> ReadImpl(ITextScanner scanner)
+        protected override ReadResult<DoubleQuote> ReadImpl(ITextScanner scanner, ITextContext context)
         {
-            if (scanner == null)
-            {
-                throw new ArgumentNullException(nameof(scanner));
-            }
             var result = innerLexer.Read(scanner);
             if (result.Success)
             {
                 return ReadResult<DoubleQuote>.FromResult(new DoubleQuote(result.Element));
             }
-            return ReadResult<DoubleQuote>.FromSyntaxError(SyntaxError.FromReadResult(result, scanner.GetContext()));
+            return ReadResult<DoubleQuote>.FromSyntaxError(SyntaxError.FromReadResult(result, context));
         }
     }
 }

@@ -17,6 +17,7 @@ namespace Txt.Core
         ///     A value container that contains the next available element, or a <c>null</c> reference, depending on whether
         ///     the return value indicates success.
         /// </returns>
+        [NotNull]
         ReadResult<Element> ReadElement([NotNull] ITextScanner scanner);
     }
 }

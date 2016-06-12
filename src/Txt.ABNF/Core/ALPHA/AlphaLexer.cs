@@ -30,13 +30,8 @@ namespace Txt.ABNF.Core.ALPHA
             this.innerLexer = innerLexer;
         }
 
-        public override ReadResult<Alpha> ReadImpl(ITextScanner scanner)
+        protected override ReadResult<Alpha> ReadImpl(ITextScanner scanner, ITextContext context)
         {
-            if (scanner == null)
-            {
-                throw new ArgumentNullException(nameof(scanner));
-            }
-            var context = scanner.GetContext();
             var result = innerLexer.Read(scanner);
             if (result.Success)
             {

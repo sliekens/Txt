@@ -18,18 +18,14 @@ namespace Sample1.factor
             this.innerLexer = innerLexer;
         }
 
-        public override ReadResult<Factor> ReadImpl(ITextScanner scanner)
+        protected override ReadResult<Factor> ReadImpl(ITextScanner scanner, ITextContext context)
         {
-            if (scanner == null)
-            {
-                throw new ArgumentNullException(nameof(scanner));
-            }
             var result = innerLexer.Read(scanner);
             if (result.Success)
             {
                 return ReadResult<Factor>.FromResult(new Factor(result.Element));
             }
-            return ReadResult<Factor>.FromSyntaxError(SyntaxError.FromReadResult(result, scanner.GetContext()));
+            return ReadResult<Factor>.FromSyntaxError(SyntaxError.FromReadResult(result, context));
         }
     }
 }

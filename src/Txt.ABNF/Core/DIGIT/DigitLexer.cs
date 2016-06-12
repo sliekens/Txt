@@ -30,18 +30,14 @@ namespace Txt.ABNF.Core.DIGIT
             this.innerLexer = innerLexer;
         }
 
-        public override ReadResult<Digit> ReadImpl(ITextScanner scanner)
+        protected override ReadResult<Digit> ReadImpl(ITextScanner scanner, ITextContext context)
         {
-            if (scanner == null)
-            {
-                throw new ArgumentNullException(nameof(scanner));
-            }
             var result = innerLexer.Read(scanner);
             if (result.Success)
             {
                 return ReadResult<Digit>.FromResult(new Digit(result.Element));
             }
-            return ReadResult<Digit>.FromSyntaxError(SyntaxError.FromReadResult(result, scanner.GetContext()));
+            return ReadResult<Digit>.FromSyntaxError(SyntaxError.FromReadResult(result, context));
         }
     }
 }

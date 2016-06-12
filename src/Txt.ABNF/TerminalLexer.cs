@@ -31,13 +31,8 @@ namespace Txt.ABNF
             this.comparer = comparer;
         }
 
-        public override ReadResult<Terminal> ReadImpl(ITextScanner scanner)
+        protected override ReadResult<Terminal> ReadImpl(ITextScanner scanner, ITextContext context)
         {
-            if (scanner == null)
-            {
-                throw new ArgumentNullException(nameof(scanner));
-            }
-            var context = scanner.GetContext();
             var result = scanner.TryMatch(terminal, comparer);
             if (result.Success)
             {

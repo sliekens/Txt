@@ -6,20 +6,14 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
 using Txt.Core;
 
 namespace Txt.ABNF.Core.OCTET
 {
     public class OctetLexer : Lexer<Octet>
     {
-        public override ReadResult<Octet> ReadImpl(ITextScanner scanner)
+        protected override ReadResult<Octet> ReadImpl(ITextScanner scanner, ITextContext context)
         {
-            if (scanner == null)
-            {
-                throw new ArgumentNullException(nameof(scanner));
-            }
-            var context = scanner.GetContext();
             var read = scanner.Read();
             if (read != -1)
             {

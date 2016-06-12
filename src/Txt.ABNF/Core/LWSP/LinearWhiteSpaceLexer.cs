@@ -27,19 +27,14 @@ namespace Txt.ABNF.Core.LWSP
             this.innerLexer = innerLexer;
         }
 
-        public override ReadResult<LinearWhiteSpace> ReadImpl(ITextScanner scanner)
+        protected override ReadResult<LinearWhiteSpace> ReadImpl(ITextScanner scanner, ITextContext context)
         {
-            if (scanner == null)
-            {
-                throw new ArgumentNullException(nameof(scanner));
-            }
             var result = innerLexer.Read(scanner);
             if (result.Success)
             {
                 return ReadResult<LinearWhiteSpace>.FromResult(new LinearWhiteSpace(result.Element));
             }
-            return ReadResult<LinearWhiteSpace>.FromSyntaxError(
-                SyntaxError.FromReadResult(result, scanner.GetContext()));
+            return ReadResult<LinearWhiteSpace>.FromSyntaxError(SyntaxError.FromReadResult(result, context));
         }
     }
 }

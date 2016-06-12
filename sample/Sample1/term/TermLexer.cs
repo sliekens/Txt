@@ -19,17 +19,13 @@ namespace Sample1.term
             this.innerLexer = innerLexer;
         }
 
-        public override ReadResult<Term> ReadImpl(ITextScanner scanner)
+        protected override ReadResult<Term> ReadImpl(ITextScanner scanner, ITextContext context)
         {
-            if (scanner == null)
-            {
-                throw new ArgumentNullException(nameof(scanner));
-            }
             var result = innerLexer.Read(scanner);
             if (result.Success)
             {
                 return ReadResult<Term>.FromResult(new Term(result.Element));
             }
-            return ReadResult<Term>.FromSyntaxError(SyntaxError.FromReadResult(result, scanner.GetContext()));
+            return ReadResult<Term>.FromSyntaxError(SyntaxError.FromReadResult(result, context));
         }
     }}

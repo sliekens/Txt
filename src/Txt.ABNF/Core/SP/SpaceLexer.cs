@@ -30,18 +30,14 @@ namespace Txt.ABNF.Core.SP
             this.innerLexer = innerLexer;
         }
 
-        public override ReadResult<Space> ReadImpl(ITextScanner scanner)
+        protected override ReadResult<Space> ReadImpl(ITextScanner scanner, ITextContext context)
         {
-            if (scanner == null)
-            {
-                throw new ArgumentNullException(nameof(scanner));
-            }
             var result = innerLexer.Read(scanner);
             if (result.Success)
             {
                 return ReadResult<Space>.FromResult(new Space(result.Element));
             }
-            return ReadResult<Space>.FromSyntaxError(SyntaxError.FromReadResult(result, scanner.GetContext()));
+            return ReadResult<Space>.FromSyntaxError(SyntaxError.FromReadResult(result, context));
         }
     }
 }

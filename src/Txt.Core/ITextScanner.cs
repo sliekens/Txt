@@ -28,6 +28,7 @@ namespace Txt.Core
         ///     The return value MUST be immutable. You MUST NOT return 'this' from this method, because '(ITextContext)this' is
         ///     not immutable.
         /// </remarks>
+        [NotNull]
         ITextContext GetContext();
 
         int Peek();

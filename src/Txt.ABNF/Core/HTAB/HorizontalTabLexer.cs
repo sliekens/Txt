@@ -30,18 +30,14 @@ namespace Txt.ABNF.Core.HTAB
             this.innerLexer = innerLexer;
         }
 
-        public override ReadResult<HorizontalTab> ReadImpl(ITextScanner scanner)
+        protected override ReadResult<HorizontalTab> ReadImpl(ITextScanner scanner, ITextContext context)
         {
-            if (scanner == null)
-            {
-                throw new ArgumentNullException(nameof(scanner));
-            }
             var result = innerLexer.Read(scanner);
             if (result.Success)
             {
                 return ReadResult<HorizontalTab>.FromResult(new HorizontalTab(result.Element));
             }
-            return ReadResult<HorizontalTab>.FromSyntaxError(SyntaxError.FromReadResult(result, scanner.GetContext()));
+            return ReadResult<HorizontalTab>.FromSyntaxError(SyntaxError.FromReadResult(result, context));
         }
     }
 }

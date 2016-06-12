@@ -18,17 +18,13 @@ namespace Sample1.expression
             this.innerLexer = innerLexer;
         }
 
-        public override ReadResult<Expression> ReadImpl(ITextScanner scanner)
+        protected override ReadResult<Expression> ReadImpl(ITextScanner scanner, ITextContext context)
         {
-            if (scanner == null)
-            {
-                throw new ArgumentNullException(nameof(scanner));
-            }
             var result = innerLexer.Read(scanner);
             if (result.Success)
             {
                 return ReadResult<Expression>.FromResult(new Expression(result.Element));
             }
-            return ReadResult<Expression>.FromSyntaxError(SyntaxError.FromReadResult(result, scanner.GetContext()));
+            return ReadResult<Expression>.FromSyntaxError(SyntaxError.FromReadResult(result, context));
         }
     }}

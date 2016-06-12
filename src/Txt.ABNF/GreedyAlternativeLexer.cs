@@ -35,13 +35,8 @@ namespace Txt.ABNF
             this.lexers = lexers;
         }
 
-        public override ReadResult<Alternation> ReadImpl(ITextScanner scanner)
+        protected override ReadResult<Alternation> ReadImpl(ITextScanner scanner, ITextContext context)
         {
-            if (scanner == null)
-            {
-                throw new ArgumentNullException(nameof(scanner));
-            }
-            var context = scanner.GetContext();
             ILexer bestCandidate = null;
             var bestCandidateLength = -1;
             var ordinal = 0;

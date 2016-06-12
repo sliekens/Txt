@@ -30,19 +30,14 @@ namespace Txt.ABNF.Core.HEXDIG
             this.innerLexer = innerLexer;
         }
 
-        public override ReadResult<HexadecimalDigit> ReadImpl(ITextScanner scanner)
+        protected override ReadResult<HexadecimalDigit> ReadImpl(ITextScanner scanner, ITextContext context)
         {
-            if (scanner == null)
-            {
-                throw new ArgumentNullException(nameof(scanner));
-            }
             var result = innerLexer.Read(scanner);
             if (result.Success)
             {
                 return ReadResult<HexadecimalDigit>.FromResult(new HexadecimalDigit(result.Element));
             }
-            return ReadResult<HexadecimalDigit>.FromSyntaxError(
-                SyntaxError.FromReadResult(result, scanner.GetContext()));
+            return ReadResult<HexadecimalDigit>.FromSyntaxError(SyntaxError.FromReadResult(result, context));
         }
     }
 }

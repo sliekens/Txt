@@ -27,18 +27,14 @@ namespace Txt.ABNF.Core.BIT
             this.innerLexer = innerLexer;
         }
 
-        public override ReadResult<Bit> ReadImpl(ITextScanner scanner)
+        protected override ReadResult<Bit> ReadImpl(ITextScanner scanner, ITextContext context)
         {
-            if (scanner == null)
-            {
-                throw new ArgumentNullException(nameof(scanner));
-            }
             var result = innerLexer.Read(scanner);
             if (result.Success)
             {
                 return ReadResult<Bit>.FromResult(new Bit(result.Element));
             }
-            return ReadResult<Bit>.FromSyntaxError(SyntaxError.FromReadResult(result, scanner.GetContext()));
+            return ReadResult<Bit>.FromSyntaxError(SyntaxError.FromReadResult(result, context));
         }
     }
 }

@@ -27,13 +27,8 @@ namespace Txt.ABNF
             this.valueRange = valueRange;
         }
 
-        public override ReadResult<Terminal> ReadImpl(ITextScanner scanner)
+        protected override ReadResult<Terminal> ReadImpl(ITextScanner scanner, ITextContext context)
         {
-            if (scanner == null)
-            {
-                throw new ArgumentNullException(nameof(scanner));
-            }
-            var context = scanner.GetContext();
             MatchResult result = null;
 
             // ReSharper disable once ForCanBeConvertedToForeach

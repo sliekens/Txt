@@ -29,8 +29,6 @@ namespace Txt.Core
     public abstract class Lexer<TElement> : ILexer<TElement>
         where TElement : Element
     {
-        public abstract ReadResult<TElement> ReadImpl([NotNull] ITextScanner scanner);
-
         /// <summary>Attempts to read the next element. A return value indicates whether the element was available.</summary>
         /// <param name="scanner">
         ///     The scanner object that provides text symbols as well as contextual information about the text
@@ -44,17 +42,51 @@ namespace Txt.Core
         /// </returns>
         public ReadResult<TElement> Read(ITextScanner scanner)
         {
-            return ReadImpl(scanner);
+            if (scanner == null)
+            {
+                throw new ArgumentNullException(nameof(scanner));
+            }
+            var context = scanner.GetContext();
+            var result = ReadImpl(scanner, context);
+            if (result == null)
+            {
+                throw new InvalidOperationException($"{GetType()}.ReadImpl(ITextScanner, ITextContext) returned null.");
+            }
+            if (result.Success)
+            {
+                if (scanner.Offset != context.Offset + result.Text.Length)
+                {
+                    // TODO: provide better error message
+                    throw new InvalidOperationException("Offset mismatch");
+                }
+            }
+            else
+            {
+                if (scanner.Offset != context.Offset)
+                {
+                    // TODO: provide better error message
+                    throw new InvalidOperationException("Offset mismatch");
+                }
+            }
+            return result;
         }
 
         ReadResult<Element> ILexer.ReadElement(ITextScanner scanner)
         {
-            var result = ReadImpl(scanner);
+            var result = Read(scanner);
             if (result.Success)
             {
                 return ReadResult<Element>.FromResult(result.Element);
             }
             return ReadResult<Element>.FromSyntaxError(result.Error);
         }
+
+        /// <summary>
+        /// Provides the implementation of the lexer rule. Notes to implementers: the return value indiocates whether the element was available.
+        /// </summary>
+        /// <param name="scanner"></param>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        protected abstract ReadResult<TElement> ReadImpl([NotNull] ITextScanner scanner, [NotNull] ITextContext context);
     }
 }

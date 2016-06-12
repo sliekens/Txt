@@ -30,13 +30,8 @@ namespace Txt.ABNF
             this.lexers = lexers;
         }
 
-        public override ReadResult<Concatenation> ReadImpl(ITextScanner scanner)
+        protected override ReadResult<Concatenation> ReadImpl(ITextScanner scanner, ITextContext context)
         {
-            if (scanner == null)
-            {
-                throw new ArgumentNullException(nameof(scanner));
-            }
-            var context = scanner.GetContext();
             var stringBuilder = new StringBuilder();
             IList<Element> elements = new List<Element>(lexers.Count);
 

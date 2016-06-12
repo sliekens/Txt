@@ -17,18 +17,14 @@ namespace Sample1.number
             this.innerLexer = innerLexer;
         }
 
-        public override ReadResult<Number> ReadImpl(ITextScanner scanner)
+        protected override ReadResult<Number> ReadImpl(ITextScanner scanner, ITextContext context)
         {
-            if (scanner == null)
-            {
-                throw new ArgumentNullException(nameof(scanner));
-            }
             var result = innerLexer.Read(scanner);
             if (result.Success)
             {
                 return ReadResult<Number>.FromResult(new Number(result.Element));
             }
-            return ReadResult<Number>.FromSyntaxError(SyntaxError.FromReadResult(result, scanner.GetContext()));
+            return ReadResult<Number>.FromSyntaxError(SyntaxError.FromReadResult(result, context));
         }
     }
 }
