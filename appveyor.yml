@@ -15,7 +15,6 @@ build_script:
 - dotnet build **\project.json -c %CONFIGURATION%
 - dotnet pack -c %CONFIGURATION% --no-build --version-suffix %LABEL% -o artifacts .\src\Txt.Core\project.json
 - dotnet pack -c %CONFIGURATION% --no-build --version-suffix %LABEL% -o artifacts .\src\Txt.ABNF\project.json
-- dotnet pack -c %CONFIGURATION% --no-build --version-suffix %LABEL% -o artifacts .\src\Txt.UTF8\project.json
 - dotnet pack -c %CONFIGURATION% --no-build --version-suffix %LABEL% -o artifacts .\src\Txt\project.json
 test_script:
 - dotnet test .\test\Txt.Core.Tests
