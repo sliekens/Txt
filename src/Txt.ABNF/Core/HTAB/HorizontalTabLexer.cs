@@ -6,38 +6,16 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
-using System.Diagnostics;
 using JetBrains.Annotations;
 using Txt.Core;
 
 namespace Txt.ABNF.Core.HTAB
 {
-    public class HorizontalTabLexer : Lexer<HorizontalTab>
+    public class HorizontalTabLexer : CompositeLexer<Terminal, HorizontalTab>
     {
-        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly ILexer<Terminal> innerLexer;
-
-        /// <summary>
-        /// </summary>
-        /// <param name="innerLexer">%x09</param>
         public HorizontalTabLexer([NotNull] ILexer<Terminal> innerLexer)
+            : base(innerLexer)
         {
-            if (innerLexer == null)
-            {
-                throw new ArgumentNullException(nameof(innerLexer));
-            }
-            this.innerLexer = innerLexer;
-        }
-
-        protected override ReadResult<HorizontalTab> ReadImpl(ITextScanner scanner, ITextContext context)
-        {
-            var result = innerLexer.Read(scanner);
-            if (result.Success)
-            {
-                return new ReadResult<HorizontalTab>(new HorizontalTab(result.Element));
-            }
-            return new ReadResult<HorizontalTab>(SyntaxError.FromReadResult(result, context));
         }
     }
 }

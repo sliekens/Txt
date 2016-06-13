@@ -6,38 +6,16 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
-using System.Diagnostics;
 using JetBrains.Annotations;
 using Txt.Core;
 
 namespace Txt.ABNF.Core.DQUOTE
 {
-    public class DoubleQuoteLexer : Lexer<DoubleQuote>
+    public class DoubleQuoteLexer : CompositeLexer<Terminal, DoubleQuote>
     {
-        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly ILexer<Terminal> innerLexer;
-
-        /// <summary>
-        /// </summary>
-        /// <param name="innerLexer">%x22</param>
         public DoubleQuoteLexer([NotNull] ILexer<Terminal> innerLexer)
+            : base(innerLexer)
         {
-            if (innerLexer == null)
-            {
-                throw new ArgumentNullException(nameof(innerLexer));
-            }
-            this.innerLexer = innerLexer;
-        }
-
-        protected override ReadResult<DoubleQuote> ReadImpl(ITextScanner scanner, ITextContext context)
-        {
-            var result = innerLexer.Read(scanner);
-            if (result.Success)
-            {
-                return new ReadResult<DoubleQuote>(new DoubleQuote(result.Element));
-            }
-            return new ReadResult<DoubleQuote>(SyntaxError.FromReadResult(result, context));
         }
     }
 }

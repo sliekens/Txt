@@ -6,35 +6,16 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
-using System.Diagnostics;
 using JetBrains.Annotations;
 using Txt.Core;
 
 namespace Txt.ABNF.Core.BIT
 {
-    public class BitLexer : Lexer<Bit>
+    public class BitLexer : CompositeLexer<Alternation, Bit>
     {
-        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly ILexer<Alternation> innerLexer;
-
         public BitLexer([NotNull] ILexer<Alternation> innerLexer)
+            : base(innerLexer)
         {
-            if (innerLexer == null)
-            {
-                throw new ArgumentNullException(nameof(innerLexer));
-            }
-            this.innerLexer = innerLexer;
-        }
-
-        protected override ReadResult<Bit> ReadImpl(ITextScanner scanner, ITextContext context)
-        {
-            var result = innerLexer.Read(scanner);
-            if (result.Success)
-            {
-                return new ReadResult<Bit>(new Bit(result.Element));
-            }
-            return new ReadResult<Bit>(SyntaxError.FromReadResult(result, context));
         }
     }
 }

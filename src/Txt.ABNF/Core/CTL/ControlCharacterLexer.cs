@@ -6,38 +6,16 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
-using System.Diagnostics;
 using JetBrains.Annotations;
 using Txt.Core;
 
 namespace Txt.ABNF.Core.CTL
 {
-    public class ControlCharacterLexer : Lexer<ControlCharacter>
+    public class ControlCharacterLexer : CompositeLexer<Alternation, ControlCharacter>
     {
-        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly ILexer<Alternation> innerLexer;
-
-        /// <summary>
-        /// </summary>
-        /// <param name="innerLexer">%x00-1F / %x7F</param>
         public ControlCharacterLexer([NotNull] ILexer<Alternation> innerLexer)
+            : base(innerLexer)
         {
-            if (innerLexer == null)
-            {
-                throw new ArgumentNullException(nameof(innerLexer));
-            }
-            this.innerLexer = innerLexer;
-        }
-
-        protected override ReadResult<ControlCharacter> ReadImpl(ITextScanner scanner, ITextContext context)
-        {
-            var result = innerLexer.Read(scanner);
-            if (result.Success)
-            {
-                return new ReadResult<ControlCharacter>(new ControlCharacter(result.Element));
-            }
-            return new ReadResult<ControlCharacter>(SyntaxError.FromReadResult(result, context));
         }
     }
 }

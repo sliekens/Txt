@@ -6,35 +6,16 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
-using System.Diagnostics;
 using JetBrains.Annotations;
 using Txt.Core;
 
 namespace Txt.ABNF.Core.LWSP
 {
-    public class LinearWhiteSpaceLexer : Lexer<LinearWhiteSpace>
+    public class LinearWhiteSpaceLexer : CompositeLexer<Repetition, LinearWhiteSpace>
     {
-        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly ILexer<Repetition> innerLexer;
-
         public LinearWhiteSpaceLexer([NotNull] ILexer<Repetition> innerLexer)
+            : base(innerLexer)
         {
-            if (innerLexer == null)
-            {
-                throw new ArgumentNullException(nameof(innerLexer));
-            }
-            this.innerLexer = innerLexer;
-        }
-
-        protected override ReadResult<LinearWhiteSpace> ReadImpl(ITextScanner scanner, ITextContext context)
-        {
-            var result = innerLexer.Read(scanner);
-            if (result.Success)
-            {
-                return new ReadResult<LinearWhiteSpace>(new LinearWhiteSpace(result.Element));
-            }
-            return new ReadResult<LinearWhiteSpace>(SyntaxError.FromReadResult(result, context));
         }
     }
 }
