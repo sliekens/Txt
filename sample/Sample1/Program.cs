@@ -48,7 +48,7 @@ namespace Sample1
                     {
                         Console.WriteLine(
                             "{0}={1}",
-                            expression,
+                            readResult.Text,
                             parser.Parse(readResult.Element));
                     }
                     else
