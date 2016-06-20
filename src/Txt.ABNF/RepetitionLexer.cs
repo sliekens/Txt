@@ -11,7 +11,7 @@ namespace Txt.ABNF
     public class RepetitionLexer : Lexer<Repetition>
     {
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly ILexer lexer;
+        private readonly ILexer<Element> lexer;
 
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly int lowerBound;
@@ -26,7 +26,7 @@ namespace Txt.ABNF
         /// <param name="lexer">The lexer for the repeating element.</param>
         /// <param name="lowerBound">A number that indicates the minimum number of occurrences (inclusive).</param>
         /// <param name="upperBound">A number that indicates the maximum number of occurrences (inclusive).</param>
-        public RepetitionLexer([NotNull] ILexer lexer, int lowerBound, int upperBound)
+        public RepetitionLexer([NotNull] ILexer<Element> lexer, int lowerBound, int upperBound)
         {
             if (lexer == null)
             {
@@ -45,7 +45,7 @@ namespace Txt.ABNF
             this.upperBound = upperBound;
         }
 
-        protected override ReadResult<Repetition> ReadImpl(ITextScanner scanner, ITextContext context)
+        protected override IReadResult<Repetition> ReadImpl(ITextScanner scanner, ITextContext context)
         {
             var stringBuilder = new StringBuilder();
             IList<Element> elements = new List<Element>(lowerBound);
@@ -53,7 +53,7 @@ namespace Txt.ABNF
             // ReSharper disable once ForCanBeConvertedToForeach
             for (var i = 0; i < upperBound; i++)
             {
-                var readResult = lexer.ReadElement(scanner);
+                var readResult = lexer.Read(scanner);
                 if (readResult.Success)
                 {
                     elements.Add(readResult.Element);

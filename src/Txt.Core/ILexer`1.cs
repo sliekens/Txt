@@ -14,7 +14,7 @@ namespace Txt.Core
 {
     /// <summary>Provides the interface for types that process the lexical syntax of a language.</summary>
     /// <typeparam name="TElement">The type of the element that represents the lexer rule.</typeparam>
-    public interface ILexer<TElement> : ILexer
+    public interface ILexer<out TElement>
         where TElement : Element
     {
         /// <summary>Attempts to read the next element. A return value indicates whether the element was available.</summary>
@@ -29,6 +29,6 @@ namespace Txt.Core
         ///     the return value indicates success.
         /// </returns>
         [NotNull]
-        ReadResult<TElement> Read([NotNull] ITextScanner scanner);
+        IReadResult<TElement> Read([NotNull] ITextScanner scanner);
     }
 }

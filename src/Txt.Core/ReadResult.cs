@@ -3,7 +3,7 @@ using JetBrains.Annotations;
 
 namespace Txt.Core
 {
-    public sealed class ReadResult<T>
+    public sealed class ReadResult<T> : IReadResult<T>
         where T : Element
     {
         public ReadResult([NotNull] SyntaxError error)

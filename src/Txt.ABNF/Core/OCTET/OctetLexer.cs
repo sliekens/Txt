@@ -12,7 +12,7 @@ namespace Txt.ABNF.Core.OCTET
 {
     public class OctetLexer : Lexer<Octet>
     {
-        protected override ReadResult<Octet> ReadImpl(ITextScanner scanner, ITextContext context)
+        protected override IReadResult<Octet> ReadImpl(ITextScanner scanner, ITextContext context)
         {
             var read = scanner.Read();
             if (read != -1)

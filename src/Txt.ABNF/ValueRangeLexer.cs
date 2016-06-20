@@ -27,7 +27,7 @@ namespace Txt.ABNF
             this.valueRange = valueRange;
         }
 
-        protected override ReadResult<Terminal> ReadImpl(ITextScanner scanner, ITextContext context)
+        protected override IReadResult<Terminal> ReadImpl(ITextScanner scanner, ITextContext context)
         {
             MatchResult result = null;
 

@@ -13,6 +13,6 @@ namespace Txt.ABNF
         /// </summary>
         /// <param name="lexers">A collection of lexers, one for each alternative element.</param>
         /// <returns>An instance of a class that implements <see cref="ILexer{TElement}" /> for the given alternatives.</returns>
-        ILexer<Alternation> Create([NotNull] [ItemNotNull] params ILexer[] lexers);
+        ILexer<Alternation> Create([NotNull] [ItemNotNull] params ILexer<Element>[] lexers);
     }
 }

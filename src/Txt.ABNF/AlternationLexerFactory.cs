@@ -8,7 +8,7 @@ namespace Txt.ABNF
     public class AlternationLexerFactory : IAlternationLexerFactory
     {
         /// <inheritdoc />
-        public ILexer<Alternation> Create([ItemNotNull] params ILexer[] lexers)
+        public ILexer<Alternation> Create([ItemNotNull] params ILexer<Element>[] lexers)
         {
             if (lexers == null)
             {

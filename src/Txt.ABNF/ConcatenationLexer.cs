@@ -11,9 +11,9 @@ namespace Txt.ABNF
     public class ConcatenationLexer : Lexer<Concatenation>
     {
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly IList<ILexer> lexers;
+        private readonly IList<ILexer<Element>> lexers;
 
-        public ConcatenationLexer([NotNull] [ItemNotNull] params ILexer[] lexers)
+        public ConcatenationLexer([NotNull] [ItemNotNull] params ILexer<Element>[] lexers)
         {
             if (lexers == null)
             {
@@ -30,7 +30,7 @@ namespace Txt.ABNF
             this.lexers = lexers;
         }
 
-        protected override ReadResult<Concatenation> ReadImpl(ITextScanner scanner, ITextContext context)
+        protected override IReadResult<Concatenation> ReadImpl(ITextScanner scanner, ITextContext context)
         {
             var stringBuilder = new StringBuilder();
             IList<Element> elements = new List<Element>(lexers.Count);
@@ -38,7 +38,7 @@ namespace Txt.ABNF
             // ReSharper disable once ForCanBeConvertedToForeach
             for (var i = 0; i < lexers.Count; i++)
             {
-                var readResult = lexers[i].ReadElement(scanner);
+                var readResult = lexers[i].Read(scanner);
                 if (readResult.Success)
                 {
                     stringBuilder.Append(readResult.Text);

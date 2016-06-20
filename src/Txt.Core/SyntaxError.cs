@@ -90,7 +90,7 @@ namespace Txt.Core
             return new SyntaxError(matchResult.EndOfInput, string.Empty, matchResult.Text, context);
         }
 
-        public static SyntaxError FromReadResult<T>([NotNull] ReadResult<T> readResult, [NotNull] ITextContext context)
+        public static SyntaxError FromReadResult<T>([NotNull] IReadResult<T> readResult, [NotNull] ITextContext context)
             where T : Element
         {
             if (readResult == null)

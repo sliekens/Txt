@@ -7,7 +7,7 @@ namespace Txt.ABNF
     public class OptionLexerFactory : IOptionLexerFactory
     {
         /// <inheritdoc />
-        public ILexer<Repetition> Create(ILexer lexer)
+        public ILexer<Repetition> Create(ILexer<Element> lexer)
         {
             if (lexer == null)
             {

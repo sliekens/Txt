@@ -8,10 +8,13 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using JetBrains.Annotations;
 
 namespace Txt.Core
 {
+
+
     /// <summary>
     ///     Provides the base class for lexers. A lexer is a class that matches symbols from a data source against a
     ///     grammar rule to produce grammar elements. Each class that extends the <see cref="Lexer{TElement}" /> class
@@ -40,7 +43,7 @@ namespace Txt.Core
         ///     A value container that contains the next available element, or a <c>null</c> reference, depending on whether
         ///     the return value indicates success.
         /// </returns>
-        public ReadResult<TElement> Read(ITextScanner scanner)
+        public IReadResult<TElement> Read(ITextScanner scanner)
         {
             if (scanner == null)
             {
@@ -71,22 +74,12 @@ namespace Txt.Core
             return result;
         }
 
-        ReadResult<Element> ILexer.ReadElement(ITextScanner scanner)
-        {
-            var result = Read(scanner);
-            if (result.Success)
-            {
-                return new ReadResult<Element>(result.Element);
-            }
-            return new ReadResult<Element>(result.Error);
-        }
-
         /// <summary>
         /// Provides the implementation of the lexer rule. Notes to implementers: the return value indiocates whether the element was available.
         /// </summary>
         /// <param name="scanner"></param>
         /// <param name="context"></param>
         /// <returns></returns>
-        protected abstract ReadResult<TElement> ReadImpl([NotNull] ITextScanner scanner, [NotNull] ITextContext context);
+        protected abstract IReadResult<TElement> ReadImpl([NotNull] ITextScanner scanner, [NotNull] ITextContext context);
     }
 }

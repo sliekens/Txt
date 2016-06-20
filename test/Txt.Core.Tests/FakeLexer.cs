@@ -17,12 +17,7 @@ namespace Txt.Core
 
         public FakeTryReadElement OnTryReadElement { get; set; }
 
-        public ReadResult<T> Read(ITextScanner scanner)
-        {
-            throw new NotImplementedException();
-        }
-
-        ReadResult<Element> ILexer.ReadElement(ITextScanner scanner)
+        public IReadResult<T> Read(ITextScanner scanner)
         {
             throw new NotImplementedException();
         }

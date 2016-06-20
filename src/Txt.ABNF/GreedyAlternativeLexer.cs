@@ -8,7 +8,7 @@ using Txt.Core;
 namespace Txt.ABNF
 {
     /// <summary>
-    ///     Wraps a collection of <see cref="ILexer" /> and tests their <see cref="ILexer.ReadElement" /> method until the
+    ///     Wraps a collection of <see cref="ILexer{TElement}" /> and tests their <see cref="ILexer{TElement}.Read" /> method until the
     ///     longest match is found.
     ///     This class implements a greedy algorithm. For a first-match-wins algorithm, use the
     ///     <see cref="AlternationLexer" /> class instead.
@@ -16,9 +16,9 @@ namespace Txt.ABNF
     public class GreedyAlternativeLexer : Lexer<Alternation>
     {
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly ILexer[] lexers;
+        private readonly ILexer<Element>[] lexers;
 
-        public GreedyAlternativeLexer([NotNull] [ItemNotNull] ILexer[] lexers)
+        public GreedyAlternativeLexer([NotNull] [ItemNotNull] ILexer<Element>[] lexers)
         {
             if (lexers == null)
             {
@@ -35,9 +35,9 @@ namespace Txt.ABNF
             this.lexers = lexers;
         }
 
-        protected override ReadResult<Alternation> ReadImpl(ITextScanner scanner, ITextContext context)
+        protected override IReadResult<Alternation> ReadImpl(ITextScanner scanner, ITextContext context)
         {
-            ILexer bestCandidate = null;
+            ILexer<Element> bestCandidate = null;
             var bestCandidateLength = -1;
             var ordinal = 0;
             IList<SyntaxError> errors = new List<SyntaxError>(lexers.Length);
@@ -47,7 +47,7 @@ namespace Txt.ABNF
             for (var i = 0; i < lexers.Length; i++)
             {
                 var lexer = lexers[i];
-                var candidate = lexer.ReadElement(scanner);
+                var candidate = lexer.Read(scanner);
                 if (candidate.Success)
                 {
                     var alternative = candidate.Element;
@@ -77,7 +77,7 @@ namespace Txt.ABNF
                 Debug.Assert(partialMatch != null, "partialMatch != null");
                 return new ReadResult<Alternation>(partialMatch);
             }
-            var readResult = bestCandidate.ReadElement(scanner);
+            var readResult = bestCandidate.Read(scanner);
             Debug.Assert(readResult.Success, "readResult.Success");
             return
                 new ReadResult<Alternation>(new Alternation(readResult.Text, readResult.Element, context, ordinal));

@@ -8,7 +8,7 @@ namespace Txt.ABNF
     public class ConcatenationLexerFactory : IConcatenationLexerFactory
     {
         /// <inheritdoc />
-        public ILexer<Concatenation> Create([ItemNotNull] params ILexer[] lexers)
+        public ILexer<Concatenation> Create([ItemNotNull] params ILexer<Element>[] lexers)
         {
             if (lexers == null)
             {

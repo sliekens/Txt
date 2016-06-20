@@ -8,20 +8,21 @@ using Txt.Core;
 namespace Txt.ABNF
 {
     /// <summary>
-    ///     Wraps a collection of <see cref="ILexer" /> and tests their <see cref="ILexer.ReadElement" /> method until a
+    ///     Wraps a collection of <see cref="ILexer{TElement}" /> and tests their <see cref="ILexer{TElement}.Read" /> method
+    ///     until a
     ///     match is found. This class implements a first-match-wins algorithm. For a greedy algorithm, use the
     ///     <see cref="GreedyAlternativeLexer" /> class instead.
     /// </summary>
     public class AlternationLexer : Lexer<Alternation>
     {
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly ILexer[] lexers;
+        private readonly ILexer<Element>[] lexers;
 
         /// <summary>
         /// </summary>
         /// <param name="lexers"></param>
         /// <exception cref="ArgumentNullException"></exception>
-        public AlternationLexer([NotNull] [ItemNotNull] params ILexer[] lexers)
+        public AlternationLexer([NotNull] [ItemNotNull] params ILexer<Element>[] lexers)
         {
             if (lexers == null)
             {
@@ -44,7 +45,7 @@ namespace Txt.ABNF
         /// <param name="context"></param>
         /// <exception cref="ArgumentNullException"></exception>
         /// <returns></returns>
-        protected override ReadResult<Alternation> ReadImpl(ITextScanner scanner, ITextContext context)
+        protected override IReadResult<Alternation> ReadImpl(ITextScanner scanner, ITextContext context)
         {
             IList<SyntaxError> errors = new List<SyntaxError>(lexers.Length);
             SyntaxError partialMatch = null;
@@ -52,7 +53,7 @@ namespace Txt.ABNF
             // ReSharper disable once ForCanBeConvertedToForeach
             for (var i = 0; i < lexers.Length; i++)
             {
-                var result = lexers[i].ReadElement(scanner);
+                var result = lexers[i].Read(scanner);
                 if (result.Success)
                 {
                     return

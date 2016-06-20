@@ -6,7 +6,7 @@ namespace Txt.ABNF
     public class RepetitionLexerFactory : IRepetitionLexerFactory
     {
         /// <inheritdoc />
-        public ILexer<Repetition> Create(ILexer lexer, int lowerBound, int upperBound)
+        public ILexer<Repetition> Create(ILexer<Element> lexer, int lowerBound, int upperBound)
         {
             return new RepetitionLexer(lexer, lowerBound, upperBound);
         }
