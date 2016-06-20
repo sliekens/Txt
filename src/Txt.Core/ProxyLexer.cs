@@ -24,10 +24,6 @@ namespace Txt.Core
 
         protected override IReadResult<TElement> ReadImpl(ITextScanner scanner, ITextContext context)
         {
-            if (scanner == null)
-            {
-                throw new ArgumentNullException(nameof(scanner));
-            }
             if (innerLexer == null)
             {
                 throw new InvalidOperationException("Initialize(ILexer`1) has never been called.");
