@@ -24,7 +24,7 @@ namespace Txt.Core
         {
             // Given that the text source has been disposed
             // When Peek is called
-            // Then an ArgumentOutOfRangeException is thrown
+            // Then an ObjectDisposedException is thrown
             var sut = new StringTextSource(Sentence);
             sut.Dispose();
             int peek;
@@ -36,7 +36,7 @@ namespace Txt.Core
         {
             // Given that the text source has been disposed
             // When Read is called
-            // Then an ArgumentOutOfRangeException is thrown
+            // Then an ObjectDisposedException is thrown
             var sut = new StringTextSource(Sentence);
             sut.Dispose();
             int len;
@@ -48,7 +48,7 @@ namespace Txt.Core
         {
             // Given that the text source has been disposed
             // When ReadAsync is called
-            // Then an ArgumentOutOfRangeException is thrown
+            // Then an ObjectDisposedException is thrown
             var sut = new StringTextSource(Sentence);
             sut.Dispose();
             var buffer = new char[Sentence.Length];
@@ -63,7 +63,7 @@ namespace Txt.Core
         {
             // Given that the text source has been disposed
             // When ReadBlock is called
-            // Then an ArgumentOutOfRangeException is thrown
+            // Then an ObjectDisposedException is thrown
             var sut = new StringTextSource(Sentence);
             sut.Dispose();
             int len;
@@ -76,7 +76,7 @@ namespace Txt.Core
         {
             // Given that the text source has been disposed
             // When ReadBlockAsync is called
-            // Then an ArgumentOutOfRangeException is thrown
+            // Then an ObjectDisposedException is thrown
             var sut = new StringTextSource(Sentence);
             sut.Dispose();
             var buffer = new char[Sentence.Length];
@@ -91,7 +91,7 @@ namespace Txt.Core
         {
             // Given that the text source has been disposed
             // When Read is called
-            // Then an ArgumentOutOfRangeException is thrown
+            // Then an ObjectDisposedException is thrown
             var sut = new StringTextSource(Sentence);
             sut.Dispose();
             int len;
@@ -104,7 +104,7 @@ namespace Txt.Core
         {
             // Given that the text source has been disposed
             // When Unread is called
-            // Then an ArgumentOutOfRangeException is thrown
+            // Then an ObjectDisposedException is thrown
             var sut = new StringTextSource(Sentence);
             sut.Dispose();
             Assert.Throws<ObjectDisposedException>(() => sut.Unread('!'));
@@ -115,7 +115,7 @@ namespace Txt.Core
         {
             // Given that the text source has been disposed
             // When UnreadAsync is called
-            // Then an ArgumentOutOfRangeException is thrown
+            // Then an ObjectDisposedException is thrown
             var sut = new StringTextSource(Sentence);
             sut.Dispose();
             var buffer = new[] { '!', '!', '!' };
@@ -127,7 +127,7 @@ namespace Txt.Core
         {
             // Given that the text source has been disposed
             // When Unread is called
-            // Then an ArgumentOutOfRangeException is thrown
+            // Then an ObjectDisposedException is thrown
             var sut = new StringTextSource(Sentence);
             sut.Dispose();
             var buffer = new[] { '!', '!', '!' };
