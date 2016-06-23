@@ -126,18 +126,6 @@ namespace Txt.Core
         }
 
         [Fact]
-        public void WhenPeekAfterDispose_ExpectObjectDisposedException()
-        {
-            // Given that the text source has been disposed
-            // When Peek is called
-            // Then an ArgumentOutOfRangeException is thrown
-            var sut = new StringTextSource(Sentence);
-            sut.Dispose();
-            int peek;
-            Assert.Throws<ObjectDisposedException>(() => peek = sut.Peek());
-        }
-
-        [Fact]
         public void WhenPeekingEndOfSource_ExpectMinusOne()
         {
             // Given that the text source has been initialized with an string

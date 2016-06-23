@@ -7,6 +7,8 @@ namespace Txt.Core
 {
     public abstract class TextSource : ITextSource
     {
+        private bool disposed;
+
         ~TextSource()
         {
             Dispose(false);
@@ -20,16 +22,28 @@ namespace Txt.Core
 
         public int Peek()
         {
+            if (disposed)
+            {
+                throw new ObjectDisposedException(GetType().FullName);
+            }
             return PeekImpl();
         }
 
         public int Read()
         {
+            if (disposed)
+            {
+                throw new ObjectDisposedException(GetType().FullName);
+            }
             return ReadImpl();
         }
 
         public int Read(char[] buffer, int offset, int count)
         {
+            if (disposed)
+            {
+                throw new ObjectDisposedException(GetType().FullName);
+            }
             if (buffer == null)
             {
                 throw new ArgumentNullException(nameof(buffer));
@@ -55,6 +69,10 @@ namespace Txt.Core
 
         public Task<int> ReadAsync(char[] buffer, int offset, int count)
         {
+            if (disposed)
+            {
+                throw new ObjectDisposedException(GetType().FullName);
+            }
             if (buffer == null)
             {
                 throw new ArgumentNullException(nameof(buffer));
@@ -80,11 +98,19 @@ namespace Txt.Core
 
         public int ReadBlock(char[] buffer, int offset, int count)
         {
+            if (disposed)
+            {
+                throw new ObjectDisposedException(GetType().FullName);
+            }
             return ReadBlockImpl(buffer, offset, count);
         }
 
         public Task<int> ReadBlockAsync(char[] buffer, int offset, int count)
         {
+            if (disposed)
+            {
+                throw new ObjectDisposedException(GetType().FullName);
+            }
             if (buffer == null)
             {
                 throw new ArgumentNullException(nameof(buffer));
@@ -110,11 +136,19 @@ namespace Txt.Core
 
         public void Unread(char c)
         {
+            if (disposed)
+            {
+                throw new ObjectDisposedException(GetType().FullName);
+            }
             UnreadImpl(c);
         }
 
         public void Unread(char[] buffer, int offset, int count)
         {
+            if (disposed)
+            {
+                throw new ObjectDisposedException(GetType().FullName);
+            }
             if (buffer == null)
             {
                 throw new ArgumentNullException(nameof(buffer));
@@ -140,6 +174,10 @@ namespace Txt.Core
 
         public Task UnreadAsync(char[] buffer, int offset, int count)
         {
+            if (disposed)
+            {
+                throw new ObjectDisposedException(GetType().FullName);
+            }
             if (buffer == null)
             {
                 throw new ArgumentNullException(nameof(buffer));
@@ -165,6 +203,10 @@ namespace Txt.Core
 
         protected virtual void Dispose(bool disposing)
         {
+            if (!disposed)
+            {
+                disposed = true;
+            }
         }
 
         protected abstract int PeekImpl();
@@ -180,16 +222,16 @@ namespace Txt.Core
             Debug.Assert(count > 0);
             Debug.Assert(offset + count <= buffer.Length);
             return Task<int>.Factory.StartNew(
-                DelegatedRead,
-                new InputOutputState
-                {
-                    TextSource = this,
-                    Buffer = buffer,
-                    Offset = offset,
-                    Count = count,
-                    CancellationToken = cancellationToken
-                },
-                cancellationToken);
+                                DelegatedRead,
+                                new InputOutputState
+                                {
+                                    TextSource = this,
+                                    Buffer = buffer,
+                                    Offset = offset,
+                                    Count = count,
+                                    CancellationToken = cancellationToken
+                                },
+                                cancellationToken);
         }
 
         protected virtual async Task<int> ReadBlockAsyncImpl(
@@ -240,16 +282,16 @@ namespace Txt.Core
             Debug.Assert(count > 0);
             Debug.Assert(offset + count <= buffer.Length);
             return Task.Factory.StartNew(
-                DelegatedUnread,
-                new InputOutputState
-                {
-                    TextSource = this,
-                    Buffer = buffer,
-                    Offset = offset,
-                    Count = count,
-                    CancellationToken = cancellationToken
-                },
-                cancellationToken);
+                           DelegatedUnread,
+                           new InputOutputState
+                           {
+                               TextSource = this,
+                               Buffer = buffer,
+                               Offset = offset,
+                               Count = count,
+                               CancellationToken = cancellationToken
+                           },
+                           cancellationToken);
         }
 
         protected abstract void UnreadImpl(char c);

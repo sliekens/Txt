@@ -20,6 +20,18 @@ namespace Txt.Core
         }
 
         [Fact]
+        public void WhenPeekAfterDispose_ExpectObjectDisposedException()
+        {
+            // Given that the text source has been disposed
+            // When Peek is called
+            // Then an ArgumentOutOfRangeException is thrown
+            var sut = new StringTextSource(Sentence);
+            sut.Dispose();
+            int peek;
+            Assert.Throws<ObjectDisposedException>(() => peek = sut.Peek());
+        }
+
+        [Fact]
         public void WhenRead_ExpectObjectDisposedException()
         {
             // Given that the text source has been disposed
@@ -32,19 +44,6 @@ namespace Txt.Core
         }
 
         [Fact]
-        public void WhenReadWithBuffer_ExpectObjectDisposedException()
-        {
-            // Given that the text source has been disposed
-            // When Read is called
-            // Then an ArgumentOutOfRangeException is thrown
-            var sut = new StringTextSource(Sentence);
-            sut.Dispose();
-            int len;
-            var buffer = new char[Sentence.Length];
-            Assert.Throws<ObjectDisposedException>(() => len = sut.Read(buffer, 0, buffer.Length));
-        }
-
-        [Fact]
         public async Task WhenReadAsync_ExpectObjectDisposedException()
         {
             // Given that the text source has been disposed
@@ -54,7 +53,9 @@ namespace Txt.Core
             sut.Dispose();
             var buffer = new char[Sentence.Length];
             int len;
-            await Assert.ThrowsAsync<ObjectDisposedException>(async () => len = await sut.ReadAsync(buffer, 0, buffer.Length));
+            await
+                Assert.ThrowsAsync<ObjectDisposedException>(
+                    async () => len = await sut.ReadAsync(buffer, 0, buffer.Length));
         }
 
         [Fact]
@@ -80,7 +81,22 @@ namespace Txt.Core
             sut.Dispose();
             var buffer = new char[Sentence.Length];
             int len;
-            await Assert.ThrowsAsync<ObjectDisposedException>(async () => len = await sut.ReadBlockAsync(buffer, 0, buffer.Length));
+            await
+                Assert.ThrowsAsync<ObjectDisposedException>(
+                    async () => len = await sut.ReadBlockAsync(buffer, 0, buffer.Length));
+        }
+
+        [Fact]
+        public void WhenReadWithBuffer_ExpectObjectDisposedException()
+        {
+            // Given that the text source has been disposed
+            // When Read is called
+            // Then an ArgumentOutOfRangeException is thrown
+            var sut = new StringTextSource(Sentence);
+            sut.Dispose();
+            int len;
+            var buffer = new char[Sentence.Length];
+            Assert.Throws<ObjectDisposedException>(() => len = sut.Read(buffer, 0, buffer.Length));
         }
 
         [Fact]
@@ -94,6 +110,17 @@ namespace Txt.Core
             Assert.Throws<ObjectDisposedException>(() => sut.Unread('!'));
         }
 
+        [Fact]
+        public async Task WhenUnreadAsync_ExpectObjectDisposedException()
+        {
+            // Given that the text source has been disposed
+            // When UnreadAsync is called
+            // Then an ArgumentOutOfRangeException is thrown
+            var sut = new StringTextSource(Sentence);
+            sut.Dispose();
+            var buffer = new[] { '!', '!', '!' };
+            await Assert.ThrowsAsync<ObjectDisposedException>(() => sut.UnreadAsync(buffer, 0, buffer.Length));
+        }
 
         [Fact]
         public void WhenUnreadWithBuffer_ExpectObjectDisposedException()
@@ -105,18 +132,6 @@ namespace Txt.Core
             sut.Dispose();
             var buffer = new[] { '!', '!', '!' };
             Assert.Throws<ObjectDisposedException>(() => sut.Unread(buffer, 0, buffer.Length));
-        }
-
-        [Fact]
-        public async Task WhenUnreadAsync_ExpectObjectDisposedException()
-        {
-            // Given that the text source has been disposed
-            // When UnreadAsync is called
-            // Then an ArgumentOutOfRangeException is thrown
-            var sut = new StringTextSource(Sentence);
-            sut.Dispose();
-            var buffer = new[] { '!', '!', '!' };
-            await Assert.ThrowsAsync<ObjectDisposedException>(() => sut.UnreadAsync(buffer, 0, buffer.Length));
         }
     }
 }
