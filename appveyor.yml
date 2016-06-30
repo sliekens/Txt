@@ -28,5 +28,3 @@ deploy:
      secure: Qwf1a1BP2lCg6c9F5xt7hwDVciba1FhiYewLIAGzAVLeNh0TiAamxz78W06ij4tp
    skip_symbols: false
    symbol_server: https://www.myget.org/F/ci/api/v2/package
-cache:
- - %USERPROFILE%\.nuget\packages -> .\CACHE
