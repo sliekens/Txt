@@ -15,10 +15,8 @@ build_script:
 - dotnet build "src\Txt" -c %CONFIGURATION% --no-dependencies --version-suffix %LABEL%
 - dotnet pack "src\Txt" -c %CONFIGURATION% --no-build --version-suffix %LABEL% -o artifacts
 test_script:
-- dotnet build "test\Txt.Core.Tests" -c %CONFIGURATION% --no-dependencies
-- dotnet test "test\Txt.Core.Tests" --no-build
-- dotnet build "test\Txt.ABNF.Tests" -c %CONFIGURATION% --no-dependencies
-- dotnet test "test\Txt.ABNF.Tests" --no-build
+- dotnet test "test\Txt.Core.Tests"
+- dotnet test "test\Txt.ABNF.Tests"
 artifacts:
   - path: artifacts\**\*.*
 deploy:
