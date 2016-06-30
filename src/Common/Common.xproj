@@ -8,7 +8,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>f20babfd-8fd3-4887-bbe4-3422e71c63a7</ProjectGuid>
     <RootNamespace>Txt</RootNamespace>
-    <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">..\..\artifacts\obj\$(MSBuildProjectName)</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">.\obj</BaseIntermediateOutputPath>
     <OutputPath Condition="'$(OutputPath)'=='' ">.\bin\</OutputPath>
   </PropertyGroup>
   <PropertyGroup>
