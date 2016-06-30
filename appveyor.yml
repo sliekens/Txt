@@ -10,7 +10,7 @@ build_script:
 - dotnet build "src\Common" -c %CONFIGURATION% --no-dependencies --version-suffix %LABEL%
 - dotnet build "src\Txt.Core" -c %CONFIGURATION% --no-dependencies --version-suffix %LABEL%
 - dotnet pack "src\Txt.Core" -c %CONFIGURATION% --no-build --version-suffix %LABEL% -o artifacts
-- dotnet build "src\Txt.ABNF" -c %CONFIGURATION% --no-dependencies --version-suffix %LABEL%
+- dotnet build "src\Txt.ABNF" -c %CONFIGURATION% --no-dependencies --version-suffix %LABEL% 
 - dotnet pack "src\Txt.ABNF" -c %CONFIGURATION% --no-build --version-suffix %LABEL% -o artifacts
 - dotnet build "src\Txt" -c %CONFIGURATION% --no-dependencies --version-suffix %LABEL%
 - dotnet pack "src\Txt" -c %CONFIGURATION% --no-build --version-suffix %LABEL% -o artifacts
@@ -29,4 +29,4 @@ deploy:
    skip_symbols: false
    symbol_server: https://www.myget.org/F/ci/api/v2/package
 cache:
- - '%USERPROFILE%\.nuget\packages' -> .\CACHE
+ - %USERPROFILE%\.nuget\packages -> .\CACHE
