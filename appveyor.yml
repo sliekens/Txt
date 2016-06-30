@@ -5,22 +5,20 @@ configuration:
 platform: Any CPU
 init:
  - ps: $Env:LABEL = "CI" + $Env:APPVEYOR_BUILD_NUMBER.PadLeft(5, "0")
-install:
-- ps: Start-FileDownload 'https://dotnetcli.blob.core.windows.net/dotnet/beta/Installers/Latest/dotnet-dev-win-x64.latest.exe'
-- dotnet-dev-win-x64.latest.exe /quiet
-environment:
-  PATH: $(PATH);$(PROGRAMFILES)\dotnet\
 build_script:
 - appveyor-retry dotnet restore -v Minimal
-- dotnet build **\project.json -c %CONFIGURATION%
-- dotnet pack -c %CONFIGURATION% --no-build --version-suffix %LABEL% -o artifacts .\src\Txt.Core\project.json
-- dotnet pack -c %CONFIGURATION% --no-build --version-suffix %LABEL% -o artifacts .\src\Txt.ABNF\project.json
-- dotnet pack -c %CONFIGURATION% --no-build --version-suffix %LABEL% -o artifacts .\src\Txt\project.json
+- dotnet build "src\Common" -c %CONFIGURATION% --no-dependencies --version-suffix %LABEL%
+- dotnet build "src\Txt.Core" -c %CONFIGURATION% --no-dependencies --version-suffix %LABEL%
+- dotnet pack "src\Txt.Core" -c %CONFIGURATION% --no-build --version-suffix %LABEL% -o artifacts
+- dotnet build "src\Txt.ABNF" -c %CONFIGURATION% --no-dependencies --version-suffix %LABEL%
+- dotnet pack "src\Txt.ABNF" -c %CONFIGURATION% --no-build --version-suffix %LABEL% -o artifacts
+- dotnet build "src\Txt" -c %CONFIGURATION% --no-dependencies --version-suffix %LABEL%
+- dotnet pack "src\Txt" -c %CONFIGURATION% --no-build --version-suffix %LABEL% -o artifacts
 test_script:
-- dotnet test .\test\Txt.Core.Tests
-- dotnet test .\test\Txt.ABNF.Tests
+- dotnet test "test\Txt.Core.Tests" -c %CONFIGURATION%
+- dotnet test "test\Txt.ABNF.Tests" -c %CONFIGURATION%
 artifacts:
-  - path: artifacts\*.nupkg
+  - path: artifacts\**\*.*
 deploy:
  - provider: NuGet
    server: https://www.myget.org/F/ci/api/v2/package
