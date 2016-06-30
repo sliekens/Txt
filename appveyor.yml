@@ -29,4 +29,4 @@ deploy:
    skip_symbols: false
    symbol_server: https://www.myget.org/F/ci/api/v2/package
 cache:
- - '%USERPROFILE%\.nuget\packages'
+ - '%USERPROFILE%\.nuget\packages' -> CACHE
