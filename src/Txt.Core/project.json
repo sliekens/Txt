@@ -1,29 +1,20 @@
 ﻿{
-    "version": "2.0.0-*",
-    "description": "Txt Foundation",
-    "authors": [ "Steven Liekens" ],
-    "frameworks": {
-        "netstandard1.0": {
-          "imports": [
-            "dotnet5.1",
-            "portable-win81+wp81",
-            "portable-net45+wp8",
-            "portable-net45+win8+wp8",
-            "portable-wp81+wpa81",
-            "portable-win81+wp81+wpa81",
-            "portable-net45+win8+wpa81+wp8"
-          ],
-          "dependencies": {
-            "System.Dynamic.Runtime": "4.0.11-rc2-24027",
-            "Microsoft.CSharp": "4.0.1-rc2-24027" 
-          }
-        }
-    },
-    "dependencies": {
+  "version": "2.0.0-*",
+  "description": "Txt Foundation",
+  "authors": [ "Steven Liekens" ],
+  "frameworks": {
+    "netstandard1.0": {
+      "dependencies": {
         "NETStandard.Library": "1.6.0",
-        "Common": {
-            "type": "build",
-            "target": "project"
-        }
+        "System.Dynamic.Runtime": "4.0.11",
+        "Microsoft.CSharp": "4.0.1" 
+      }
     }
+  },
+  "dependencies": {
+    "Common": {
+      "type": "build",
+      "target": "project"
+    }
+  }
 }

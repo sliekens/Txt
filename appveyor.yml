@@ -12,7 +12,6 @@ build_script:
 - dotnet pack "src\Txt.Core" -c %CONFIGURATION% --no-build --version-suffix %LABEL% -o artifacts
 - dotnet build "src\Txt.ABNF" -c %CONFIGURATION% --no-dependencies --version-suffix %LABEL%
 - dotnet pack "src\Txt.ABNF" -c %CONFIGURATION% --no-build --version-suffix %LABEL% -o artifacts
-- dotnet build "src\Txt" -c %CONFIGURATION% --no-dependencies --version-suffix %LABEL%
 - dotnet pack "src\Txt" -c %CONFIGURATION% --no-build --version-suffix %LABEL% -o artifacts
 test_script:
 - dotnet build "test\Txt.Core.Tests" -c %CONFIGURATION% --no-dependencies
