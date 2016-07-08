@@ -42,7 +42,18 @@ namespace Txt.Core
 
         protected override int PeekImpl()
         {
-            return binaryReader.PeekChar();
+            if (binaryReader.BaseStream.CanSeek)
+            {
+                return binaryReader.PeekChar();
+            }
+
+            var next = ReadImpl();
+            if (next == -1)
+            {
+                return -1;
+            }
+            UnreadImpl((char)next);
+            return next;
         }
 
         protected override int ReadImpl()
