@@ -11,9 +11,6 @@ namespace Txt.Core
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly BinaryReader binaryReader;
 
-        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly PushbackInputStream inputStream;
-
         public StreamTextSource([NotNull] PushbackInputStream inputStream, [NotNull] Encoding encoding)
         {
             if (inputStream == null)
@@ -24,7 +21,6 @@ namespace Txt.Core
             {
                 throw new ArgumentNullException(nameof(encoding));
             }
-            this.inputStream = inputStream;
             Encoding = encoding;
             binaryReader = new BinaryReader(inputStream, encoding, true);
         }
@@ -73,15 +69,15 @@ namespace Txt.Core
 
         protected override void UnreadImpl(char[] buffer, int offset, int count)
         {
-            if (inputStream.CanSeek)
+            if (binaryReader.BaseStream.CanSeek)
             {
                 var length = Encoding.GetByteCount(buffer, offset, count);
-                inputStream.Seek(-length, SeekOrigin.Current);
+                binaryReader.BaseStream.Seek(-length, SeekOrigin.Current);
             }
             else
             {
                 var pushbackBuffer = Encoding.GetBytes(buffer, offset, count);
-                inputStream.Write(pushbackBuffer, 0, pushbackBuffer.Length);
+                binaryReader.BaseStream.Write(pushbackBuffer, 0, pushbackBuffer.Length);
             }
         }
     }
