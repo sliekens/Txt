@@ -136,27 +136,6 @@ namespace Txt.Core
         }
 
         /// <summary>
-        ///     Gets a collection of terminal elements by recursively evaluating <see cref="GetTerminals" /> for every
-        ///     <see cref="Element" /> in <see cref="Elements" />.
-        /// </summary>
-        /// <returns>A collection of terminal elements.</returns>
-        [NotNull]
-        public IEnumerable<Element> GetTerminals()
-        {
-            if (Elements.Count == 0)
-            {
-                yield return this;
-            }
-            else
-            {
-                foreach (var terminal in Elements.SelectMany(t => t.GetTerminals()))
-                {
-                    yield return terminal;
-                }
-            }
-        }
-
-        /// <summary>
         ///     Gets a well-formed string that represents the current element. This is useful for elements that are
         ///     technically valid, but contain formatting errors or other inpurities. For example: mixed upper and lower case
         ///     characters where only lower case is well-formed. Unless overridden, the default return value is the value of
