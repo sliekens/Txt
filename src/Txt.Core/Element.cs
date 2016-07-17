@@ -61,7 +61,7 @@ namespace Txt.Core
                 throw new ArgumentNullException(nameof(context));
             }
             text = terminals;
-            elements = new Element[0];
+            elements = EmptyElements;
             this.context = context;
         }
 
@@ -88,10 +88,7 @@ namespace Txt.Core
                 throw new ArgumentNullException(nameof(context));
             }
             text = sequence;
-            this.elements = elements.Count == 0
-                ? EmptyElements
-                : new ReadOnlyCollection<Element>(new List<Element>(elements));
-            this.elements = elements.ToArray();
+            this.elements = elements.Count == 0 ? EmptyElements : elements.ToArray();
             this.context = context;
         }
 
