@@ -22,7 +22,10 @@ test_script:
 - dotnet test "test\Txt.Core.Tests" -c %CONFIGURATION% --no-build
 - dotnet test "test\Txt.ABNF.Tests" -c %CONFIGURATION% --no-build
 artifacts:
-  - path: artifacts\**\*.*
+  - path: artifacts\**\*.nupkg
+    name: lib
+  - path: artifacts\samples
+    name: samples
 deploy:
  - provider: NuGet
    server: https://www.myget.org/F/ci/api/v2/package
