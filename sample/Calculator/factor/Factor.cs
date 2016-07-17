@@ -1,6 +1,6 @@
 ﻿using Txt.ABNF;
 
-namespace Sample1.factor
+namespace Calculator.factor
 {
     public class Factor : Concatenation
     {

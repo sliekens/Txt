@@ -1,7 +1,7 @@
 ﻿using Txt.ABNF;
 using Txt.Core;
 
-namespace Sample1.term
+namespace Calculator.term
 {
     public sealed class TermLexer : CompositeLexer<Concatenation, Term>
     {

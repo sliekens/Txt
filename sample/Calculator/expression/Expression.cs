@@ -1,6 +1,6 @@
 ﻿using Txt.ABNF;
 
-namespace Sample1.expression
+namespace Calculator.expression
 {
     public class Expression : Concatenation
     {

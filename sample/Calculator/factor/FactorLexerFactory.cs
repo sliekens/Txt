@@ -1,10 +1,10 @@
 ﻿using System;
-using Sample1.expression;
-using Sample1.number;
+using Calculator.expression;
+using Calculator.number;
 using Txt.ABNF;
 using Txt.Core;
 
-namespace Sample1.factor
+namespace Calculator.factor
 {
     public class FactorLexerFactory : ILexerFactory<Factor>
     {

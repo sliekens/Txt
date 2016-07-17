@@ -1,9 +1,9 @@
 ﻿using System;
-using Sample1.factor;
+using Calculator.factor;
 using Txt.ABNF;
 using Txt.Core;
 
-namespace Sample1.term
+namespace Calculator.term
 {
     public class TermLexerFactory : ILexerFactory<Term>
     {

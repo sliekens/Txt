@@ -1,6 +1,6 @@
 ﻿using Txt.Core;
 
-namespace Sample1.number
+namespace Calculator.number
 {
     public class NumberParser : Parser<Number, int>
     {

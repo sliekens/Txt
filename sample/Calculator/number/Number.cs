@@ -1,6 +1,6 @@
 ﻿using Txt.ABNF;
 
-namespace Sample1.number
+namespace Calculator.number
 {
     public class Number : Repetition
     {

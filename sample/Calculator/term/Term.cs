@@ -1,6 +1,6 @@
 ﻿using Txt.ABNF;
 
-namespace Sample1.term
+namespace Calculator.term
 {
     public class Term : Concatenation
     {

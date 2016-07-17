@@ -1,7 +1,7 @@
 ﻿using Txt.ABNF;
 using Txt.Core;
 
-namespace Sample1.number
+namespace Calculator.number
 {
     public sealed class NumberLexer : CompositeLexer<Repetition, Number>
     {

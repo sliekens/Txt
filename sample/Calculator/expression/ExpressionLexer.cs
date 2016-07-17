@@ -1,7 +1,7 @@
 ﻿using Txt.ABNF;
 using Txt.Core;
 
-namespace Sample1.expression
+namespace Calculator.expression
 {
     public sealed class ExpressionLexer : CompositeLexer<Concatenation, Expression>
     {

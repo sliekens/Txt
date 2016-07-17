@@ -2,7 +2,7 @@
 using Txt.ABNF.Core.DIGIT;
 using Txt.Core;
 
-namespace Sample1.number
+namespace Calculator.number
 {
     public class NumberLexerFactory : ILexerFactory<Number>
     {

@@ -1,7 +1,7 @@
 ﻿using Txt.ABNF;
 using Txt.Core;
 
-namespace Sample1.factor
+namespace Calculator.factor
 {
     public sealed class FactorLexer : CompositeLexer<Concatenation, Factor>
     {

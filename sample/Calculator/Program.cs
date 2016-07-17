@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Globalization;
-using Sample1.expression;
-using Sample1.factor;
-using Sample1.number;
-using Sample1.term;
+using Calculator.expression;
+using Calculator.factor;
+using Calculator.number;
+using Calculator.term;
 using Txt.ABNF;
 using Txt.ABNF.Core.DIGIT;
 using Txt.Core;
 
-namespace Sample1
+namespace Calculator
 {
     internal class Program
     {

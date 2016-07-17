@@ -1,8 +1,8 @@
-﻿using Sample1.term;
+﻿using Calculator.term;
 using Txt.ABNF;
 using Txt.Core;
 
-namespace Sample1.expression
+namespace Calculator.expression
 {
     public class ExpressionParser : Parser<Expression, double>
     {
