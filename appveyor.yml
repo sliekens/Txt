@@ -17,8 +17,8 @@ after_build:
 - dotnet pack "src\Txt.ABNF" -c %CONFIGURATION% --no-build --version-suffix %LABEL% -o artifacts
 - dotnet pack "src\Txt" -c %CONFIGURATION% --no-build --version-suffix %LABEL% -o artifacts
 test_script:
-- dotnet test "test\Txt.Core.Tests" --no-build
-- dotnet test "test\Txt.ABNF.Tests" --no-build
+- dotnet test "test\Txt.Core.Tests" -c %CONFIGURATION% --no-build
+- dotnet test "test\Txt.ABNF.Tests" -c %CONFIGURATION% --no-build
 artifacts:
   - path: artifacts\**\*.*
 deploy:
