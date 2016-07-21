@@ -97,6 +97,7 @@ namespace Txt.Core
             if (read == -1)
             {
                 endOfInput = true;
+                return -1;
             }
             Interlocked.Increment(ref offset);
             return read;
