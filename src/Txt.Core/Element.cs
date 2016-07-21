@@ -10,6 +10,7 @@ namespace Txt.Core
     /// <summary>Provides the base class for all elements.</summary>
     public abstract class Element : ITextContext, IReadOnlyList<Element>
     {
+        [NotNull, ItemNotNull]
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private static readonly IReadOnlyList<Element> EmptyElements = new Element[0];
 
@@ -17,7 +18,7 @@ namespace Txt.Core
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly ITextContext context;
 
-        [NotNull]
+        [NotNull, ItemNotNull]
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly IReadOnlyList<Element> elements;
 
@@ -72,7 +73,7 @@ namespace Txt.Core
         ///     The value of  <paramref name="sequence" /> or  <paramref name="elements" /> or
         ///     <paramref name="context" /> is a null reference.
         /// </exception>
-        protected Element([NotNull] string sequence, [NotNull] IList<Element> elements, [NotNull] ITextContext context)
+        protected Element([NotNull] string sequence, [NotNull, ItemNotNull] IList<Element> elements, [NotNull] ITextContext context)
         {
             if (sequence == null)
             {
