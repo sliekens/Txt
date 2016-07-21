@@ -8,13 +8,10 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
-using System.Collections.Generic;
 using JetBrains.Annotations;
 
 namespace Txt.Core
 {
-
-
     /// <summary>
     ///     Provides the base class for lexers. A lexer is a class that matches symbols from a data source against a
     ///     grammar rule to produce grammar elements. Each class that extends the <see cref="Lexer{TElement}" /> class
@@ -53,33 +50,36 @@ namespace Txt.Core
             var result = ReadImpl(scanner, context);
             if (result == null)
             {
-                throw new InvalidOperationException($"{GetType()}.ReadImpl(ITextScanner, ITextContext) returned null.");
+                throw new InvalidOperationException($"{GetType()}.ReadImpl returned null.");
             }
             if (result.Success)
             {
                 if (scanner.Offset != context.Offset + result.Text.Length)
                 {
-                    // TODO: provide better error message
-                    throw new InvalidOperationException("Offset mismatch");
+                    throw new InvalidOperationException(
+                        $"{GetType()}.ReadImpl returned a success result, but the text length is not equal to the difference between the old offset and the new offset in the text source. Calculated offset: {context.Offset} to {scanner.Offset} (length: {scanner.Offset - context.Offset}). The reported length is: {result.Text.Length}. Reported offset: {result.Element.Offset}. Calculated end offset: {result.Element.Offset + result.Text.Length}.");
                 }
             }
             else
             {
                 if (scanner.Offset != context.Offset)
                 {
-                    // TODO: provide better error message
-                    throw new InvalidOperationException("Offset mismatch");
+                    throw new InvalidOperationException(
+                        $"{GetType()}.ReadImpl returned an error result, but the new offset is not equal to the old offset in the text source. Old offset: {context.Offset}. New offset: {scanner.Offset}.");
                 }
             }
             return result;
         }
 
         /// <summary>
-        /// Provides the implementation of the lexer rule. Notes to implementers: the return value indiocates whether the element was available.
+        ///     Provides the implementation of the lexer rule. Notes to implementers: the return value indiocates whether the
+        ///     element was available.
         /// </summary>
         /// <param name="scanner"></param>
         /// <param name="context"></param>
         /// <returns></returns>
-        protected abstract IReadResult<TElement> ReadImpl([NotNull] ITextScanner scanner, [NotNull] ITextContext context);
+        protected abstract IReadResult<TElement> ReadImpl(
+            [NotNull] ITextScanner scanner,
+            [NotNull] ITextContext context);
     }
 }
