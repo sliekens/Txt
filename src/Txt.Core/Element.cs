@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using JetBrains.Annotations;
@@ -95,20 +94,6 @@ namespace Txt.Core
         /// <inheritdoc />
         public int Count => elements.Count;
 
-        /// <summary>
-        ///     Returns the sequence of elements that represent the current element. If the current element is a string of
-        ///     terminal values then this collection is empty.
-        /// </summary>
-        [NotNull]
-        public IReadOnlyList<Element> Elements
-        {
-            get
-            {
-                Debug.Assert(elements != null, "this.elements != null");
-                return elements;
-            }
-        }
-
         /// <summary>Gets the current position, relative to the beginning of the data source.</summary>
         public int Offset => context.Offset;
 
@@ -155,7 +140,7 @@ namespace Txt.Core
                 {
                     return;
                 }
-                foreach (dynamic element in Elements)
+                foreach (dynamic element in this)
                 {
                     element?.WalkImpl(walker);
                 }
