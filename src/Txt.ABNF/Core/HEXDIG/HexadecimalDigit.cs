@@ -17,11 +17,5 @@ namespace Txt.ABNF.Core.HEXDIG
             : base(element)
         {
         }
-
-        public override string GetWellFormedText()
-        {
-            // Well-formed HEXDIG uses upper case letters
-            return Text.ToUpperInvariant();
-        }
     }
 }

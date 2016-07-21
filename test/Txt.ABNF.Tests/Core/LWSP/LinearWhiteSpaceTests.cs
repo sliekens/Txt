@@ -12,21 +12,21 @@ namespace Txt.ABNF.Core.LWSP
     public class LinearWhiteSpaceTests
     {
         [Theory]
-        [InlineData("", "")]
-        [InlineData(" ", " ")]
-        [InlineData("  ", " ")]
-        [InlineData("\t", " ")]
-        [InlineData("\t ", " ")]
-        [InlineData("\t  ", " ")]
-        [InlineData("\t   ", " ")]
-        [InlineData("\r\n ", " ")]
-        [InlineData("\r\n  ", " ")]
-        [InlineData("\r\n   ", " ")]
-        [InlineData("\r\n\t", " ")]
-        [InlineData("\r\n\t\t", " ")]
-        [InlineData("\r\n\t\t\t", " ")]
-        [InlineData("\t\t\t\r\n\t", " ")]
-        public void GetWellFormedValues_ShouldBehaveAsExpected(string input, string wellFormed)
+        [InlineData("")]
+        [InlineData(" ")]
+        [InlineData("  ")]
+        [InlineData("\t")]
+        [InlineData("\t ")]
+        [InlineData("\t  ")]
+        [InlineData("\t   ")]
+        [InlineData("\r\n ")]
+        [InlineData("\r\n  ")]
+        [InlineData("\r\n   ")]
+        [InlineData("\r\n\t")]
+        [InlineData("\r\n\t\t")]
+        [InlineData("\r\n\t\t\t")]
+        [InlineData("\t\t\t\r\n\t")]
+        public void Read_ShouldBehaveAsExpected(string input)
         {
             // General
             var terminalLexerFactory = new TerminalLexerFactory();
@@ -59,10 +59,7 @@ namespace Txt.ABNF.Core.LWSP
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {
                 var result = linearWhiteSpaceLexer.Read(scanner);
-                Assert.NotNull(result);
-                Assert.True(result.Success);
-                Assert.NotNull(result.Element);
-                Assert.Equal(wellFormed, result.Element.GetWellFormedText());
+                Assert.Equal(input, result.Text);
             }
         }
     }

@@ -34,11 +34,5 @@ namespace Txt.ABNF
         {
             this.text = text;
         }
-
-        /// <inheritdoc />
-        public override string GetWellFormedText()
-        {
-            return text;
-        }
     }
 }

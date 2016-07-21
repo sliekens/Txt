@@ -132,18 +132,6 @@ namespace Txt.Core
             return elements.GetEnumerator();
         }
 
-        /// <summary>
-        ///     Gets a well-formed string that represents the current element. This is useful for elements that are
-        ///     technically valid, but contain formatting errors or other inpurities. For example: mixed upper and lower case
-        ///     characters where only lower case is well-formed. Unless overridden, the default return value is the value of
-        ///     <see cref="Text" />.
-        /// </summary>
-        /// <returns>A well-formed string that represents the current element.</returns>
-        public virtual string GetWellFormedText()
-        {
-            return string.Concat(Elements.Select(element => element.GetWellFormedText()));
-        }
-
         public void Walk([NotNull] Walker walker)
         {
             if (walker == null)
