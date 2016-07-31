@@ -70,7 +70,7 @@ namespace Txt.Core
             {
                 throw new ObjectDisposedException(nameof(TextScanner));
             }
-            return new TextContext(offset);
+            return new Bookmark(offset);
         }
 
         public int Peek()
