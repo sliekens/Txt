@@ -8,7 +8,7 @@ using JetBrains.Annotations;
 namespace Txt.Core
 {
     /// <summary>Provides the base class for all elements.</summary>
-    public abstract class Element : ITextContext, IReadOnlyList<Element>
+    public abstract class Element : IReadOnlyList<Element>
     {
         [NotNull, ItemNotNull]
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
@@ -95,8 +95,7 @@ namespace Txt.Core
         /// <inheritdoc />
         public int Count => elements.Count;
 
-        /// <summary>Gets the current position, relative to the beginning of the data source.</summary>
-        public int Offset => context.Offset;
+        public ITextContext Context => context;
 
         /// <summary>Gets one or more terminal values that represent the current element.</summary>
         [NotNull]
