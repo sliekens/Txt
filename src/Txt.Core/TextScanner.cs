@@ -56,6 +56,22 @@ namespace Txt.Core
             }
         }
 
+        public int Line
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public int Column
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         /// <summary>This method calls <see cref="Dispose(bool)" />, specifying <c>true</c> to release all resources.</summary>
         public void Close()
         {

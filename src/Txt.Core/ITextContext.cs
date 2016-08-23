@@ -14,5 +14,9 @@ namespace Txt.Core
     {
         /// <summary>Gets the current position, relative to the beginning of the data source.</summary>
         int Offset { get; }
+
+        int Line { get; }
+
+        int Column { get; }
     }
 }

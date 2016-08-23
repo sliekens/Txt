@@ -7,6 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
 using System.Diagnostics;
 
 namespace Txt.Core
@@ -25,5 +26,21 @@ namespace Txt.Core
 
         /// <summary>Gets the current position, relative to the beginning of the data source.</summary>
         public int Offset { get; }
+
+        public int Line
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public int Column
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
     }
 }
