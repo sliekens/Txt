@@ -33,6 +33,8 @@ namespace Txt.Core
         /// <returns>A value indicating the number of buffered characters.</returns>
         int Read([NotNull] char[] buffer, int startIndex, int maxCount);
 
+        int ReadBlock([NotNull] char[] buffer, int startIndex, int maxCount);
+
         /// <summary>
         ///     Sets the character position within the current text source.
         /// </summary>

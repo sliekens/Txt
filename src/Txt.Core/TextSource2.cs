@@ -94,7 +94,8 @@ namespace Txt.Core
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TextSource2"/> class with a specified initial capacity for its internal buffer.
+        ///     Initializes a new instance of the <see cref="TextSource2" /> class with a specified initial capacity for its
+        ///     internal buffer.
         /// </summary>
         /// <param name="capacity">The inital capacity of the internal buffer.</param>
         protected TextSource2(int capacity)
@@ -199,6 +200,16 @@ namespace Txt.Core
             dataIndex += maxCount;
             index += maxCount;
             return maxCount;
+        }
+
+        public int ReadBlock(char[] buffer, int startIndex, int maxCount)
+        {
+            int i, n = 0;
+            do
+            {
+                n += i = Read(buffer, startIndex + n, maxCount - n);
+            } while ((i > 0) && (n < maxCount));
+            return n;
         }
 
         /// <summary>
@@ -324,7 +335,6 @@ namespace Txt.Core
             {
                 Array.Resize(ref data, data.Length + need - unusedCapacity);
             }
-            
             var length = ReadImpl(data, dataIndex, need);
             dataLength += length;
             return length + unreadCount;
