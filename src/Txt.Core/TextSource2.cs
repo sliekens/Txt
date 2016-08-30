@@ -239,10 +239,6 @@ namespace Txt.Core
             else
             {
                 // lookahead
-                if (diff > data.Length - dataIndex)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(offset));
-                }
                 var unreadCount = FillBuffer((int)diff);
                 dataIndex += (int)Math.Min(diff, unreadCount);
             }
