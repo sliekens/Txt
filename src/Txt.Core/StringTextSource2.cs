@@ -1,6 +1,4 @@
-﻿using System;
-using JetBrains.Annotations;
-using Txt.Core;
+﻿using JetBrains.Annotations;
 
 namespace Txt.Core
 {
@@ -11,7 +9,7 @@ namespace Txt.Core
         {
         }
 
-        protected override int ReadImpl(char[] buffer, int offset, int count)
+        protected override int ReadImpl(char[] buffer, int startIndex, int maxCount)
         {
             return 0;
         }
