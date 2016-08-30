@@ -38,5 +38,27 @@ namespace Txt.Core
         /// </summary>
         /// <param name="offset">A character offset relative to the beginning of the current text source.</param>
         void Seek(long offset);
+
+        /// <summary>
+        ///     Start recording characters into an internal buffer. Calling this method ensures that
+        ///     <see cref="TextSource2.Seek" /> will not throw an exception when called with an offset that is equal or greater
+        ///     than the
+        ///     current value of <see cref="TextSource2.Offset" />.
+        /// </summary>
+        /// <remarks>
+        ///     Consumers must take responsibility of calling <see cref="TextSource2.StopRecording" /> when they no longer intend
+        ///     to reset the
+        ///     current offset.
+        /// </remarks>
+        void StartRecording();
+
+        /// <summary>
+        ///     Stop recording characters and clear the internal buffer.
+        /// </summary>
+        /// <remarks>
+        ///     When <see cref="TextSource2.StartRecording" /> is called n times where n is n>=1, only the n-th call to
+        ///     <see cref="TextSource2.StopRecording" /> will cause the internal buffer to be cleared.
+        /// </remarks>
+        void StopRecording();
     }
 }
