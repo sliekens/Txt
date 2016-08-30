@@ -80,7 +80,7 @@ namespace Txt.Core
             // When creating a new StringTextSource with a null argument
             // Then an ArgumentNullException is thrown
             StringTextSource2 sut;
-            Assert.Throws<ArgumentNullException>(() => sut = new StringTextSource2(null));
+            Assert.Throws<ArgumentNullException>(() => sut = new StringTextSource2((string)null));
         }
 
         [Fact]
