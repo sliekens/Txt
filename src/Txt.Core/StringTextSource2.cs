@@ -7,15 +7,7 @@ namespace Txt.Core
     public class StringTextSource2 : TextSource2
     {
         public StringTextSource2([NotNull] string data)
-            : base(new Func<char[]>(
-                () =>
-                {
-                    if (data == null)
-                    {
-                        throw new ArgumentNullException(nameof(data));
-                    }
-                    return data.ToCharArray();
-                })())
+            : base(data == null ? null : data.ToCharArray())
         {
         }
 
