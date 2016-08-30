@@ -16,10 +16,10 @@ namespace Txt.Core
         ///     is
         ///     called, we'll append characters instead of overwriting them, until <see cref="StopRecording" /> is called.
         /// </remarks>
-        private readonly char[] data;
+        private char[] data;
 
         /// <summary>
-        ///     The index of the next unread character in <see cref="data" />. Its range is 0..<see cref="dataLength" />-1.
+        ///     The index of the next unread character in <c>data</c>. Its range is 0..(<c>dataLength-1</c>).
         /// </summary>
         /// <remarks>
         ///     Typically, the index is reset to 0 with every read or seek operation. However, when <see cref="StartRecording" />
@@ -31,7 +31,7 @@ namespace Txt.Core
         private int dataIndex;
 
         /// <summary>
-        ///     The number of unread characters in <see cref="data" />. Its range is 0..data.Length.
+        ///     The number of buffered characters in <see cref="data" />. Its range is 0..(<c>data.Length</c>).
         /// </summary>
         private int dataLength;
 
@@ -93,6 +93,10 @@ namespace Txt.Core
             dataLength = length;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TextSource2"/> class with a specified initial capacity for its internal buffer.
+        /// </summary>
+        /// <param name="capacity">The inital capacity of the internal buffer.</param>
         protected TextSource2(int capacity)
         {
             if (capacity < 0)
@@ -125,8 +129,8 @@ namespace Txt.Core
             {
                 throw new ObjectDisposedException(GetType().FullName);
             }
-            var unread = FillBuffer(1);
-            if (unread == 0)
+            var unreadCount = FillBuffer(1);
+            if (unreadCount == 0)
             {
                 return -1;
             }
@@ -143,8 +147,8 @@ namespace Txt.Core
             {
                 throw new ObjectDisposedException(GetType().FullName);
             }
-            var unread = FillBuffer(1);
-            if (unread == 0)
+            var unreadCount = FillBuffer(1);
+            if (unreadCount == 0)
             {
                 return -1;
             }
@@ -189,8 +193,8 @@ namespace Txt.Core
             {
                 return 0;
             }
-            var unread = FillBuffer(maxCount);
-            maxCount = Math.Min(maxCount, unread);
+            var unreadCount = FillBuffer(maxCount);
+            maxCount = Math.Min(maxCount, unreadCount);
             Array.Copy(data, dataIndex, buffer, startIndex, maxCount);
             dataIndex += maxCount;
             index += maxCount;
@@ -228,8 +232,8 @@ namespace Txt.Core
                 {
                     throw new ArgumentOutOfRangeException(nameof(offset));
                 }
-                var unread = FillBuffer((int)diff);
-                dataIndex += (int)Math.Min(diff, unread);
+                var unreadCount = FillBuffer((int)diff);
+                dataIndex += (int)Math.Min(diff, unreadCount);
             }
             index = offset;
             if (watchers == 0)
@@ -299,30 +303,31 @@ namespace Txt.Core
         {
             if (data.Length == 0)
             {
-                return 0;
+                Array.Resize(ref data, count);
             }
             if (watchers == 0)
             {
                 ResetBuffer();
             }
-            if (dataLength == data.Length)
+
+            // Just return already if there are enough characters in the buffer
+            var unreadCount = dataLength - dataIndex;
+            if (unreadCount >= count)
             {
-                if (dataIndex == dataLength)
-                {
-                    throw new InvalidOperationException(
-                        @"Buffer has reached maximum capacity. Consider increasing the buffer size.");
-                }
-                return dataLength - dataIndex;
+                return unreadCount;
             }
-            var buffered = dataLength - dataIndex;
-            count = Math.Max(count - buffered, 0);
-            if (count == 0)
+
+            // Resize the buffer if it is too small to hold the needed number of characters
+            var need = count - unreadCount;
+            var unusedCapacity = data.Length - dataLength - dataIndex;
+            if (need > unusedCapacity)
             {
-                return buffered;
+                Array.Resize(ref data, data.Length + need - unusedCapacity);
             }
-            var length = ReadImpl(data, dataIndex, count);
+            
+            var length = ReadImpl(data, dataIndex, need);
             dataLength += length;
-            return length + buffered;
+            return length + unreadCount;
         }
 
         /// <summary>
