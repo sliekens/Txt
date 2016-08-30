@@ -55,8 +55,42 @@ namespace Txt.Core
             {
                 throw new ArgumentNullException(nameof(data));
             }
-            dataLength = data.Length;
             this.data = data;
+            dataLength = data.Length;
+        }
+
+        protected TextSource2([NotNull] char[] data, int startIndex)
+        {
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
+            if ((startIndex < 0) || (startIndex > data.Length))
+            {
+                throw new ArgumentOutOfRangeException(nameof(startIndex));
+            }
+            this.data = data;
+            dataIndex = startIndex;
+            dataLength = data.Length - startIndex;
+        }
+
+        protected TextSource2([NotNull] char[] data, int startIndex, int length)
+        {
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
+            if ((startIndex < 0) || (startIndex > data.Length))
+            {
+                throw new ArgumentOutOfRangeException(nameof(startIndex));
+            }
+            if ((length < 0) || (length > data.Length - startIndex))
+            {
+                throw new ArgumentOutOfRangeException(nameof(length));
+            }
+            this.data = data;
+            dataIndex = startIndex;
+            dataLength = length;
         }
 
         protected TextSource2(int capacity)
@@ -291,6 +325,9 @@ namespace Txt.Core
             return length + buffered;
         }
 
+        /// <summary>
+        ///     Removes <see cref="dataIndex" /> characters from the start of the buffer.
+        /// </summary>
         private void ResetBuffer()
         {
             if (dataIndex == 0)
