@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
@@ -10,61 +9,6 @@ namespace Txt.Core
         private const string EmptyString = "";
 
         private const string Sentence = "The quick brown fox jumps over the lazy dog";
-
-        public static IEnumerable<object[]> LineAndColumnData()
-        {
-            yield return new object[]
-            {
-                "",
-                new[]
-                {
-                    new Marker(0, 1, 1)
-                }
-            };
-            yield return new object[]
-             {
-                "abc",
-                new[]
-                {
-                    new Marker(0, 1, 1),
-                    new Marker(1, 1, 2),
-                    new Marker(2, 1, 3)
-                }
-             };
-            yield return new object[]
-             {
-                "\n",
-                new[]
-                {
-                    new Marker(0, 1, 1),
-                    new Marker(1, 2, 1),
-                }
-             };
-            yield return new object[]
-             {
-                "\r\n",
-                new[]
-                {
-                    new Marker(0, 1, 1),
-                    new Marker(1, 1, 1),
-                    new Marker(2, 2, 1),
-                }
-             };
-            yield return new object[]
-             {
-                "L1\r\nL2",
-                new[]
-                {
-                    new Marker(0, 1, 1),
-                    new Marker(1, 1, 2),
-                    new Marker(2, 1, 3),
-                    new Marker(3, 1, 1),
-                    new Marker(4, 2, 1),
-                    new Marker(5, 2, 2),
-                    new Marker(6, 2, 3),
-                }
-             };
-        }
 
         [Fact]
         public void WhenNewWithEmptyString_ExpectObjectIsCreated()
@@ -237,19 +181,6 @@ namespace Txt.Core
         }
 
         [Fact]
-        public void WhenSeekWithOffsetGreaterThanCurrent_ExpectCharacterAtSpecifiedOffset()
-        {
-            // Given that there is text to be read
-            // When Seek is called
-            // Then the current offset becomes the specified offset
-            using (var sut = new StringTextSource2("abc"))
-            {
-                sut.Seek(2);
-                Assert.Equal(2, sut.Offset);
-            }
-        }
-
-        [Fact]
         public void WhenSeekWithNegativeOffset_ExpectArgumentOutOfRangeException()
         {
             // Given that there is text to be read
@@ -271,6 +202,19 @@ namespace Txt.Core
             using (var sut = new StringTextSource2("abc"))
             {
                 Assert.Throws<ArgumentOutOfRangeException>(() => sut.Seek(4));
+            }
+        }
+
+        [Fact]
+        public void WhenSeekWithOffsetGreaterThanCurrent_ExpectCharacterAtSpecifiedOffset()
+        {
+            // Given that there is text to be read
+            // When Seek is called
+            // Then the current offset becomes the specified offset
+            using (var sut = new StringTextSource2("abc"))
+            {
+                sut.Seek(2);
+                Assert.Equal(2, sut.Offset);
             }
         }
     }
