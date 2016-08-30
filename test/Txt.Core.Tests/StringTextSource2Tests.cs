@@ -194,18 +194,6 @@ namespace Txt.Core
         }
 
         [Fact]
-        public void WhenSeekWithOffsetBeyondTextLength_ExpectArgumentOutOfRangeException()
-        {
-            // Given that there is text to be read
-            // When Seek is called with an offset greater than the length of the text
-            // Then an ArgumentOutOfRangeException is thrown
-            using (var sut = new StringTextSource2("abc"))
-            {
-                Assert.Throws<ArgumentOutOfRangeException>(() => sut.Seek(4));
-            }
-        }
-
-        [Fact]
         public void WhenSeekWithOffsetGreaterThanCurrent_ExpectCharacterAtSpecifiedOffset()
         {
             // Given that there is text to be read
