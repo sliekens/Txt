@@ -48,11 +48,10 @@ namespace Txt.Core
         ///     current value of <see cref="TextSource2.Offset" />.
         /// </summary>
         /// <remarks>
-        ///     Consumers must take responsibility of calling <see cref="TextSource2.StopRecording" /> when they no longer intend
-        ///     to reset the
-        ///     current offset.
+        ///     Consumers must take responsibility of calling <see cref="TextSource2.StopRecording" /> when they no longer intend to reset the current offset.
         /// </remarks>
-        void StartRecording();
+        /// <returns>The <see cref="Offset"/> at which recording begins.</returns>
+        long StartRecording();
 
         /// <summary>
         ///     Stop recording characters and clear the internal buffer.

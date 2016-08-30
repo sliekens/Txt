@@ -262,13 +262,14 @@ namespace Txt.Core
         ///     Consumers must take responsibility of calling <see cref="StopRecording" /> when they no longer intend to reset the
         ///     current offset.
         /// </remarks>
-        public void StartRecording()
+        public long StartRecording()
         {
             if (disposed)
             {
                 throw new ObjectDisposedException(GetType().FullName);
             }
             watchers++;
+            return Offset;
         }
 
         /// <summary>
