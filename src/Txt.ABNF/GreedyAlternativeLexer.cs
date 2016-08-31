@@ -37,50 +37,51 @@ namespace Txt.ABNF
 
         protected override IReadResult<Alternation> ReadImpl(ITextScanner scanner, ITextContext context)
         {
-            ILexer<Element> bestCandidate = null;
-            var bestCandidateLength = -1;
-            var ordinal = 0;
             IList<SyntaxError> errors = new List<SyntaxError>(lexers.Length);
             SyntaxError partialMatch = null;
-
-            // ReSharper disable once ForCanBeConvertedToForeach
-            for (var i = 0; i < lexers.Length; i++)
+            var offset = scanner.StartRecording();
+            var greediestOffset = offset;
+            Element greediest = null;
+            var ordinal = 0;
+            try
             {
-                var lexer = lexers[i];
-                var candidate = lexer.Read(scanner);
-                if (candidate.Success)
+                // ReSharper disable once ForCanBeConvertedToForeach
+                for (var i = 0; i < lexers.Length; i++)
                 {
-                    var alternative = candidate.Element;
-                    var length = alternative.Text.Length;
-                    if (length > bestCandidateLength)
+                    var lexer = lexers[i];
+                    var candidate = lexer.Read(scanner);
+                    if (candidate.Success)
                     {
-                        bestCandidate = lexer;
-                        bestCandidateLength = length;
-                        ordinal = i + 1;
+                        if (scanner.Offset > greediestOffset)
+                        {
+                            greediest = candidate.Element;
+                            ordinal = i + 1;
+                        }
                     }
-                    if (length != 0)
+                    else
                     {
-                        scanner.Unread(alternative.Text);
+                        errors.Add(candidate.Error);
+                        if ((partialMatch == null) || (candidate.Text.Length > partialMatch.Text.Length))
+                        {
+                            partialMatch = candidate.Error;
+                        }
+
                     }
-                }
-                else
-                {
-                    errors.Add(candidate.Error);
-                    if ((partialMatch == null) || (candidate.Text.Length > partialMatch.Text.Length))
-                    {
-                        partialMatch = candidate.Error;
-                    }
+                    scanner.Seek(offset);
                 }
             }
-            if (bestCandidate == null)
+            finally
+            {
+                scanner.StopRecording();
+            }
+            if (greediest == null)
             {
                 Debug.Assert(partialMatch != null, "partialMatch != null");
                 return new ReadResult<Alternation>(partialMatch);
             }
-            var readResult = bestCandidate.Read(scanner);
-            Debug.Assert(readResult.Success, "readResult.Success");
-            return
-                new ReadResult<Alternation>(new Alternation(readResult.Text, readResult.Element, context, ordinal));
+            scanner.Seek(greediestOffset);
+            var alternation = new Alternation(greediest.Text, greediest, context, ordinal);
+            return new ReadResult<Alternation>(alternation);
         }
     }
 }

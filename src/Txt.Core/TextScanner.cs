@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Threading;
+using System.Threading.Tasks;
 using JetBrains.Annotations;
 
 namespace Txt.Core
@@ -14,12 +14,6 @@ namespace Txt.Core
         [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private bool disposed;
 
-        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private bool endOfInput;
-
-        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private int offset;
-
         public TextScanner([NotNull] ITextSource textSource)
         {
             if (textSource == null)
@@ -29,46 +23,9 @@ namespace Txt.Core
             this.textSource = textSource;
         }
 
-        /// <inheritdoc />
-        public virtual bool EndOfInput
+        public long Offset
         {
-            get
-            {
-                if (disposed)
-                {
-                    throw new ObjectDisposedException(nameof(TextScanner));
-                }
-                return endOfInput;
-            }
-        }
-
-        /// <inheritdoc />
-        public virtual int Offset
-        {
-            get
-            {
-                if (disposed)
-                {
-                    throw new ObjectDisposedException(nameof(TextScanner));
-                }
-                return offset;
-            }
-        }
-
-        public int Line
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public int Column
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            get { return textSource.Offset; }
         }
 
         /// <summary>This method calls <see cref="Dispose(bool)" />, specifying <c>true</c> to release all resources.</summary>
@@ -78,44 +35,54 @@ namespace Txt.Core
             GC.SuppressFinalize(this);
         }
 
-        /// <inheritdoc />
-        public virtual ITextContext GetContext()
+        public ITextContext GetContext()
         {
-            if (disposed)
-            {
-                throw new ObjectDisposedException(nameof(TextScanner));
-            }
-            return new Bookmark(offset);
+            return new Bookmark(Offset);
         }
 
         public int Peek()
         {
-            if (disposed)
-            {
-                throw new ObjectDisposedException(nameof(TextScanner));
-            }
-            var peek = textSource.Peek();
-            if (peek == -1)
-            {
-                endOfInput = true;
-            }
-            return peek;
+            return textSource.Peek();
         }
 
         public int Read()
         {
-            if (disposed)
-            {
-                throw new ObjectDisposedException(nameof(TextScanner));
-            }
-            var read = textSource.Read();
-            if (read == -1)
-            {
-                endOfInput = true;
-                return -1;
-            }
-            Interlocked.Increment(ref offset);
-            return read;
+            return textSource.Read();
+        }
+
+        public int Read(char[] buffer, int startIndex, int maxCount)
+        {
+            return textSource.Read(buffer, startIndex, maxCount);
+        }
+
+        public Task<int> ReadAsync(char[] buffer, int startIndex, int maxCount)
+        {
+            return textSource.ReadAsync(buffer, startIndex, maxCount);
+        }
+
+        public int ReadBlock(char[] buffer, int startIndex, int maxCount)
+        {
+            return textSource.ReadBlock(buffer, startIndex, maxCount);
+        }
+
+        public Task<int> ReadBlockAsync(char[] buffer, int startIndex, int maxCount)
+        {
+            return textSource.ReadBlockAsync(buffer, startIndex, maxCount);
+        }
+
+        public void Seek(long offset)
+        {
+            textSource.Seek(offset);
+        }
+
+        public long StartRecording()
+        {
+            return textSource.StartRecording();
+        }
+
+        public void StopRecording()
+        {
+            textSource.StopRecording();
         }
 
         /// <summary>
@@ -140,19 +107,15 @@ namespace Txt.Core
             var head = textSource.Peek();
             if (head == -1)
             {
-                endOfInput = true;
                 return new MatchResult(true, false, string.Empty, string.Empty);
             }
-
             var next = (char)head;
             var text = char.ToString(next);
             if (!predicate(next))
             {
                 return new MatchResult(false, false, text, string.Empty);
             }
-
             textSource.Read();
-            Interlocked.Increment(ref offset);
             return new MatchResult(false, true, text, text);
         }
 
@@ -179,21 +142,27 @@ namespace Txt.Core
                 }
                 return MatchResult.FromMatch(string.Empty, s);
             }
-            var buffer = new char[s.Length];
-            var len = textSource.ReadBlock(buffer, 0, buffer.Length);
-            var next = new string(buffer, 0, len);
-            if (len == 0)
+            var offset = StartRecording();
+            try
             {
-                endOfInput = true;
-                return MatchResult.FromEndOfInput(s);
-            }
-            if (!comparer.Equals(s, next))
-            {
-                textSource.Unread(buffer, 0, len);
+                var buffer = new char[s.Length];
+                var len = textSource.ReadBlock(buffer, 0, buffer.Length);
+                if (len == 0)
+                {
+                    return MatchResult.FromEndOfInput(s);
+                }
+                var next = new string(buffer, 0, len);
+                if (comparer.Equals(s, next))
+                {
+                    return MatchResult.FromMatch(next, s);
+                }
+                Seek(offset);
                 return MatchResult.FromMismatch(next, s);
             }
-            Interlocked.Add(ref offset, len);
-            return MatchResult.FromMatch(next, s);
+            finally
+            {
+                StopRecording();
+            }
         }
 
         /// <inheritdoc />
@@ -207,7 +176,6 @@ namespace Txt.Core
             var expected = char.ToString(c);
             if (head == -1)
             {
-                endOfInput = true;
                 return MatchResult.FromEndOfInput(expected);
             }
             var next = (char)head;
@@ -217,46 +185,9 @@ namespace Txt.Core
                 return MatchResult.FromMismatch(text, expected);
             }
             textSource.Read();
-            Interlocked.Increment(ref offset);
             return MatchResult.FromMatch(text, expected);
         }
 
-        public void Unread(string s)
-        {
-            if (disposed)
-            {
-                throw new ObjectDisposedException(nameof(TextScanner));
-            }
-            if (s == null)
-            {
-                throw new ArgumentNullException(nameof(s));
-            }
-            if (offset < s.Length)
-            {
-                throw new InvalidOperationException("Precondition: Offset >= s.Length");
-            }
-
-            // Special case: pushback string may be empty
-            // -> no-op
-            if (s.Length == 0)
-            {
-                return;
-            }
-            if (s.Length == 1)
-            {
-                Interlocked.Decrement(ref offset);
-                textSource.Unread(s[0]);
-            }
-            else
-            {
-                var buffer = s.ToCharArray();
-                Interlocked.Add(ref offset, -buffer.Length);
-                textSource.Unread(buffer, 0, buffer.Length);
-            }
-            endOfInput = false;
-        }
-
-        /// <inheritdoc />
         void IDisposable.Dispose()
         {
             Close();

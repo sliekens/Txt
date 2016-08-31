@@ -13,12 +13,8 @@ using JetBrains.Annotations;
 
 namespace Txt.Core
 {
-    public interface ITextScanner : ITextContext, IDisposable
+    public interface ITextScanner : ITextSource
     {
-        /// <summary>Gets or sets a value indicating whether the end of the input has been reached.</summary>
-        /// <exception cref="ObjectDisposedException">The current text scanner is closed.</exception>
-        bool EndOfInput { get; }
-
         /// <summary>Gets a snapshot of the current context. The return value is immutable.</summary>
         /// <exception cref="ObjectDisposedException">The current text scanner is closed.</exception>
         /// <returns>The current context.</returns>
@@ -29,10 +25,6 @@ namespace Txt.Core
         /// </remarks>
         [NotNull]
         ITextContext GetContext();
-
-        int Peek();
-
-        int Read();
 
         /// <summary>
         ///     Compares the given character to the next available character and advances the scanner's position if there is a
@@ -83,11 +75,5 @@ namespace Txt.Core
         ///     given string.
         /// </returns>
         MatchResult TryMatch([NotNull] string s, [NotNull] IEqualityComparer<string> comparer);
-
-        /// <summary>Prepends the given text to the input stream.</summary>
-        /// <param name="s">The text to put back.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="s" /> is a null reference.</exception>
-        /// <exception cref="ObjectDisposedException">The current text scanner is closed.</exception>
-        void Unread([NotNull] string s);
     }
 }

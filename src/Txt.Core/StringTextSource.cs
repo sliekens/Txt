@@ -1,92 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 
 namespace Txt.Core
 {
     public class StringTextSource : TextSource
     {
-        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly Stack<char> pushback;
-
-        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly Queue<char> s;
-
-        public StringTextSource([NotNull] string s)
+        public StringTextSource([NotNull] string data)
+            : base(data?.ToCharArray())
         {
-            if (s == null)
-            {
-                throw new ArgumentNullException(nameof(s));
-            }
-            this.s = new Queue<char>(s.Length);
-
-            // ReSharper disable once ForCanBeConvertedToForeach
-            for (var index = 0; index < s.Length; index++)
-            {
-                this.s.Enqueue(s[index]);
-            }
-            pushback = new Stack<char>();
         }
 
-        protected override int PeekImpl()
+        public StringTextSource([NotNull] char[] data)
+            : base(data)
         {
-            if (pushback.Count != 0)
-            {
-                return pushback.Peek();
-            }
-            if (s.Count != 0)
-            {
-                return s.Peek();
-            }
-            return -1;
         }
 
-        protected override int ReadImpl()
+        public StringTextSource([NotNull] char[] data, int startIndex)
+            : base(data, startIndex)
         {
-            if (pushback.Count != 0)
-            {
-                return pushback.Pop();
-            }
-            if (s.Count != 0)
-            {
-                return s.Dequeue();
-            }
-            return -1;
         }
 
-        protected override int ReadImpl(char[] buffer, int offset, int count)
+        public StringTextSource([NotNull] char[] data, int startIndex, int length)
+            : base(data, startIndex, length)
         {
-            int length;
-            for (length = 0; length < count; length++, offset++)
-            {
-                if (pushback.Count == 0)
-                {
-                    if (s.Count == 0)
-                    {
-                        break;
-                    }
-                    buffer[offset] = s.Dequeue();
-                }
-                else
-                {
-                    buffer[offset] = pushback.Pop();
-                }
-            }
-            return length;
         }
 
-        protected override void UnreadImpl(char c)
+        protected override int ReadImpl(char[] buffer, int startIndex, int maxCount)
         {
-            pushback.Push(c);
-        }
-
-        protected override void UnreadImpl(char[] buffer, int offset, int count)
-        {
-            for (var i = offset + count - 1; i >= 0; i--)
-            {
-                pushback.Push(buffer[i]);
-            }
+            // All characters were buffered upfront so return a value indicating that there are no more characters
+            return 0;
         }
     }
 }

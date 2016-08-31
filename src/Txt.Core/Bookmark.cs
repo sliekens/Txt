@@ -7,7 +7,6 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
 using System.Diagnostics;
 
 namespace Txt.Core
@@ -17,7 +16,7 @@ namespace Txt.Core
     {
         /// <summary>Initializes a new instance of the <see cref="Bookmark" /> struct with a specified offset.</summary>
         /// <param name="offset">The position, relative to the beginning of the data source.</param>
-        public Bookmark(int offset)
+        public Bookmark(long offset)
             : this()
         {
             Debug.Assert(offset >= 0, "offset >= 0");
@@ -25,22 +24,6 @@ namespace Txt.Core
         }
 
         /// <summary>Gets the current position, relative to the beginning of the data source.</summary>
-        public int Offset { get; }
-
-        public int Line
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public int Column
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public long Offset { get; }
     }
 }

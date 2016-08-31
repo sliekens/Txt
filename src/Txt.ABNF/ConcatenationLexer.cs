@@ -34,31 +34,35 @@ namespace Txt.ABNF
         {
             var stringBuilder = new StringBuilder();
             IList<Element> elements = new List<Element>(lexers.Count);
-
-            // ReSharper disable once ForCanBeConvertedToForeach
-            for (var i = 0; i < lexers.Count; i++)
+            var offset = scanner.StartRecording();
+            try
             {
-                var readResult = lexers[i].Read(scanner);
-                if (readResult.Success)
+                // ReSharper disable once ForCanBeConvertedToForeach
+                for (var i = 0; i < lexers.Count; i++)
                 {
-                    stringBuilder.Append(readResult.Text);
-                    elements.Add(readResult.Element);
-                }
-                else
-                {
-                    var partialMatch = stringBuilder.ToString();
-                    if (partialMatch.Length != 0)
+                    var readResult = lexers[i].Read(scanner);
+                    if (readResult.Success)
                     {
-                        scanner.Unread(partialMatch);
+                        stringBuilder.Append(readResult.Text);
+                        elements.Add(readResult.Element);
                     }
-                    return
-                        new ReadResult<Concatenation>(new SyntaxError(
+                    else
+                    {
+                        scanner.Seek(offset);
+                        var partialMatch = stringBuilder.ToString();
+                        var syntaxError = new SyntaxError(
                             readResult.EndOfInput,
                             partialMatch,
                             readResult.ErrorText,
                             context,
-                            readResult.Error));
+                            readResult.Error);
+                        return new ReadResult<Concatenation>(syntaxError);
+                    }
                 }
+            }
+            finally
+            {
+                scanner.StopRecording();
             }
             return new ReadResult<Concatenation>(new Concatenation(stringBuilder.ToString(), elements, context));
         }

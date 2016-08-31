@@ -49,38 +49,41 @@ namespace Txt.ABNF
         {
             var stringBuilder = new StringBuilder();
             IList<Element> elements = new List<Element>(lowerBound);
-
-            // ReSharper disable once ForCanBeConvertedToForeach
-            for (var i = 0; i < upperBound; i++)
+            var offset = scanner.StartRecording();
+            try
             {
-                var readResult = lexer.Read(scanner);
-                if (readResult.Success)
+                // ReSharper disable once ForCanBeConvertedToForeach
+                for (var i = 0; i < upperBound; i++)
                 {
-                    elements.Add(readResult.Element);
-                    stringBuilder.Append(readResult.Text);
-                }
-                else
-                {
-                    if (elements.Count >= lowerBound)
+                    var readResult = lexer.Read(scanner);
+                    if (readResult.Success)
                     {
-                        return
-                            new ReadResult<Repetition>(new Repetition(stringBuilder.ToString(), elements, context));
+                        elements.Add(readResult.Element);
+                        stringBuilder.Append(readResult.Text);
                     }
-                    var partialMatch = stringBuilder.ToString();
-                    if (partialMatch.Length != 0)
+                    else
                     {
-                        scanner.Unread(partialMatch);
-                    }
-                    return
-                        new ReadResult<Repetition>(new SyntaxError(
+                        if (elements.Count >= lowerBound)
+                        {
+                            var repetition = new Repetition(stringBuilder.ToString(), elements, context);
+                            return new ReadResult<Repetition>(repetition);
+                        }
+                        scanner.Seek(offset);
+                        var syntaxError = new SyntaxError(
                             readResult.EndOfInput,
-                            partialMatch,
+                            stringBuilder.ToString(),
                             readResult.ErrorText,
                             context,
-                            readResult.Error));
+                            readResult.Error);
+                        return new ReadResult<Repetition>(syntaxError);
+                    }
                 }
+                return new ReadResult<Repetition>(new Repetition(stringBuilder.ToString(), elements, context));
             }
-            return new ReadResult<Repetition>(new Repetition(stringBuilder.ToString(), elements, context));
+            finally
+            {
+                scanner.StopRecording();
+            }
         }
     }
 }

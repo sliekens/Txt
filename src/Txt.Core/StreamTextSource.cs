@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.IO;
 using System.Text;
 using JetBrains.Annotations;
@@ -8,77 +7,69 @@ namespace Txt.Core
 {
     public class StreamTextSource : TextSource
     {
-        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly BinaryReader binaryReader;
+        private readonly BinaryReader reader;
 
-        public StreamTextSource([NotNull] PushbackInputStream inputStream, [NotNull] Encoding encoding)
+        private bool disposed;
+
+        public StreamTextSource([NotNull] Stream input, int capacity = 2048)
+            : base(capacity)
         {
-            if (inputStream == null)
+            if (input == null)
             {
-                throw new ArgumentNullException(nameof(inputStream));
+                throw new ArgumentNullException(nameof(input));
+            }
+            reader = new BinaryReader(input);
+        }
+
+        public StreamTextSource([NotNull] Stream input, [NotNull] Encoding encoding, int capacity = 2048)
+            : base(capacity)
+        {
+            if (input == null)
+            {
+                throw new ArgumentNullException(nameof(input));
             }
             if (encoding == null)
             {
                 throw new ArgumentNullException(nameof(encoding));
             }
-            Encoding = encoding;
-            binaryReader = new BinaryReader(inputStream, encoding, true);
+            reader = new BinaryReader(input, encoding);
         }
 
-        public Encoding Encoding { get; }
+        public StreamTextSource(
+            [NotNull] Stream input,
+            [NotNull] Encoding encoding,
+            bool leaveOpen,
+            int capacity = 2048)
+            : base(capacity)
+        {
+            if (input == null)
+            {
+                throw new ArgumentNullException(nameof(input));
+            }
+            if (encoding == null)
+            {
+                throw new ArgumentNullException(nameof(encoding));
+            }
+            reader = new BinaryReader(input, encoding, leaveOpen);
+        }
 
         protected override void Dispose(bool disposing)
         {
+            if (disposed)
+            {
+                return;
+            }
             if (disposing)
             {
-                binaryReader.Dispose();
+                reader.Dispose();
             }
             base.Dispose(disposing);
+            disposed = true;
         }
 
-        protected override int PeekImpl()
+        protected override int ReadImpl(char[] buffer, int startIndex, int maxCount)
         {
-            if (binaryReader.BaseStream.CanSeek)
-            {
-                return binaryReader.PeekChar();
-            }
-
-            var next = ReadImpl();
-            if (next == -1)
-            {
-                return -1;
-            }
-            UnreadImpl((char)next);
-            return next;
-        }
-
-        protected override int ReadImpl()
-        {
-            return binaryReader.Read();
-        }
-
-        protected override int ReadImpl(char[] buffer, int offset, int count)
-        {
-            return binaryReader.Read(buffer, offset, count);
-        }
-
-        protected override void UnreadImpl(char c)
-        {
-            Unread(new[] { c }, 0, 1);
-        }
-
-        protected override void UnreadImpl(char[] buffer, int offset, int count)
-        {
-            if (binaryReader.BaseStream.CanSeek)
-            {
-                var length = Encoding.GetByteCount(buffer, offset, count);
-                binaryReader.BaseStream.Seek(-length, SeekOrigin.Current);
-            }
-            else
-            {
-                var pushbackBuffer = Encoding.GetBytes(buffer, offset, count);
-                binaryReader.BaseStream.Write(pushbackBuffer, 0, pushbackBuffer.Length);
-            }
+            return reader.Read(buffer, startIndex, maxCount);
         }
     }
 }
