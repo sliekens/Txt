@@ -64,6 +64,7 @@ namespace Txt.Core
                 reader.Dispose();
             }
             base.Dispose(disposing);
+            disposed = true;
         }
 
         protected override int ReadImpl(char[] buffer, int startIndex, int maxCount)
