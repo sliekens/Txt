@@ -111,18 +111,6 @@ namespace Txt.Core
         }
 
         [Fact]
-        public async Task WhenUnreadAsync_ExpectObjectDisposedException()
-        {
-            // Given that the text source has been disposed
-            // When UnreadAsync is called
-            // Then an ObjectDisposedException is thrown
-            var sut = new StringTextSource(Sentence);
-            sut.Dispose();
-            var buffer = new[] { '!', '!', '!' };
-            await Assert.ThrowsAsync<ObjectDisposedException>(() => sut.UnreadAsync(buffer, 0, buffer.Length));
-        }
-
-        [Fact]
         public void WhenUnreadWithBuffer_ExpectObjectDisposedException()
         {
             // Given that the text source has been disposed

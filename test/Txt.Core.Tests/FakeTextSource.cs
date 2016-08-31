@@ -38,8 +38,6 @@ namespace Txt.Core
 
         public Action<char[], int, int> OnUnreadCharArrayInt32Int32 { get; set; }
 
-        public Func<char[], int, int, Task> OnUnreadCharAsyncArrayInt32Int32 { get; set; }
-
         public void Dispose()
         {
             if (this.OnDispose == null)
@@ -128,16 +126,6 @@ namespace Txt.Core
             }
 
             this.OnUnreadCharArrayInt32Int32(buffer, offset, count);
-        }
-
-        public Task UnreadAsync(char[] buffer, int offset, int count)
-        {
-            if (this.OnUnreadCharAsyncArrayInt32Int32 == null)
-            {
-                throw new NotImplementedException();
-            }
-
-            return this.OnUnreadCharAsyncArrayInt32Int32(buffer, offset, count);
         }
     }
 }

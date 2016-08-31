@@ -9,7 +9,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using JetBrains.Annotations;
 
 namespace Txt.Core
@@ -90,11 +89,5 @@ namespace Txt.Core
         /// <exception cref="ArgumentNullException"><paramref name="s" /> is a null reference.</exception>
         /// <exception cref="ObjectDisposedException">The current text scanner is closed.</exception>
         void Unread([NotNull] string s);
-
-        /// <summary>Prepends the given text to the input stream.</summary>
-        /// <param name="s">The text to put back.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="s" /> is a null reference.</exception>
-        /// <exception cref="ObjectDisposedException">The current text scanner is closed.</exception>
-        Task UnreadAsync([NotNull] string s);
     }
 }

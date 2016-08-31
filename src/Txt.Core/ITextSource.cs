@@ -24,7 +24,5 @@ namespace Txt.Core
         void Unread(char c);
 
         void Unread([NotNull] char[] buffer, int offset, int count);
-
-        Task UnreadAsync([NotNull] char[] buffer, int offset, int count);
     }
 }

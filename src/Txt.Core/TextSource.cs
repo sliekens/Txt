@@ -172,35 +172,6 @@ namespace Txt.Core
             UnreadImpl(buffer, offset, count);
         }
 
-        public Task UnreadAsync(char[] buffer, int offset, int count)
-        {
-            if (disposed)
-            {
-                throw new ObjectDisposedException(GetType().FullName);
-            }
-            if (buffer == null)
-            {
-                throw new ArgumentNullException(nameof(buffer));
-            }
-            if (offset < 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(offset), "Precondition: offset >= 0");
-            }
-            if (count < 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(count), "Precondition: count >= 0");
-            }
-            if (offset + count > buffer.Length)
-            {
-                throw new ArgumentOutOfRangeException(nameof(count), "Precondition: offset + count <= buffer.Length");
-            }
-            if (count == 0)
-            {
-                return TaskHelper.CompletedTask;
-            }
-            return UnreadAsyncImpl(buffer, offset, count, CancellationToken.None);
-        }
-
         protected virtual void Dispose(bool disposing)
         {
             if (!disposed)
@@ -271,29 +242,6 @@ namespace Txt.Core
 
         protected abstract int ReadImpl(char[] buffer, int offset, int count);
 
-        protected virtual Task UnreadAsyncImpl(
-            char[] buffer,
-            int offset,
-            int count,
-            CancellationToken cancellationToken)
-        {
-            Debug.Assert(buffer != null, "buffer != null");
-            Debug.Assert(offset >= 0);
-            Debug.Assert(count > 0);
-            Debug.Assert(offset + count <= buffer.Length);
-            return Task.Factory.StartNew(
-                           DelegatedUnread,
-                           new InputOutputState
-                           {
-                               TextSource = this,
-                               Buffer = buffer,
-                               Offset = offset,
-                               Count = count,
-                               CancellationToken = cancellationToken
-                           },
-                           cancellationToken);
-        }
-
         protected abstract void UnreadImpl(char c);
 
         protected abstract void UnreadImpl(char[] buffer, int offset, int count);
@@ -303,13 +251,6 @@ namespace Txt.Core
             Debug.Assert(o is InputOutputState, "o is InputOutputState");
             var state = (InputOutputState)o;
             return state.TextSource.ReadImpl(state.Buffer, state.Offset, state.Count);
-        }
-
-        private static void DelegatedUnread(object o)
-        {
-            Debug.Assert(o is InputOutputState, "o is InputOutputState");
-            var state = (InputOutputState)o;
-            state.TextSource.UnreadImpl(state.Buffer, state.Offset, state.Count);
         }
 
         private class InputOutputState

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
-using System.Threading.Tasks;
 using JetBrains.Annotations;
 
 namespace Txt.Core
@@ -257,23 +256,6 @@ namespace Txt.Core
             endOfInput = false;
         }
 
-        public Task UnreadAsync(string s)
-        {
-            if (disposed)
-            {
-                throw new ObjectDisposedException(nameof(TextScanner));
-            }
-            if (s == null)
-            {
-                throw new ArgumentNullException(nameof(s));
-            }
-            if (offset < s.Length)
-            {
-                throw new InvalidOperationException("Precondition: Offset >= s.Length");
-            }
-            return UnreadAsyncImpl(s);
-        }
-
         /// <inheritdoc />
         void IDisposable.Dispose()
         {
@@ -292,16 +274,6 @@ namespace Txt.Core
                 return;
             }
             disposed = true;
-        }
-
-        private async Task UnreadAsyncImpl(string s)
-        {
-            Debug.Assert(s != null, "s != null");
-            Debug.Assert(offset < s.Length, "this.offset < s.Length");
-            Debug.Assert(s.Length > 0);
-            var buffer = s.ToCharArray();
-            Interlocked.Add(ref offset, -buffer.Length);
-            await textSource.UnreadAsync(buffer, 0, buffer.Length).ConfigureAwait(false);
         }
     }
 }
