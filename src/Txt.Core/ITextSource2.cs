@@ -43,12 +43,12 @@ namespace Txt.Core
 
         /// <summary>
         ///     Start recording characters into an internal buffer. Calling this method ensures that
-        ///     <see cref="TextSource2.Seek" /> will not throw an exception when called with an offset that is equal or greater
+        ///     <see cref="Seek" /> will not throw an exception when called with an offset that is equal or greater
         ///     than the
-        ///     current value of <see cref="TextSource2.Offset" />.
+        ///     current value of <see cref="Offset" />.
         /// </summary>
         /// <remarks>
-        ///     Consumers must take responsibility of calling <see cref="TextSource2.StopRecording" /> when they no longer intend to reset the current offset.
+        ///     Consumers must take responsibility of calling <see cref="StopRecording" /> when they no longer intend to reset the current offset.
         /// </remarks>
         /// <returns>The <see cref="Offset"/> at which recording begins.</returns>
         long StartRecording();
@@ -57,8 +57,8 @@ namespace Txt.Core
         ///     Stop recording characters and clear the internal buffer.
         /// </summary>
         /// <remarks>
-        ///     When <see cref="TextSource2.StartRecording" /> is called n times where n is n>=1, only the n-th call to
-        ///     <see cref="TextSource2.StopRecording" /> will cause the internal buffer to be cleared.
+        ///     When <see cref="StartRecording" /> is called n times where n is n>=1, only the n-th call to
+        ///     <see cref="StopRecording" /> will cause the internal buffer to be cleared.
         /// </remarks>
         void StopRecording();
     }
