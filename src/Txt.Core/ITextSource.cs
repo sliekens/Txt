@@ -7,6 +7,16 @@ namespace Txt.Core
     public interface ITextSource : IDisposable
     {
         /// <summary>
+        ///     Gets the current position in the current <see cref="Line" />.
+        /// </summary>
+        int Column { get; }
+
+        /// <summary>
+        ///     Gets the current line number.
+        /// </summary>
+        int Line { get; }
+
+        /// <summary>
         ///     Gets the zero-based position within the current text source.
         /// </summary>
         long Offset { get; }

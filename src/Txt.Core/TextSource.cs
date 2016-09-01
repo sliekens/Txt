@@ -26,6 +26,8 @@ namespace Txt.Core
         /// </remarks>
         private char[] data;
 
+        private int dataColumn = 1;
+
         /// <summary>
         ///     The index of the next unread character in <c>data</c>. Its range is 0..(<c>dataLength-1</c>).
         /// </summary>
@@ -43,10 +45,14 @@ namespace Txt.Core
         /// </summary>
         private int dataLength;
 
+        private int dataLine = 1;
+
         /// <summary>The zero-based index into the text source at which <see cref="data" /> begins.</summary>
         private long dataOffset;
 
         private bool disposed;
+
+        private ITextSource textSourceImplementation;
 
         /// <summary>
         ///     A value indicating how many consumers expect to be able to seek to a previous offset. Do not reset the internal
@@ -112,6 +118,10 @@ namespace Txt.Core
             data = new char[capacity];
         }
 
+        public int Column { get; private set; } = 1;
+
+        public int Line { get; private set; } = 1;
+
         /// <summary>
         ///     Gets the zero-based position within the current text source.
         /// </summary>
@@ -161,6 +171,22 @@ namespace Txt.Core
             var c = data[dataIndex];
             dataIndex++;
             currentOffset++;
+            switch (c)
+            {
+                case '\r':
+                    Column = 1;
+                    break;
+                case '\n':
+                    Line++;
+                    if (Column != 1)
+                    {
+                        Column = 1;
+                    }
+                    break;
+                default:
+                    Column++;
+                    break;
+            }
             return c;
         }
 
@@ -204,6 +230,25 @@ namespace Txt.Core
             var unreadCount = FillBuffer(maxCount);
             maxCount = Math.Min(maxCount, unreadCount);
             Array.Copy(data, dataIndex, buffer, startIndex, maxCount);
+            for (var i = dataIndex; i < dataIndex + maxCount; i++)
+            {
+                switch (data[i])
+                {
+                    case '\r':
+                        Column = 1;
+                        break;
+                    case '\n':
+                        Line++;
+                        if (Column != 1)
+                        {
+                            Column = 1;
+                        }
+                        break;
+                    default:
+                        Column++;
+                        break;
+                }
+            }
             dataIndex += maxCount;
             currentOffset += maxCount;
             return maxCount;
@@ -319,6 +364,8 @@ namespace Txt.Core
             if (offset == dataOffset)
             {
                 currentOffset = dataOffset;
+                Line = dataLine;
+                Column = dataColumn;
                 dataIndex = 0;
                 return;
             }
@@ -329,6 +376,25 @@ namespace Txt.Core
             var lookahead = (int)(offset - currentOffset);
             var available = FillBuffer(lookahead);
             var seek = Math.Min(available, lookahead);
+            for (var i = dataIndex; i < dataIndex + seek; i++)
+            {
+                switch (data[i])
+                {
+                    case '\r':
+                        Column = 1;
+                        break;
+                    case '\n':
+                        Line++;
+                        if (Column != 1)
+                        {
+                            Column = 1;
+                        }
+                        break;
+                    default:
+                        Column++;
+                        break;
+                }
+            }
             dataIndex += seek;
             currentOffset += seek;
             if (watchers == 0)
@@ -485,6 +551,8 @@ namespace Txt.Core
             dataLength = unreadCount;
             dataIndex = 0;
             dataOffset = currentOffset;
+            dataLine = Line;
+            dataColumn = Column;
         }
     }
 }

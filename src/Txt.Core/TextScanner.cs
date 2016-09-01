@@ -23,10 +23,11 @@ namespace Txt.Core
             this.textSource = textSource;
         }
 
-        public long Offset
-        {
-            get { return textSource.Offset; }
-        }
+        public int Column => textSource.Column;
+
+        public int Line => textSource.Line;
+
+        public long Offset => textSource.Offset;
 
         /// <summary>This method calls <see cref="Dispose(bool)" />, specifying <c>true</c> to release all resources.</summary>
         public void Close()
