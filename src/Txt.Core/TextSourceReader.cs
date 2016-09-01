@@ -9,6 +9,8 @@ namespace Txt.Core
     {
         private readonly ITextSource textSource;
 
+        private bool disposed;
+
         public TextSourceReader([NotNull] ITextSource textSource)
         {
             if (textSource == null)
@@ -67,6 +69,20 @@ namespace Txt.Core
         public void StopRecording()
         {
             textSource.StopRecording();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposed)
+            {
+                return;
+            }
+            if (disposing)
+            {
+                textSource.Dispose();
+            }
+            base.Dispose(disposing);
+            disposed = true;
         }
     }
 }
