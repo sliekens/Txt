@@ -43,13 +43,16 @@ namespace Txt.Core
         ///     The zero-based index into the text source. This is not the index of the next unread character in
         ///     <see cref="data" />, that's <see cref="dataIndex" />.
         /// </summary>
-        private long index;
+        private long currentOffset;
 
         /// <summary>
         ///     A value indicating how many consumers expect to be able to seek to a previous offset. Do not reset the internal
         ///     buffer while this value is greater than 0.
         /// </summary>
         private int watchers;
+
+        /// <summary>The zero-based index into the text source at which <see cref="data"/> begins.</summary>
+        private long dataOffset;
 
         protected TextSource([NotNull] char[] data)
         {
@@ -112,7 +115,7 @@ namespace Txt.Core
         /// <summary>
         ///     Gets the zero-based position within the current text source.
         /// </summary>
-        public long Offset => index;
+        public long Offset => currentOffset;
 
         /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
         /// <filterpriority>2</filterpriority>
@@ -157,7 +160,7 @@ namespace Txt.Core
             }
             var c = data[dataIndex];
             dataIndex++;
-            index++;
+            currentOffset++;
             return c;
         }
 
@@ -202,7 +205,7 @@ namespace Txt.Core
             maxCount = Math.Min(maxCount, unreadCount);
             Array.Copy(data, dataIndex, buffer, startIndex, maxCount);
             dataIndex += maxCount;
-            index += maxCount;
+            currentOffset += maxCount;
             return maxCount;
         }
 
@@ -238,7 +241,7 @@ namespace Txt.Core
             maxCount = Math.Min(maxCount, unreadCount);
             Array.Copy(data, dataIndex, buffer, startIndex, maxCount);
             dataIndex += maxCount;
-            index += maxCount;
+            currentOffset += maxCount;
             return maxCount;
         }
 
@@ -305,27 +308,30 @@ namespace Txt.Core
             {
                 throw new ObjectDisposedException(GetType().FullName);
             }
-            if (Offset == offset)
+            if (offset < dataOffset)
+            {
+                throw new ArgumentOutOfRangeException(nameof(offset));
+            }
+            if (offset == currentOffset)
             {
                 return;
             }
-            var diff = Math.Abs(Offset - offset);
-            if (Offset > offset)
+            if (offset == dataOffset)
             {
-                // backtrack
-                if (diff > dataIndex)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(offset));
-                }
-                dataIndex -= (int)diff;
+                currentOffset = dataOffset;
+                dataIndex = 0;
+                return;
             }
-            else
+            if (offset < currentOffset)
             {
-                // lookahead
-                var unreadCount = FillBuffer((int)diff);
-                dataIndex += (int)Math.Min(diff, unreadCount);
+                Seek(dataOffset);
             }
-            index = offset;
+
+            var lookahead = (int)(offset - currentOffset);
+            var available = FillBuffer(lookahead);
+            var seek = Math.Min(available, lookahead);
+            dataIndex += seek;
+            currentOffset += seek;
             if (watchers == 0)
             {
                 ResetBuffer();
@@ -347,8 +353,12 @@ namespace Txt.Core
             {
                 throw new ObjectDisposedException(GetType().FullName);
             }
-            watchers++;
-            return Offset;
+            if (watchers == 0)
+            {
+                watchers++;
+                ResetBuffer();
+            }
+            return dataOffset;
         }
 
         /// <summary>
@@ -475,6 +485,7 @@ namespace Txt.Core
             }
             dataLength = unreadCount;
             dataIndex = 0;
+            dataOffset = currentOffset;
         }
     }
 }
