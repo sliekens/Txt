@@ -8,6 +8,12 @@ namespace Txt.Core
     public abstract class TextSource : ITextSource
     {
         /// <summary>
+        ///     The zero-based index into the text source. This is not the index of the next unread character in
+        ///     <see cref="data" />, that's <see cref="dataIndex" />.
+        /// </summary>
+        private long currentOffset;
+
+        /// <summary>
         ///     This is the internal character buffer.
         ///     This buffer is not meant to improve performance. Instead, its intended use is to provide a sliding window over a
         ///     text source.
@@ -37,22 +43,16 @@ namespace Txt.Core
         /// </summary>
         private int dataLength;
 
-        private bool disposed;
+        /// <summary>The zero-based index into the text source at which <see cref="data" /> begins.</summary>
+        private long dataOffset;
 
-        /// <summary>
-        ///     The zero-based index into the text source. This is not the index of the next unread character in
-        ///     <see cref="data" />, that's <see cref="dataIndex" />.
-        /// </summary>
-        private long currentOffset;
+        private bool disposed;
 
         /// <summary>
         ///     A value indicating how many consumers expect to be able to seek to a previous offset. Do not reset the internal
         ///     buffer while this value is greater than 0.
         /// </summary>
         private int watchers;
-
-        /// <summary>The zero-based index into the text source at which <see cref="data"/> begins.</summary>
-        private long dataOffset;
 
         protected TextSource([NotNull] char[] data)
         {
@@ -326,7 +326,6 @@ namespace Txt.Core
             {
                 Seek(dataOffset);
             }
-
             var lookahead = (int)(offset - currentOffset);
             var available = FillBuffer(lookahead);
             var seek = Math.Min(available, lookahead);
