@@ -52,8 +52,6 @@ namespace Txt.Core
 
         private bool disposed;
 
-        private ITextSource textSourceImplementation;
-
         /// <summary>
         ///     A value indicating how many consumers expect to be able to seek to a previous offset. Do not reset the internal
         ///     buffer while this value is greater than 0.
