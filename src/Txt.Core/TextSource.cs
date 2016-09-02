@@ -65,7 +65,7 @@ namespace Txt.Core
                 throw new ArgumentNullException(nameof(data));
             }
             this.data = data;
-            dataLength = data.Length;
+            dataLength = this.data.Length;
         }
 
         protected TextSource([NotNull] char[] data, int startIndex)
@@ -88,9 +88,16 @@ namespace Txt.Core
                     startIndex,
                     $"Precondition: {nameof(startIndex)} <= {nameof(data)}::{nameof(data.Length)}");
             }
-            this.data = data;
-            dataIndex = startIndex;
             dataLength = data.Length - startIndex;
+            if (startIndex == 0)
+            {
+                this.data = data;
+            }
+            else
+            {
+                this.data = new char[dataLength];
+                Array.Copy(data, startIndex, this.data, 0, dataLength);
+            }
         }
 
         protected TextSource([NotNull] char[] data, int startIndex, int length)
@@ -127,9 +134,17 @@ namespace Txt.Core
                     length,
                     $"Precondition: {nameof(length)} <= {nameof(data)}::{nameof(data.Length)} - {nameof(startIndex)}");
             }
-            this.data = data;
-            dataIndex = startIndex;
             dataLength = length;
+            if (startIndex == 0)
+            {
+                this.data = data;
+            }
+            else
+            {
+                this.data = new char[dataLength];
+                Array.Copy(data, startIndex, this.data, 0, dataLength);
+            }
+
         }
 
         /// <summary>
