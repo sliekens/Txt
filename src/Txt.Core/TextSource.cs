@@ -530,10 +530,6 @@ namespace Txt.Core
 
         private async Task<int> FillBufferAsync(int count)
         {
-            if (data.Length == 0)
-            {
-                Array.Resize(ref data, count);
-            }
             if (watchers == 0)
             {
                 ResetBuffer();
