@@ -20,11 +20,22 @@ Building a parser using Txt begins with defining a text source. A text source ca
 
 Txt includes `ITextSource` implementations for `System.String` or `System.IO.Stream`.
 
+```c#
+ITextSource stringTextSource = new StringTextSource("<c>Hello World</c>");
+```
+```c#
+ITextSource streamTextSource = new StreamTextSource(File.OpenRead("data.txt"), Encoding.UTF8);
+```
+
 ### Text Scanner
 
 A text source object is passed to a text scanner, which provides methods for reading and matching character data. A text scanner can be any class that implements `ITextScanner` and `IDisposable`.
 
 Txt includes a `TextScanner` class that is intended to fullfill every need.
+
+```c#
+ITextScanner textScanner = new TextScanner(stringTextSource);
+```
 
 ### Lexer
 
@@ -32,21 +43,29 @@ A text scanner is passed to a Lexer, which reads grammar elements from the text 
 
 Txt includes an abstract `Lexer` class that you should derive from.
 
+See the samples directory for concrete code samples.
+
 ### Element
 
 An Element is a class representation of a grammar rule. An instance of an Element contains a substring that matches its grammar rule. Your program should have one Element for every rule in a grammar.
 
 Txt includes an abstract `Element` class that you must derive from.
 
+See the samples directory for concrete code samples.
+
 ### Parser
 An Element is passed to a Parser. A Parser can be any class that implements `IParser<TElement, TResult>`.
 
 Txt includes an abstract `Parser` class that you may derive from.
 
+See the samples directory for concrete code samples.
+
 ### Walker
 One or more parsers are passed to a Walker. A walker is passed to an element. A walker knows how to make sense out of an element tree. It walks the tree and parses individual elements along the way.
 
 Txt includes an abstract `Walker` class that you must derive from.
+
+See the samples directory for concrete code samples.
 
 ## Example
 
