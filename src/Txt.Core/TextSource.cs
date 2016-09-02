@@ -74,9 +74,19 @@ namespace Txt.Core
             {
                 throw new ArgumentNullException(nameof(data));
             }
-            if ((startIndex < 0) || (startIndex > data.Length))
+            if (startIndex < 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(startIndex));
+                throw new ArgumentOutOfRangeException(
+                    nameof(startIndex),
+                    startIndex,
+                    $"Precondition: {nameof(startIndex)} >= 0");
+            }
+            if (startIndex > data.Length)
+            {
+                throw new ArgumentOutOfRangeException(
+                    nameof(startIndex),
+                    startIndex,
+                    $"Precondition: {nameof(startIndex)} <= {nameof(data)}::{nameof(data.Length)}");
             }
             this.data = data;
             dataIndex = startIndex;
@@ -89,13 +99,33 @@ namespace Txt.Core
             {
                 throw new ArgumentNullException(nameof(data));
             }
-            if ((startIndex < 0) || (startIndex > data.Length))
+            if (startIndex < 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(startIndex));
+                throw new ArgumentOutOfRangeException(
+                    nameof(startIndex),
+                    startIndex,
+                    $"Precondition: {nameof(startIndex)} >= 0");
             }
-            if ((length < 0) || (length > data.Length - startIndex))
+            if (startIndex > data.Length)
             {
-                throw new ArgumentOutOfRangeException(nameof(length));
+                throw new ArgumentOutOfRangeException(
+                    nameof(startIndex),
+                    startIndex,
+                    $"Precondition: {nameof(startIndex)} <= {nameof(data)}::{nameof(data.Length)}");
+            }
+            if (length < 0)
+            {
+                throw new ArgumentOutOfRangeException(
+                    nameof(length),
+                    length,
+                    $"Precondition: {nameof(length)} >= 0");
+            }
+            if (length > data.Length - startIndex)
+            {
+                throw new ArgumentOutOfRangeException(
+                    nameof(length),
+                    length,
+                    $"Precondition: {nameof(length)} <= {nameof(data)}::{nameof(data.Length)} - {nameof(startIndex)}");
             }
             this.data = data;
             dataIndex = startIndex;
