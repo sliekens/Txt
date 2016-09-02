@@ -38,7 +38,7 @@ namespace Txt.Core
 
         public ITextContext GetContext()
         {
-            return new Bookmark(Offset);
+            return new Bookmark(Offset, Line, Column);
         }
 
         public int Peek()
