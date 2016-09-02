@@ -73,21 +73,21 @@ namespace Txt.Core
             return current;
         }
 
-        public static SyntaxError FromMatchResult([NotNull] MatchResult matchResult, [NotNull] ITextContext context)
+        public static SyntaxError FromMatchResult([NotNull] ScanResult scanResult, [NotNull] ITextContext context)
         {
-            if (matchResult == null)
+            if (scanResult == null)
             {
-                throw new ArgumentNullException(nameof(matchResult));
+                throw new ArgumentNullException(nameof(scanResult));
             }
             if (context == null)
             {
                 throw new ArgumentNullException(nameof(context));
             }
-            if (matchResult.Success)
+            if (scanResult.Success)
             {
-                throw new ArgumentException("Argument is not an error result", nameof(matchResult));
+                throw new ArgumentException("Argument is not an error result", nameof(scanResult));
             }
-            return new SyntaxError(matchResult.EndOfInput, string.Empty, matchResult.Text, context);
+            return new SyntaxError(scanResult.EndOfInput, string.Empty, scanResult.Text, context);
         }
 
         public static SyntaxError FromReadResult<T>([NotNull] IReadResult<T> readResult, [NotNull] ITextContext context)

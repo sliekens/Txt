@@ -95,7 +95,7 @@ namespace Txt.Core
         ///     A value container that contains the next available character and another value indicating whether it matches
         ///     the conditions defined by the predicate.
         /// </returns>
-        public MatchResult TryMatch([NotNull] Predicate<char> predicate)
+        public ScanResult TryMatch([NotNull] Predicate<char> predicate)
         {
             if (predicate == null)
             {
@@ -108,24 +108,24 @@ namespace Txt.Core
             var head = textSource.Peek();
             if (head == -1)
             {
-                return new MatchResult(true, false, string.Empty, string.Empty);
+                return new ScanResult(true, false, string.Empty, string.Empty);
             }
             var next = (char)head;
             var text = char.ToString(next);
             if (!predicate(next))
             {
-                return new MatchResult(false, false, text, string.Empty);
+                return new ScanResult(false, false, text, string.Empty);
             }
             textSource.Read();
-            return new MatchResult(false, true, text, text);
+            return new ScanResult(false, true, text, text);
         }
 
-        public virtual MatchResult TryMatch(string s)
+        public virtual ScanResult TryMatch(string s)
         {
             return TryMatch(s, StringComparer.Ordinal);
         }
 
-        public MatchResult TryMatch(string s, IEqualityComparer<string> comparer)
+        public ScanResult TryMatch(string s, IEqualityComparer<string> comparer)
         {
             if (s == null)
             {
@@ -139,9 +139,9 @@ namespace Txt.Core
             {
                 if (textSource.Peek() == -1)
                 {
-                    return MatchResult.FromEndOfInput(s);
+                    return ScanResult.FromEndOfInput(s);
                 }
-                return MatchResult.FromMatch(string.Empty, s);
+                return ScanResult.FromMatch(string.Empty, s);
             }
             var offset = StartRecording();
             try
@@ -150,15 +150,15 @@ namespace Txt.Core
                 var len = textSource.ReadBlock(buffer, 0, buffer.Length);
                 if (len == 0)
                 {
-                    return MatchResult.FromEndOfInput(s);
+                    return ScanResult.FromEndOfInput(s);
                 }
                 var next = new string(buffer, 0, len);
                 if (comparer.Equals(s, next))
                 {
-                    return MatchResult.FromMatch(next, s);
+                    return ScanResult.FromMatch(next, s);
                 }
                 Seek(offset);
-                return MatchResult.FromMismatch(next, s);
+                return ScanResult.FromMismatch(next, s);
             }
             finally
             {
@@ -167,7 +167,7 @@ namespace Txt.Core
         }
 
         /// <inheritdoc />
-        public virtual MatchResult TryMatch(char c)
+        public virtual ScanResult TryMatch(char c)
         {
             if (disposed)
             {
@@ -177,16 +177,16 @@ namespace Txt.Core
             var expected = char.ToString(c);
             if (head == -1)
             {
-                return MatchResult.FromEndOfInput(expected);
+                return ScanResult.FromEndOfInput(expected);
             }
             var next = (char)head;
             var text = char.ToString(next);
             if (c != next)
             {
-                return MatchResult.FromMismatch(text, expected);
+                return ScanResult.FromMismatch(text, expected);
             }
             textSource.Read();
-            return MatchResult.FromMatch(text, expected);
+            return ScanResult.FromMatch(text, expected);
         }
 
         void IDisposable.Dispose()

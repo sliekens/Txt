@@ -3,9 +3,9 @@ using JetBrains.Annotations;
 
 namespace Txt.Core
 {
-    public sealed class MatchResult
+    public sealed class ScanResult
     {
-        public MatchResult(bool endOfInput, bool success, [NotNull] string text, [NotNull] string expected)
+        public ScanResult(bool endOfInput, bool success, [NotNull] string text, [NotNull] string expected)
         {
             if (text == null)
             {
@@ -37,7 +37,7 @@ namespace Txt.Core
         public string Text { get; }
 
         [NotNull]
-        public static MatchResult FromEndOfInput([NotNull] string expected)
+        public static ScanResult FromEndOfInput([NotNull] string expected)
         {
             if (expected == null)
             {
@@ -45,11 +45,11 @@ namespace Txt.Core
             }
 
             // Success is true if 'expected' is the empty string; otherwise, false
-            return new MatchResult(true, expected == string.Empty, string.Empty, expected);
+            return new ScanResult(true, expected == string.Empty, string.Empty, expected);
         }
 
         [NotNull]
-        public static MatchResult FromMatch([NotNull] string text, [NotNull] string expected)
+        public static ScanResult FromMatch([NotNull] string text, [NotNull] string expected)
         {
             if (text == null)
             {
@@ -59,10 +59,10 @@ namespace Txt.Core
             {
                 throw new ArgumentNullException(nameof(expected));
             }
-            return new MatchResult(false, true, text, expected);
+            return new ScanResult(false, true, text, expected);
         }
 
-        public static MatchResult FromMismatch([NotNull] string text, [NotNull] string expected)
+        public static ScanResult FromMismatch([NotNull] string text, [NotNull] string expected)
         {
             if (text == null)
             {
@@ -72,7 +72,7 @@ namespace Txt.Core
             {
                 throw new ArgumentNullException(nameof(expected));
             }
-            return new MatchResult(false, false, text, expected);
+            return new ScanResult(false, false, text, expected);
         }
     }
 }

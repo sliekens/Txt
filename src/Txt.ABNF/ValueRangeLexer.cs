@@ -29,7 +29,7 @@ namespace Txt.ABNF
 
         protected override IReadResult<Terminal> ReadImpl(ITextScanner scanner, ITextContext context)
         {
-            MatchResult result = null;
+            ScanResult result = null;
 
             // ReSharper disable once ForCanBeConvertedToForeach
             for (var i = 0; i < valueRange.Length; i++)

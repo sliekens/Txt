@@ -36,7 +36,7 @@ namespace Txt.Core
         ///     A value container that contains the next available character and another value indicating whether it matches
         ///     the given character.
         /// </returns>
-        MatchResult TryMatch(char c);
+        ScanResult TryMatch(char c);
 
         /// <summary>
         ///     Advances the scanner's position if the next available character matches the conditions defined by the specified
@@ -47,7 +47,7 @@ namespace Txt.Core
         ///     A value container that contains the next available character and another value indicating whether it matches
         ///     the conditions defined by the predicate.
         /// </returns>
-        MatchResult TryMatch(Predicate<char> predicate);
+        ScanResult TryMatch(Predicate<char> predicate);
 
         /// <summary>
         ///     Compares the given string to the next available string and advances the scanner's position if there is a
@@ -60,7 +60,7 @@ namespace Txt.Core
         ///     A value container that contains the next available string and another value indicating whether it matches the
         ///     given string.
         /// </returns>
-        MatchResult TryMatch([NotNull] string s);
+        ScanResult TryMatch([NotNull] string s);
 
         /// <summary>
         ///     Compares the given string to the next available string and advances the scanner's position if there is a
@@ -74,6 +74,6 @@ namespace Txt.Core
         ///     A value container that contains the next available string and another value indicating whether it matches the
         ///     given string.
         /// </returns>
-        MatchResult TryMatch([NotNull] string s, [NotNull] IEqualityComparer<string> comparer);
+        ScanResult TryMatch([NotNull] string s, [NotNull] IEqualityComparer<string> comparer);
     }
 }
