@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using Xunit;
 
 namespace Txt.Core
@@ -184,6 +185,8 @@ namespace Txt.Core
                     : base(capacity)
                 {
                 }
+
+                public override Encoding Encoding { get; }
 
                 protected override int ReadImpl(char[] buffer, int startIndex, int maxCount)
                 {

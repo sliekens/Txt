@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Text;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 
@@ -21,6 +22,8 @@ namespace Txt.Core
         }
 
         public int Column => textSource.Column;
+
+        public Encoding Encoding => textSource.Encoding;
 
         public int Line => textSource.Line;
 
