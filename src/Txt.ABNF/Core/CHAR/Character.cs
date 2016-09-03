@@ -1,13 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Character.cs" company="Steven Liekens">
-//   The MIT License (MIT)
-// </copyright>
-// <summary>
-//   Represents the CHAR rule: 1 US-ASCII character, excluding NUL. Unicode: U+0001 - U+007F.
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
-
-using System;
+﻿using System;
 using JetBrains.Annotations;
 
 namespace Txt.ABNF.Core.CHAR

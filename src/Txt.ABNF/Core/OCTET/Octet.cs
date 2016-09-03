@@ -1,13 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Octet.cs" company="Steven Liekens">
-//   The MIT License (MIT)
-// </copyright>
-// <summary>
-//   
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
-
-using System;
+﻿using System;
 using JetBrains.Annotations;
 using Txt.Core;
 

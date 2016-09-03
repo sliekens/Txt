@@ -1,23 +1,14 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Bookmark.cs" company="Steven Liekens">
-//   The MIT License (MIT)
-// </copyright>
-// <summary>
-//   
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
-
-using System.Diagnostics;
+﻿using System.Diagnostics;
 
 namespace Txt.Core
 {
-    /// <summary>Represents an immutable implementation of the <see cref="ITextContext" /> interface</summary>
+    /// <summary>Represents an immutable implementation of the <see cref="ITextContext" /> interface.</summary>
     public struct Bookmark : ITextContext
     {
-        /// <summary>Initializes a new instance of the <see cref="Bookmark" /> struct with a specified offset.</summary>
-        /// <param name="offset">The position, relative to the beginning of the data source.</param>
-        /// <param name="line"></param>
-        /// <param name="column"></param>
+        /// <summary>Initializes a new instance of the <see cref="Bookmark" /> class with a specified offset, line number and column number.</summary>
+        /// <param name="offset">The character position, relative to the beginning of the text.</param>
+        /// <param name="line">The line number, relative to the beginning of the text.</param>
+        /// <param name="column">The column number, relative to the beginning of the <paramref name="line"/>.</param>
         public Bookmark(long offset, int line, int column)
             : this()
         {
@@ -29,11 +20,13 @@ namespace Txt.Core
             Column = column;
         }
 
+        /// <summary>Gets the column number, relative to the beginning of the <see cref="Line" />.</summary>
         public int Column { get; }
 
+        /// <summary>Gets the line number, relative to the beginning of the text.</summary>
         public int Line { get; }
 
-        /// <summary>Gets the current position, relative to the beginning of the data source.</summary>
+        /// <summary>Gets the character position, relative to the beginning of the text.</summary>
         public long Offset { get; }
     }
 }

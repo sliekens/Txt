@@ -1,12 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="OctetLexer.cs" company="Steven Liekens">
-//   The MIT License (MIT)
-// </copyright>
-// <summary>
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
-
-using Txt.Core;
+﻿using Txt.Core;
 
 namespace Txt.ABNF.Core.OCTET
 {

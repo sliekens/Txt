@@ -38,15 +38,15 @@ namespace Txt.Core
             var elementType = typeof(TElement).GetTypeInfo();
             var innerType = typeof(TInner);
             var ctor = elementType.DeclaredConstructors.First(
-            x =>
-            {
-                var parameters = x.GetParameters();
-                if (parameters.Length != 1)
-                {
-                    return false;
-                }
-                return parameters[0].ParameterType == innerType;
-            });
+                                      x =>
+                                      {
+                                          var parameters = x.GetParameters();
+                                          if (parameters.Length != 1)
+                                          {
+                                              return false;
+                                          }
+                                          return parameters[0].ParameterType == innerType;
+                                      });
             var parameterExpression = Expression.Parameter(innerType);
             var newExpression = Expression.New(ctor, parameterExpression);
             var lambda = Expression.Lambda<Func<TInner, TElement>>(newExpression, parameterExpression);

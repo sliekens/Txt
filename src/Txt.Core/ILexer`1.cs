@@ -1,13 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ILexer.cs" company="Steven Liekens">
-//   The MIT License (MIT)
-// </copyright>
-// <summary>
-//   Provides the interface for types that process the lexical syntax of a language.
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
-
-using System;
+﻿using System;
 using JetBrains.Annotations;
 
 namespace Txt.Core

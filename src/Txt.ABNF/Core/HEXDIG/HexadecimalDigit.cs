@@ -1,13 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="HexadecimalDigit.cs" company="Steven Liekens">
-//   The MIT License (MIT)
-// </copyright>
-// <summary>
-//   
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
-
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 
 namespace Txt.ABNF.Core.HEXDIG
 {
