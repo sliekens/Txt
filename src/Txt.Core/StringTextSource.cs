@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using System.Text;
+using JetBrains.Annotations;
 
 namespace Txt.Core
 {
@@ -23,6 +24,8 @@ namespace Txt.Core
             : base(data, startIndex, length)
         {
         }
+
+        public override Encoding Encoding => Encoding.Unicode;
 
         protected override int ReadImpl(char[] buffer, int startIndex, int maxCount)
         {

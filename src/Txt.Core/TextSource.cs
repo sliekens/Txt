@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Text;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 
@@ -144,7 +145,6 @@ namespace Txt.Core
                 this.data = new char[dataLength];
                 Array.Copy(data, startIndex, this.data, 0, dataLength);
             }
-
         }
 
         /// <summary>
@@ -162,6 +162,8 @@ namespace Txt.Core
         }
 
         public int Column { get; private set; } = 1;
+
+        public abstract Encoding Encoding { get; }
 
         public int Line { get; private set; } = 1;
 

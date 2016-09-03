@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 
@@ -10,6 +11,8 @@ namespace Txt.Core
         ///     Gets the current position in the current <see cref="Line" />.
         /// </summary>
         int Column { get; }
+
+        Encoding Encoding { get; }
 
         /// <summary>
         ///     Gets the current line number.

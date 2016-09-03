@@ -19,6 +19,7 @@ namespace Txt.Core
                 throw new ArgumentNullException(nameof(input));
             }
             reader = new BinaryReader(input);
+            Encoding = new UTF8Encoding();
         }
 
         public StreamTextSource([NotNull] Stream input, [NotNull] Encoding encoding, int capacity = 2048)
@@ -33,6 +34,7 @@ namespace Txt.Core
                 throw new ArgumentNullException(nameof(encoding));
             }
             reader = new BinaryReader(input, encoding);
+            Encoding = encoding;
         }
 
         public StreamTextSource(
@@ -51,7 +53,10 @@ namespace Txt.Core
                 throw new ArgumentNullException(nameof(encoding));
             }
             reader = new BinaryReader(input, encoding, leaveOpen);
+            Encoding = encoding;
         }
+
+        public override Encoding Encoding { get; }
 
         protected override void Dispose(bool disposing)
         {
