@@ -59,6 +59,10 @@ namespace Txt.Core
         /// </summary>
         private int watchers;
 
+        private int currentLine = 1;
+
+        private int currentColumn = 1;
+
         protected TextSource([NotNull] char[] data)
         {
             if (data == null)
@@ -161,11 +165,11 @@ namespace Txt.Core
             data = new char[capacity];
         }
 
-        public int Column { get; private set; } = 1;
+        public int Column => currentColumn;
 
         public abstract Encoding Encoding { get; }
 
-        public int Line { get; private set; } = 1;
+        public int Line => currentLine;
 
         /// <summary>
         ///     Gets the zero-based position within the current text source.
@@ -219,17 +223,14 @@ namespace Txt.Core
             switch (c)
             {
                 case '\r':
-                    Column = 1;
+                    currentColumn = 1;
                     break;
                 case '\n':
-                    Line++;
-                    if (Column != 1)
-                    {
-                        Column = 1;
-                    }
+                    currentLine++;
+                    currentColumn = 1;
                     break;
                 default:
-                    Column++;
+                    currentColumn++;
                     break;
             }
             return c;
@@ -280,17 +281,14 @@ namespace Txt.Core
                 switch (data[i])
                 {
                     case '\r':
-                        Column = 1;
+                        currentColumn = 1;
                         break;
                     case '\n':
-                        Line++;
-                        if (Column != 1)
-                        {
-                            Column = 1;
-                        }
+                        currentLine++;
+                        currentColumn = 1;
                         break;
                     default:
-                        Column++;
+                        currentColumn++;
                         break;
                 }
             }
@@ -409,8 +407,8 @@ namespace Txt.Core
             if (offset == dataOffset)
             {
                 currentOffset = dataOffset;
-                Line = dataLine;
-                Column = dataColumn;
+                currentLine = dataLine;
+                currentColumn = dataColumn;
                 dataIndex = 0;
                 return;
             }
@@ -426,17 +424,14 @@ namespace Txt.Core
                 switch (data[i])
                 {
                     case '\r':
-                        Column = 1;
+                        currentColumn = 1;
                         break;
                     case '\n':
-                        Line++;
-                        if (Column != 1)
-                        {
-                            Column = 1;
-                        }
+                        currentLine++;
+                        currentColumn = 1;
                         break;
                     default:
-                        Column++;
+                        currentColumn++;
                         break;
                 }
             }
@@ -571,25 +566,32 @@ namespace Txt.Core
             return length + unreadCount;
         }
 
-        /// <summary>
-        ///     Removes <see cref="dataIndex" /> characters from the start of the buffer.
-        /// </summary>
         private void ResetBuffer()
         {
-            if (dataIndex == 0)
+            // Move unread characters to the start of the buffer so that dataIndex becomes 0.
+            // We do this to maximize free buffer space which means we have to increase its size less often.
+            // The tradeoff is that after this method returns,
+            //  Seek(long) cannot be called with an offset before the current offset.
+            if (dataIndex != 0)
             {
-                return;
+                dataLength = dataLength - dataIndex;
+                if (dataLength != 0)
+                {
+                    Array.Copy(data, dataIndex, data, 0, dataLength);
+                }
+                dataIndex = 0;
+                dataOffset = currentOffset;
+                dataLine = Line;
+                dataColumn = Column;
             }
-            var unreadCount = dataLength - dataIndex;
-            if (unreadCount != 0)
+
+            // Shrink the buffer if at least 50% capacity is now unused
+            //  but only for considerably large buffers 
+            //  don't shrink if buffer size is 0..255, it's not worth it
+            if ((data.Length >= 256) && (dataLength <= data.Length * 0.5))
             {
-                Array.Copy(data, dataIndex, data, 0, unreadCount);
+                Array.Resize(ref data, dataLength);
             }
-            dataLength = unreadCount;
-            dataIndex = 0;
-            dataOffset = currentOffset;
-            dataLine = Line;
-            dataColumn = Column;
         }
     }
 }
