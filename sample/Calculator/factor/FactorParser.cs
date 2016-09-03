@@ -9,9 +9,9 @@ namespace Calculator.factor
     {
         private readonly IParser<Expression, double> expressionParser;
 
-        private readonly IParser<Number, int> numberParser;
+        private readonly IParser<Number, double> numberParser;
 
-        public FactorParser(IParser<Number, int> numberParser, IParser<Expression, double> expressionParser)
+        public FactorParser(IParser<Number, double> numberParser, IParser<Expression, double> expressionParser)
         {
             this.numberParser = numberParser;
             this.expressionParser = expressionParser;

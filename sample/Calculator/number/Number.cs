@@ -2,10 +2,10 @@
 
 namespace Calculator.number
 {
-    public class Number : Repetition
+    public class Number : Alternation
     {
-        public Number(Repetition repetition)
-            : base(repetition)
+        public Number(Alternation number)
+            : base(number)
         {
         }
     }

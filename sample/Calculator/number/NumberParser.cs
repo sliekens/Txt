@@ -2,11 +2,11 @@
 
 namespace Calculator.number
 {
-    public class NumberParser : Parser<Number, int>
+    public class NumberParser : Parser<Number, double>
     {
-        protected override int ParseImpl(Number number)
+        protected override double ParseImpl(Number number)
         {
-            return int.Parse(number.Text);
+            return double.Parse(number.Text);
         }
     }
 }

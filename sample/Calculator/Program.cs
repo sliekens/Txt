@@ -82,7 +82,11 @@ namespace Calculator
             var digitLexerFactory = new DigitLexerFactory(valueRangeLexerFactory);
             var digitLexer = digitLexerFactory.Create();
             var numberLexerFactory = new NumberLexerFactory(
+                alternationLexerFactory,
+                concatenationLexerFactory,
                 repetitionLexerFactory,
+                optionLexerFactory,
+                terminalLexerFactory,
                 digitLexer);
             var numberLexer = numberLexerFactory.Create();
             var expressionLexerProxy = new ProxyLexer<Expression>();

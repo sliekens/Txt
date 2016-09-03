@@ -1,4 +1,4 @@
 ﻿expression = term *(("+" / "-") term)
 term       = factor *(("*" / "/") factor)
 factor     = ["-"] (number / "(" expression ")")
-number     = 1*DIGIT
+number     = ("." 1*DIGIT) / (1*DIGIT ["." 1*DIGIT])
