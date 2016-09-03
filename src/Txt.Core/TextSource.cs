@@ -439,7 +439,7 @@ namespace Txt.Core
             currentOffset += seek;
             if (watchers == 0)
             {
-                ResetBuffer();
+                ResetBuffer(0);
             }
         }
 
@@ -460,7 +460,7 @@ namespace Txt.Core
             }
             if (watchers == 0)
             {
-                ResetBuffer();
+                ResetBuffer(0);
             }
             watchers++;
             return currentOffset;
@@ -486,7 +486,7 @@ namespace Txt.Core
             watchers--;
             if (watchers == 0)
             {
-                ResetBuffer();
+                ResetBuffer(0);
             }
         }
 
@@ -518,7 +518,7 @@ namespace Txt.Core
         {
             if (watchers == 0)
             {
-                ResetBuffer();
+                ResetBuffer(count);
             }
 
             // Just return already if there are enough characters in the buffer
@@ -544,7 +544,7 @@ namespace Txt.Core
         {
             if (watchers == 0)
             {
-                ResetBuffer();
+                ResetBuffer(count);
             }
 
             // Just return already if there are enough characters in the buffer
@@ -566,7 +566,7 @@ namespace Txt.Core
             return length + unreadCount;
         }
 
-        private void ResetBuffer()
+        private void ResetBuffer(int minLength)
         {
             // Move unread characters to the start of the buffer so that dataIndex becomes 0.
             // We do this to maximize free buffer space which means we have to increase its size less often.
@@ -587,10 +587,12 @@ namespace Txt.Core
 
             // Shrink the buffer if at least 50% capacity is now unused
             //  but only for considerably large buffers 
-            //  don't shrink if buffer size is 0..255, it's not worth it
-            if ((data.Length >= 256) && (dataLength <= data.Length * 0.5))
+            //  don't shrink if minLength is 0..128, it's not worth it
+            minLength = Math.Max(minLength, 128);
+            minLength = Math.Max(minLength, dataLength);
+            if (minLength <= data.Length * 0.5)
             {
-                Array.Resize(ref data, dataLength);
+                Array.Resize(ref data, minLength);
             }
         }
     }
