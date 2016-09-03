@@ -463,10 +463,10 @@ namespace Txt.Core
             }
             if (watchers == 0)
             {
-                watchers++;
                 ResetBuffer();
             }
-            return dataOffset;
+            watchers++;
+            return currentOffset;
         }
 
         /// <summary>
