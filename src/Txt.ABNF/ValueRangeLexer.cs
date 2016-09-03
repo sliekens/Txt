@@ -29,24 +29,23 @@ namespace Txt.ABNF
 
         protected override IReadResult<Terminal> ReadImpl(ITextScanner scanner, ITextContext context)
         {
-            ScanResult result = null;
+            if (scanner.Peek() == -1)
+            {
+                return ReadResult<Terminal>.None;
+            }
 
             // ReSharper disable once ForCanBeConvertedToForeach
             for (var i = 0; i < valueRange.Length; i++)
             {
                 var c = valueRange[i];
-                result = scanner.TryMatch(c);
-                if (result.EndOfInput)
+                var result = scanner.TryMatch(c);
+                if (result.IsMatch)
                 {
-                    return new ReadResult<Terminal>(SyntaxError.FromMatchResult(result, context));
-                }
-                if (result.Success)
-                {
-                    return new ReadResult<Terminal>(new Terminal(result.Text, context));
+                    var terminal = new Terminal(result.Text, context);
+                    return ReadResult<Terminal>.Success(terminal);
                 }
             }
-            Debug.Assert(result != null, "result != null");
-            return new ReadResult<Terminal>(SyntaxError.FromMatchResult(result, context));
+            return ReadResult<Terminal>.None;
         }
     }
 }

@@ -44,19 +44,21 @@ namespace Calculator
                 using (var textScanner = new TextScanner(stringTextSource))
                 {
                     var readResult = lexer.Read(textScanner);
-                    if (readResult.Success)
+                    if (readResult.IsSuccess)
                     {
                         Console.WriteLine(
                             "{0}={1}",
-                            readResult.Text,
+                            readResult.Element.Text,
                             parser.Parse(readResult.Element));
                     }
                     else
                     {
                         Console.WriteLine("Invalid input detected");
-                        Console.Write(readResult.Text);
                         Console.ForegroundColor = ConsoleColor.Red;
-                        Console.Write(readResult.ErrorText);
+                        using (var reader = new TextSourceReader(stringTextSource))
+                        {
+                            Console.WriteLine(reader.ReadToEnd());
+                        }
                         Console.ForegroundColor = foregroundColor;
                     }
                 }

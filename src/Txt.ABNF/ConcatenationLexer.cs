@@ -41,22 +41,15 @@ namespace Txt.ABNF
                 for (var i = 0; i < lexers.Count; i++)
                 {
                     var readResult = lexers[i].Read(scanner);
-                    if (readResult.Success)
+                    if (readResult.IsSuccess)
                     {
-                        stringBuilder.Append(readResult.Text);
+                        stringBuilder.Append(readResult.Element.Text);
                         elements.Add(readResult.Element);
                     }
                     else
                     {
                         scanner.Seek(offset);
-                        var partialMatch = stringBuilder.ToString();
-                        var syntaxError = new SyntaxError(
-                            readResult.EndOfInput,
-                            partialMatch,
-                            readResult.ErrorText,
-                            context,
-                            readResult.Error);
-                        return new ReadResult<Concatenation>(syntaxError);
+                        return ReadResult<Concatenation>.None;
                     }
                 }
             }
@@ -64,7 +57,7 @@ namespace Txt.ABNF
             {
                 scanner.StopRecording();
             }
-            return new ReadResult<Concatenation>(new Concatenation(stringBuilder.ToString(), elements, context));
+            return ReadResult<Concatenation>.Success(new Concatenation(stringBuilder.ToString(), elements, context));
         }
     }
 }

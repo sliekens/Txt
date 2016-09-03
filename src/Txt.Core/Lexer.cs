@@ -43,12 +43,12 @@ namespace Txt.Core
             {
                 throw new InvalidOperationException($"{GetType()}.ReadImpl returned null.");
             }
-            if (result.Success)
+            if (result.IsSuccess)
             {
-                if (scanner.Offset != context.Offset + result.Text.Length)
+                if (scanner.Offset != context.Offset + result.Element.Text.Length)
                 {
                     throw new InvalidOperationException(
-                        $"{GetType()}.ReadImpl returned a success result, but the text length is not equal to the difference between the old offset and the new offset in the text source. Calculated offset: {context.Offset} to {scanner.Offset} (length: {scanner.Offset - context.Offset}). The reported length is: {result.Text.Length}. Reported offset: {result.Element.Context.Offset}. Calculated end offset: {result.Element.Context.Offset + result.Text.Length}.");
+                        $"{GetType()}.ReadImpl returned a success result, but the text length is not equal to the difference between the old offset and the new offset in the text source. Calculated offset: {context.Offset} to {scanner.Offset} (length: {scanner.Offset - context.Offset}). The reported length is: {result.Element.Text.Length}. Reported offset: {result.Element.Context.Offset}. Calculated end offset: {result.Element.Context.Offset + result.Element.Text.Length}.");
                 }
             }
             else

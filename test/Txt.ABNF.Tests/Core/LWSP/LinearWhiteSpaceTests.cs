@@ -59,7 +59,7 @@ namespace Txt.ABNF.Core.LWSP
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {
                 var result = linearWhiteSpaceLexer.Read(scanner);
-                Assert.Equal(input, result.Text);
+                Assert.Equal(input, result.Element.Text);
             }
         }
     }

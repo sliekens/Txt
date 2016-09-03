@@ -52,33 +52,25 @@ namespace Txt.ABNF
             var offset = scanner.StartRecording();
             try
             {
-                // ReSharper disable once ForCanBeConvertedToForeach
                 for (var i = 0; i < upperBound; i++)
                 {
                     var readResult = lexer.Read(scanner);
-                    if (readResult.Success)
+                    if (readResult.IsSuccess)
                     {
                         elements.Add(readResult.Element);
-                        stringBuilder.Append(readResult.Text);
+                        stringBuilder.Append(readResult.Element.Text);
                     }
                     else
                     {
-                        if (elements.Count >= lowerBound)
+                        if (elements.Count < lowerBound)
                         {
-                            var repetition = new Repetition(stringBuilder.ToString(), elements, context);
-                            return new ReadResult<Repetition>(repetition);
+                            scanner.Seek(offset);
+                            return ReadResult<Repetition>.None;
                         }
-                        scanner.Seek(offset);
-                        var syntaxError = new SyntaxError(
-                            readResult.EndOfInput,
-                            stringBuilder.ToString(),
-                            readResult.ErrorText,
-                            context,
-                            readResult.Error);
-                        return new ReadResult<Repetition>(syntaxError);
+                        break;
                     }
                 }
-                return new ReadResult<Repetition>(new Repetition(stringBuilder.ToString(), elements, context));
+                return ReadResult<Repetition>.Success(new Repetition(stringBuilder.ToString(), elements, context));
             }
             finally
             {

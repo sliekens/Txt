@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using JetBrains.Annotations;
@@ -8,7 +7,8 @@ using Txt.Core;
 namespace Txt.ABNF
 {
     /// <summary>
-    ///     Wraps a collection of <see cref="ILexer{TElement}" /> and tests their <see cref="ILexer{TElement}.Read" /> method until the
+    ///     Wraps a collection of <see cref="ILexer{TElement}" /> and tests their <see cref="ILexer{TElement}.Read" /> method
+    ///     until the
     ///     longest match is found.
     ///     This class implements a greedy algorithm. For a first-match-wins algorithm, use the
     ///     <see cref="AlternationLexer" /> class instead.
@@ -37,8 +37,6 @@ namespace Txt.ABNF
 
         protected override IReadResult<Alternation> ReadImpl(ITextScanner scanner, ITextContext context)
         {
-            IList<SyntaxError> errors = new List<SyntaxError>(lexers.Length);
-            SyntaxError partialMatch = null;
             var offset = scanner.StartRecording();
             var greediestOffset = offset;
             Element greediest = null;
@@ -48,24 +46,12 @@ namespace Txt.ABNF
                 // ReSharper disable once ForCanBeConvertedToForeach
                 for (var i = 0; i < lexers.Length; i++)
                 {
-                    var lexer = lexers[i];
-                    var candidate = lexer.Read(scanner);
-                    if (candidate.Success)
+                    var candidate = lexers[i].Read(scanner);
+                    if (candidate.IsSuccess && (scanner.Offset > greediestOffset))
                     {
-                        if (scanner.Offset > greediestOffset)
-                        {
-                            greediest = candidate.Element;
-                            ordinal = i + 1;
-                        }
-                    }
-                    else
-                    {
-                        errors.Add(candidate.Error);
-                        if ((partialMatch == null) || (candidate.Text.Length > partialMatch.Text.Length))
-                        {
-                            partialMatch = candidate.Error;
-                        }
-
+                        greediest = candidate.Element;
+                        greediestOffset = scanner.Offset;
+                        ordinal = i + 1;
                     }
                     scanner.Seek(offset);
                 }
@@ -76,12 +62,11 @@ namespace Txt.ABNF
             }
             if (greediest == null)
             {
-                Debug.Assert(partialMatch != null, "partialMatch != null");
-                return new ReadResult<Alternation>(partialMatch);
+                return ReadResult<Alternation>.None;
             }
             scanner.Seek(greediestOffset);
             var alternation = new Alternation(greediest.Text, greediest, context, ordinal);
-            return new ReadResult<Alternation>(alternation);
+            return ReadResult<Alternation>.Success(alternation);
         }
     }
 }

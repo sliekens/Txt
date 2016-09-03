@@ -38,11 +38,9 @@ namespace Txt.ABNF
         protected override IReadResult<Terminal> ReadImpl(ITextScanner scanner, ITextContext context)
         {
             var result = scanner.TryMatch(terminal, comparer);
-            if (result.Success)
-            {
-                return new ReadResult<Terminal>(new Terminal(result.Text, context));
-            }
-            return new ReadResult<Terminal>(SyntaxError.FromMatchResult(result, context));
+            return result.IsMatch
+                ? ReadResult<Terminal>.Success(new Terminal(result.Text, context))
+                : ReadResult<Terminal>.None;
         }
     }
 }

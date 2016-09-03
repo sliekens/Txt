@@ -26,11 +26,13 @@ namespace Txt.Core
         protected override IReadResult<TElement> ReadImpl(ITextScanner scanner, ITextContext context)
         {
             var result = innerLexer.Read(scanner);
-            if (!result.Success)
+            if (!result.IsSuccess)
             {
-                return new ReadResult<TElement>(SyntaxError.FromReadResult(result, context));
+                return ReadResult<TElement>.None;
             }
-            return new ReadResult<TElement>(lazyFactory.Value.Invoke(result.Element));
+            var factory = lazyFactory.Value;
+            var element = factory.Invoke(result.Element);
+            return ReadResult<TElement>.Success(element);
         }
 
         private static Func<TInner, TElement> FactoryFactory()

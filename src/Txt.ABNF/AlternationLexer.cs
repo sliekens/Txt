@@ -47,26 +47,17 @@ namespace Txt.ABNF
         /// <returns></returns>
         protected override IReadResult<Alternation> ReadImpl(ITextScanner scanner, ITextContext context)
         {
-            IList<SyntaxError> errors = new List<SyntaxError>(lexers.Length);
-            SyntaxError partialMatch = null;
-
             // ReSharper disable once ForCanBeConvertedToForeach
             for (var i = 0; i < lexers.Length; i++)
             {
                 var result = lexers[i].Read(scanner);
-                if (result.Success)
+                if (result.IsSuccess)
                 {
-                    return
-                        new ReadResult<Alternation>(new Alternation(result.Text, result.Element, context, i + 1));
-                }
-                errors.Add(result.Error);
-                if ((partialMatch == null) || (result.Text.Length > partialMatch.Text.Length))
-                {
-                    partialMatch = result.Error;
+                    var alternation = new Alternation(result.Element.Text, result.Element, context, i + 1);
+                    return ReadResult<Alternation>.Success(alternation);
                 }
             }
-            Debug.Assert(partialMatch != null, "partialMatch != null");
-            return new ReadResult<Alternation>(partialMatch);
+            return ReadResult<Alternation>.None;
         }
     }
 }

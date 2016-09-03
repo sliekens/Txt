@@ -18,7 +18,7 @@ namespace Txt.ABNF.Core.CTL
             {
                 var result = controlCharacterLexer.Read(scanner);
                 Assert.NotNull(result);
-                Assert.True(result.Success);
+                Assert.True(result.IsSuccess);
                 Assert.NotNull(result.Element);
                 Assert.Equal(input, result.Element.Text);
             }
