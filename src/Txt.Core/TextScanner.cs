@@ -131,17 +131,13 @@ namespace Txt.Core
             {
                 throw new ArgumentNullException(nameof(s));
             }
+            if (string.IsNullOrEmpty(s))
+            {
+                throw new ArgumentException($"Value cannot be empty. Test {nameof(Peek)} for -1 instead.", nameof(s));
+            }
             if (disposed)
             {
                 throw new ObjectDisposedException(nameof(TextScanner));
-            }
-            if (s.Length == 0)
-            {
-                if (textSource.Peek() == -1)
-                {
-                    return ScanResult.FromEndOfInput(s);
-                }
-                return ScanResult.FromMatch(string.Empty, s);
             }
             var offset = StartRecording();
             try
