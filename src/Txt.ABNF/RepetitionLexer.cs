@@ -65,7 +65,7 @@ namespace Txt.ABNF
                         if (elements.Count < lowerBound)
                         {
                             scanner.Seek(offset);
-                            return ReadResult<Repetition>.None;
+                            return ReadResult<Repetition>.Fail(readResult.SyntaxError);
                         }
                         break;
                     }

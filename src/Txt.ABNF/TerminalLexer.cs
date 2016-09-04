@@ -37,6 +37,11 @@ namespace Txt.ABNF
 
         protected override IReadResult<Terminal> ReadImpl(ITextScanner scanner, ITextContext context)
         {
+
+            if (scanner.Peek() == -1)
+            {
+                return ReadResult<Terminal>.Fail(new SyntaxError(context, "Unexpected end of input"));
+            }
             var result = scanner.TryMatch(terminal, comparer);
             return result.IsMatch
                 ? ReadResult<Terminal>.Success(new Terminal(result.Text, context))

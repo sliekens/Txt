@@ -6,12 +6,12 @@ namespace Txt.ABNF.Core.OCTET
     {
         protected override IReadResult<Octet> ReadImpl(ITextScanner scanner, ITextContext context)
         {
-            var read = scanner.Read();
-            if (read == -1)
+            if (scanner.Peek() == -1)
             {
-                return ReadResult<Octet>.None;
+                return ReadResult<Octet>.Fail(new SyntaxError(context, "Unexpected end of input"));
             }
-            return ReadResult<Octet>.Success(new Octet(read, context));
+            var octet = new Octet(scanner.Read(), context);
+            return ReadResult<Octet>.Success(octet);
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using JetBrains.Annotations;
@@ -57,7 +56,7 @@ namespace Txt.ABNF
                     return ReadResult<Alternation>.Success(alternation);
                 }
             }
-            return ReadResult<Alternation>.None;
+            return ReadResult<Alternation>.Fail(new SyntaxError(context, "No viable alternative"));
         }
     }
 }

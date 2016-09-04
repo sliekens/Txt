@@ -62,7 +62,7 @@ namespace Txt.ABNF
             }
             if (greediest == null)
             {
-                return ReadResult<Alternation>.None;
+                return ReadResult<Alternation>.Fail(new SyntaxError(context, "No viable alternative"));
             }
             scanner.Seek(greediestOffset);
             var alternation = new Alternation(greediest.Text, greediest, context, ordinal);

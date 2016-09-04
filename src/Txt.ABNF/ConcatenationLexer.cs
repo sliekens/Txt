@@ -49,7 +49,7 @@ namespace Txt.ABNF
                     else
                     {
                         scanner.Seek(offset);
-                        return ReadResult<Concatenation>.None;
+                        return ReadResult<Concatenation>.Fail(readResult.SyntaxError);
                     }
                 }
             }

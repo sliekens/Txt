@@ -6,5 +6,7 @@
         T Element { get; }
 
         bool IsSuccess { get; }
+
+        SyntaxError SyntaxError { get; }
     }
 }

@@ -28,7 +28,7 @@ namespace Txt.Core
             var result = innerLexer.Read(scanner);
             if (!result.IsSuccess)
             {
-                return ReadResult<TElement>.None;
+                return ReadResult<TElement>.Fail(result.SyntaxError);
             }
             var factory = lazyFactory.Value;
             var element = factory.Invoke(result.Element);

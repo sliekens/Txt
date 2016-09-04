@@ -31,7 +31,7 @@ namespace Txt.ABNF
         {
             if (scanner.Peek() == -1)
             {
-                return ReadResult<Terminal>.None;
+                return ReadResult<Terminal>.Fail(new SyntaxError(context, "Unexpected end of input"));
             }
 
             // ReSharper disable once ForCanBeConvertedToForeach
