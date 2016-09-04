@@ -3,13 +3,13 @@
 namespace Txt.Core
 {
     /// <summary>Represents an immutable implementation of the <see cref="ITextContext" /> interface.</summary>
-    public struct Bookmark : ITextContext
+    public struct Cursor : ITextContext
     {
-        /// <summary>Initializes a new instance of the <see cref="Bookmark" /> class with a specified offset, line number and column number.</summary>
+        /// <summary>Initializes a new instance of the <see cref="Cursor" /> class with a specified offset, line number and column number.</summary>
         /// <param name="offset">The character position, relative to the beginning of the text.</param>
         /// <param name="line">The line number, relative to the beginning of the text.</param>
         /// <param name="column">The column number, relative to the beginning of the <paramref name="line"/>.</param>
-        public Bookmark(long offset, int line, int column)
+        public Cursor(long offset, int line, int column)
             : this()
         {
             Debug.Assert(offset >= 0, "offset >= 0");
