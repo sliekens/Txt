@@ -35,17 +35,18 @@ namespace Txt.ABNF
             this.comparer = comparer;
         }
 
-        protected override IReadResult<Terminal> ReadImpl(ITextScanner scanner, ITextContext context)
+        public override IEnumerable<Terminal> Read2Impl(ITextScanner scanner, ITextContext context)
         {
-
             if (scanner.Peek() == -1)
             {
-                return ReadResult<Terminal>.Fail(new SyntaxError(context, "Unexpected end of input"));
+                return Empty;
             }
             var result = scanner.TryMatch(terminal, comparer);
-            return result.IsMatch
-                ? ReadResult<Terminal>.Success(new Terminal(result.Text, context))
-                : ReadResult<Terminal>.None;
+            if (result.IsMatch)
+            {
+                return new[] { new Terminal(result.Text, context) };
+            }
+            return Empty;
         }
     }
 }

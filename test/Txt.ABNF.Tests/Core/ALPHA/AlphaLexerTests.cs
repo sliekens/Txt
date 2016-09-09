@@ -39,10 +39,7 @@ namespace Txt.ABNF.Core.ALPHA
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {
                 var result = alphaLexer.Read(scanner);
-                Assert.NotNull(result);
-                Assert.True(result.IsSuccess);
-                Assert.NotNull(result.Element);
-                Assert.Equal(input, result.Element.Text);
+                Assert.Equal(input, result.Text);
             }
         }
 
@@ -80,10 +77,7 @@ namespace Txt.ABNF.Core.ALPHA
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {
                 var result = alphaLexer.Read(scanner);
-                Assert.NotNull(result);
-                Assert.True(result.IsSuccess);
-                Assert.NotNull(result.Element);
-                Assert.Equal(input, result.Element.Text);
+                Assert.Equal(input, result.Text);
             }
         }
     }

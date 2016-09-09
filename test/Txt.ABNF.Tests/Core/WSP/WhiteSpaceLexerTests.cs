@@ -24,10 +24,7 @@ namespace Txt.ABNF.Core.WSP
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {
                 var result = whiteSpaceLexer.Read(scanner);
-                Assert.NotNull(result);
-                Assert.True(result.IsSuccess);
-                Assert.NotNull(result.Element);
-                Assert.Equal(input, result.Element.Text);
+                Assert.Equal(input, result.Text);
             }
         }
     }

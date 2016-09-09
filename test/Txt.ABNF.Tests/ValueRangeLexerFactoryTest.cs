@@ -25,7 +25,7 @@ namespace Txt.ABNF
             using (var scanner = new TextScanner(text))
             {
                 var result = lexer.Read(scanner);
-                Assert.Equal(s, result.Element.Text);
+                Assert.Equal(s, result.Text);
             }
         }
     }

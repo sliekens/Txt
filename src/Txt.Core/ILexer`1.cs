@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using JetBrains.Annotations;
 
 namespace Txt.Core
@@ -8,18 +8,26 @@ namespace Txt.Core
     public interface ILexer<out TElement>
         where TElement : Element
     {
-        /// <summary>Attempts to read the next element. A return value indicates whether the element was available.</summary>
-        /// <param name="scanner">
-        ///     The scanner object that provides text symbols as well as contextual information about the text
-        ///     source.
-        /// </param>
-        /// <exception cref="ArgumentNullException"><paramref name="scanner" /> is a null reference.</exception>
-        /// <exception cref="ObjectDisposedException">The given text scanner is closed.</exception>
-        /// <returns>
-        ///     A value container that contains the next available element, or a <c>null</c> reference, depending on whether
-        ///     the return value indicates success.
-        /// </returns>
+        TElement Read([NotNull] ITextScanner scanner);
+
+        /// <summary>
+        ///     Iterates all possible matches for <typeparamref name="TElement" /> beginning at the specified offset.
+        /// </summary>
+        /// <param name="scanner">The scanner object to read from.</param>
+        /// <param name="context">The context object that describes the offset to begin reading at.</param>
+        /// <remarks>
+        ///     The implementation MUST call <see cref="ITextScanner.StartRecording" /> upon entry.
+        ///     The implementation MUST <see cref="ITextScanner.Seek" /> to the offset specified by <paramref name="context" />
+        ///     before every iteration.
+        ///     The implementation MUST <see cref="ITextScanner.Seek" /> to the offset specified by <paramref name="context" /> at
+        ///     the end of iterations in case of a partial match.
+        ///     The implementation MUST NOT change current offset at the end of iterations in case of a successful match.
+        ///     The implementation MUST call <see cref="ITextScanner.StopRecording" /> in a finally-block immediately before
+        ///     returning.
+        /// </remarks>
+        /// <returns>A collection of all possible matches.</returns>
         [NotNull]
-        IReadResult<TElement> Read([NotNull] ITextScanner scanner);
+        [ItemNotNull]
+        IEnumerable<TElement> Read([NotNull] ITextScanner scanner, [NotNull] ITextContext context);
     }
 }

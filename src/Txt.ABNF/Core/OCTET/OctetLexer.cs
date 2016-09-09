@@ -1,17 +1,18 @@
-﻿using Txt.Core;
+﻿using System.Collections.Generic;
+using Txt.Core;
 
 namespace Txt.ABNF.Core.OCTET
 {
     public class OctetLexer : Lexer<Octet>
     {
-        protected override IReadResult<Octet> ReadImpl(ITextScanner scanner, ITextContext context)
+        public override IEnumerable<Octet> Read2Impl(ITextScanner scanner, ITextContext context)
         {
-            if (scanner.Peek() == -1)
+            var value = scanner.Read();
+            if (value == -1)
             {
-                return ReadResult<Octet>.Fail(new SyntaxError(context, "Unexpected end of input"));
+                yield break;
             }
-            var octet = new Octet(scanner.Read(), context);
-            return ReadResult<Octet>.Success(octet);
+            yield return new Octet(value, context);
         }
     }
 }

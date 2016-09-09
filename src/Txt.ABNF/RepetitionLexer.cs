@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
 using JetBrains.Annotations;
 using Txt.Core;
 
@@ -45,36 +44,39 @@ namespace Txt.ABNF
             this.upperBound = upperBound;
         }
 
-        protected override IReadResult<Repetition> ReadImpl(ITextScanner scanner, ITextContext context)
+        public override IEnumerable<Repetition> Read2Impl(ITextScanner scanner, ITextContext context)
         {
-            var stringBuilder = new StringBuilder();
-            IList<Element> elements = new List<Element>(lowerBound);
-            var offset = scanner.StartRecording();
-            try
+            return Branch(scanner, context, context, new List<Element>(lowerBound));
+        }
+
+        private IEnumerable<Repetition> Branch(
+            ITextScanner scanner,
+            ITextContext root,
+            ITextContext branch,
+            List<Element> elements)
+        {
+            if (elements.Count >= lowerBound)
             {
-                for (var i = 0; i < upperBound; i++)
+                yield return new Repetition(string.Concat(elements), elements, root);
+                if (elements.Count == upperBound)
                 {
-                    var readResult = lexer.Read(scanner);
-                    if (readResult.IsSuccess)
-                    {
-                        elements.Add(readResult.Element);
-                        stringBuilder.Append(readResult.Element.Text);
-                    }
-                    else
-                    {
-                        if (elements.Count < lowerBound)
-                        {
-                            scanner.Seek(offset);
-                            return ReadResult<Repetition>.Fail(readResult.SyntaxError);
-                        }
-                        break;
-                    }
+                    yield break;
                 }
-                return ReadResult<Repetition>.Success(new Repetition(stringBuilder.ToString(), elements, context));
             }
-            finally
+            foreach (var element in lexer.Read(scanner, branch))
             {
-                scanner.StopRecording();
+                var copy = new List<Element>(elements) { element };
+                var nextBranch = scanner.GetContext();
+                var success = false;
+                foreach (var repetition in Branch(scanner, root, nextBranch, copy))
+                {
+                    success = true;
+                    yield return repetition;
+                }
+                if (!success)
+                {
+                    scanner.Seek(branch.Offset);
+                }
             }
         }
     }

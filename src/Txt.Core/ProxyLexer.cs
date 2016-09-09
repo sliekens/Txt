@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using JetBrains.Annotations;
 
 namespace Txt.Core
@@ -22,13 +23,13 @@ namespace Txt.Core
             innerLexer = lexer;
         }
 
-        protected override IReadResult<TElement> ReadImpl(ITextScanner scanner, ITextContext context)
+        public override IEnumerable<TElement> Read2Impl(ITextScanner scanner, ITextContext context)
         {
             if (innerLexer == null)
             {
                 throw new InvalidOperationException("Initialize(ILexer`1) has never been called.");
             }
-            return innerLexer.Read(scanner);
+            return innerLexer.Read(scanner, context);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -23,16 +24,13 @@ namespace Txt.Core
             this.innerLexer = innerLexer;
         }
 
-        protected override IReadResult<TElement> ReadImpl(ITextScanner scanner, ITextContext context)
+        public override IEnumerable<TElement> Read2Impl(ITextScanner scanner, ITextContext context)
         {
-            var result = innerLexer.Read(scanner);
-            if (!result.IsSuccess)
-            {
-                return ReadResult<TElement>.Fail(result.SyntaxError);
-            }
             var factory = lazyFactory.Value;
-            var element = factory.Invoke(result.Element);
-            return ReadResult<TElement>.Success(element);
+            foreach (var element in innerLexer.Read(scanner, context))
+            {
+                yield return factory.Invoke(element);
+            }
         }
 
         private static Func<TInner, TElement> FactoryFactory()

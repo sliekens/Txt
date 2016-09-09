@@ -30,7 +30,7 @@ namespace Txt.ABNF.Core.OCTET
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {
                 var result = octetLexer.Read(scanner);
-                Assert.Equal(result.Element.Value, expected);
+                Assert.Equal(expected, result.Value);
             }
         }
     }

@@ -44,12 +44,12 @@ namespace Calculator
                 using (var textScanner = new TextScanner(stringTextSource))
                 {
                     var readResult = lexer.Read(textScanner);
-                    if (readResult.IsSuccess)
+                    if (readResult != null)
                     {
                         Console.WriteLine(
                             "{0}={1}",
-                            readResult.Element.Text,
-                            parser.Parse(readResult.Element));
+                            readResult.Text,
+                            parser.Parse(readResult));
                     }
                     else
                     {

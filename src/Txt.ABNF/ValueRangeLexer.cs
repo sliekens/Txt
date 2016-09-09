@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using JetBrains.Annotations;
 using Txt.Core;
@@ -27,11 +28,11 @@ namespace Txt.ABNF
             this.valueRange = valueRange;
         }
 
-        protected override IReadResult<Terminal> ReadImpl(ITextScanner scanner, ITextContext context)
+        public override IEnumerable<Terminal> Read2Impl(ITextScanner scanner, ITextContext context)
         {
             if (scanner.Peek() == -1)
             {
-                return ReadResult<Terminal>.Fail(new SyntaxError(context, "Unexpected end of input"));
+                return Empty;
             }
 
             // ReSharper disable once ForCanBeConvertedToForeach
@@ -41,11 +42,10 @@ namespace Txt.ABNF
                 var result = scanner.TryMatch(c);
                 if (result.IsMatch)
                 {
-                    var terminal = new Terminal(result.Text, context);
-                    return ReadResult<Terminal>.Success(terminal);
+                    return new[] { new Terminal(result.Text, context) };
                 }
             }
-            return ReadResult<Terminal>.None;
+            return Empty;
         }
     }
 }

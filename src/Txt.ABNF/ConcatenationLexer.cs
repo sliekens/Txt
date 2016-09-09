@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using JetBrains.Annotations;
 using Txt.Core;
 
@@ -30,34 +29,40 @@ namespace Txt.ABNF
             this.lexers = lexers;
         }
 
-        protected override IReadResult<Concatenation> ReadImpl(ITextScanner scanner, ITextContext context)
+        public override IEnumerable<Concatenation> Read2Impl(ITextScanner scanner, ITextContext context)
         {
-            var stringBuilder = new StringBuilder();
-            IList<Element> elements = new List<Element>(lexers.Count);
-            var offset = scanner.StartRecording();
-            try
+            return Branch(scanner, context, context, new List<Element>(lexers.Count));
+        }
+
+        private IEnumerable<Concatenation> Branch(
+            ITextScanner scanner,
+            ITextContext root,
+            ITextContext branch,
+            List<Element> elements)
+        {
+            if (elements.Count == lexers.Count)
             {
-                // ReSharper disable once ForCanBeConvertedToForeach
-                for (var i = 0; i < lexers.Count; i++)
+                yield return new Concatenation(string.Concat(elements), elements, root);
+            }
+            else
+            {
+                var next = lexers[elements.Count];
+                foreach (var element in next.Read(scanner, branch))
                 {
-                    var readResult = lexers[i].Read(scanner);
-                    if (readResult.IsSuccess)
+                    var nextBranch = scanner.GetContext();
+                    var copy = new List<Element>(elements) { element };
+                    var success = false;
+                    foreach (var concat in Branch(scanner, root, nextBranch, copy))
                     {
-                        stringBuilder.Append(readResult.Element.Text);
-                        elements.Add(readResult.Element);
+                        success = true;
+                        yield return concat;
                     }
-                    else
+                    if (!success)
                     {
-                        scanner.Seek(offset);
-                        return ReadResult<Concatenation>.Fail(readResult.SyntaxError);
+                        scanner.Seek(branch.Offset);
                     }
                 }
             }
-            finally
-            {
-                scanner.StopRecording();
-            }
-            return ReadResult<Concatenation>.Success(new Concatenation(stringBuilder.ToString(), elements, context));
         }
     }
 }
