@@ -26,12 +26,18 @@ namespace Txt.Core
             try
             {
                 var context = scanner.GetContext();
-                var element = Read2Impl(scanner, context).LastOrDefault();
-                if (element != null)
+                var element = Read2Impl(scanner, context).ToList();
+                if (element.Count == 0)
                 {
-                    scanner.Seek(context.Offset + element.Text.Length);
+                    return null;
                 }
-                return element;
+
+                if (element.Count == 1)
+                {
+                    return element[0];
+                }
+
+                return element.OrderByDescending(candidate => candidate.Text.Length).First();
             }
             finally
             {
