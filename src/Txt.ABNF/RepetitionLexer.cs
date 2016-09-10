@@ -46,7 +46,16 @@ namespace Txt.ABNF
 
         public override IEnumerable<Repetition> Read2Impl(ITextScanner scanner, ITextContext context)
         {
-            return Branch(scanner, context, context, new List<Element>(lowerBound));
+            bool success = false;
+            foreach (var repetition in Branch(scanner, context, context, new List<Element>(lowerBound)))
+            {
+                success = true;
+                yield return repetition;
+            }
+            if (!success)
+            {
+                scanner.Seek(context.Offset);
+            }
         }
 
         private IEnumerable<Repetition> Branch(
@@ -67,15 +76,9 @@ namespace Txt.ABNF
             {
                 var copy = new List<Element>(elements) { element };
                 var nextBranch = scanner.GetContext();
-                var success = false;
                 foreach (var repetition in Branch(scanner, root, nextBranch, copy))
                 {
-                    success = true;
                     yield return repetition;
-                }
-                if (!success)
-                {
-                    scanner.Seek(branch.Offset);
                 }
             }
         }

@@ -31,7 +31,17 @@ namespace Txt.ABNF
 
         public override IEnumerable<Concatenation> Read2Impl(ITextScanner scanner, ITextContext context)
         {
-            return Branch(scanner, context, context, new List<Element>(lexers.Count));
+            bool success = false;
+            foreach (var concatenation in Branch(scanner, context, context, new List<Element>(lexers.Count)))
+            {
+                success = true;
+                yield return concatenation;
+            }
+
+            if (!success)
+            {
+                scanner.Seek(context.Offset);
+            }
         }
 
         private IEnumerable<Concatenation> Branch(
@@ -51,15 +61,9 @@ namespace Txt.ABNF
                 {
                     var nextBranch = scanner.GetContext();
                     var copy = new List<Element>(elements) { element };
-                    var success = false;
                     foreach (var concat in Branch(scanner, root, nextBranch, copy))
                     {
-                        success = true;
                         yield return concat;
-                    }
-                    if (!success)
-                    {
-                        scanner.Seek(branch.Offset);
                     }
                 }
             }
