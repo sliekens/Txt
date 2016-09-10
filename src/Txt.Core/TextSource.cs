@@ -530,7 +530,7 @@ namespace Txt.Core
 
             // Resize the buffer if it is too small to hold the needed number of characters
             var need = count - unreadCount;
-            var unusedCapacity = data.Length - dataLength - dataIndex;
+            var unusedCapacity = data.Length - dataLength;
             if (need > unusedCapacity)
             {
                 Array.Resize(ref data, data.Length + need - unusedCapacity);
