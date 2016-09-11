@@ -64,21 +64,26 @@ namespace Txt.ABNF
             ITextContext branch,
             List<Element> elements)
         {
-            if (elements.Count >= lowerBound)
+            if (elements.Count == upperBound)
             {
                 yield return new Repetition(string.Concat(elements), elements, root);
-                if (elements.Count == upperBound)
-                {
-                    yield break;
-                }
             }
-            foreach (var element in lexer.Read(scanner, branch))
+            else
             {
-                var copy = new List<Element>(elements) { element };
-                var nextBranch = scanner.GetContext();
-                foreach (var repetition in Branch(scanner, root, nextBranch, copy))
+                bool success = false;
+                foreach (var element in lexer.Read(scanner, branch))
                 {
-                    yield return repetition;
+                    success = true;
+                    var copy = new List<Element>(elements) { element };
+                    var nextBranch = scanner.GetContext();
+                    foreach (var repetition in Branch(scanner, root, nextBranch, copy))
+                    {
+                        yield return repetition;
+                    }
+                }
+                if (!success && (elements.Count >= lowerBound))
+                {
+                    yield return new Repetition(string.Concat(elements), elements, root);
                 }
             }
         }
