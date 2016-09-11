@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
@@ -8,12 +9,6 @@ namespace Txt.Core
 {
     public abstract class TextSource : ITextSource
     {
-        /// <summary>
-        ///     The zero-based index into the text source. This is not the index of the next unread character in
-        ///     <see cref="data" />, that's <see cref="dataIndex" />.
-        /// </summary>
-        private long currentOffset;
-
         /// <summary>
         ///     This is the internal character buffer.
         ///     This buffer is not meant to improve performance. Instead, its intended use is to provide a sliding window over a
@@ -26,8 +21,6 @@ namespace Txt.Core
         ///     called, we'll append characters instead of overwriting them, until <see cref="StopRecording" /> is called.
         /// </remarks>
         private char[] data;
-
-        private int dataColumn = 1;
 
         /// <summary>
         ///     The index of the next unread character in <c>data</c>. Its range is 0..(<c>dataLength-1</c>).
@@ -46,22 +39,20 @@ namespace Txt.Core
         /// </summary>
         private int dataLength;
 
-        private int dataLine = 1;
+        private bool disposed;
+
+        private int recordedColumn = 1;
+
+        private int recordedLine = 1;
 
         /// <summary>The zero-based index into the text source at which <see cref="data" /> begins.</summary>
-        private long dataOffset;
-
-        private bool disposed;
+        private long recordedOffset;
 
         /// <summary>
         ///     A value indicating how many consumers expect to be able to seek to a previous offset. Do not reset the internal
         ///     buffer while this value is greater than 0.
         /// </summary>
         private int watchers;
-
-        private int currentLine = 1;
-
-        private int currentColumn = 1;
 
         protected TextSource([NotNull] char[] data)
         {
@@ -165,16 +156,16 @@ namespace Txt.Core
             data = new char[capacity];
         }
 
-        public int Column => currentColumn;
+        public int Column { get; private set; } = 1;
 
         public abstract Encoding Encoding { get; }
 
-        public int Line => currentLine;
+        public int Line { get; private set; } = 1;
 
         /// <summary>
         ///     Gets the zero-based position within the current text source.
         /// </summary>
-        public long Offset => currentOffset;
+        public long Offset { get; private set; }
 
         /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
         /// <filterpriority>2</filterpriority>
@@ -218,21 +209,9 @@ namespace Txt.Core
                 return -1;
             }
             var c = data[dataIndex];
+            Track(c);
             dataIndex++;
-            currentOffset++;
-            switch (c)
-            {
-                case '\r':
-                    currentColumn = 1;
-                    break;
-                case '\n':
-                    currentLine++;
-                    currentColumn = 1;
-                    break;
-                default:
-                    currentColumn++;
-                    break;
-            }
+            Offset++;
             return c;
         }
 
@@ -276,24 +255,13 @@ namespace Txt.Core
             var unreadCount = FillBuffer(maxCount);
             maxCount = Math.Min(maxCount, unreadCount);
             Array.Copy(data, dataIndex, buffer, startIndex, maxCount);
-            for (var i = dataIndex; i < dataIndex + maxCount; i++)
+            var maxIndex = dataIndex + maxCount;
+            for (var i = dataIndex; i < maxIndex; i++)
             {
-                switch (data[i])
-                {
-                    case '\r':
-                        currentColumn = 1;
-                        break;
-                    case '\n':
-                        currentLine++;
-                        currentColumn = 1;
-                        break;
-                    default:
-                        currentColumn++;
-                        break;
-                }
+                Track(data[i]);
             }
             dataIndex += maxCount;
-            currentOffset += maxCount;
+            Offset += maxCount;
             return maxCount;
         }
 
@@ -328,8 +296,13 @@ namespace Txt.Core
             var unreadCount = await FillBufferAsync(maxCount).ConfigureAwait(false);
             maxCount = Math.Min(maxCount, unreadCount);
             Array.Copy(data, dataIndex, buffer, startIndex, maxCount);
+            var maxIndex = dataIndex + maxCount;
+            for (var i = dataIndex; i < maxIndex; i++)
+            {
+                Track(data[i]);
+            }
             dataIndex += maxCount;
-            currentOffset += maxCount;
+            Offset += maxCount;
             return maxCount;
         }
 
@@ -396,50 +369,59 @@ namespace Txt.Core
             {
                 throw new ObjectDisposedException(GetType().FullName);
             }
-            if (offset < dataOffset)
+
+            // Ensure that the requested offset is not data[n < 0]
+            if (offset < recordedOffset)
             {
-                throw new ArgumentOutOfRangeException(nameof(offset));
+                throw new ArgumentOutOfRangeException(
+                    nameof(offset),
+                    offset,
+                    $"{nameof(Seek)}({offset}) failed: the smallest recorded offset is {recordedOffset}. Did you forget to invoke {nameof(StartRecording)}?");
             }
-            if (offset == currentOffset)
+            try
             {
-                return;
-            }
-            if (offset == dataOffset)
-            {
-                currentOffset = dataOffset;
-                currentLine = dataLine;
-                currentColumn = dataColumn;
-                dataIndex = 0;
-                return;
-            }
-            if (offset < currentOffset)
-            {
-                Seek(dataOffset);
-            }
-            var lookahead = (int)(offset - currentOffset);
-            var available = FillBuffer(lookahead);
-            var seek = Math.Min(available, lookahead);
-            for (var i = dataIndex; i < dataIndex + seek; i++)
-            {
-                switch (data[i])
+                // Do nothing if the requested offset is the current offset
+                if (offset == Offset)
                 {
-                    case '\r':
-                        currentColumn = 1;
-                        break;
-                    case '\n':
-                        currentLine++;
-                        currentColumn = 1;
-                        break;
-                    default:
-                        currentColumn++;
-                        break;
+                    return;
                 }
+
+                // Seek to data[0] if the requested offset is data[n <= dataIndex]
+                // This is necessary for line/column tracking which you can't do backwards
+                if (offset < Offset)
+                {
+                    dataIndex = 0;
+                    Line = recordedLine;
+                    Column = recordedColumn;
+                    Offset = recordedOffset;
+                    if (offset == Offset)
+                    {
+                        return;
+                    }
+                }
+
+                // demand is the number of characters to move forward
+                var demand = (int)(offset - Offset);
+
+                // supply is the number of available characters after buffering
+                var supply = FillBuffer(demand);
+
+                // Seek up to the number of characters in the buffer
+                var maxCount = Math.Min(supply, demand);
+                var maxIndex = dataIndex + maxCount;
+                for (var i = dataIndex; i < maxIndex; i++)
+                {
+                    Track(data[i]);
+                }
+                dataIndex += maxCount;
+                Offset += maxCount;
             }
-            dataIndex += seek;
-            currentOffset += seek;
-            if (watchers == 0)
+            finally
             {
-                ResetBuffer(0);
+                if (watchers == 0)
+                {
+                    ResetBuffer(0);
+                }
             }
         }
 
@@ -463,7 +445,7 @@ namespace Txt.Core
                 ResetBuffer(0);
             }
             watchers++;
-            return currentOffset;
+            return Offset;
         }
 
         /// <summary>
@@ -556,7 +538,7 @@ namespace Txt.Core
 
             // Resize the buffer if it is too small to hold the needed number of characters
             var need = count - unreadCount;
-            var unusedCapacity = data.Length - dataLength - dataIndex;
+            var unusedCapacity = data.Length - dataLength;
             if (need > unusedCapacity)
             {
                 Array.Resize(ref data, data.Length + need - unusedCapacity);
@@ -580,9 +562,9 @@ namespace Txt.Core
                     Array.Copy(data, dataIndex, data, 0, dataLength);
                 }
                 dataIndex = 0;
-                dataOffset = currentOffset;
-                dataLine = Line;
-                dataColumn = Column;
+                recordedOffset = Offset;
+                recordedLine = Line;
+                recordedColumn = Column;
             }
 
             // Shrink the buffer if at least 50% capacity is now unused
@@ -590,9 +572,27 @@ namespace Txt.Core
             //  don't shrink if minLength is 0..128, it's not worth it
             minLength = Math.Max(minLength, 128);
             minLength = Math.Max(minLength, dataLength);
-            if (minLength <= data.Length * 0.5)
+            if (minLength <= data.Length*0.5)
             {
                 Array.Resize(ref data, minLength);
+            }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private void Track(char c)
+        {
+            switch (c)
+            {
+                case '\r':
+                    Column = 1;
+                    break;
+                case '\n':
+                    Line++;
+                    Column = 1;
+                    break;
+                default:
+                    Column++;
+                    break;
             }
         }
     }
