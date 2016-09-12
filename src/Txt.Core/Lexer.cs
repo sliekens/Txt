@@ -22,27 +22,33 @@ namespace Txt.Core
             {
                 throw new ArgumentNullException(nameof(scanner));
             }
-            scanner.StartRecording();
+            var offset = scanner.StartRecording();
+            TElement candidate = null;
             try
             {
                 var context = scanner.GetContext();
-                var element = Read2Impl(scanner, context).ToList();
-                if (element.Count == 0)
+                foreach (var element in Read2Impl(scanner, context))
+                {
+                    if (candidate == null)
+                    {
+                        candidate = element;
+                    }
+                    if (element.Text.Length > candidate.Text.Length)
+                    {
+                        candidate = element;
+                    }
+                }
+                if (candidate == null)
                 {
                     return null;
                 }
-
-                if (element.Count == 1)
-                {
-                    return element[0];
-                }
-
-                return element.OrderByDescending(candidate => candidate.Text.Length).First();
+                scanner.Seek(offset + candidate.Text.Length);
             }
             finally
             {
                 scanner.StopRecording();
             }
+            return candidate;
         }
 
         /// <summary>
