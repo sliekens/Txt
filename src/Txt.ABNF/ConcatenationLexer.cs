@@ -32,7 +32,7 @@ namespace Txt.ABNF
         public override IEnumerable<Concatenation> Read2Impl(ITextScanner scanner, ITextContext context)
         {
             bool success = false;
-            foreach (var concatenation in Branch(scanner, context, context, new List<Element>(lexers.Count)))
+            foreach (var concatenation in Branch(scanner, context, new List<Element>(lexers.Count)))
             {
                 success = true;
                 yield return concatenation;
@@ -47,7 +47,6 @@ namespace Txt.ABNF
         private IEnumerable<Concatenation> Branch(
             ITextScanner scanner,
             ITextContext root,
-            ITextContext branch,
             List<Element> elements)
         {
             if (elements.Count == lexers.Count)
@@ -57,11 +56,11 @@ namespace Txt.ABNF
             else
             {
                 var next = lexers[elements.Count];
-                foreach (var element in next.Read(scanner, branch))
+                var element = next.Read(scanner);
+                if (element != null)
                 {
-                    var nextBranch = scanner.GetContext();
                     var copy = new List<Element>(elements) { element };
-                    foreach (var concat in Branch(scanner, root, nextBranch, copy))
+                    foreach (var concat in Branch(scanner, root, copy))
                     {
                         yield return concat;
                     }

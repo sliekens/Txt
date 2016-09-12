@@ -47,7 +47,7 @@ namespace Txt.ABNF
         public override IEnumerable<Repetition> Read2Impl(ITextScanner scanner, ITextContext context)
         {
             bool success = false;
-            foreach (var repetition in Branch(scanner, context, context, new List<Element>(lowerBound)))
+            foreach (var repetition in Branch(scanner, context, new List<Element>(lowerBound)))
             {
                 success = true;
                 yield return repetition;
@@ -61,7 +61,6 @@ namespace Txt.ABNF
         private IEnumerable<Repetition> Branch(
             ITextScanner scanner,
             ITextContext root,
-            ITextContext branch,
             List<Element> elements)
         {
             if (elements.Count == upperBound)
@@ -70,18 +69,16 @@ namespace Txt.ABNF
             }
             else
             {
-                bool success = false;
-                foreach (var element in lexer.Read(scanner, branch))
+                var element = lexer.Read(scanner);
+                if (element != null)
                 {
-                    success = true;
                     var copy = new List<Element>(elements) { element };
-                    var nextBranch = scanner.GetContext();
-                    foreach (var repetition in Branch(scanner, root, nextBranch, copy))
+                    foreach (var repetition in Branch(scanner, root, copy))
                     {
                         yield return repetition;
                     }
                 }
-                if (!success && (elements.Count >= lowerBound))
+                else if (elements.Count >= lowerBound)
                 {
                     yield return new Repetition(string.Concat(elements), elements, root);
                 }
