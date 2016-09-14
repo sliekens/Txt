@@ -33,7 +33,7 @@ namespace Txt.Core
                     {
                         candidate = element;
                     }
-                    if (element.Text.Length > candidate.Text.Length)
+                    else if (element.Text.Length > candidate.Text.Length)
                     {
                         candidate = element;
                     }

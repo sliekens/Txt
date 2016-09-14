@@ -38,7 +38,9 @@ namespace Txt.ABNF
         {
             for (var i = 0; i < lexers.Length; i++)
             {
-                foreach (var element in lexers[i].Read(scanner, context))
+                scanner.Seek(context.Offset);
+                var element = lexers[i].Read(scanner);
+                if (element != null)
                 {
                     yield return new Alternation(element.Text, element, context, i + 1);
                 }
