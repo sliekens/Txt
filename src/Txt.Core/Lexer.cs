@@ -58,16 +58,15 @@ namespace Txt.Core
 
             public IEnumerator<TElement> GetEnumerator()
             {
-                return new ReadImpl<TElement>(impl, scanner, context);
+                return new ReadImpl(impl, scanner, context);
             }
 
             IEnumerator IEnumerable.GetEnumerator()
             {
-                return new ReadImpl<TElement>(impl, scanner, context);
+                return new ReadImpl(impl, scanner, context);
             }
 
-            private class ReadImpl<TElement> : IEnumerator<TElement>
-                where TElement : Element
+            private class ReadImpl : IEnumerator<TElement>
             {
                 private readonly ITextContext context;
 
