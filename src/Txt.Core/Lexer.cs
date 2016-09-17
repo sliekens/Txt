@@ -27,7 +27,7 @@ namespace Txt.Core
             try
             {
                 var context = scanner.GetContext();
-                foreach (var element in Read2Impl(scanner, context))
+                foreach (var element in ReadImpl(scanner, context))
                 {
                     if (candidate == null)
                     {
@@ -77,7 +77,7 @@ namespace Txt.Core
             try
             {
                 scanner.Seek(context.Offset);
-                return Read2Impl(scanner, context);
+                return ReadImpl(scanner, context);
             }
             finally
             {
@@ -85,6 +85,6 @@ namespace Txt.Core
             }
         }
 
-        public abstract IEnumerable<TElement> Read2Impl(ITextScanner scanner, ITextContext context);
+        public abstract IEnumerable<TElement> ReadImpl(ITextScanner scanner, ITextContext context);
     }
 }

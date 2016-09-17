@@ -29,7 +29,7 @@ namespace Txt.ABNF
             this.lexers = lexers;
         }
 
-        public override IEnumerable<Concatenation> Read2Impl(ITextScanner scanner, ITextContext context)
+        public override IEnumerable<Concatenation> ReadImpl(ITextScanner scanner, ITextContext context)
         {
             bool success = false;
             foreach (var concatenation in Branch(scanner, context, new List<Element>(lexers.Count)))

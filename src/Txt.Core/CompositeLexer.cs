@@ -24,7 +24,7 @@ namespace Txt.Core
             this.innerLexer = innerLexer;
         }
 
-        public override IEnumerable<TElement> Read2Impl(ITextScanner scanner, ITextContext context)
+        public override IEnumerable<TElement> ReadImpl(ITextScanner scanner, ITextContext context)
         {
             var factory = lazyFactory.Value;
             foreach (var element in innerLexer.Read(scanner, context))

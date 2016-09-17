@@ -35,7 +35,7 @@ namespace Txt.ABNF
             this.comparer = comparer;
         }
 
-        public override IEnumerable<Terminal> Read2Impl(ITextScanner scanner, ITextContext context)
+        public override IEnumerable<Terminal> ReadImpl(ITextScanner scanner, ITextContext context)
         {
             if (scanner.Peek() == -1)
             {
