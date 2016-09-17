@@ -63,7 +63,7 @@ namespace Txt.Core
 
             IEnumerator IEnumerable.GetEnumerator()
             {
-                return GetEnumerator();
+                return new ReadImpl<TElement>(impl, scanner, context);
             }
 
             private class ReadImpl<TElement> : IEnumerator<TElement>
@@ -74,8 +74,6 @@ namespace Txt.Core
                 private readonly Lexer<TElement> lexer;
 
                 private readonly ITextScanner scanner;
-
-                private Element current;
 
                 private bool initialized;
 
