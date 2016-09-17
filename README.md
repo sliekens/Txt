@@ -90,31 +90,19 @@ public class Integer : Repetition
     }
 }
 
-public class IntegerLexer : Lexer<Integer>
+public class IntegerLexer : CompositeLexer<Repetition, Integer>
 {
-    private readonly ILexer<Repetition> innerLexer;
-
     public IntegerLexer(ILexer<Repetition> innerLexer)
+        : base(innerLexer)
     {
-        this.innerLexer = innerLexer;
-    }
-
-    public override ReadResult<Integer> ReadImpl(ITextScanner scanner)
-    {
-        var result = innerLexer.Read(scanner);
-        if (result.Success)
-        {
-            return ReadResult<Integer>.FromResult(new Integer(result.Element));
-        }
-        return ReadResult<Integer>.FromSyntaxError(SyntaxError.FromReadResult(result, scanner.GetContext()));
     }
 }
 
 public class IntegerLexerFactory : ILexerFactory<Integer>
 {
-    private readonly IRepetitionLexerFactory repetitionLexerFactory;
-
     private readonly ILexer<Digit> digitLexer;
+
+    private readonly IRepetitionLexerFactory repetitionLexerFactory;
 
     public IntegerLexerFactory(IRepetitionLexerFactory repetitionLexerFactory, ILexer<Digit> digitLexer)
     {
@@ -143,11 +131,9 @@ public class IntegerWalker : Walker
         Console.WriteLine("Entering the Integer");
     }
 
-    public bool Walk(Integer integer)
+    public void Enter(Digit digit)
     {
-        var parser = new IntegerParser();
-        Console.WriteLine("The integer is " + parser.Parse(integer));
-        return base.Walk(integer);
+        Console.WriteLine("Entering a Digit at position " + digit.Context.Offset);
     }
 
     public void Exit(Integer integer)
@@ -155,9 +141,16 @@ public class IntegerWalker : Walker
         Console.WriteLine("Exiting the Integer");
     }
 
-    public void Enter(Digit digit)
+    public void Exit(Digit digit)
     {
-        Console.WriteLine("Entering a Digit at position " + digit.Offset);
+        Console.WriteLine("Exiting the Digit");
+    }
+
+    public bool Walk(Integer integer)
+    {
+        var parser = new IntegerParser();
+        Console.WriteLine("The integer is " + parser.Parse(integer));
+        return base.Walk(integer);
     }
 
     public bool Walk(Digit digit)
@@ -165,11 +158,6 @@ public class IntegerWalker : Walker
         var parser = new DigitParser();
         Console.WriteLine("The digit is " + parser.Parse(digit));
         return base.Walk(digit);
-    }
-
-    public void Exit(Digit digit)
-    {
-        Console.WriteLine("Exiting the Digit");
     }
 }
 ```
@@ -188,9 +176,12 @@ var integerParser = new IntegerParser();
 using (ITextSource textSource = new StringTextSource(input))
 using (ITextScanner textScanner = new TextScanner(textSource))
 {
-    ReadResult<Integer> readResult = integerLexer.Read(textScanner);
-    if (!readResult.Success) throw new InvalidOperationException();
-    int value = integerParser.Parse(readResult.Element);
+    var result = integerLexer.Read(textScanner);
+    if (result == null)
+    {
+        throw new FormatException();
+    }
+    int value = integerParser.Parse(result);
 }
 ```
 StreamTextSource:
@@ -208,9 +199,12 @@ using (PushbackInputStream inputStream = new PushbackInputStream(fileStream))
 using (ITextSource textSource = new StreamTextSource(inputStream, Encoding.UTF8))
 using (ITextScanner textScanner = new TextScanner(textSource))
 {
-    ReadResult<Integer> readResult = integerLexer.Read(textScanner);
-    if (!readResult.Success) throw new InvalidOperationException();
-    int value = integerParser.Parse(readResult.Element);;
+    var result = integerLexer.Read(textScanner);
+    if (result == null)
+    {
+        throw new FormatException();
+    }
+    int value = integerParser.Parse(result);
 }
 ```
 
