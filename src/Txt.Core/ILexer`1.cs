@@ -8,8 +8,6 @@ namespace Txt.Core
     public interface ILexer<out TElement>
         where TElement : Element
     {
-        TElement Read([NotNull] ITextScanner scanner);
-
         /// <summary>
         ///     Iterates all possible matches for <typeparamref name="TElement" /> beginning at the specified offset.
         /// </summary>

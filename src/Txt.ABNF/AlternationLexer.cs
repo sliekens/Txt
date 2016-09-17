@@ -34,7 +34,7 @@ namespace Txt.ABNF
             this.lexers = lexers;
         }
 
-        public override IEnumerable<Alternation> ReadImpl(ITextScanner scanner, ITextContext context)
+        protected override IEnumerable<Alternation> ReadImpl(ITextScanner scanner, ITextContext context)
         {
             for (var i = 0; i < lexers.Length; i++)
             {

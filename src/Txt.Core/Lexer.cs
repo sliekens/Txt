@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 
 namespace Txt.Core
 {
@@ -15,41 +17,6 @@ namespace Txt.Core
         where TElement : Element
     {
         protected readonly IEnumerable<TElement> Empty = Enumerable.Empty<TElement>();
-
-        public TElement Read(ITextScanner scanner)
-        {
-            if (scanner == null)
-            {
-                throw new ArgumentNullException(nameof(scanner));
-            }
-            var offset = scanner.StartRecording();
-            TElement candidate = null;
-            try
-            {
-                var context = scanner.GetContext();
-                foreach (var element in ReadImpl(scanner, context))
-                {
-                    if (candidate == null)
-                    {
-                        candidate = element;
-                    }
-                    else if (element.Text.Length > candidate.Text.Length)
-                    {
-                        candidate = element;
-                    }
-                }
-                if (candidate == null)
-                {
-                    return null;
-                }
-                scanner.Seek(offset + candidate.Text.Length);
-            }
-            finally
-            {
-                scanner.StopRecording();
-            }
-            return candidate;
-        }
 
         /// <summary>
         ///     Iterates all possible matches for <typeparamref name="TElement" /> beginning at the specified offset.
@@ -69,22 +36,126 @@ namespace Txt.Core
         /// <returns>A collection of all possible matches.</returns>
         public IEnumerable<TElement> Read(ITextScanner scanner, ITextContext context)
         {
-            if (scanner == null)
-            {
-                throw new ArgumentNullException(nameof(scanner));
-            }
-            scanner.StartRecording();
-            try
-            {
-                scanner.Seek(context.Offset);
-                return ReadImpl(scanner, context);
-            }
-            finally
-            {
-                scanner.StopRecording();
-            }
+            return new LexerImpl(this, scanner, context);
         }
 
-        public abstract IEnumerable<TElement> ReadImpl(ITextScanner scanner, ITextContext context);
+        protected abstract IEnumerable<TElement> ReadImpl(ITextScanner scanner, ITextContext context);
+
+        private class LexerImpl : IEnumerable<TElement>
+        {
+            private readonly ITextContext context;
+
+            private readonly Lexer<TElement> impl;
+
+            private readonly ITextScanner scanner;
+
+            public LexerImpl(Lexer<TElement> impl, ITextScanner scanner, ITextContext context)
+            {
+                this.impl = impl;
+                this.scanner = scanner;
+                this.context = context;
+            }
+
+            public IEnumerator<TElement> GetEnumerator()
+            {
+                return new ReadImpl<TElement>(impl, scanner, context);
+            }
+
+            IEnumerator IEnumerable.GetEnumerator()
+            {
+                return GetEnumerator();
+            }
+
+            private class ReadImpl<TElement> : IEnumerator<TElement>
+                where TElement : Element
+            {
+                private readonly ITextContext context;
+
+                private readonly Lexer<TElement> lexer;
+
+                private readonly ITextScanner scanner;
+
+                private Element current;
+
+                private bool initialized;
+
+                private IEnumerator<TElement> inner;
+
+                private long start;
+
+                public ReadImpl(
+                    [NotNull] Lexer<TElement> lexer,
+                    [NotNull] ITextScanner scanner,
+                    [NotNull] ITextContext context)
+                {
+                    if (lexer == null)
+                    {
+                        throw new ArgumentNullException(nameof(lexer));
+                    }
+                    if (scanner == null)
+                    {
+                        throw new ArgumentNullException(nameof(scanner));
+                    }
+                    if (context == null)
+                    {
+                        throw new ArgumentNullException(nameof(context));
+                    }
+                    this.lexer = lexer;
+                    this.scanner = scanner;
+                    this.context = context;
+                }
+
+                public TElement Current { get; private set; }
+
+                object IEnumerator.Current => Current;
+
+                public void Dispose()
+                {
+                    if (initialized)
+                    {
+                        inner.Dispose();
+                        scanner.StopRecording();
+                    }
+                }
+
+                public bool MoveNext()
+                {
+                    if (!initialized)
+                    {
+                        start = scanner.StartRecording();
+                        inner = lexer.ReadImpl(scanner, context).GetEnumerator();
+                        initialized = true;
+                    }
+                    if (scanner.Offset != context.Offset)
+                    {
+                        scanner.Seek(context.Offset);
+                    }
+                    if (!inner.MoveNext())
+                    {
+                        if (scanner.Offset != context.Offset)
+                        {
+                            scanner.Seek(context.Offset);
+                        }
+                        return false;
+                    }
+                    Current = inner.Current;
+                    return true;
+                }
+
+                public void Reset()
+                {
+                    if (!initialized)
+                    {
+                        return;
+                    }
+                    inner.Dispose();
+                    if (scanner.Offset != start)
+                    {
+                        scanner.Seek(start);
+                    }
+                    initialized = false;
+                }
+            }
+        }
     }
 }

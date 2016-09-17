@@ -44,7 +44,7 @@ namespace Txt.ABNF
             this.upperBound = upperBound;
         }
 
-        public override IEnumerable<Repetition> ReadImpl(ITextScanner scanner, ITextContext context)
+        protected override IEnumerable<Repetition> ReadImpl(ITextScanner scanner, ITextContext context)
         {
             bool success = false;
             foreach (var repetition in Branch(scanner, context, new List<Element>(lowerBound)))
