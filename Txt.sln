@@ -16,8 +16,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		RFC5234.abnf = RFC5234.abnf
 	EndProjectSection
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Common", "src\Common\Common.xproj", "{F20BABFD-8FD3-4887-BBE4-3422E71C63A7}"
-EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Txt.ABNF", "src\Txt.ABNF\Txt.ABNF.xproj", "{8BD2F60F-82C9-444E-A290-4AE01C90593D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{1C65ACFA-CF2F-4922-A7B5-9FB745B469B9}"
@@ -34,16 +32,19 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Txt", "src\Txt\Txt.xproj", 
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Calculator", "sample\Calculator\Calculator.xproj", "{F3CA639E-DB7D-4551-A68A-F3B0D68E31D1}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "shared", "shared", "{CF04A44E-04F6-4F47-BA2E-84A753418267}"
+	ProjectSection(SolutionItems) = preProject
+		src\shared\JetBrains.Annotations.cs = src\shared\JetBrains.Annotations.cs
+		src\shared\SwitchOnBuild.cs = src\shared\SwitchOnBuild.cs
+		src\shared\TaskHelper.cs = src\shared\TaskHelper.cs
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F20BABFD-8FD3-4887-BBE4-3422E71C63A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F20BABFD-8FD3-4887-BBE4-3422E71C63A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F20BABFD-8FD3-4887-BBE4-3422E71C63A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F20BABFD-8FD3-4887-BBE4-3422E71C63A7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8BD2F60F-82C9-444E-A290-4AE01C90593D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8BD2F60F-82C9-444E-A290-4AE01C90593D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8BD2F60F-82C9-444E-A290-4AE01C90593D}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -73,12 +74,12 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{F20BABFD-8FD3-4887-BBE4-3422E71C63A7} = {6AFE5181-DC35-4668-92B7-13C7D06686D7}
 		{8BD2F60F-82C9-444E-A290-4AE01C90593D} = {6AFE5181-DC35-4668-92B7-13C7D06686D7}
 		{BFB002EA-D011-4C31-9870-48D7B3987E61} = {1C65ACFA-CF2F-4922-A7B5-9FB745B469B9}
 		{B0EBCE28-C62B-4169-9051-C9C0B1F17B52} = {6AFE5181-DC35-4668-92B7-13C7D06686D7}
 		{B6421C49-53B7-48A4-8913-95191E7F6A23} = {1C65ACFA-CF2F-4922-A7B5-9FB745B469B9}
 		{FA27D053-B091-433B-8D33-D28082B68BBA} = {6AFE5181-DC35-4668-92B7-13C7D06686D7}
 		{F3CA639E-DB7D-4551-A68A-F3B0D68E31D1} = {F10BEB21-D1AF-416E-800D-348A6B1FC544}
+		{CF04A44E-04F6-4F47-BA2E-84A753418267} = {6AFE5181-DC35-4668-92B7-13C7D06686D7}
 	EndGlobalSection
 EndGlobal

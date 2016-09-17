@@ -11,10 +11,11 @@
       }
     }
   },
-  "dependencies": {
-    "Common": {
-      "type": "build",
-      "target": "project"
+  "buildOptions": {
+    "compile": {
+      "include": [
+        "../shared/**/*.cs"
+      ]
     }
   }
 }
