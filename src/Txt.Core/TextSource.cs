@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,8 +9,10 @@ using JetBrains.Annotations;
 
 namespace Txt.Core
 {
-    public abstract class TextSource : ITextSource
+    public abstract partial class TextSource : ITextSource
     {
+        private readonly Stack<Snapshot> snapshots = new Stack<Snapshot>();
+
         /// <summary>
         ///     This is the internal character buffer.
         ///     This buffer is not meant to improve performance. Instead, its intended use is to provide a sliding window over a
@@ -389,15 +393,16 @@ namespace Txt.Core
                 return;
             }
 
-            // Seek to data[0] if the requested offset is data[n <= dataIndex]
+            // Seek to the closest snapshot if the requested offset is data[n <= dataIndex]
             // This is necessary for line/column tracking which you can't do backwards
             if (offset < Offset)
             {
-                dataIndex = 0;
-                Line = recordedLine;
-                Column = recordedColumn;
-                Offset = recordedOffset;
-                if (offset == Offset)
+                var snapshot = snapshots.First(s => s.Offset <= offset);
+                dataIndex = snapshot.DataIndex;
+                Line = snapshot.Line;
+                Column = snapshot.Column;
+                Offset = snapshot.Offset;
+                if (offset == snapshot.Offset)
                 {
                     return;
                 }
@@ -436,6 +441,17 @@ namespace Txt.Core
                 throw new ObjectDisposedException(GetType().FullName);
             }
             watchers++;
+            if (snapshots.Count == 0)
+            {
+                snapshots.Push(new Snapshot(dataIndex, Offset, Line, Column));
+            }
+            else
+            {
+                var previous = snapshots.Peek();
+                snapshots.Push(previous.DataIndex == dataIndex
+                    ? previous
+                    : new Snapshot(dataIndex, Offset, Line, Column));
+            }
             return Offset;
         }
 
@@ -457,6 +473,7 @@ namespace Txt.Core
                 return;
             }
             watchers--;
+            snapshots.Pop();
             if (watchers == 0)
             {
                 ResetBuffer();
