@@ -6,8 +6,6 @@ namespace Txt.Core
 {
     public class StringTextSourceTests
     {
-        private const string EmptyString = "";
-
         private const string Sentence = "The quick brown fox jumps over the lazy dog";
 
         [Fact]
@@ -15,7 +13,7 @@ namespace Txt.Core
         {
             // When creating a new StringTextSource with an empty string
             // Then no exception is thrown
-            var sut = new StringTextSource(EmptyString);
+            var sut = new StringTextSource("");
         }
 
         [Fact]
@@ -25,17 +23,6 @@ namespace Txt.Core
             // Then an ArgumentNullException is thrown
             StringTextSource sut;
             Assert.Throws<ArgumentNullException>(() => sut = new StringTextSource((string)null));
-        }
-
-        [Fact]
-        public void WhenPeekingEndOfSource_ExpectMinusOne()
-        {
-            // Given that the text source has been initialized with an string
-            // When Peek is called
-            // Then -1 is returned
-            var sut = new StringTextSource(EmptyString);
-            var peek = sut.Peek();
-            Assert.Equal(-1, peek);
         }
 
         [Fact]
@@ -62,7 +49,7 @@ namespace Txt.Core
             // Given that the text source has been initialized with an string
             // When Read is called
             // Then -1 is returned
-            var sut = new StringTextSource(EmptyString);
+            var sut = new StringTextSource("");
             var read = sut.Read();
             Assert.Equal(-1, read);
         }
@@ -177,32 +164,6 @@ namespace Txt.Core
                 var buffer = new char[Sentence.Length];
                 int read;
                 Assert.Throws<ArgumentOutOfRangeException>(() => read = sut.Read(buffer, buffer.Length + 1, 0));
-            }
-        }
-
-        [Fact]
-        public void WhenSeekWithNegativeOffset_ExpectArgumentOutOfRangeException()
-        {
-            // Given that there is text to be read
-
-            // When Seek is called with a negative offset
-            // Then an ArgumentOutOfRangeException is thrown
-            using (var sut = new StringTextSource("abc"))
-            {
-                Assert.Throws<ArgumentOutOfRangeException>(() => sut.Seek(-1));
-            }
-        }
-
-        [Fact]
-        public void WhenSeekWithOffsetGreaterThanCurrent_ExpectCharacterAtSpecifiedOffset()
-        {
-            // Given that there is text to be read
-            // When Seek is called
-            // Then the current offset becomes the specified offset
-            using (var sut = new StringTextSource("abc"))
-            {
-                sut.Seek(2);
-                Assert.Equal(2, sut.Offset);
             }
         }
     }
