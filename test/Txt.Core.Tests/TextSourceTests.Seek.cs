@@ -39,6 +39,21 @@ namespace Txt.Core
                     Assert.Equal(2, sut.Offset);
                 }
             }
+
+            [Fact]
+            public void SeekWithoutRecording()
+            {
+                // Given that there is a text source
+                //  and the text length is 10
+                // When reading 1 character
+                //  and seeking to offset 0
+                // Then an exception is thrown
+                using (var sut = new StringTextSource("1234567890"))
+                {
+                    sut.Read(new char[2], 0, 2);
+                    Assert.Throws<ArgumentOutOfRangeException>(() => sut.Seek(0));
+                }
+            }
         }
     }
 }

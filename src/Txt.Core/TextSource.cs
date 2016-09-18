@@ -212,6 +212,10 @@ namespace Txt.Core
             Track(c);
             dataIndex++;
             Offset++;
+            if (watchers == 0)
+            {
+                ClearBuffer();
+            }
             return c;
         }
 
@@ -255,13 +259,13 @@ namespace Txt.Core
             var unreadCount = FillBuffer(maxCount);
             maxCount = Math.Min(maxCount, unreadCount);
             Array.Copy(data, dataIndex, buffer, startIndex, maxCount);
-            var maxIndex = dataIndex + maxCount;
-            for (var i = dataIndex; i < maxIndex; i++)
-            {
-                Track(data[i]);
-            }
+            Track(data, dataIndex, maxCount);
             dataIndex += maxCount;
             Offset += maxCount;
+            if (watchers == 0)
+            {
+                ClearBuffer();
+            }
             return maxCount;
         }
 
@@ -296,13 +300,13 @@ namespace Txt.Core
             var unreadCount = await FillBufferAsync(maxCount).ConfigureAwait(false);
             maxCount = Math.Min(maxCount, unreadCount);
             Array.Copy(data, dataIndex, buffer, startIndex, maxCount);
-            var maxIndex = dataIndex + maxCount;
-            for (var i = dataIndex; i < maxIndex; i++)
-            {
-                Track(data[i]);
-            }
+            Track(data, dataIndex, maxCount);
             dataIndex += maxCount;
             Offset += maxCount;
+            if (watchers == 0)
+            {
+                ClearBuffer();
+            }
             return maxCount;
         }
 
@@ -378,50 +382,41 @@ namespace Txt.Core
                     offset,
                     $"{nameof(Seek)}({offset}) failed: the smallest recorded offset is {recordedOffset}. Did you forget to invoke {nameof(StartRecording)}?");
             }
-            try
+
+            // Do nothing if the requested offset is the current offset
+            if (offset == Offset)
             {
-                // Do nothing if the requested offset is the current offset
+                return;
+            }
+
+            // Seek to data[0] if the requested offset is data[n <= dataIndex]
+            // This is necessary for line/column tracking which you can't do backwards
+            if (offset < Offset)
+            {
+                dataIndex = 0;
+                Line = recordedLine;
+                Column = recordedColumn;
+                Offset = recordedOffset;
                 if (offset == Offset)
                 {
                     return;
                 }
-
-                // Seek to data[0] if the requested offset is data[n <= dataIndex]
-                // This is necessary for line/column tracking which you can't do backwards
-                if (offset < Offset)
-                {
-                    dataIndex = 0;
-                    Line = recordedLine;
-                    Column = recordedColumn;
-                    Offset = recordedOffset;
-                    if (offset == Offset)
-                    {
-                        return;
-                    }
-                }
-
-                // demand is the number of characters to move forward
-                var demand = (int)(offset - Offset);
-
-                // supply is the number of available characters after buffering
-                var supply = FillBuffer(demand);
-
-                // Seek up to the number of characters in the buffer
-                var maxCount = Math.Min(supply, demand);
-                var maxIndex = dataIndex + maxCount;
-                for (var i = dataIndex; i < maxIndex; i++)
-                {
-                    Track(data[i]);
-                }
-                dataIndex += maxCount;
-                Offset += maxCount;
             }
-            finally
+
+            // demand is the number of characters to move forward
+            var demand = (int)(offset - Offset);
+
+            // supply is the number of available characters after buffering
+            var supply = FillBuffer(demand);
+
+            // Seek up to the number of characters in the buffer
+            var maxCount = Math.Min(supply, demand);
+            Track(data, dataIndex, maxCount);
+            dataIndex += maxCount;
+            Offset += maxCount;
+            if (watchers == 0)
             {
-                if (watchers == 0)
-                {
-                    ResetBuffer(0);
-                }
+                ClearBuffer();
             }
         }
 
@@ -439,10 +434,6 @@ namespace Txt.Core
             if (disposed)
             {
                 throw new ObjectDisposedException(GetType().FullName);
-            }
-            if (watchers == 0)
-            {
-                ResetBuffer(0);
             }
             watchers++;
             return Offset;
@@ -468,7 +459,7 @@ namespace Txt.Core
             watchers--;
             if (watchers == 0)
             {
-                ResetBuffer(0);
+                ResetBuffer();
             }
         }
 
@@ -498,11 +489,6 @@ namespace Txt.Core
 
         private int FillBuffer(int count)
         {
-            if (watchers == 0)
-            {
-                ResetBuffer(count);
-            }
-
             // Just return already if there are enough characters in the buffer
             var unreadCount = dataLength - dataIndex;
             if (unreadCount >= count)
@@ -524,11 +510,6 @@ namespace Txt.Core
 
         private async Task<int> FillBufferAsync(int count)
         {
-            if (watchers == 0)
-            {
-                ResetBuffer(count);
-            }
-
             // Just return already if there are enough characters in the buffer
             var unreadCount = dataLength - dataIndex;
             if (unreadCount >= count)
@@ -548,33 +529,31 @@ namespace Txt.Core
             return length + unreadCount;
         }
 
-        private void ResetBuffer(int minLength)
+        private void ClearBuffer()
         {
             // Move unread characters to the start of the buffer so that dataIndex becomes 0.
             // We do this to maximize free buffer space which means we have to increase its size less often.
             // The tradeoff is that after this method returns,
             //  Seek(long) cannot be called with an offset before the current offset.
-            if (dataIndex != 0)
+            dataLength = dataLength - dataIndex;
+            if (dataLength != 0)
             {
-                dataLength = dataLength - dataIndex;
-                if (dataLength != 0)
-                {
-                    Array.Copy(data, dataIndex, data, 0, dataLength);
-                }
-                dataIndex = 0;
-                recordedOffset = Offset;
-                recordedLine = Line;
-                recordedColumn = Column;
+                Array.Copy(data, dataIndex, data, 0, dataLength);
             }
+            dataIndex = 0;
+            recordedOffset = Offset;
+            recordedLine = Line;
+            recordedColumn = Column;
+        }
 
-            // Shrink the buffer if at least 50% capacity is now unused
-            //  but only for considerably large buffers 
-            //  don't shrink if minLength is 0..128, it's not worth it
-            minLength = Math.Max(minLength, 128);
-            minLength = Math.Max(minLength, dataLength);
-            if (minLength <= data.Length*0.5)
+
+        private void ResetBuffer()
+        {
+            ClearBuffer();
+            var newSize = Math.Max(dataLength, 128);
+            if (newSize < data.Length * 0.9)
             {
-                Array.Resize(ref data, minLength);
+                Array.Resize(ref data, newSize);
             }
         }
 
@@ -593,6 +572,27 @@ namespace Txt.Core
                 default:
                     Column++;
                     break;
+            }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private void Track(char[] buffer, int startIndex, int count)
+        {
+            for (int i = startIndex; i < count; i++)
+            {
+                switch (buffer[i])
+                {
+                    case '\r':
+                        Column = 1;
+                        break;
+                    case '\n':
+                        Line++;
+                        Column = 1;
+                        break;
+                    default:
+                        Column++;
+                        break;
+                }
             }
         }
     }
