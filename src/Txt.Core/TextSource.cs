@@ -45,10 +45,6 @@ namespace Txt.Core
 
         private bool disposed;
 
-        private int recordedColumn = 1;
-
-        private int recordedLine = 1;
-
         /// <summary>The zero-based index into the text source at which <see cref="data" /> begins.</summary>
         private long recordedOffset;
 
@@ -559,8 +555,6 @@ namespace Txt.Core
             }
             dataIndex = 0;
             recordedOffset = Offset;
-            recordedLine = Line;
-            recordedColumn = Column;
         }
 
 

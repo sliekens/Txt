@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using JetBrains.Annotations;
 using Txt.Core;
 
@@ -10,9 +9,6 @@ namespace Txt.ABNF
     /// </summary>
     public class Terminal : Element
     {
-        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly string text;
-
         /// <summary>
         ///     Creates a new instance of the <see cref="Terminal" /> class with a specified terminal to copy.
         /// </summary>
@@ -32,7 +28,6 @@ namespace Txt.ABNF
         public Terminal([NotNull] string text, [NotNull] ITextContext context)
             : base(text, context)
         {
-            this.text = text;
         }
     }
 }
