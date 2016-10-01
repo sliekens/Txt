@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using JetBrains.Annotations;
 using Txt.ABNF.Core.CR;
 using Txt.ABNF.Core.LF;
@@ -10,48 +9,105 @@ namespace Txt.ABNF.Core.CRLF
     /// <summary>Creates instances of the <see cref="NewLineLexer" /> class.</summary>
     public class NewLineLexerFactory : ILexerFactory<NewLine>
     {
-        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly ILexer<CarriageReturn> carriageReturnLexer;
+        private ILexer<NewLine> instance;
 
-        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly IConcatenationLexerFactory concatenationLexerFactory;
+        static NewLineLexerFactory()
+        {
+            Default = new NewLineLexerFactory(
+                ABNF.ConcatenationLexerFactory.Default,
+                CR.CarriageReturnLexerFactory.Default,
+                LF.LineFeedLexerFactory.Default);
+        }
 
-        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly ILexer<LineFeed> lineFeedLexer;
-
-        /// <summary>
-        /// </summary>
-        /// <param name="concatenationLexerFactory"></param>
-        /// <param name="carriageReturnLexer"></param>
-        /// <param name="lineFeedLexer"></param>
-        /// <exception cref="ArgumentNullException"></exception>
-        public NewLineLexerFactory(
+        private NewLineLexerFactory(
             [NotNull] IConcatenationLexerFactory concatenationLexerFactory,
-            [NotNull] ILexer<CarriageReturn> carriageReturnLexer,
-            [NotNull] ILexer<LineFeed> lineFeedLexer)
+            [NotNull] ILexerFactory<CarriageReturn> carriageReturnLexerFactory,
+            [NotNull] ILexerFactory<LineFeed> lineFeedLexerFactory)
         {
             if (concatenationLexerFactory == null)
             {
                 throw new ArgumentNullException(nameof(concatenationLexerFactory));
             }
-            if (carriageReturnLexer == null)
+            if (carriageReturnLexerFactory == null)
             {
-                throw new ArgumentNullException(nameof(carriageReturnLexer));
+                throw new ArgumentNullException(nameof(carriageReturnLexerFactory));
             }
-            if (lineFeedLexer == null)
+            if (lineFeedLexerFactory == null)
             {
-                throw new ArgumentNullException(nameof(lineFeedLexer));
+                throw new ArgumentNullException(nameof(lineFeedLexerFactory));
             }
-            this.concatenationLexerFactory = concatenationLexerFactory;
-            this.carriageReturnLexer = carriageReturnLexer;
-            this.lineFeedLexer = lineFeedLexer;
+            ConcatenationLexerFactory = concatenationLexerFactory;
+            CarriageReturnLexerFactory = carriageReturnLexerFactory;
+            LineFeedLexerFactory = lineFeedLexerFactory;
         }
+
+        [NotNull]
+        public static NewLineLexerFactory Default { get; }
+
+        [NotNull]
+        public ILexerFactory<CarriageReturn> CarriageReturnLexerFactory { get; }
+
+        [NotNull]
+        public IConcatenationLexerFactory ConcatenationLexerFactory { get; }
+
+        [NotNull]
+        public ILexerFactory<LineFeed> LineFeedLexerFactory { get; set; }
 
         /// <inheritdoc />
         public ILexer<NewLine> Create()
         {
-            var innerLexer = concatenationLexerFactory.Create(carriageReturnLexer, lineFeedLexer);
-            return new NewLineLexer(innerLexer);
+            return
+                new NewLineLexer(
+                    ConcatenationLexerFactory.Create(
+                        CarriageReturnLexerFactory.CreateOnce(),
+                        LineFeedLexerFactory.CreateOnce()));
+        }
+
+        /// <inheritdoc />
+        public ILexer<NewLine> CreateOnce()
+        {
+            return instance ?? (instance = Create());
+        }
+
+        [NotNull]
+        public NewLineLexerFactory UseCarriageReturnLexerFactory(
+            [NotNull] ILexerFactory<CarriageReturn> carriageReturnLexerFactory)
+        {
+            if (carriageReturnLexerFactory == null)
+            {
+                throw new ArgumentNullException(nameof(carriageReturnLexerFactory));
+            }
+            return new NewLineLexerFactory(
+                ConcatenationLexerFactory,
+                carriageReturnLexerFactory,
+                LineFeedLexerFactory);
+        }
+
+        [NotNull]
+        public NewLineLexerFactory UseConcatenationLexerFactory(
+            [NotNull] IConcatenationLexerFactory concatenationLexerFactory)
+        {
+            if (concatenationLexerFactory == null)
+            {
+                throw new ArgumentNullException(nameof(concatenationLexerFactory));
+            }
+            return new NewLineLexerFactory(
+                concatenationLexerFactory,
+                CarriageReturnLexerFactory,
+                LineFeedLexerFactory);
+        }
+
+        [NotNull]
+        public NewLineLexerFactory UseLineFeedLexerFactory([NotNull] ILexerFactory<LineFeed> lineFeedLexerFactory)
+        {
+            if (lineFeedLexerFactory == null)
+            {
+                throw new ArgumentNullException(nameof(lineFeedLexerFactory));
+            }
+            return new NewLineLexerFactory(
+                ConcatenationLexerFactory,
+                CarriageReturnLexerFactory,
+                lineFeedLexerFactory);
         }
     }
 }

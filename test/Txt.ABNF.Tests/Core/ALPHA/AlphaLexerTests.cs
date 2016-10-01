@@ -5,7 +5,7 @@ namespace Txt.ABNF.Core.ALPHA
 {
     public class AlphaLexerTests
     {
-         [Theory]
+        [Theory]
         [InlineData("a")]
         [InlineData("b")]
         [InlineData("c")]
@@ -34,11 +34,10 @@ namespace Txt.ABNF.Core.ALPHA
         [InlineData("z")]
         public void CanReadLowercaseAsciiLetters(string input)
         {
-            var factory = new AlphaLexerFactory(new ValueRangeLexerFactory(), new AlternationLexerFactory());
-            var alphaLexer = factory.Create();
+            var sut = AlphaLexerFactory.Default.Create();
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {
-                var result = alphaLexer.Read(scanner);
+                var result = sut.Read(scanner);
                 Assert.Equal(input, result.Text);
             }
         }
@@ -72,11 +71,10 @@ namespace Txt.ABNF.Core.ALPHA
         [InlineData("Z")]
         public void CanReadUppercaseAsciiLetters(string input)
         {
-            var factory = new AlphaLexerFactory(new ValueRangeLexerFactory(), new AlternationLexerFactory());
-            var alphaLexer = factory.Create();
+            var sut = AlphaLexerFactory.Default.Create();
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {
-                var result = alphaLexer.Read(scanner);
+                var result = sut.Read(scanner);
                 Assert.Equal(input, result.Text);
             }
         }

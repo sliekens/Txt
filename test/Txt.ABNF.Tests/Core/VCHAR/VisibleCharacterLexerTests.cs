@@ -10,11 +10,10 @@ namespace Txt.ABNF.Core.VCHAR
         [InlineData("\x7E")]
         public void ReadSuccess(string input)
         {
-            var factory = new VisibleCharacterLexerFactory(new ValueRangeLexerFactory());
-            var visibleCharacterLexer = factory.Create();
+            var sut = VisibleCharacterLexerFactory.Default.Create();
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {
-                var result = visibleCharacterLexer.Read(scanner);
+                var result = sut.Read(scanner);
                 Assert.Equal(input, result.Text);
             }
         }

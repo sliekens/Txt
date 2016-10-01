@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using JetBrains.Annotations;
 using Txt.Core;
 
@@ -8,14 +7,15 @@ namespace Txt.ABNF.Core.CTL
     /// <summary>Creates instances of the <see cref="ControlCharacterLexer" /> class.</summary>
     public class ControlCharacterLexerFactory : ILexerFactory<ControlCharacter>
     {
-        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly IAlternationLexerFactory alternationLexerFactory;
+        private ILexer<ControlCharacter> instance;
 
-        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly ITerminalLexerFactory terminalLexerFactory;
-
-        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly IValueRangeLexerFactory valueRangeLexerFactory;
+        static ControlCharacterLexerFactory()
+        {
+            Default = new ControlCharacterLexerFactory(
+                ABNF.ValueRangeLexerFactory.Default,
+                ABNF.TerminalLexerFactory.Default,
+                ABNF.AlternationLexerFactory.Default);
+        }
 
         /// <summary>
         /// </summary>
@@ -40,18 +40,77 @@ namespace Txt.ABNF.Core.CTL
             {
                 throw new ArgumentNullException(nameof(alternationLexerFactory));
             }
-            this.valueRangeLexerFactory = valueRangeLexerFactory;
-            this.terminalLexerFactory = terminalLexerFactory;
-            this.alternationLexerFactory = alternationLexerFactory;
+            ValueRangeLexerFactory = valueRangeLexerFactory;
+            TerminalLexerFactory = terminalLexerFactory;
+            AlternationLexerFactory = alternationLexerFactory;
         }
+
+        [NotNull]
+        public static ControlCharacterLexerFactory Default { get; }
+
+        [NotNull]
+        public IAlternationLexerFactory AlternationLexerFactory { get; }
+
+        [NotNull]
+        public ITerminalLexerFactory TerminalLexerFactory { get; }
+
+        [NotNull]
+        public IValueRangeLexerFactory ValueRangeLexerFactory { get; }
 
         /// <inheritdoc />
         public ILexer<ControlCharacter> Create()
         {
-            var controlsValueRange = valueRangeLexerFactory.Create('\x00', '\x1F');
-            var delete = terminalLexerFactory.Create("\x7F", StringComparer.Ordinal);
-            var innerLexer = alternationLexerFactory.Create(controlsValueRange, delete);
+            var controlsValueRange = ValueRangeLexerFactory.Create('\x00', '\x1F');
+            var delete = TerminalLexerFactory.Create("\x7F", StringComparer.Ordinal);
+            var innerLexer = AlternationLexerFactory.Create(controlsValueRange, delete);
             return new ControlCharacterLexer(innerLexer);
+        }
+
+        public ILexer<ControlCharacter> CreateOnce()
+        {
+            return instance ?? (instance = Create());
+        }
+
+        [NotNull]
+        public ControlCharacterLexerFactory UseAlternationLexerFactory(
+            [NotNull] IAlternationLexerFactory alternationLexerFactory)
+        {
+            if (alternationLexerFactory == null)
+            {
+                throw new ArgumentNullException(nameof(alternationLexerFactory));
+            }
+            return new ControlCharacterLexerFactory(
+                ValueRangeLexerFactory,
+                TerminalLexerFactory,
+                alternationLexerFactory);
+        }
+
+        [NotNull]
+        public ControlCharacterLexerFactory UseTerminalLexerFactory(
+            [NotNull] ITerminalLexerFactory terminalLexerFactory)
+        {
+            if (terminalLexerFactory == null)
+            {
+                throw new ArgumentNullException(nameof(terminalLexerFactory));
+            }
+            return new ControlCharacterLexerFactory(
+                ValueRangeLexerFactory,
+                terminalLexerFactory,
+                AlternationLexerFactory);
+        }
+
+        [NotNull]
+        public ControlCharacterLexerFactory UseValueRangeLexerFactory(
+            [NotNull] IValueRangeLexerFactory valueRangeLexerFactory)
+        {
+            if (valueRangeLexerFactory == null)
+            {
+                throw new ArgumentNullException(nameof(valueRangeLexerFactory));
+            }
+            return new ControlCharacterLexerFactory(
+                valueRangeLexerFactory,
+                TerminalLexerFactory,
+                AlternationLexerFactory);
         }
     }
 }

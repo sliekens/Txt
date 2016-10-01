@@ -18,11 +18,10 @@ namespace Txt.ABNF.Core.DIGIT
         [InlineData("\x39")]
         public void ReadSuccess(string input)
         {
-            var factory = new DigitLexerFactory(new ValueRangeLexerFactory());
-            var digitLexer = factory.Create();
+            var sut = DigitLexerFactory.Default.Create();
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {
-                var result = digitLexer.Read(scanner);
+                var result = sut.Read(scanner);
                 Assert.Equal(input, result.Text);
             }
         }

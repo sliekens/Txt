@@ -11,11 +11,10 @@ namespace Txt.ABNF.Core.HTAB
         [InlineData(@"	")]
         public void ReadSuccess(string input)
         {
-            var factory = new HorizontalTabLexerFactory(new TerminalLexerFactory());
-            var lexer = factory.Create();
+            var sut = HorizontalTabLexerFactory.Default.Create();
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {
-                var result = lexer.Read(scanner);
+                var result = sut.Read(scanner);
                 Assert.Equal(input, result.Text);
             }
         }

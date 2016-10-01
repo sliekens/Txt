@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using JetBrains.Annotations;
 using Txt.Core;
@@ -9,7 +8,6 @@ namespace Txt.ABNF
 {
     public class ConcatenationLexer : Lexer<Concatenation>
     {
-        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly IList<ILexer<Element>> lexers;
 
         public ConcatenationLexer([NotNull] [ItemNotNull] params ILexer<Element>[] lexers)
@@ -31,13 +29,12 @@ namespace Txt.ABNF
 
         protected override IEnumerable<Concatenation> ReadImpl(ITextScanner scanner, ITextContext context)
         {
-            bool success = false;
+            var success = false;
             foreach (var concatenation in Branch(scanner, context, new List<Element>(lexers.Count)))
             {
                 success = true;
                 yield return concatenation;
             }
-
             if (!success)
             {
                 scanner.Seek(context.Offset);

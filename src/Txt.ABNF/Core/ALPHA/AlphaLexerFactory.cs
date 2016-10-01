@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using JetBrains.Annotations;
 using Txt.Core;
 
@@ -8,17 +7,15 @@ namespace Txt.ABNF.Core.ALPHA
     /// <summary>Creates instances of the <see cref="AlphaLexer" /> class.</summary>
     public class AlphaLexerFactory : ILexerFactory<Alpha>
     {
-        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly IAlternationLexerFactory alternationLexerFactory;
+        private ILexer<Alpha> instance;
 
-        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly IValueRangeLexerFactory valueRangeLexerFactory;
+        static AlphaLexerFactory()
+        {
+            Default = new AlphaLexerFactory(
+                ABNF.ValueRangeLexerFactory.Default,
+                ABNF.AlternationLexerFactory.Default);
+        }
 
-        /// <summary>
-        /// </summary>
-        /// <param name="valueRangeLexerFactory"></param>
-        /// <param name="alternationLexerFactory"></param>
-        /// <exception cref="ArgumentNullException"></exception>
         public AlphaLexerFactory(
             [NotNull] IValueRangeLexerFactory valueRangeLexerFactory,
             [NotNull] IAlternationLexerFactory alternationLexerFactory)
@@ -31,19 +28,57 @@ namespace Txt.ABNF.Core.ALPHA
             {
                 throw new ArgumentNullException(nameof(alternationLexerFactory));
             }
-            this.valueRangeLexerFactory = valueRangeLexerFactory;
-            this.alternationLexerFactory = alternationLexerFactory;
+            ValueRangeLexerFactory = valueRangeLexerFactory;
+            AlternationLexerFactory = alternationLexerFactory;
         }
+
+        [NotNull]
+        public static AlphaLexerFactory Default { get; }
+
+        [NotNull]
+        public IAlternationLexerFactory AlternationLexerFactory { get; }
+
+        [NotNull]
+        public IValueRangeLexerFactory ValueRangeLexerFactory { get; }
 
         /// <inheritdoc />
         public ILexer<Alpha> Create()
         {
-            var upperCaseValueRangeLexer = valueRangeLexerFactory.Create('\x41', '\x5A');
-            var lowerCaseValueRangeLexer = valueRangeLexerFactory.Create('\x61', '\x7A');
-            var innerLexer = alternationLexerFactory.Create(
+            var upperCaseValueRangeLexer = ValueRangeLexerFactory.Create('\x41', '\x5A');
+            var lowerCaseValueRangeLexer = ValueRangeLexerFactory.Create('\x61', '\x7A');
+            var innerLexer = AlternationLexerFactory.Create(
                 upperCaseValueRangeLexer,
                 lowerCaseValueRangeLexer);
             return new AlphaLexer(innerLexer);
+        }
+
+        public ILexer<Alpha> CreateOnce()
+        {
+            return instance ?? (instance = Create());
+        }
+
+        [NotNull]
+        public AlphaLexerFactory UseAlternationLexerFactory([NotNull] IAlternationLexerFactory alternationLexerFactory)
+        {
+            if (alternationLexerFactory == null)
+            {
+                throw new ArgumentNullException(nameof(alternationLexerFactory));
+            }
+            return new AlphaLexerFactory(
+                ValueRangeLexerFactory,
+                alternationLexerFactory);
+        }
+
+        [NotNull]
+        public AlphaLexerFactory UseValueRangeFactory([NotNull] IValueRangeLexerFactory valueRangeLexerFactory)
+        {
+            if (valueRangeLexerFactory == null)
+            {
+                throw new ArgumentNullException(nameof(valueRangeLexerFactory));
+            }
+            return new AlphaLexerFactory(
+                valueRangeLexerFactory,
+                AlternationLexerFactory);
         }
     }
 }

@@ -9,11 +9,10 @@ namespace Txt.ABNF.Core.LF
         [InlineData("\x0A")]
         public void ReadSuccess(string input)
         {
-            var factory = new LineFeedLexerFactory(new TerminalLexerFactory());
-            var lineFeedLexer = factory.Create();
+            var sut = LineFeedLexerFactory.Default.Create();
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {
-                var result = lineFeedLexer.Read(scanner);
+                var result = sut.Read(scanner);
                 Assert.Equal(input, result.Text);
             }
         }

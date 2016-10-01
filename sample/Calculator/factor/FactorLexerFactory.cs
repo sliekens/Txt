@@ -8,46 +8,55 @@ namespace Calculator.factor
 {
     public class FactorLexerFactory : ILexerFactory<Factor>
     {
-        private readonly IAlternationLexerFactory alternationLexerFactory;
-
-        private readonly IConcatenationLexerFactory concatenationLexerFactory;
-
-        private readonly ILexer<Expression> expressionLexer;
-
-        private readonly ILexer<Number> numberLexer;
-
-        private readonly IOptionLexerFactory optionLexerFactory;
-
-        private readonly ITerminalLexerFactory terminalLexerFactory;
+        private ILexer<Factor> instance;
 
         public FactorLexerFactory(
             IConcatenationLexerFactory concatenationLexerFactory,
             IOptionLexerFactory optionLexerFactory,
             ITerminalLexerFactory terminalLexerFactory,
             IAlternationLexerFactory alternationLexerFactory,
-            ILexer<Number> numberLexer,
-            ILexer<Expression> expressionLexer)
+            ILexerFactory<Number> numberLexerFactory,
+            ILexerFactory<Expression> expressionLexerFactory)
         {
-            this.concatenationLexerFactory = concatenationLexerFactory;
-            this.optionLexerFactory = optionLexerFactory;
-            this.terminalLexerFactory = terminalLexerFactory;
-            this.alternationLexerFactory = alternationLexerFactory;
-            this.numberLexer = numberLexer;
-            this.expressionLexer = expressionLexer;
+            ConcatenationLexerFactory = concatenationLexerFactory;
+            OptionLexerFactory = optionLexerFactory;
+            TerminalLexerFactory = terminalLexerFactory;
+            AlternationLexerFactory = alternationLexerFactory;
+            NumberLexerFactory = numberLexerFactory;
+            ExpressionLexerFactory = expressionLexerFactory;
         }
+
+        public IAlternationLexerFactory AlternationLexerFactory { get; }
+
+        public IConcatenationLexerFactory ConcatenationLexerFactory { get; }
+
+        public ILexerFactory<Expression> ExpressionLexerFactory { get; }
+
+        public ILexerFactory<Number> NumberLexerFactory { get; }
+
+        public IOptionLexerFactory OptionLexerFactory { get; }
+
+        public ITerminalLexerFactory TerminalLexerFactory { get; }
 
         public ILexer<Factor> Create()
         {
+            var numberLexer = NumberLexerFactory.CreateOnce();
+            var expressionLexer = ExpressionLexerFactory.CreateOnce();
             return new FactorLexer(
-                concatenationLexerFactory.Create(
-                    optionLexerFactory.Create(
-                        terminalLexerFactory.Create("-", StringComparer.Ordinal)),
-                    alternationLexerFactory.Create(
+                ConcatenationLexerFactory.Create(
+                    OptionLexerFactory.Create(
+                        TerminalLexerFactory.Create("-", StringComparer.Ordinal)),
+                    AlternationLexerFactory.Create(
                         numberLexer,
-                        concatenationLexerFactory.Create(
-                            terminalLexerFactory.Create("(", StringComparer.Ordinal),
+                        ConcatenationLexerFactory.Create(
+                            TerminalLexerFactory.Create("(", StringComparer.Ordinal),
                             expressionLexer,
-                            terminalLexerFactory.Create(")", StringComparer.Ordinal)))));
+                            TerminalLexerFactory.Create(")", StringComparer.Ordinal)))));
+        }
+
+        public ILexer<Factor> CreateOnce()
+        {
+            return instance ?? (instance = Create());
         }
     }
 }

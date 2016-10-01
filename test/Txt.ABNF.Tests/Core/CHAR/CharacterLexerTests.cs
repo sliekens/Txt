@@ -17,11 +17,10 @@ namespace Txt.ABNF.Core.CHAR
         [InlineData("\x7F")]
         public void ReadSuccess(string input)
         {
-            var factory = new CharacterLexerFactory(new ValueRangeLexerFactory());
-            var lexer = factory.Create();
+            var sut = CharacterLexerFactory.Default.Create();
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {
-                var result = lexer.Read(scanner);
+                var result = sut.Read(scanner);
                 Assert.Equal(input, result.Text);
             }
         }

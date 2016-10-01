@@ -9,7 +9,6 @@ namespace Txt.ABNF
 {
     public class AlternationLexer : Lexer<Alternation>
     {
-        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly ILexer<Element>[] lexers;
 
         /// <summary>

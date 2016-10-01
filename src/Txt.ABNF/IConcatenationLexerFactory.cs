@@ -12,6 +12,7 @@ namespace Txt.ABNF
         /// </summary>
         /// <param name="lexers">A collection of lexers, one for each element in the sequence, in order of appearance.</param>
         /// <returns>An instance of a class that implements <see cref="ILexer{TElement}" /> for the given sequence.</returns>
+        [NotNull]
         ILexer<Concatenation> Create([NotNull] [ItemNotNull] params ILexer<Element>[] lexers);
     }
 }

@@ -9,11 +9,10 @@ namespace Txt.ABNF.Core.CR
         [InlineData("\x0D")]
         public void ReadSuccess(string input)
         {
-            var factory = new CarriageReturnLexerFactory(new TerminalLexerFactory());
-            var carriageReturnLexer = factory.Create();
+            var sut = CarriageReturnLexerFactory.Default.Create();
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {
-                var result = carriageReturnLexer.Read(scanner);
+                var result = sut.Read(scanner);
                 Assert.Equal(input, result.Text);
             }
         }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using JetBrains.Annotations;
 using Txt.Core;
 
@@ -8,11 +7,14 @@ namespace Txt.ABNF.Core.BIT
     /// <summary>Creates instances of the <see cref="BitLexer" /> class.</summary>
     public class BitLexerFactory : ILexerFactory<Bit>
     {
-        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly IAlternationLexerFactory alternationLexerFactory;
+        private ILexer<Bit> instance;
 
-        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly ITerminalLexerFactory terminalLexerFactory;
+        static BitLexerFactory()
+        {
+            Default = new BitLexerFactory(
+                ABNF.AlternationLexerFactory.Default,
+                ABNF.TerminalLexerFactory.Default);
+        }
 
         /// <summary>
         /// </summary>
@@ -31,17 +33,51 @@ namespace Txt.ABNF.Core.BIT
             {
                 throw new ArgumentNullException(nameof(terminalLexerFactory));
             }
-            this.alternationLexerFactory = alternationLexerFactory;
-            this.terminalLexerFactory = terminalLexerFactory;
+            AlternationLexerFactory = alternationLexerFactory;
+            TerminalLexerFactory = terminalLexerFactory;
         }
+
+        [NotNull]
+        public static BitLexerFactory Default { get; }
+
+        [NotNull]
+        public IAlternationLexerFactory AlternationLexerFactory { get; }
+
+        [NotNull]
+        public ITerminalLexerFactory TerminalLexerFactory { get; }
 
         /// <inheritdoc />
         public ILexer<Bit> Create()
         {
-            var bit0TerminalLexer = terminalLexerFactory.Create("0", StringComparer.Ordinal);
-            var bit1TerminalLexer = terminalLexerFactory.Create("1", StringComparer.Ordinal);
-            var innerLexer = alternationLexerFactory.Create(bit0TerminalLexer, bit1TerminalLexer);
+            var bit0TerminalLexer = TerminalLexerFactory.Create("0", StringComparer.Ordinal);
+            var bit1TerminalLexer = TerminalLexerFactory.Create("1", StringComparer.Ordinal);
+            var innerLexer = AlternationLexerFactory.Create(bit0TerminalLexer, bit1TerminalLexer);
             return new BitLexer(innerLexer);
+        }
+
+        public ILexer<Bit> CreateOnce()
+        {
+            return instance ?? (instance = Create());
+        }
+
+        [NotNull]
+        public BitLexerFactory UseAlternationLexerFactory([NotNull] IAlternationLexerFactory alternationLexerFactory)
+        {
+            if (alternationLexerFactory == null)
+            {
+                throw new ArgumentNullException(nameof(alternationLexerFactory));
+            }
+            return new BitLexerFactory(alternationLexerFactory, TerminalLexerFactory);
+        }
+
+        [NotNull]
+        public BitLexerFactory UseTerminalLexerFactory([NotNull] ITerminalLexerFactory terminalLexerFactory)
+        {
+            if (terminalLexerFactory == null)
+            {
+                throw new ArgumentNullException(nameof(terminalLexerFactory));
+            }
+            return new BitLexerFactory(AlternationLexerFactory, terminalLexerFactory);
         }
     }
 }

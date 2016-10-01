@@ -7,43 +7,51 @@ namespace Calculator.term
 {
     public class TermLexerFactory : ILexerFactory<Term>
     {
-        private readonly IConcatenationLexerFactory concatenationLexerFactory;
-
-        private readonly IRepetitionLexerFactory repetitionLexerFactory;
-
-        private readonly IAlternationLexerFactory alternationLexerFactory;
-
-        private readonly ITerminalLexerFactory terminalLexerFactory;
-
-        private readonly ILexer<Factor> factorLexer;
+        private ILexer<Term> instance;
 
         public TermLexerFactory(
             IConcatenationLexerFactory concatenationLexerFactory,
             IRepetitionLexerFactory repetitionLexerFactory,
             IAlternationLexerFactory alternationLexerFactory,
             ITerminalLexerFactory terminalLexerFactory,
-            ILexer<Factor> factorLexer)
+            ILexerFactory<Factor> factorLexerFactory)
         {
-            this.concatenationLexerFactory = concatenationLexerFactory;
-            this.repetitionLexerFactory = repetitionLexerFactory;
-            this.alternationLexerFactory = alternationLexerFactory;
-            this.terminalLexerFactory = terminalLexerFactory;
-            this.factorLexer = factorLexer;
+            ConcatenationLexerFactory = concatenationLexerFactory;
+            RepetitionLexerFactory = repetitionLexerFactory;
+            AlternationLexerFactory = alternationLexerFactory;
+            TerminalLexerFactory = terminalLexerFactory;
+            FactorLexerFactory = factorLexerFactory;
         }
+
+        public IAlternationLexerFactory AlternationLexerFactory { get; }
+
+        public IConcatenationLexerFactory ConcatenationLexerFactory { get; }
+
+        public ILexerFactory<Factor> FactorLexerFactory { get; }
+
+        public IRepetitionLexerFactory RepetitionLexerFactory { get; }
+
+        public ITerminalLexerFactory TerminalLexerFactory { get; }
 
         public ILexer<Term> Create()
         {
+            var factorLexer = FactorLexerFactory.CreateOnce();
             return new TermLexer(
-                concatenationLexerFactory.Create(
+                ConcatenationLexerFactory.Create(
                     factorLexer,
-                    repetitionLexerFactory.Create(
-                        concatenationLexerFactory.Create(
-                            alternationLexerFactory.Create(
-                                terminalLexerFactory.Create("*", StringComparer.Ordinal),
-                                terminalLexerFactory.Create("/", StringComparer.Ordinal)),
+                    RepetitionLexerFactory.Create(
+                        ConcatenationLexerFactory.Create(
+                            AlternationLexerFactory.Create(
+                                TerminalLexerFactory.Create("*", StringComparer.Ordinal),
+                                TerminalLexerFactory.Create("/", StringComparer.Ordinal)),
                             factorLexer),
                         0,
                         int.MaxValue)));
+        }
+
+        public ILexer<Term> CreateOnce()
+        {
+            return instance ?? (instance = Create());
         }
     }
 }

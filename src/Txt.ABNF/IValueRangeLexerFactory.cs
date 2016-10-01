@@ -18,6 +18,7 @@ namespace Txt.ABNF
         ///     The value of <paramref name="upperBound" /> is smaller than the value of
         ///     <paramref name="lowerBound" />.
         /// </exception>
+        [NotNull]
         ILexer<Terminal> Create(char lowerBound, char upperBound);
 
         /// <summary>
@@ -35,6 +36,7 @@ namespace Txt.ABNF
         /// <exception cref="InvalidOperationException">
         ///     One or more values in the range are not valid in the specified encoding.
         /// </exception>
+        [NotNull]
         ILexer<Terminal> Create(int lowerBound, int upperBound, [NotNull] Encoding encoding);
     }
 }

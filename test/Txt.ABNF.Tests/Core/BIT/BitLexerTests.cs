@@ -6,15 +6,14 @@ namespace Txt.ABNF.Core.BIT
     public class BitLexerTests
     {
         [Fact]
-        public void CanReadZero()
+        public void CannotReadNegativeOne()
         {
-            var input = "0";
-            var factory = new BitLexerFactory(new AlternationLexerFactory(), new TerminalLexerFactory());
-            var bitLexer = factory.Create();
+            var input = "-1";
+            var sut = BitLexerFactory.Default.Create();
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {
-                var result = bitLexer.Read(scanner);
-                Assert.Equal(input, result.Text);
+                var result = sut.Read(scanner);
+                Assert.Null(result);
             }
         }
 
@@ -22,25 +21,23 @@ namespace Txt.ABNF.Core.BIT
         public void CanReadOne()
         {
             var input = "1";
-            var factory = new BitLexerFactory(new AlternationLexerFactory(), new TerminalLexerFactory());
-            var bitLexer = factory.Create();
+            var sut = BitLexerFactory.Default.Create();
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {
-                var result = bitLexer.Read(scanner);
+                var result = sut.Read(scanner);
                 Assert.Equal(input, result.Text);
             }
         }
 
         [Fact]
-        public void CannotReadNegativeOne()
+        public void CanReadZero()
         {
-            var input = "-1";
-            var factory = new BitLexerFactory(new AlternationLexerFactory(), new TerminalLexerFactory());
-            var bitLexer = factory.Create();
+            var input = "0";
+            var sut = BitLexerFactory.Default.Create();
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {
-                var result = bitLexer.Read(scanner);
-                Assert.Null(result);
+                var result = sut.Read(scanner);
+                Assert.Equal(input, result.Text);
             }
         }
     }

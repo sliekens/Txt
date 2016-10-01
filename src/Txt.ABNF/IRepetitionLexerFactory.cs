@@ -14,6 +14,7 @@ namespace Txt.ABNF
         /// <param name="lowerBound">A number that indicates the minimum number of occurrences (inclusive).</param>
         /// <param name="upperBound">A number that indicates the maximum number of occurrences (inclusive).</param>
         /// <returns>>An instance of a class that implements <see cref="ILexer{TElement}" /> for the given repetition.</returns>
+        [NotNull]
         ILexer<Repetition> Create([NotNull] ILexer<Element> lexer, int lowerBound, int upperBound);
     }
 }

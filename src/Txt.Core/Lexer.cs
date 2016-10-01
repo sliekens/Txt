@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using JetBrains.Annotations;
 
@@ -39,17 +40,27 @@ namespace Txt.Core
             return new LexerImpl(this, scanner, context);
         }
 
-        protected abstract IEnumerable<TElement> ReadImpl(ITextScanner scanner, ITextContext context);
+        [NotNull]
+        [ItemNotNull]
+        protected abstract IEnumerable<TElement> ReadImpl(
+            [NotNull] ITextScanner scanner,
+            [NotNull] ITextContext context);
 
         private class LexerImpl : IEnumerable<TElement>
         {
+            [NotNull]
             private readonly ITextContext context;
 
+            [NotNull]
             private readonly Lexer<TElement> impl;
 
+            [NotNull]
             private readonly ITextScanner scanner;
 
-            public LexerImpl(Lexer<TElement> impl, ITextScanner scanner, ITextContext context)
+            public LexerImpl(
+                [NotNull] Lexer<TElement> impl,
+                [NotNull] ITextScanner scanner,
+                [NotNull] ITextContext context)
             {
                 this.impl = impl;
                 this.scanner = scanner;
@@ -68,10 +79,13 @@ namespace Txt.Core
 
             private class ReadImpl : IEnumerator<TElement>
             {
+                [NotNull]
                 private readonly ITextContext context;
 
+                [NotNull]
                 private readonly Lexer<TElement> lexer;
 
+                [NotNull]
                 private readonly ITextScanner scanner;
 
                 private bool initialized;
@@ -110,6 +124,7 @@ namespace Txt.Core
                 {
                     if (initialized)
                     {
+                        Debug.Assert(inner != null, "inner != null");
                         inner.Dispose();
                         scanner.StopRecording();
                     }
@@ -145,6 +160,7 @@ namespace Txt.Core
                     {
                         return;
                     }
+                    Debug.Assert(inner != null, "inner != null");
                     inner.Dispose();
                     if (scanner.Offset != start)
                     {

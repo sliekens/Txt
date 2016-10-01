@@ -19,6 +19,7 @@ namespace Txt.ABNF
         ///     reference.
         /// </exception>
         /// <returns>>An instance of a class that implements <see cref="ILexer{TElement}" /> for the given terminal value.</returns>
+        [NotNull]
         ILexer<Terminal> Create([NotNull] string terminal, [NotNull] IEqualityComparer<string> comparer);
     }
 }

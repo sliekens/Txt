@@ -12,6 +12,7 @@ namespace Txt.ABNF
         /// </summary>
         /// <param name="lexer">The lexer for the optional element.</param>
         /// <returns>>An instance of a class that implements <see cref="ILexer{TElement}" /> for the given option.</returns>
+        [NotNull]
         ILexer<Repetition> Create([NotNull] ILexer<Element> lexer);
     }
 }

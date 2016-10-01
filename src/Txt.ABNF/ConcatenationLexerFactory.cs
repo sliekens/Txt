@@ -1,4 +1,5 @@
 ﻿using System;
+using JetBrains.Annotations;
 using Txt.Core;
 
 namespace Txt.ABNF
@@ -6,6 +7,9 @@ namespace Txt.ABNF
     /// <summary>Creates instances of the <see cref="ConcatenationLexer" /> class.</summary>
     public class ConcatenationLexerFactory : IConcatenationLexerFactory
     {
+        [NotNull]
+        public static ConcatenationLexerFactory Default { get; } = new ConcatenationLexerFactory();
+
         /// <inheritdoc />
         public ILexer<Concatenation> Create(params ILexer<Element>[] lexers)
         {

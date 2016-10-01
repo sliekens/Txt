@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using JetBrains.Annotations;
 using Txt.Core;
 
@@ -8,8 +7,12 @@ namespace Txt.ABNF.Core.VCHAR
     /// <summary>Creates instances of the <see cref="VisibleCharacterLexer" /> class.</summary>
     public class VisibleCharacterLexerFactory : ILexerFactory<VisibleCharacter>
     {
-        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly IValueRangeLexerFactory valueRangeLexer;
+        private ILexer<VisibleCharacter> instance;
+
+        static VisibleCharacterLexerFactory()
+        {
+            Default = new VisibleCharacterLexerFactory(ABNF.ValueRangeLexerFactory.Default);
+        }
 
         /// <summary>
         /// </summary>
@@ -21,14 +24,36 @@ namespace Txt.ABNF.Core.VCHAR
             {
                 throw new ArgumentNullException(nameof(valueRangeLexer));
             }
-            this.valueRangeLexer = valueRangeLexer;
+            ValueRangeLexerFactory = valueRangeLexer;
         }
+
+        [NotNull]
+        public static VisibleCharacterLexerFactory Default { get; }
+
+        [NotNull]
+        public IValueRangeLexerFactory ValueRangeLexerFactory { get; }
 
         /// <inheritdoc />
         public ILexer<VisibleCharacter> Create()
         {
-            var innerLexer = valueRangeLexer.Create('\x21', '\x7E');
+            var innerLexer = ValueRangeLexerFactory.Create('\x21', '\x7E');
             return new VisibleCharacterLexer(innerLexer);
+        }
+
+        public ILexer<VisibleCharacter> CreateOnce()
+        {
+            return instance ?? (instance = Create());
+        }
+
+        [NotNull]
+        public VisibleCharacterLexerFactory UseValueRangeLexerFactory(
+            [NotNull] IValueRangeLexerFactory valueRangeLexerFactory)
+        {
+            if (valueRangeLexerFactory == null)
+            {
+                throw new ArgumentNullException(nameof(valueRangeLexerFactory));
+            }
+            return new VisibleCharacterLexerFactory(valueRangeLexerFactory);
         }
     }
 }

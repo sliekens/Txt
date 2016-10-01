@@ -12,11 +12,10 @@ namespace Txt.ABNF.Core.CTL
         [InlineData("\x7F")]
         public void ReadSuccess(string input)
         {
-            var factory = new ControlCharacterLexerFactory(new ValueRangeLexerFactory(), new TerminalLexerFactory(), new AlternationLexerFactory());
-            var controlCharacterLexer = factory.Create();
+            var sut = ControlCharacterLexerFactory.Default.Create();
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {
-                var result = controlCharacterLexer.Read(scanner);
+                var result = sut.Read(scanner);
                 Assert.Equal(input, result.Text);
             }
         }

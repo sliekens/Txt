@@ -10,11 +10,10 @@ namespace Txt.ABNF.Core.DQUOTE
         [InlineData("\x22")]
         public void ReadSuccess(string input)
         {
-            var factory = new DoubleQuoteLexerFactory(new TerminalLexerFactory());
-            var lexer = factory.Create();
+            var sut = DoubleQuoteLexerFactory.Default.Create();
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {
-                var result = lexer.Read(scanner);
+                var result = sut.Read(scanner);
                 Assert.Equal(input, result.Text);
             }
         }

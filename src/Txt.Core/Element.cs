@@ -10,20 +10,15 @@ namespace Txt.Core
     /// <summary>Provides the base class for all elements.</summary>
     public abstract class Element : IReadOnlyList<Element>
     {
-        [NotNull, ItemNotNull]
-        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
+        [NotNull]
+        [ItemNotNull]
         private static readonly IReadOnlyList<Element> EmptyElements = new Element[0];
 
         [NotNull]
-        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly ITextContext context;
-
-        [NotNull, ItemNotNull]
-        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
+        [ItemNotNull]
         private readonly IReadOnlyList<Element> elements;
 
         [NotNull]
-        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly string text;
 
         /// <summary>Initializes a new instance of the <see cref="Element" /> class with a given element to copy.</summary>
@@ -37,7 +32,7 @@ namespace Txt.Core
             }
             text = element.text;
             elements = element.elements;
-            context = element.context;
+            Context = element.Context;
         }
 
         /// <summary>
@@ -62,7 +57,7 @@ namespace Txt.Core
             }
             text = terminals;
             elements = EmptyElements;
-            this.context = context;
+            Context = context;
         }
 
         /// <summary>Initializes a new instance of the <see cref="Element" /> class with a given sequence and its context.</summary>
@@ -73,7 +68,10 @@ namespace Txt.Core
         ///     The value of  <paramref name="sequence" /> or  <paramref name="elements" /> or
         ///     <paramref name="context" /> is a null reference.
         /// </exception>
-        protected Element([NotNull] string sequence, [NotNull, ItemNotNull] IList<Element> elements, [NotNull] ITextContext context)
+        protected Element(
+            [NotNull] string sequence,
+            [NotNull] [ItemNotNull] IList<Element> elements,
+            [NotNull] ITextContext context)
         {
             if (sequence == null)
             {
@@ -89,13 +87,14 @@ namespace Txt.Core
             }
             text = sequence;
             this.elements = elements.Count == 0 ? EmptyElements : elements.ToArray();
-            this.context = context;
+            Context = context;
         }
+
+        [NotNull]
+        public ITextContext Context { get; }
 
         /// <inheritdoc />
         public int Count => elements.Count;
-
-        public ITextContext Context => context;
 
         /// <summary>Gets one or more terminal values that represent the current element.</summary>
         [NotNull]
@@ -117,6 +116,12 @@ namespace Txt.Core
             return elements.GetEnumerator();
         }
 
+        /// <inheritdoc />
+        public sealed override string ToString()
+        {
+            return Text;
+        }
+
         public void Walk([NotNull] Walker walker)
         {
             if (walker == null)
@@ -124,6 +129,12 @@ namespace Txt.Core
                 throw new ArgumentNullException(nameof(walker));
             }
             WalkImpl(walker);
+        }
+
+        /// <inheritdoc />
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return elements.GetEnumerator();
         }
 
         private void WalkImpl([NotNull] dynamic walker)
@@ -144,25 +155,12 @@ namespace Txt.Core
                 {
                     element?.WalkImpl(walker);
                 }
-
             }
             finally
             {
                 walker.Exit((dynamic)this);
                 walker.ExitAny(this);
             }
-        }
-
-        /// <inheritdoc />
-        public sealed override string ToString()
-        {
-            return Text;
-        }
-
-        /// <inheritdoc />
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return elements.GetEnumerator();
         }
     }
 }

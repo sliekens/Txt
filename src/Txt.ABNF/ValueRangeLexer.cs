@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using JetBrains.Annotations;
 using Txt.Core;
 
@@ -9,7 +8,6 @@ namespace Txt.ABNF
     /// <summary>Provides methods for reading a range of alternative values.</summary>
     public class ValueRangeLexer : Lexer<Terminal>
     {
-        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly char[] valueRange;
 
         /// <summary>

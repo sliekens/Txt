@@ -10,11 +10,10 @@ namespace Txt.ABNF.Core.SP
         [InlineData(" ")]
         public void ReadSuccess(string input)
         {
-            var factory = new SpaceLexerFactory(new TerminalLexerFactory());
-            var spaceLexer = factory.Create();
+            var sut = SpaceLexerFactory.Default.Create();
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {
-                var result = spaceLexer.Read(scanner);
+                var result = sut.Read(scanner);
                 Assert.Equal(input, result.Text);
             }
         }

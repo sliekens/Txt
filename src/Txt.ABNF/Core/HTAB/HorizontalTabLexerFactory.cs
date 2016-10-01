@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using JetBrains.Annotations;
 using Txt.Core;
 
@@ -8,8 +7,12 @@ namespace Txt.ABNF.Core.HTAB
     /// <summary>Creates instances of the <see cref="HorizontalTabLexer" /> class.</summary>
     public class HorizontalTabLexerFactory : ILexerFactory<HorizontalTab>
     {
-        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly ITerminalLexerFactory terminalLexerFactory;
+        private ILexer<HorizontalTab> instance;
+
+        static HorizontalTabLexerFactory()
+        {
+            Default = new HorizontalTabLexerFactory(ABNF.TerminalLexerFactory.Default);
+        }
 
         /// <summary>
         /// </summary>
@@ -21,14 +24,35 @@ namespace Txt.ABNF.Core.HTAB
             {
                 throw new ArgumentNullException(nameof(terminalLexerFactory));
             }
-            this.terminalLexerFactory = terminalLexerFactory;
+            TerminalLexerFactory = terminalLexerFactory;
         }
+
+        [NotNull]
+        public static HorizontalTabLexerFactory Default { get; }
+
+        [NotNull]
+        public ITerminalLexerFactory TerminalLexerFactory { get; }
 
         /// <inheritdoc />
         public ILexer<HorizontalTab> Create()
         {
-            var innerLexer = terminalLexerFactory.Create("\x09", StringComparer.Ordinal);
+            var innerLexer = TerminalLexerFactory.Create("\x09", StringComparer.Ordinal);
             return new HorizontalTabLexer(innerLexer);
+        }
+
+        public ILexer<HorizontalTab> CreateOnce()
+        {
+            return instance ?? (instance = Create());
+        }
+
+        [NotNull]
+        public HorizontalTabLexerFactory UseTerminalLexerFactory([NotNull] ITerminalLexerFactory terminalLexerFactory)
+        {
+            if (terminalLexerFactory == null)
+            {
+                throw new ArgumentNullException(nameof(terminalLexerFactory));
+            }
+            return new HorizontalTabLexerFactory(terminalLexerFactory);
         }
     }
 }

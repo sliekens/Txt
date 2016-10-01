@@ -1,5 +1,4 @@
 ﻿using Txt.Core;
-using Txt.ABNF.Core.DIGIT;
 using Xunit;
 
 namespace Txt.ABNF.Core.HEXDIG
@@ -31,15 +30,10 @@ namespace Txt.ABNF.Core.HEXDIG
         [InlineData("f")]
         public void ReadSuccess(string input)
         {
-            var valueRangeLexerFactory = new ValueRangeLexerFactory();
-            var digitLexerFactory = new DigitLexerFactory(valueRangeLexerFactory);
-            var terminalLexerFactory = new TerminalLexerFactory();
-            var alternativeLexerFactory = new AlternationLexerFactory();
-            var factory = new HexadecimalDigitLexerFactory(alternativeLexerFactory, terminalLexerFactory, digitLexerFactory.Create());
-            var lexer = factory.Create();
+            var sut = HexadecimalDigitLexerFactory.Default.Create();
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {
-                var result = lexer.Read(scanner);
+                var result = sut.Read(scanner);
                 Assert.Equal(input, result.Text);
             }
         }

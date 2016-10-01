@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using JetBrains.Annotations;
 using Txt.Core;
 
@@ -8,8 +7,12 @@ namespace Txt.ABNF.Core.CHAR
     /// <summary>Creates instances of the <see cref="CharacterLexer" /> class.</summary>
     public class CharacterLexerFactory : ILexerFactory<Character>
     {
-        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly IValueRangeLexerFactory valueRangeLexerFactory;
+        private ILexer<Character> instance;
+
+        static CharacterLexerFactory()
+        {
+            Default = new CharacterLexerFactory(ABNF.ValueRangeLexerFactory.Default);
+        }
 
         /// <summary>
         /// </summary>
@@ -21,14 +24,36 @@ namespace Txt.ABNF.Core.CHAR
             {
                 throw new ArgumentNullException(nameof(valueRangeLexerFactory));
             }
-            this.valueRangeLexerFactory = valueRangeLexerFactory;
+            ValueRangeLexerFactory = valueRangeLexerFactory;
         }
+
+        [NotNull]
+        public static CharacterLexerFactory Default { get; }
+
+        [NotNull]
+        public IValueRangeLexerFactory ValueRangeLexerFactory { get; }
 
         /// <inheritdoc />
         public ILexer<Character> Create()
         {
-            var innerLexer = valueRangeLexerFactory.Create('\x01', '\x7F');
+            var innerLexer = ValueRangeLexerFactory.Create('\x01', '\x7F');
             return new CharacterLexer(innerLexer);
+        }
+
+        /// <inheritdoc />
+        public ILexer<Character> CreateOnce()
+        {
+            return instance ?? (instance = Create());
+        }
+
+        [NotNull]
+        public CharacterLexerFactory UseValueRangeLexerFactory([NotNull] IValueRangeLexerFactory valueRangeLexerFactory)
+        {
+            if (valueRangeLexerFactory == null)
+            {
+                throw new ArgumentNullException(nameof(valueRangeLexerFactory));
+            }
+            return new CharacterLexerFactory(valueRangeLexerFactory);
         }
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Text;
+using JetBrains.Annotations;
 using Txt.Core;
 
 namespace Txt.ABNF
@@ -7,6 +8,9 @@ namespace Txt.ABNF
     /// <summary>Creates instances of the <see cref="ValueRangeLexer" /> class.</summary>
     public class ValueRangeLexerFactory : IValueRangeLexerFactory
     {
+        [NotNull]
+        public static ValueRangeLexerFactory Default { get; } = new ValueRangeLexerFactory();
+
         /// <summary>
         ///     Initializes a new instance of a class that implements the <see cref="ILexer{TElement}" /> interface with a
         ///     specified lower and upper bound, both inclusive.

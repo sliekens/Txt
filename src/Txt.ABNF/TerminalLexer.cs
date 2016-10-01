@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using JetBrains.Annotations;
 using Txt.Core;
 
@@ -11,10 +10,8 @@ namespace Txt.ABNF
     /// </summary>
     public class TerminalLexer : Lexer<Terminal>
     {
-        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly IEqualityComparer<string> comparer;
 
-        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly string terminal;
 
         public TerminalLexer([NotNull] string terminal, [NotNull] IEqualityComparer<string> comparer)

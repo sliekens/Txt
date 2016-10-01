@@ -35,7 +35,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "shared", "shared", "{CF04A44E-04F6-4F47-BA2E-84A753418267}"
 	ProjectSection(SolutionItems) = preProject
 		src\shared\JetBrains.Annotations.cs = src\shared\JetBrains.Annotations.cs
-		src\shared\SwitchOnBuild.cs = src\shared\SwitchOnBuild.cs
 		src\shared\TaskHelper.cs = src\shared\TaskHelper.cs
 	EndProjectSection
 EndProject

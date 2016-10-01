@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using JetBrains.Annotations;
 using Txt.Core;
 
@@ -9,15 +8,6 @@ namespace Txt.ABNF
     /// <summary>Provides the base class for lexers whose lexer rule is a repetition of elements.</summary>
     public class RepetitionLexer : Lexer<Repetition>
     {
-        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly ILexer<Element> lexer;
-
-        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly int lowerBound;
-
-        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
-        private readonly int upperBound;
-
         /// <summary>
         ///     Initializes a new instance of the <see cref="RepetitionLexer" /> class with a specified lower and upper bound,
         ///     both inclusive.
@@ -39,15 +29,22 @@ namespace Txt.ABNF
             {
                 throw new ArgumentOutOfRangeException(nameof(upperBound), "Precondition: upperBound >= lowerBound");
             }
-            this.lexer = lexer;
-            this.lowerBound = lowerBound;
-            this.upperBound = upperBound;
+            Lexer = lexer;
+            LowerBound = lowerBound;
+            UpperBound = upperBound;
         }
+
+        [NotNull]
+        public ILexer<Element> Lexer { get; }
+
+        public int LowerBound { get; }
+
+        public int UpperBound { get; }
 
         protected override IEnumerable<Repetition> ReadImpl(ITextScanner scanner, ITextContext context)
         {
-            bool success = false;
-            foreach (var repetition in Branch(scanner, context, new List<Element>(lowerBound)))
+            var success = false;
+            foreach (var repetition in Branch(scanner, context, new List<Element>(LowerBound)))
             {
                 success = true;
                 yield return repetition;
@@ -58,18 +55,20 @@ namespace Txt.ABNF
             }
         }
 
+        [NotNull]
+        [ItemNotNull]
         private IEnumerable<Repetition> Branch(
-            ITextScanner scanner,
-            ITextContext root,
-            List<Element> elements)
+            [NotNull] ITextScanner scanner,
+            [NotNull] ITextContext root,
+            [NotNull] List<Element> elements)
         {
-            if (elements.Count == upperBound)
+            if (elements.Count == UpperBound)
             {
                 yield return new Repetition(string.Concat(elements), elements, root);
             }
             else
             {
-                var element = lexer.Read(scanner);
+                var element = Lexer.Read(scanner);
                 if (element != null)
                 {
                     var copy = new List<Element>(elements) { element };
@@ -78,7 +77,7 @@ namespace Txt.ABNF
                         yield return repetition;
                     }
                 }
-                else if (elements.Count >= lowerBound)
+                else if (elements.Count >= LowerBound)
                 {
                     yield return new Repetition(string.Concat(elements), elements, root);
                 }

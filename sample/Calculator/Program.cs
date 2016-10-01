@@ -10,8 +10,50 @@ using Txt.Core;
 
 namespace Calculator
 {
-    internal class Program
+    public class Program
     {
+        private static ILexer<Expression> GetExpressionLexer()
+        {
+            var proxy = new ProxyLexer<Expression>();
+            var numberLexerFactory = new NumberLexerFactory(
+                AlternationLexerFactory.Default,
+                ConcatenationLexerFactory.Default,
+                RepetitionLexerFactory.Default,
+                OptionLexerFactory.Default,
+                TerminalLexerFactory.Default,
+                DigitLexerFactory.Default);
+            var factorLexerFactory = new FactorLexerFactory(
+                ConcatenationLexerFactory.Default,
+                OptionLexerFactory.Default,
+                TerminalLexerFactory.Default,
+                AlternationLexerFactory.Default,
+                numberLexerFactory,
+                new LexerFactoryAdapter<Expression>(proxy));
+            var termLexerFactory = new TermLexerFactory(
+                ConcatenationLexerFactory.Default,
+                RepetitionLexerFactory.Default,
+                AlternationLexerFactory.Default,
+                TerminalLexerFactory.Default,
+                factorLexerFactory);
+            var expressionLexerFactory = new ExpressionLexerFactory(
+                ConcatenationLexerFactory.Default,
+                RepetitionLexerFactory.Default,
+                AlternationLexerFactory.Default,
+                TerminalLexerFactory.Default,
+                termLexerFactory);
+            var expressionLexer = expressionLexerFactory.Create();
+            proxy.Initialize(expressionLexer);
+            return expressionLexer;
+        }
+
+        private static ExpressionParser GetExpressionParser()
+        {
+            var expressionParser = new ProxyParser<Expression, double>();
+            var parser = new ExpressionParser(new TermParser(new FactorParser(new NumberParser(), expressionParser)));
+            expressionParser.Initialize(parser);
+            return parser;
+        }
+
         private static void Main(string[] args)
         {
             var lexer = GetExpressionLexer();
@@ -41,81 +83,30 @@ namespace Calculator
                     return;
                 }
                 using (var stringTextSource = new StringTextSource(expression))
-                using (var textScanner = new TextScanner(stringTextSource))
                 {
-                    var readResult = lexer.Read(textScanner);
-                    if (readResult != null)
+                    using (var textScanner = new TextScanner(stringTextSource))
                     {
-                        Console.WriteLine(
-                            "{0}={1}",
-                            readResult.Text,
-                            parser.Parse(readResult));
-                    }
-                    else
-                    {
-                        Console.WriteLine("Invalid input detected");
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        using (var reader = new TextSourceReader(stringTextSource))
+                        var readResult = lexer.Read(textScanner);
+                        if (readResult != null)
                         {
-                            Console.WriteLine(reader.ReadToEnd());
+                            Console.WriteLine(
+                                "{0}={1}",
+                                readResult.Text,
+                                parser.Parse(readResult));
                         }
-                        Console.ForegroundColor = foregroundColor;
+                        else
+                        {
+                            Console.WriteLine("Invalid input detected");
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            using (var reader = new TextSourceReader(stringTextSource))
+                            {
+                                Console.WriteLine(reader.ReadToEnd());
+                            }
+                            Console.ForegroundColor = foregroundColor;
+                        }
                     }
                 }
             }
-        }
-
-        private static ExpressionParser GetExpressionParser()
-        {
-            var expressionParser = new ProxyParser<Expression, double>();
-            var parser = new ExpressionParser(new TermParser(new FactorParser(new NumberParser(), expressionParser)));
-            expressionParser.Initialize(parser);
-            return parser;
-        }
-
-        private static ILexer<Expression> GetExpressionLexer()
-        {
-            var concatenationLexerFactory = new ConcatenationLexerFactory();
-            var repetitionLexerFactory = new RepetitionLexerFactory();
-            var alternationLexerFactory = new AlternationLexerFactory();
-            var terminalLexerFactory = new TerminalLexerFactory();
-            var optionLexerFactory = new OptionLexerFactory();
-            var valueRangeLexerFactory = new ValueRangeLexerFactory();
-            var digitLexerFactory = new DigitLexerFactory(valueRangeLexerFactory);
-            var digitLexer = digitLexerFactory.Create();
-            var numberLexerFactory = new NumberLexerFactory(
-                alternationLexerFactory,
-                concatenationLexerFactory,
-                repetitionLexerFactory,
-                optionLexerFactory,
-                terminalLexerFactory,
-                digitLexer);
-            var numberLexer = numberLexerFactory.Create();
-            var expressionLexerProxy = new ProxyLexer<Expression>();
-            var factorLexerFactory = new FactorLexerFactory(
-                concatenationLexerFactory,
-                optionLexerFactory,
-                terminalLexerFactory,
-                alternationLexerFactory,
-                numberLexer,
-                expressionLexerProxy);
-            var factorLexer = factorLexerFactory.Create();
-            var termLexerFactory = new TermLexerFactory(
-                concatenationLexerFactory,
-                repetitionLexerFactory,
-                alternationLexerFactory,
-                terminalLexerFactory,
-                factorLexer);
-            var termLexer = termLexerFactory.Create();
-            var expressionLexerFactory = new ExpressionLexerFactory(
-                concatenationLexerFactory,
-                repetitionLexerFactory,
-                alternationLexerFactory,
-                terminalLexerFactory,
-                termLexer);
-            var expressionLexer = expressionLexerFactory.Create();
-            expressionLexerProxy.Initialize(expressionLexer);
-            return expressionLexer;
         }
     }
 }

@@ -7,43 +7,51 @@ namespace Calculator.expression
 {
     public class ExpressionLexerFactory : ILexerFactory<Expression>
     {
-        private readonly IConcatenationLexerFactory concatenationLexerFactory;
-
-        private readonly IRepetitionLexerFactory repetitionLexerFactory;
-
-        private readonly IAlternationLexerFactory alternationLexerFactory;
-
-        private readonly ITerminalLexerFactory terminalLexerFactory;
-
-        private readonly ILexer<Term> termLexer;
+        private ILexer<Expression> instance;
 
         public ExpressionLexerFactory(
             IConcatenationLexerFactory concatenationLexerFactory,
             IRepetitionLexerFactory repetitionLexerFactory,
             IAlternationLexerFactory alternationLexerFactory,
             ITerminalLexerFactory terminalLexerFactory,
-            ILexer<Term> termLexer)
+            ILexerFactory<Term> termLexerFactory)
         {
-            this.concatenationLexerFactory = concatenationLexerFactory;
-            this.repetitionLexerFactory = repetitionLexerFactory;
-            this.alternationLexerFactory = alternationLexerFactory;
-            this.terminalLexerFactory = terminalLexerFactory;
-            this.termLexer = termLexer;
+            ConcatenationLexerFactory = concatenationLexerFactory;
+            RepetitionLexerFactory = repetitionLexerFactory;
+            AlternationLexerFactory = alternationLexerFactory;
+            TerminalLexerFactory = terminalLexerFactory;
+            TermLexerFactory = termLexerFactory;
         }
+
+        public IAlternationLexerFactory AlternationLexerFactory { get; }
+
+        public IConcatenationLexerFactory ConcatenationLexerFactory { get; }
+
+        public IRepetitionLexerFactory RepetitionLexerFactory { get; }
+
+        public ITerminalLexerFactory TerminalLexerFactory { get; }
+
+        public ILexerFactory<Term> TermLexerFactory { get; }
 
         public ILexer<Expression> Create()
         {
+            var termLexer = TermLexerFactory.CreateOnce();
             return new ExpressionLexer(
-                concatenationLexerFactory.Create(
+                ConcatenationLexerFactory.Create(
                     termLexer,
-                    repetitionLexerFactory.Create(
-                        concatenationLexerFactory.Create(
-                            alternationLexerFactory.Create(
-                            terminalLexerFactory.Create("+", StringComparer.Ordinal),
-                            terminalLexerFactory.Create("-", StringComparer.Ordinal)),
+                    RepetitionLexerFactory.Create(
+                        ConcatenationLexerFactory.Create(
+                            AlternationLexerFactory.Create(
+                                TerminalLexerFactory.Create("+", StringComparer.Ordinal),
+                                TerminalLexerFactory.Create("-", StringComparer.Ordinal)),
                             termLexer),
                         0,
                         int.MaxValue)));
+        }
+
+        public ILexer<Expression> CreateOnce()
+        {
+            return instance ?? (instance = Create());
         }
     }
 }

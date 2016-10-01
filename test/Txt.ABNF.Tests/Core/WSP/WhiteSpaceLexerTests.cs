@@ -1,6 +1,4 @@
-﻿using Txt.ABNF.Core.HTAB;
-using Txt.ABNF.Core.SP;
-using Txt.Core;
+﻿using Txt.Core;
 using Xunit;
 
 namespace Txt.ABNF.Core.WSP
@@ -15,15 +13,10 @@ namespace Txt.ABNF.Core.WSP
         [InlineData(@"	")]
         public void ReadSuccess(string input)
         {
-            var terminalLexerFactory = new TerminalLexerFactory();
-            var spaceLexerFactory = new SpaceLexerFactory(terminalLexerFactory);
-            var horizontalTabLexerFactory = new HorizontalTabLexerFactory(terminalLexerFactory);
-            var alternativeLexerFactory = new AlternationLexerFactory();
-            var whiteSpaceLexerFactory = new WhiteSpaceLexerFactory(alternativeLexerFactory, spaceLexerFactory.Create(), horizontalTabLexerFactory.Create());
-            var whiteSpaceLexer = whiteSpaceLexerFactory.Create();
+            var sut = WhiteSpaceLexerFactory.Default.Create();
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {
-                var result = whiteSpaceLexer.Read(scanner);
+                var result = sut.Read(scanner);
                 Assert.Equal(input, result.Text);
             }
         }

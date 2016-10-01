@@ -7,17 +7,18 @@ namespace Calculator.number
 {
     public class NumberLexerFactory : ILexerFactory<Number>
     {
-        private readonly IAlternationLexerFactory alternationLexerFactory;
+        private ILexer<Number> instance;
 
-        private readonly IConcatenationLexerFactory concatenationLexerFactory;
-
-        private readonly ILexer<Digit> digitLexer;
-
-        private readonly IOptionLexerFactory optionLexerFactory;
-
-        private readonly IRepetitionLexerFactory repetitionLexerFactory;
-
-        private readonly ITerminalLexerFactory terminalLexerFactory;
+        static NumberLexerFactory()
+        {
+            Default = new NumberLexerFactory(
+                Txt.ABNF.AlternationLexerFactory.Default,
+                Txt.ABNF.ConcatenationLexerFactory.Default,
+                Txt.ABNF.RepetitionLexerFactory.Default,
+                Txt.ABNF.OptionLexerFactory.Default,
+                Txt.ABNF.TerminalLexerFactory.Default,
+                Txt.ABNF.Core.DIGIT.DigitLexerFactory.Default);
+        }
 
         public NumberLexerFactory(
             IAlternationLexerFactory alternationLexerFactory,
@@ -25,27 +26,48 @@ namespace Calculator.number
             IRepetitionLexerFactory repetitionLexerFactory,
             IOptionLexerFactory optionLexerFactory,
             ITerminalLexerFactory terminalLexerFactory,
-            ILexer<Digit> digitLexer)
+            ILexerFactory<Digit> digitLexerFactory)
         {
-            this.alternationLexerFactory = alternationLexerFactory;
-            this.concatenationLexerFactory = concatenationLexerFactory;
-            this.repetitionLexerFactory = repetitionLexerFactory;
-            this.optionLexerFactory = optionLexerFactory;
-            this.terminalLexerFactory = terminalLexerFactory;
-            this.digitLexer = digitLexer;
+            AlternationLexerFactory = alternationLexerFactory;
+            ConcatenationLexerFactory = concatenationLexerFactory;
+            RepetitionLexerFactory = repetitionLexerFactory;
+            OptionLexerFactory = optionLexerFactory;
+            TerminalLexerFactory = terminalLexerFactory;
+            DigitLexerFactory = digitLexerFactory;
         }
+
+        public static NumberLexerFactory Default { get; }
+
+        public IAlternationLexerFactory AlternationLexerFactory { get; }
+
+        public IConcatenationLexerFactory ConcatenationLexerFactory { get; }
+
+        public ILexerFactory<Digit> DigitLexerFactory { get; }
+
+        public IOptionLexerFactory OptionLexerFactory { get; }
+
+        public IRepetitionLexerFactory RepetitionLexerFactory { get; }
+
+        public ITerminalLexerFactory TerminalLexerFactory { get; }
 
         public ILexer<Number> Create()
         {
-            var digits = repetitionLexerFactory.Create(digitLexer, 1, int.MaxValue);
+            var digits =
+                RepetitionLexerFactory.Create(DigitLexerFactory.CreateOnce(), 1, int.MaxValue);
             var fraction =
-                concatenationLexerFactory.Create(
-                    terminalLexerFactory.Create(@".", StringComparer.OrdinalIgnoreCase),
+                ConcatenationLexerFactory.Create(
+                    TerminalLexerFactory.Create(@".", StringComparer.OrdinalIgnoreCase),
                     digits);
-            var innerLexer = alternationLexerFactory.Create(
-                fraction,
-                concatenationLexerFactory.Create(digits, optionLexerFactory.Create(fraction)));
+            var innerLexer =
+                AlternationLexerFactory.Create(
+                    fraction,
+                    ConcatenationLexerFactory.Create(digits, OptionLexerFactory.Create(fraction)));
             return new NumberLexer(innerLexer);
+        }
+
+        public ILexer<Number> CreateOnce()
+        {
+            return instance ?? (instance = Create());
         }
     }
 }

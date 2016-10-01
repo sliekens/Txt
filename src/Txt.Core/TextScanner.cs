@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
@@ -9,10 +8,8 @@ namespace Txt.Core
 {
     public class TextScanner : ITextScanner
     {
-        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private readonly ITextSource textSource;
 
-        [DebuggerBrowsable(SwitchOnBuild.DebuggerBrowsableState)]
         private bool disposed;
 
         public TextScanner([NotNull] ITextSource textSource)
