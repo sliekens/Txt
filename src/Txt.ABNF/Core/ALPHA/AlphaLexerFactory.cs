@@ -52,11 +52,6 @@ namespace Txt.ABNF.Core.ALPHA
             return new AlphaLexer(innerLexer);
         }
 
-        public ILexer<Alpha> CreateOnce()
-        {
-            return instance ?? (instance = Create());
-        }
-
         [NotNull]
         public AlphaLexerFactory UseAlternationLexerFactory([NotNull] IAlternationLexerFactory alternationLexerFactory)
         {

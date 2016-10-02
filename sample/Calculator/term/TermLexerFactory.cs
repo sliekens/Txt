@@ -35,7 +35,7 @@ namespace Calculator.term
 
         public ILexer<Term> Create()
         {
-            var factorLexer = FactorLexerFactory.CreateOnce();
+            var factorLexer = FactorLexerFactory.Create();
             return new TermLexer(
                 ConcatenationLexerFactory.Create(
                     factorLexer,
@@ -47,11 +47,6 @@ namespace Calculator.term
                             factorLexer),
                         0,
                         int.MaxValue)));
-        }
-
-        public ILexer<Term> CreateOnce()
-        {
-            return instance ?? (instance = Create());
         }
     }
 }

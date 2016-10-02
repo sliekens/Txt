@@ -40,12 +40,6 @@ namespace Txt.ABNF.Core.CHAR
             return new CharacterLexer(innerLexer);
         }
 
-        /// <inheritdoc />
-        public ILexer<Character> CreateOnce()
-        {
-            return instance ?? (instance = Create());
-        }
-
         [NotNull]
         public CharacterLexerFactory UseValueRangeLexerFactory([NotNull] IValueRangeLexerFactory valueRangeLexerFactory)
         {

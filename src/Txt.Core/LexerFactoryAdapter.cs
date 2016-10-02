@@ -21,10 +21,5 @@ namespace Txt.Core
         {
             return instance;
         }
-
-        public ILexer<T> CreateOnce()
-        {
-            return instance;
-        }
     }
 }

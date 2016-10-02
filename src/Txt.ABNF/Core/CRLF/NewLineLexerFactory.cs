@@ -59,14 +59,8 @@ namespace Txt.ABNF.Core.CRLF
             return
                 new NewLineLexer(
                     ConcatenationLexerFactory.Create(
-                        CarriageReturnLexerFactory.CreateOnce(),
-                        LineFeedLexerFactory.CreateOnce()));
-        }
-
-        /// <inheritdoc />
-        public ILexer<NewLine> CreateOnce()
-        {
-            return instance ?? (instance = Create());
+                        CarriageReturnLexerFactory.Create(),
+                        LineFeedLexerFactory.Create()));
         }
 
         [NotNull]

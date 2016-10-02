@@ -15,32 +15,38 @@ namespace Calculator
         private static ILexer<Expression> GetExpressionLexer()
         {
             var proxy = new ProxyLexer<Expression>();
+            var terminalLexerFactory = TerminalLexerFactory.Default;
+            var alternationLexerFactory = AlternationLexerFactory.Default;
+            var concatenationLexerFactory = ConcatenationLexerFactory.Default;
+            var repetitionLexerFactory = RepetitionLexerFactory.Default;
+            var optionLexerFactory = OptionLexerFactory.Default;
+            var digitLexerFactory = DigitLexerFactory.Default.Singleton();
             var numberLexerFactory = new NumberLexerFactory(
-                AlternationLexerFactory.Default,
-                ConcatenationLexerFactory.Default,
-                RepetitionLexerFactory.Default,
-                OptionLexerFactory.Default,
-                TerminalLexerFactory.Default,
-                DigitLexerFactory.Default);
+                alternationLexerFactory,
+                concatenationLexerFactory,
+                repetitionLexerFactory,
+                optionLexerFactory,
+                terminalLexerFactory,
+                digitLexerFactory).Singleton();
             var factorLexerFactory = new FactorLexerFactory(
-                ConcatenationLexerFactory.Default,
-                OptionLexerFactory.Default,
-                TerminalLexerFactory.Default,
-                AlternationLexerFactory.Default,
+                concatenationLexerFactory,
+                optionLexerFactory,
+                terminalLexerFactory,
+                alternationLexerFactory,
                 numberLexerFactory,
                 new LexerFactoryAdapter<Expression>(proxy));
             var termLexerFactory = new TermLexerFactory(
-                ConcatenationLexerFactory.Default,
-                RepetitionLexerFactory.Default,
-                AlternationLexerFactory.Default,
-                TerminalLexerFactory.Default,
-                factorLexerFactory);
+                concatenationLexerFactory,
+                repetitionLexerFactory,
+                alternationLexerFactory,
+                terminalLexerFactory,
+                factorLexerFactory).Singleton();
             var expressionLexerFactory = new ExpressionLexerFactory(
-                ConcatenationLexerFactory.Default,
-                RepetitionLexerFactory.Default,
-                AlternationLexerFactory.Default,
-                TerminalLexerFactory.Default,
-                termLexerFactory);
+                concatenationLexerFactory,
+                repetitionLexerFactory,
+                alternationLexerFactory,
+                terminalLexerFactory,
+                termLexerFactory).Singleton();
             var expressionLexer = expressionLexerFactory.Create();
             proxy.Initialize(expressionLexer);
             return expressionLexer;

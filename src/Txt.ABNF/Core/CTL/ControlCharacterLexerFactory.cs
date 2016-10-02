@@ -66,11 +66,6 @@ namespace Txt.ABNF.Core.CTL
             return new ControlCharacterLexer(innerLexer);
         }
 
-        public ILexer<ControlCharacter> CreateOnce()
-        {
-            return instance ?? (instance = Create());
-        }
-
         [NotNull]
         public ControlCharacterLexerFactory UseAlternationLexerFactory(
             [NotNull] IAlternationLexerFactory alternationLexerFactory)

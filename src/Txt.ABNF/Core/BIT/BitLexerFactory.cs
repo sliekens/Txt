@@ -55,11 +55,6 @@ namespace Txt.ABNF.Core.BIT
             return new BitLexer(innerLexer);
         }
 
-        public ILexer<Bit> CreateOnce()
-        {
-            return instance ?? (instance = Create());
-        }
-
         [NotNull]
         public BitLexerFactory UseAlternationLexerFactory([NotNull] IAlternationLexerFactory alternationLexerFactory)
         {

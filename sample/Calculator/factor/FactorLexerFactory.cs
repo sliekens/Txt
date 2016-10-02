@@ -40,8 +40,8 @@ namespace Calculator.factor
 
         public ILexer<Factor> Create()
         {
-            var numberLexer = NumberLexerFactory.CreateOnce();
-            var expressionLexer = ExpressionLexerFactory.CreateOnce();
+            var numberLexer = NumberLexerFactory.Create();
+            var expressionLexer = ExpressionLexerFactory.Create();
             return new FactorLexer(
                 ConcatenationLexerFactory.Create(
                     OptionLexerFactory.Create(
@@ -52,11 +52,6 @@ namespace Calculator.factor
                             TerminalLexerFactory.Create("(", StringComparer.Ordinal),
                             expressionLexer,
                             TerminalLexerFactory.Create(")", StringComparer.Ordinal)))));
-        }
-
-        public ILexer<Factor> CreateOnce()
-        {
-            return instance ?? (instance = Create());
         }
     }
 }

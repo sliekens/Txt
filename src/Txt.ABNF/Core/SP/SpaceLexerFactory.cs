@@ -40,11 +40,6 @@ namespace Txt.ABNF.Core.SP
             return new SpaceLexer(innerLexer);
         }
 
-        public ILexer<Space> CreateOnce()
-        {
-            return instance ?? (instance = Create());
-        }
-
         [NotNull]
         public SpaceLexerFactory UseTerminalLexerFactory([NotNull] ITerminalLexerFactory terminalLexerFactory)
         {

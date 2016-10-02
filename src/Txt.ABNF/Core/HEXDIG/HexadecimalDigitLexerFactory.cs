@@ -56,7 +56,7 @@ namespace Txt.ABNF.Core.HEXDIG
         public ILexer<HexadecimalDigit> Create()
         {
             var innerLexer = AlternationLexerFactory.Create(
-                DigitLexerFactory.CreateOnce(),
+                DigitLexerFactory.Create(),
                 TerminalLexerFactory.Create("A", StringComparer.OrdinalIgnoreCase),
                 TerminalLexerFactory.Create("B", StringComparer.OrdinalIgnoreCase),
                 TerminalLexerFactory.Create("C", StringComparer.OrdinalIgnoreCase),
@@ -64,11 +64,6 @@ namespace Txt.ABNF.Core.HEXDIG
                 TerminalLexerFactory.Create("E", StringComparer.OrdinalIgnoreCase),
                 TerminalLexerFactory.Create("F", StringComparer.OrdinalIgnoreCase));
             return new HexadecimalDigitLexer(innerLexer);
-        }
-
-        public ILexer<HexadecimalDigit> CreateOnce()
-        {
-            return instance ?? (instance = Create());
         }
 
         [NotNull]

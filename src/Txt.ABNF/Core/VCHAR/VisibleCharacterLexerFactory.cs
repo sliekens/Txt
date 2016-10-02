@@ -40,11 +40,6 @@ namespace Txt.ABNF.Core.VCHAR
             return new VisibleCharacterLexer(innerLexer);
         }
 
-        public ILexer<VisibleCharacter> CreateOnce()
-        {
-            return instance ?? (instance = Create());
-        }
-
         [NotNull]
         public VisibleCharacterLexerFactory UseValueRangeLexerFactory(
             [NotNull] IValueRangeLexerFactory valueRangeLexerFactory)

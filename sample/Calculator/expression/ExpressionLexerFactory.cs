@@ -35,7 +35,7 @@ namespace Calculator.expression
 
         public ILexer<Expression> Create()
         {
-            var termLexer = TermLexerFactory.CreateOnce();
+            var termLexer = TermLexerFactory.Create();
             return new ExpressionLexer(
                 ConcatenationLexerFactory.Create(
                     termLexer,
@@ -47,11 +47,6 @@ namespace Calculator.expression
                             termLexer),
                         0,
                         int.MaxValue)));
-        }
-
-        public ILexer<Expression> CreateOnce()
-        {
-            return instance ?? (instance = Create());
         }
     }
 }

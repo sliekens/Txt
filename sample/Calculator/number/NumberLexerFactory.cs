@@ -53,7 +53,7 @@ namespace Calculator.number
         public ILexer<Number> Create()
         {
             var digits =
-                RepetitionLexerFactory.Create(DigitLexerFactory.CreateOnce(), 1, int.MaxValue);
+                RepetitionLexerFactory.Create(DigitLexerFactory.Create(), 1, int.MaxValue);
             var fraction =
                 ConcatenationLexerFactory.Create(
                     TerminalLexerFactory.Create(@".", StringComparer.OrdinalIgnoreCase),
@@ -63,11 +63,6 @@ namespace Calculator.number
                     fraction,
                     ConcatenationLexerFactory.Create(digits, OptionLexerFactory.Create(fraction)));
             return new NumberLexer(innerLexer);
-        }
-
-        public ILexer<Number> CreateOnce()
-        {
-            return instance ?? (instance = Create());
         }
     }
 }

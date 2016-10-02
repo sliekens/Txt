@@ -19,11 +19,5 @@ namespace Txt.ABNF.Core.OCTET
         {
             return new OctetLexer();
         }
-
-        /// <inheritdoc />
-        public ILexer<Octet> CreateOnce()
-        {
-            return instance ?? (instance = Create());
-        }
     }
 }

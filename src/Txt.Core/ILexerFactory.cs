@@ -14,8 +14,5 @@ namespace Txt.Core
         /// <returns>An instance of a class that implements <see cref="ILexer{TElement}" /> of the specified type.</returns>
         [NotNull]
         ILexer<T> Create();
-
-        [NotNull]
-        ILexer<T> CreateOnce();
     }
 }

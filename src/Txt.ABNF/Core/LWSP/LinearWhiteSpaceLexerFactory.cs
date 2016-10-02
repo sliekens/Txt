@@ -84,17 +84,12 @@ namespace Txt.ABNF.Core.LWSP
         /// <inheritdoc />
         public ILexer<LinearWhiteSpace> Create()
         {
-            var newLineLexer = NewLineLexerFactory.CreateOnce();
-            var whiteSpaceLexer = WhiteSpaceLexerFactory.CreateOnce();
+            var newLineLexer = NewLineLexerFactory.Create();
+            var whiteSpaceLexer = WhiteSpaceLexerFactory.Create();
             var foldLexer = ConcatenationLexerFactory.Create(newLineLexer, whiteSpaceLexer);
             var breakingWhiteSpaceLexer = AlternationLexerFactory.Create(whiteSpaceLexer, foldLexer);
             var innerLexer = RepetitionLexerFactory.Create(breakingWhiteSpaceLexer, 0, int.MaxValue);
             return new LinearWhiteSpaceLexer(innerLexer);
-        }
-
-        public ILexer<LinearWhiteSpace> CreateOnce()
-        {
-            return instance ?? (instance = Create());
         }
     }
 }

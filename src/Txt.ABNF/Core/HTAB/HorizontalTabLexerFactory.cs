@@ -40,11 +40,6 @@ namespace Txt.ABNF.Core.HTAB
             return new HorizontalTabLexer(innerLexer);
         }
 
-        public ILexer<HorizontalTab> CreateOnce()
-        {
-            return instance ?? (instance = Create());
-        }
-
         [NotNull]
         public HorizontalTabLexerFactory UseTerminalLexerFactory([NotNull] ITerminalLexerFactory terminalLexerFactory)
         {

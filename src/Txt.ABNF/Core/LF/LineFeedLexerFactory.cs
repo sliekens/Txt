@@ -40,11 +40,6 @@ namespace Txt.ABNF.Core.LF
             return new LineFeedLexer(innerLexer);
         }
 
-        public ILexer<LineFeed> CreateOnce()
-        {
-            return instance ?? (instance = Create());
-        }
-
         [NotNull]
         public LineFeedLexerFactory UseTerminalLexerFactory([NotNull] ITerminalLexerFactory terminalLexerFactory)
         {

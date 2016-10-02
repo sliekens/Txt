@@ -40,11 +40,6 @@ namespace Txt.ABNF.Core.DIGIT
             return new DigitLexer(innerLexer);
         }
 
-        public ILexer<Digit> CreateOnce()
-        {
-            return instance ?? (instance = Create());
-        }
-
         [NotNull]
         public DigitLexerFactory UseValueRangeLexerFactory([NotNull] IValueRangeLexerFactory valueRangeLexerFactory)
         {

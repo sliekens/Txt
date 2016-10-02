@@ -40,11 +40,6 @@ namespace Txt.ABNF.Core.CR
             return new CarriageReturnLexer(innerLexer);
         }
 
-        public ILexer<CarriageReturn> CreateOnce()
-        {
-            return instance ?? (instance = Create());
-        }
-
         [NotNull]
         public CarriageReturnLexerFactory UseTerminalLexerFactory([NotNull] ITerminalLexerFactory terminalLexerFactory)
         {

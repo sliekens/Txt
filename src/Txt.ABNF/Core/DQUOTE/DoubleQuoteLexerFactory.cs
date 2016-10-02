@@ -40,11 +40,6 @@ namespace Txt.ABNF.Core.DQUOTE
             return new DoubleQuoteLexer(innerLexer);
         }
 
-        public ILexer<DoubleQuote> CreateOnce()
-        {
-            return instance ?? (instance = Create());
-        }
-
         [NotNull]
         public DoubleQuoteLexerFactory UseTerminalLexerFactory([NotNull] ITerminalLexerFactory terminalLexerFactory)
         {

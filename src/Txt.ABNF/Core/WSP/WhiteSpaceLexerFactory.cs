@@ -63,14 +63,9 @@ namespace Txt.ABNF.Core.WSP
         public ILexer<WhiteSpace> Create()
         {
             var innerLexer = AlternationLexerFactory.Create(
-                SpaceLexerFactory.CreateOnce(),
-                HorizontalTabLexerFactory.CreateOnce());
+                SpaceLexerFactory.Create(),
+                HorizontalTabLexerFactory.Create());
             return new WhiteSpaceLexer(innerLexer);
-        }
-
-        public ILexer<WhiteSpace> CreateOnce()
-        {
-            return instance ?? (instance = Create());
         }
 
         [NotNull]
