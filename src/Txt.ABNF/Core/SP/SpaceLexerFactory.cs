@@ -5,7 +5,7 @@ using Txt.Core;
 namespace Txt.ABNF.Core.SP
 {
     /// <summary>Creates instances of the <see cref="SpaceLexer" /> class.</summary>
-    public class SpaceLexerFactory : ILexerFactory<Space>
+    public class SpaceLexerFactory : LexerFactory<Space>
     {
         private ILexer<Space> instance;
 
@@ -34,7 +34,7 @@ namespace Txt.ABNF.Core.SP
         public ITerminalLexerFactory TerminalLexerFactory { get; }
 
         /// <inheritdoc />
-        public ILexer<Space> Create()
+        public override ILexer<Space> Create()
         {
             var innerLexer = TerminalLexerFactory.Create("\x20", StringComparer.Ordinal);
             return new SpaceLexer(innerLexer);

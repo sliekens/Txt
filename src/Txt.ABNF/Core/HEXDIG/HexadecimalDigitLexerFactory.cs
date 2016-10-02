@@ -6,7 +6,7 @@ using Txt.Core;
 namespace Txt.ABNF.Core.HEXDIG
 {
     /// <summary>Creates instances of the <see cref="HexadecimalDigitLexer" /> class.</summary>
-    public class HexadecimalDigitLexerFactory : ILexerFactory<HexadecimalDigit>
+    public class HexadecimalDigitLexerFactory : LexerFactory<HexadecimalDigit>
     {
         private ILexer<HexadecimalDigit> instance;
 
@@ -53,7 +53,7 @@ namespace Txt.ABNF.Core.HEXDIG
         public ITerminalLexerFactory TerminalLexerFactory { get; }
 
         /// <inheritdoc />
-        public ILexer<HexadecimalDigit> Create()
+        public override ILexer<HexadecimalDigit> Create()
         {
             var innerLexer = AlternationLexerFactory.Create(
                 DigitLexerFactory.Create(),

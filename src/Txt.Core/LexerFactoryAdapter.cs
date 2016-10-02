@@ -3,7 +3,7 @@ using JetBrains.Annotations;
 
 namespace Txt.Core
 {
-    public class LexerFactoryAdapter<T> : ILexerFactory<T>
+    public class LexerFactoryAdapter<T> : LexerFactory<T>
         where T : Element
     {
         private readonly ILexer<T> instance;
@@ -17,7 +17,7 @@ namespace Txt.Core
             this.instance = instance;
         }
 
-        public ILexer<T> Create()
+        public override ILexer<T> Create()
         {
             return instance;
         }

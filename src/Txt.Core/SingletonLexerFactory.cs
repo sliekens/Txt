@@ -26,5 +26,10 @@ namespace Txt.Core
         {
             return lazy.Value;
         }
+
+        public ILexerFactory<T> Singleton()
+        {
+            return this;
+        }
     }
 }

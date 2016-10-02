@@ -3,7 +3,7 @@
 namespace Txt.ABNF.Core.OCTET
 {
     /// <summary>Creates instances of the <see cref="OctetLexer" /> class.</summary>
-    public class OctetLexerFactory : ILexerFactory<Octet>
+    public class OctetLexerFactory : LexerFactory<Octet>
     {
         private ILexer<Octet> instance;
 
@@ -15,7 +15,7 @@ namespace Txt.ABNF.Core.OCTET
         public static OctetLexerFactory Default { get; }
 
         /// <inheritdoc />
-        public ILexer<Octet> Create()
+        public override ILexer<Octet> Create()
         {
             return new OctetLexer();
         }

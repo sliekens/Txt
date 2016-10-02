@@ -7,7 +7,7 @@ using Txt.Core;
 namespace Txt.ABNF.Core.CRLF
 {
     /// <summary>Creates instances of the <see cref="NewLineLexer" /> class.</summary>
-    public class NewLineLexerFactory : ILexerFactory<NewLine>
+    public class NewLineLexerFactory : LexerFactory<NewLine>
     {
         private ILexer<NewLine> instance;
 
@@ -54,7 +54,7 @@ namespace Txt.ABNF.Core.CRLF
         public ILexerFactory<LineFeed> LineFeedLexerFactory { get; set; }
 
         /// <inheritdoc />
-        public ILexer<NewLine> Create()
+        public override ILexer<NewLine> Create()
         {
             return
                 new NewLineLexer(

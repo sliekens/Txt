@@ -5,7 +5,7 @@ using Txt.Core;
 namespace Txt.ABNF.Core.CHAR
 {
     /// <summary>Creates instances of the <see cref="CharacterLexer" /> class.</summary>
-    public class CharacterLexerFactory : ILexerFactory<Character>
+    public class CharacterLexerFactory : LexerFactory<Character>
     {
         private ILexer<Character> instance;
 
@@ -34,7 +34,7 @@ namespace Txt.ABNF.Core.CHAR
         public IValueRangeLexerFactory ValueRangeLexerFactory { get; }
 
         /// <inheritdoc />
-        public ILexer<Character> Create()
+        public override ILexer<Character> Create()
         {
             var innerLexer = ValueRangeLexerFactory.Create('\x01', '\x7F');
             return new CharacterLexer(innerLexer);

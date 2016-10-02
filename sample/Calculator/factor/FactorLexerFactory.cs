@@ -6,10 +6,8 @@ using Txt.Core;
 
 namespace Calculator.factor
 {
-    public class FactorLexerFactory : ILexerFactory<Factor>
+    public class FactorLexerFactory : LexerFactory<Factor>
     {
-        private ILexer<Factor> instance;
-
         public FactorLexerFactory(
             IConcatenationLexerFactory concatenationLexerFactory,
             IOptionLexerFactory optionLexerFactory,
@@ -38,7 +36,7 @@ namespace Calculator.factor
 
         public ITerminalLexerFactory TerminalLexerFactory { get; }
 
-        public ILexer<Factor> Create()
+        public override ILexer<Factor> Create()
         {
             var numberLexer = NumberLexerFactory.Create();
             var expressionLexer = ExpressionLexerFactory.Create();

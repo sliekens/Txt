@@ -5,7 +5,7 @@ using Txt.Core;
 namespace Txt.ABNF.Core.CTL
 {
     /// <summary>Creates instances of the <see cref="ControlCharacterLexer" /> class.</summary>
-    public class ControlCharacterLexerFactory : ILexerFactory<ControlCharacter>
+    public class ControlCharacterLexerFactory : LexerFactory<ControlCharacter>
     {
         private ILexer<ControlCharacter> instance;
 
@@ -58,7 +58,7 @@ namespace Txt.ABNF.Core.CTL
         public IValueRangeLexerFactory ValueRangeLexerFactory { get; }
 
         /// <inheritdoc />
-        public ILexer<ControlCharacter> Create()
+        public override ILexer<ControlCharacter> Create()
         {
             var controlsValueRange = ValueRangeLexerFactory.Create('\x00', '\x1F');
             var delete = TerminalLexerFactory.Create("\x7F", StringComparer.Ordinal);

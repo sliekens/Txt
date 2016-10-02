@@ -7,7 +7,7 @@ using Txt.Core;
 namespace Txt.ABNF.Core.LWSP
 {
     /// <summary>Creates instances of the <see cref="LinearWhiteSpaceLexer" /> class.</summary>
-    public class LinearWhiteSpaceLexerFactory : ILexerFactory<LinearWhiteSpace>
+    public class LinearWhiteSpaceLexerFactory : LexerFactory<LinearWhiteSpace>
     {
         private ILexer<LinearWhiteSpace> instance;
 
@@ -82,7 +82,7 @@ namespace Txt.ABNF.Core.LWSP
         public ILexerFactory<WhiteSpace> WhiteSpaceLexerFactory { get; }
 
         /// <inheritdoc />
-        public ILexer<LinearWhiteSpace> Create()
+        public override ILexer<LinearWhiteSpace> Create()
         {
             var newLineLexer = NewLineLexerFactory.Create();
             var whiteSpaceLexer = WhiteSpaceLexerFactory.Create();

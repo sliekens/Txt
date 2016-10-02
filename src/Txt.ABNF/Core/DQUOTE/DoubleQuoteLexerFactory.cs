@@ -5,7 +5,7 @@ using Txt.Core;
 namespace Txt.ABNF.Core.DQUOTE
 {
     /// <summary>Creates instances of the <see cref="DoubleQuoteLexer" /> class.</summary>
-    public class DoubleQuoteLexerFactory : ILexerFactory<DoubleQuote>
+    public class DoubleQuoteLexerFactory : LexerFactory<DoubleQuote>
     {
         private ILexer<DoubleQuote> instance;
 
@@ -34,7 +34,7 @@ namespace Txt.ABNF.Core.DQUOTE
         public ITerminalLexerFactory TerminalLexerFactory { get; }
 
         /// <inheritdoc />
-        public ILexer<DoubleQuote> Create()
+        public override ILexer<DoubleQuote> Create()
         {
             var innerLexer = TerminalLexerFactory.Create("\x22", StringComparer.Ordinal);
             return new DoubleQuoteLexer(innerLexer);

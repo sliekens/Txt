@@ -5,7 +5,7 @@ using Txt.Core;
 namespace Txt.ABNF.Core.BIT
 {
     /// <summary>Creates instances of the <see cref="BitLexer" /> class.</summary>
-    public class BitLexerFactory : ILexerFactory<Bit>
+    public class BitLexerFactory : LexerFactory<Bit>
     {
         private ILexer<Bit> instance;
 
@@ -47,7 +47,7 @@ namespace Txt.ABNF.Core.BIT
         public ITerminalLexerFactory TerminalLexerFactory { get; }
 
         /// <inheritdoc />
-        public ILexer<Bit> Create()
+        public override ILexer<Bit> Create()
         {
             var bit0TerminalLexer = TerminalLexerFactory.Create("0", StringComparer.Ordinal);
             var bit1TerminalLexer = TerminalLexerFactory.Create("1", StringComparer.Ordinal);

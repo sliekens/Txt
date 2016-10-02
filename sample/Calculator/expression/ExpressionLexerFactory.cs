@@ -5,10 +5,8 @@ using Txt.Core;
 
 namespace Calculator.expression
 {
-    public class ExpressionLexerFactory : ILexerFactory<Expression>
+    public class ExpressionLexerFactory : LexerFactory<Expression>
     {
-        private ILexer<Expression> instance;
-
         public ExpressionLexerFactory(
             IConcatenationLexerFactory concatenationLexerFactory,
             IRepetitionLexerFactory repetitionLexerFactory,
@@ -33,7 +31,7 @@ namespace Calculator.expression
 
         public ILexerFactory<Term> TermLexerFactory { get; }
 
-        public ILexer<Expression> Create()
+        public override ILexer<Expression> Create()
         {
             var termLexer = TermLexerFactory.Create();
             return new ExpressionLexer(

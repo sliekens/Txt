@@ -5,14 +5,12 @@ using Txt.Core;
 
 namespace Calculator.number
 {
-    public class NumberLexerFactory : ILexerFactory<Number>
+    public class NumberLexerFactory : LexerFactory<Number>
     {
-        private ILexer<Number> instance;
-
         static NumberLexerFactory()
         {
             Default = new NumberLexerFactory(
-                Txt.ABNF.AlternationLexerFactory.Default,
+                  Txt.ABNF.AlternationLexerFactory.Default,
                 Txt.ABNF.ConcatenationLexerFactory.Default,
                 Txt.ABNF.RepetitionLexerFactory.Default,
                 Txt.ABNF.OptionLexerFactory.Default,
@@ -50,7 +48,7 @@ namespace Calculator.number
 
         public ITerminalLexerFactory TerminalLexerFactory { get; }
 
-        public ILexer<Number> Create()
+        public override ILexer<Number> Create()
         {
             var digits =
                 RepetitionLexerFactory.Create(DigitLexerFactory.Create(), 1, int.MaxValue);

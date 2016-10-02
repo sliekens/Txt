@@ -5,7 +5,7 @@ using Txt.Core;
 namespace Txt.ABNF.Core.HTAB
 {
     /// <summary>Creates instances of the <see cref="HorizontalTabLexer" /> class.</summary>
-    public class HorizontalTabLexerFactory : ILexerFactory<HorizontalTab>
+    public class HorizontalTabLexerFactory : LexerFactory<HorizontalTab>
     {
         private ILexer<HorizontalTab> instance;
 
@@ -34,7 +34,7 @@ namespace Txt.ABNF.Core.HTAB
         public ITerminalLexerFactory TerminalLexerFactory { get; }
 
         /// <inheritdoc />
-        public ILexer<HorizontalTab> Create()
+        public override ILexer<HorizontalTab> Create()
         {
             var innerLexer = TerminalLexerFactory.Create("\x09", StringComparer.Ordinal);
             return new HorizontalTabLexer(innerLexer);

@@ -5,7 +5,7 @@ using Txt.Core;
 namespace Txt.ABNF.Core.CR
 {
     /// <summary>Creates instances of the <see cref="CarriageReturnLexer" /> class.</summary>
-    public class CarriageReturnLexerFactory : ILexerFactory<CarriageReturn>
+    public class CarriageReturnLexerFactory : LexerFactory<CarriageReturn>
     {
         private ILexer<CarriageReturn> instance;
 
@@ -34,7 +34,7 @@ namespace Txt.ABNF.Core.CR
         public ITerminalLexerFactory TerminalLexerFactory { get; }
 
         /// <inheritdoc />
-        public ILexer<CarriageReturn> Create()
+        public override ILexer<CarriageReturn> Create()
         {
             var innerLexer = TerminalLexerFactory.Create("\x0D", StringComparer.Ordinal);
             return new CarriageReturnLexer(innerLexer);

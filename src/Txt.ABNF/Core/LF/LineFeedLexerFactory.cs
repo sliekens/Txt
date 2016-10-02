@@ -5,7 +5,7 @@ using Txt.Core;
 namespace Txt.ABNF.Core.LF
 {
     /// <summary>Creates instances of the <see cref="LineFeedLexer" /> class.</summary>
-    public class LineFeedLexerFactory : ILexerFactory<LineFeed>
+    public class LineFeedLexerFactory : LexerFactory<LineFeed>
     {
         private ILexer<LineFeed> instance;
 
@@ -34,7 +34,7 @@ namespace Txt.ABNF.Core.LF
         public ITerminalLexerFactory TerminalLexerFactory { get; }
 
         /// <inheritdoc />
-        public ILexer<LineFeed> Create()
+        public override ILexer<LineFeed> Create()
         {
             var innerLexer = TerminalLexerFactory.Create("\x0A", StringComparer.Ordinal);
             return new LineFeedLexer(innerLexer);

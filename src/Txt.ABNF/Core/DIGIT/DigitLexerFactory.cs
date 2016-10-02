@@ -5,7 +5,7 @@ using Txt.Core;
 namespace Txt.ABNF.Core.DIGIT
 {
     /// <summary>Creates instances of the <see cref="DigitLexer" /> class.</summary>
-    public class DigitLexerFactory : ILexerFactory<Digit>
+    public class DigitLexerFactory : LexerFactory<Digit>
     {
         private ILexer<Digit> instance;
 
@@ -34,7 +34,7 @@ namespace Txt.ABNF.Core.DIGIT
         public IValueRangeLexerFactory ValueRangeLexerFactory { get; }
 
         /// <inheritdoc />
-        public ILexer<Digit> Create()
+        public override ILexer<Digit> Create()
         {
             var innerLexer = ValueRangeLexerFactory.Create('\x30', '\x39');
             return new DigitLexer(innerLexer);

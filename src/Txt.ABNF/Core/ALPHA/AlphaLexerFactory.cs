@@ -5,7 +5,7 @@ using Txt.Core;
 namespace Txt.ABNF.Core.ALPHA
 {
     /// <summary>Creates instances of the <see cref="AlphaLexer" /> class.</summary>
-    public class AlphaLexerFactory : ILexerFactory<Alpha>
+    public class AlphaLexerFactory : LexerFactory<Alpha>
     {
         private ILexer<Alpha> instance;
 
@@ -42,7 +42,7 @@ namespace Txt.ABNF.Core.ALPHA
         public IValueRangeLexerFactory ValueRangeLexerFactory { get; }
 
         /// <inheritdoc />
-        public ILexer<Alpha> Create()
+        public override ILexer<Alpha> Create()
         {
             var upperCaseValueRangeLexer = ValueRangeLexerFactory.Create('\x41', '\x5A');
             var lowerCaseValueRangeLexer = ValueRangeLexerFactory.Create('\x61', '\x7A');
