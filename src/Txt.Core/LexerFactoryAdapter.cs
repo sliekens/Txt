@@ -6,6 +6,7 @@ namespace Txt.Core
     public class LexerFactoryAdapter<T> : LexerFactory<T>
         where T : Element
     {
+        [NotNull]
         private readonly ILexer<T> instance;
 
         public LexerFactoryAdapter([NotNull] ILexer<T> instance)
