@@ -7,8 +7,6 @@ namespace Txt.ABNF.Core.HTAB
     /// <summary>Creates instances of the <see cref="HorizontalTabLexer" /> class.</summary>
     public class HorizontalTabLexerFactory : LexerFactory<HorizontalTab>
     {
-        private ILexer<HorizontalTab> instance;
-
         static HorizontalTabLexerFactory()
         {
             Default = new HorizontalTabLexerFactory(ABNF.TerminalLexerFactory.Default);

@@ -7,8 +7,6 @@ namespace Txt.ABNF.Core.BIT
     /// <summary>Creates instances of the <see cref="BitLexer" /> class.</summary>
     public class BitLexerFactory : LexerFactory<Bit>
     {
-        private ILexer<Bit> instance;
-
         static BitLexerFactory()
         {
             Default = new BitLexerFactory(

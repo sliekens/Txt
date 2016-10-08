@@ -9,8 +9,6 @@ namespace Txt.ABNF.Core.CRLF
     /// <summary>Creates instances of the <see cref="NewLineLexer" /> class.</summary>
     public class NewLineLexerFactory : LexerFactory<NewLine>
     {
-        private ILexer<NewLine> instance;
-
         static NewLineLexerFactory()
         {
             Default = new NewLineLexerFactory(

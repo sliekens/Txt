@@ -9,8 +9,6 @@ namespace Txt.ABNF.Core.WSP
     /// <summary>Creates instances of the <see cref="WhiteSpaceLexer" /> class.</summary>
     public class WhiteSpaceLexerFactory : LexerFactory<WhiteSpace>
     {
-        private ILexer<WhiteSpace> instance;
-
         static WhiteSpaceLexerFactory()
         {
             Default = new WhiteSpaceLexerFactory(

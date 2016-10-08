@@ -7,8 +7,6 @@ namespace Txt.ABNF.Core.ALPHA
     /// <summary>Creates instances of the <see cref="AlphaLexer" /> class.</summary>
     public class AlphaLexerFactory : LexerFactory<Alpha>
     {
-        private ILexer<Alpha> instance;
-
         static AlphaLexerFactory()
         {
             Default = new AlphaLexerFactory(

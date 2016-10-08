@@ -7,8 +7,6 @@ namespace Txt.ABNF.Core.LF
     /// <summary>Creates instances of the <see cref="LineFeedLexer" /> class.</summary>
     public class LineFeedLexerFactory : LexerFactory<LineFeed>
     {
-        private ILexer<LineFeed> instance;
-
         static LineFeedLexerFactory()
         {
             Default = new LineFeedLexerFactory(ABNF.TerminalLexerFactory.Default);

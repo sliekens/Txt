@@ -7,8 +7,6 @@ namespace Txt.ABNF.Core.DQUOTE
     /// <summary>Creates instances of the <see cref="DoubleQuoteLexer" /> class.</summary>
     public class DoubleQuoteLexerFactory : LexerFactory<DoubleQuote>
     {
-        private ILexer<DoubleQuote> instance;
-
         static DoubleQuoteLexerFactory()
         {
             Default = new DoubleQuoteLexerFactory(ABNF.TerminalLexerFactory.Default);

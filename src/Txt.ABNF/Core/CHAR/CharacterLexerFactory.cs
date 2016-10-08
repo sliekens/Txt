@@ -7,8 +7,6 @@ namespace Txt.ABNF.Core.CHAR
     /// <summary>Creates instances of the <see cref="CharacterLexer" /> class.</summary>
     public class CharacterLexerFactory : LexerFactory<Character>
     {
-        private ILexer<Character> instance;
-
         static CharacterLexerFactory()
         {
             Default = new CharacterLexerFactory(ABNF.ValueRangeLexerFactory.Default);

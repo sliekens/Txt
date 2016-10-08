@@ -7,8 +7,6 @@ namespace Txt.ABNF.Core.CTL
     /// <summary>Creates instances of the <see cref="ControlCharacterLexer" /> class.</summary>
     public class ControlCharacterLexerFactory : LexerFactory<ControlCharacter>
     {
-        private ILexer<ControlCharacter> instance;
-
         static ControlCharacterLexerFactory()
         {
             Default = new ControlCharacterLexerFactory(

@@ -7,8 +7,6 @@ namespace Txt.ABNF.Core.CR
     /// <summary>Creates instances of the <see cref="CarriageReturnLexer" /> class.</summary>
     public class CarriageReturnLexerFactory : LexerFactory<CarriageReturn>
     {
-        private ILexer<CarriageReturn> instance;
-
         static CarriageReturnLexerFactory()
         {
             Default = new CarriageReturnLexerFactory(ABNF.TerminalLexerFactory.Default);

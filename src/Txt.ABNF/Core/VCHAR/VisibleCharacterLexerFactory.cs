@@ -7,8 +7,6 @@ namespace Txt.ABNF.Core.VCHAR
     /// <summary>Creates instances of the <see cref="VisibleCharacterLexer" /> class.</summary>
     public class VisibleCharacterLexerFactory : LexerFactory<VisibleCharacter>
     {
-        private ILexer<VisibleCharacter> instance;
-
         static VisibleCharacterLexerFactory()
         {
             Default = new VisibleCharacterLexerFactory(ABNF.ValueRangeLexerFactory.Default);

@@ -7,8 +7,6 @@ namespace Txt.ABNF.Core.SP
     /// <summary>Creates instances of the <see cref="SpaceLexer" /> class.</summary>
     public class SpaceLexerFactory : LexerFactory<Space>
     {
-        private ILexer<Space> instance;
-
         static SpaceLexerFactory()
         {
             Default = new SpaceLexerFactory(ABNF.TerminalLexerFactory.Default);

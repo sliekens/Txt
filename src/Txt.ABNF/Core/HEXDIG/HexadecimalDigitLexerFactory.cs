@@ -8,8 +8,6 @@ namespace Txt.ABNF.Core.HEXDIG
     /// <summary>Creates instances of the <see cref="HexadecimalDigitLexer" /> class.</summary>
     public class HexadecimalDigitLexerFactory : LexerFactory<HexadecimalDigit>
     {
-        private ILexer<HexadecimalDigit> instance;
-
         static HexadecimalDigitLexerFactory()
         {
             Default = new HexadecimalDigitLexerFactory(

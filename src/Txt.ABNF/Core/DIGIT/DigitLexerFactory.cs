@@ -7,8 +7,6 @@ namespace Txt.ABNF.Core.DIGIT
     /// <summary>Creates instances of the <see cref="DigitLexer" /> class.</summary>
     public class DigitLexerFactory : LexerFactory<Digit>
     {
-        private ILexer<Digit> instance;
-
         static DigitLexerFactory()
         {
             Default = new DigitLexerFactory(ABNF.ValueRangeLexerFactory.Default);
