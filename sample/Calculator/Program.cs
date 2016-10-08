@@ -5,7 +5,6 @@ using Calculator.factor;
 using Calculator.number;
 using Calculator.term;
 using Txt.ABNF;
-using Txt.ABNF.Core.DIGIT;
 using Txt.Core;
 
 namespace Calculator
@@ -14,41 +13,8 @@ namespace Calculator
     {
         private static ILexer<Expression> GetExpressionLexer()
         {
-            var proxy = new ProxyLexer<Expression>();
-            var terminalLexerFactory = TerminalLexerFactory.Default;
-            var alternationLexerFactory = AlternationLexerFactory.Default;
-            var concatenationLexerFactory = ConcatenationLexerFactory.Default;
-            var repetitionLexerFactory = RepetitionLexerFactory.Default;
-            var optionLexerFactory = OptionLexerFactory.Default;
-            var digitLexerFactory = DigitLexerFactory.Default.Singleton();
-            var numberLexerFactory = new NumberLexerFactory(
-                alternationLexerFactory,
-                concatenationLexerFactory,
-                repetitionLexerFactory,
-                optionLexerFactory,
-                terminalLexerFactory,
-                digitLexerFactory).Singleton();
-            var factorLexerFactory = new FactorLexerFactory(
-                concatenationLexerFactory,
-                optionLexerFactory,
-                terminalLexerFactory,
-                alternationLexerFactory,
-                numberLexerFactory,
-                new LexerFactoryAdapter<Expression>(proxy));
-            var termLexerFactory = new TermLexerFactory(
-                concatenationLexerFactory,
-                repetitionLexerFactory,
-                alternationLexerFactory,
-                terminalLexerFactory,
-                factorLexerFactory).Singleton();
-            var expressionLexerFactory = new ExpressionLexerFactory(
-                concatenationLexerFactory,
-                repetitionLexerFactory,
-                alternationLexerFactory,
-                terminalLexerFactory,
-                termLexerFactory).Singleton();
-            var expressionLexer = expressionLexerFactory.Create();
-            proxy.Initialize(expressionLexer);
+            var expressionLexer = ExpressionLexerFactory.Default.Create();
+            FactorLexerFactory.Default.ExpressionProxyLexer.Initialize(expressionLexer);
             return expressionLexer;
         }
 
@@ -89,27 +55,23 @@ namespace Calculator
                     return;
                 }
                 using (var stringTextSource = new StringTextSource(expression))
+                using (var textScanner = new TextScanner(stringTextSource))
                 {
-                    using (var textScanner = new TextScanner(stringTextSource))
+                    var readResult = lexer.Read(textScanner);
+                    if (readResult != null)
                     {
-                        var readResult = lexer.Read(textScanner);
-                        if (readResult != null)
-                        {
-                            Console.WriteLine(
-                                "{0}={1}",
-                                readResult.Text,
-                                parser.Parse(readResult));
-                        }
-                        else
-                        {
-                            Console.WriteLine("Invalid input detected");
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            using (var reader = new TextSourceReader(stringTextSource))
-                            {
-                                Console.WriteLine(reader.ReadToEnd());
-                            }
-                            Console.ForegroundColor = foregroundColor;
-                        }
+                        Console.WriteLine(
+                            "{0}={1}",
+                            readResult.Text,
+                            parser.Parse(readResult));
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid input detected");
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        using (var reader = new TextSourceReader(stringTextSource))
+                            Console.WriteLine(reader.ReadToEnd());
+                        Console.ForegroundColor = foregroundColor;
                     }
                 }
             }

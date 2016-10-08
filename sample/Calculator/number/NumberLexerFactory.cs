@@ -10,12 +10,12 @@ namespace Calculator.number
         static NumberLexerFactory()
         {
             Default = new NumberLexerFactory(
-                  Txt.ABNF.AlternationLexerFactory.Default,
+                Txt.ABNF.AlternationLexerFactory.Default,
                 Txt.ABNF.ConcatenationLexerFactory.Default,
                 Txt.ABNF.RepetitionLexerFactory.Default,
                 Txt.ABNF.OptionLexerFactory.Default,
                 Txt.ABNF.TerminalLexerFactory.Default,
-                Txt.ABNF.Core.DIGIT.DigitLexerFactory.Default);
+                Txt.ABNF.Core.DIGIT.DigitLexerFactory.Default.Singleton());
         }
 
         public NumberLexerFactory(

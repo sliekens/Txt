@@ -7,6 +7,16 @@ namespace Calculator.expression
 {
     public class ExpressionLexerFactory : LexerFactory<Expression>
     {
+        static ExpressionLexerFactory()
+        {
+            Default = new ExpressionLexerFactory(
+                Txt.ABNF.ConcatenationLexerFactory.Default,
+                Txt.ABNF.RepetitionLexerFactory.Default,
+                Txt.ABNF.AlternationLexerFactory.Default,
+                Txt.ABNF.TerminalLexerFactory.Default,
+                term.TermLexerFactory.Default.Singleton());
+        }
+
         public ExpressionLexerFactory(
             IConcatenationLexerFactory concatenationLexerFactory,
             IRepetitionLexerFactory repetitionLexerFactory,
@@ -20,6 +30,8 @@ namespace Calculator.expression
             TerminalLexerFactory = terminalLexerFactory;
             TermLexerFactory = termLexerFactory;
         }
+
+        public static ExpressionLexerFactory Default { get; }
 
         public IAlternationLexerFactory AlternationLexerFactory { get; }
 

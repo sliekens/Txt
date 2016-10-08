@@ -7,6 +7,16 @@ namespace Calculator.term
 {
     public class TermLexerFactory : LexerFactory<Term>
     {
+        static TermLexerFactory()
+        {
+            Default = new TermLexerFactory(
+                Txt.ABNF.ConcatenationLexerFactory.Default,
+                Txt.ABNF.RepetitionLexerFactory.Default,
+                Txt.ABNF.AlternationLexerFactory.Default,
+                Txt.ABNF.TerminalLexerFactory.Default,
+                factor.FactorLexerFactory.Default.Singleton());
+        }
+
         public TermLexerFactory(
             IConcatenationLexerFactory concatenationLexerFactory,
             IRepetitionLexerFactory repetitionLexerFactory,
@@ -20,6 +30,8 @@ namespace Calculator.term
             TerminalLexerFactory = terminalLexerFactory;
             FactorLexerFactory = factorLexerFactory;
         }
+
+        public static TermLexerFactory Default { get; }
 
         public IAlternationLexerFactory AlternationLexerFactory { get; }
 

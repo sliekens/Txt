@@ -8,27 +8,40 @@ namespace Calculator.factor
 {
     public class FactorLexerFactory : LexerFactory<Factor>
     {
+        static FactorLexerFactory()
+        {
+            Default = new FactorLexerFactory(
+                Txt.ABNF.ConcatenationLexerFactory.Default,
+                Txt.ABNF.OptionLexerFactory.Default,
+                Txt.ABNF.TerminalLexerFactory.Default,
+                Txt.ABNF.AlternationLexerFactory.Default,
+                number.NumberLexerFactory.Default.Singleton(),
+                new ProxyLexer<Expression>());
+        }
+
         public FactorLexerFactory(
             IConcatenationLexerFactory concatenationLexerFactory,
             IOptionLexerFactory optionLexerFactory,
             ITerminalLexerFactory terminalLexerFactory,
             IAlternationLexerFactory alternationLexerFactory,
             ILexerFactory<Number> numberLexerFactory,
-            ILexerFactory<Expression> expressionLexerFactory)
+            ProxyLexer<Expression> expressionProxyLexer)
         {
             ConcatenationLexerFactory = concatenationLexerFactory;
             OptionLexerFactory = optionLexerFactory;
             TerminalLexerFactory = terminalLexerFactory;
             AlternationLexerFactory = alternationLexerFactory;
             NumberLexerFactory = numberLexerFactory;
-            ExpressionLexerFactory = expressionLexerFactory;
+            ExpressionProxyLexer = expressionProxyLexer;
         }
+
+        public static FactorLexerFactory Default { get; }
 
         public IAlternationLexerFactory AlternationLexerFactory { get; }
 
         public IConcatenationLexerFactory ConcatenationLexerFactory { get; }
 
-        public ILexerFactory<Expression> ExpressionLexerFactory { get; }
+        public ProxyLexer<Expression> ExpressionProxyLexer { get; }
 
         public ILexerFactory<Number> NumberLexerFactory { get; }
 
@@ -39,7 +52,6 @@ namespace Calculator.factor
         public override ILexer<Factor> Create()
         {
             var numberLexer = NumberLexerFactory.Create();
-            var expressionLexer = ExpressionLexerFactory.Create();
             return new FactorLexer(
                 ConcatenationLexerFactory.Create(
                     OptionLexerFactory.Create(
@@ -48,7 +60,7 @@ namespace Calculator.factor
                         numberLexer,
                         ConcatenationLexerFactory.Create(
                             TerminalLexerFactory.Create("(", StringComparer.Ordinal),
-                            expressionLexer,
+                            ExpressionProxyLexer,
                             TerminalLexerFactory.Create(")", StringComparer.Ordinal)))));
         }
     }
