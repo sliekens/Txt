@@ -86,6 +86,7 @@ namespace Txt.Core
                 throw new ArgumentNullException(nameof(context));
             }
             text = sequence;
+            // ReSharper disable once AssignNullToNotNullAttribute
             this.elements = elements.Count == 0 ? EmptyElements : elements.ToArray();
             Context = context;
         }
@@ -108,6 +109,9 @@ namespace Txt.Core
         }
 
         /// <inheritdoc />
+        [NotNull]
+        [ItemNotNull]
+        // ReSharper disable once AssignNullToNotNullAttribute
         public Element this[int index] => elements[index];
 
         /// <inheritdoc />

@@ -1,8 +1,11 @@
-﻿namespace Txt.Core
+﻿using JetBrains.Annotations;
+
+namespace Txt.Core
 {
     public abstract class LexerFactory<T> : ILexerFactory<T>
         where T : Element
     {
+        [NotNull]
         private readonly SingletonLexerFactory<T> singleton;
 
         protected LexerFactory()
