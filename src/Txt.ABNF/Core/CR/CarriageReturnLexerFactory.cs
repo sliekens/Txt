@@ -17,7 +17,7 @@ namespace Txt.ABNF.Core.CR
 
         public override ILexer<CarriageReturn> Create()
         {
-            var innerLexer = Terminal.Create(@"\x0D", StringComparer.Ordinal);
+            var innerLexer = Terminal.Create("\x0D", StringComparer.Ordinal);
             return new CarriageReturnLexer(innerLexer);
         }
     }

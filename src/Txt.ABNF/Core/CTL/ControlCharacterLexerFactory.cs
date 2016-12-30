@@ -19,7 +19,7 @@ namespace Txt.ABNF.Core.CTL
         {
             var innerLexer = Alternation.Create(
                 ValueRange.Create('\x00', '\x1F'),
-                Terminal.Create(@"\x7F", StringComparer.Ordinal));
+                Terminal.Create("\x7F", StringComparer.Ordinal));
             return new ControlCharacterLexer(innerLexer);
         }
     }
