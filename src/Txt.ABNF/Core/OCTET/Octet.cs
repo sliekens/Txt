@@ -18,10 +18,10 @@ namespace Txt.ABNF.Core.OCTET
         ///     Initializes a new instance of the <see cref="Element" /> class with a given string of terminal values and its
         ///     context.
         /// </summary>
-        /// <param name="terminals">The terminal values.</param>
+        /// <param name="value"></param>
         /// <param name="context">An object that describes the current element's context.</param>
         /// <exception cref="ArgumentNullException">
-        ///     The value of  <paramref name="terminals" /> or <paramref name="context" /> is a
+        ///     The value of <paramref name="context" /> is a
         ///     null reference.
         /// </exception>
         public Octet(int value, [NotNull] ITextContext context)

@@ -1,51 +1,25 @@
 ﻿using System;
 using JetBrains.Annotations;
+using Txt.ABNF;
 using Txt.ABNF.Core.CRLF;
 using Txt.ABNF.Core.WSP;
 using Txt.Core;
 
 namespace Txt.ABNF.Core.LWSP
 {
-    /// <summary>Creates instances of the <see cref="LinearWhiteSpaceLexer" /> class.</summary>
-    public class LinearWhiteSpaceLexerFactory : LexerFactory<LinearWhiteSpace>
+    public sealed class LinearWhiteSpaceLexerFactory : RuleLexerFactory<LinearWhiteSpace>
     {
         static LinearWhiteSpaceLexerFactory()
         {
             Default = new LinearWhiteSpaceLexerFactory(
-                ABNF.AlternationLexerFactory.Default,
-                ABNF.ConcatenationLexerFactory.Default,
-                ABNF.RepetitionLexerFactory.Default,
-                WSP.WhiteSpaceLexerFactory.Default,
-                CRLF.NewLineLexerFactory.Default);
+                WSP.WhiteSpaceLexerFactory.Default.Singleton(),
+                CRLF.NewLineLexerFactory.Default.Singleton());
         }
 
-        /// <summary>
-        /// </summary>
-        /// <param name="alternationLexerFactory"></param>
-        /// <param name="concatenationLexerFactory"></param>
-        /// <param name="repetitionLexerFactory"></param>
-        /// <param name="whiteSpaceLexerFactory"></param>
-        /// <param name="newLineLexerFactory"></param>
-        /// <exception cref="ArgumentNullException"></exception>
         public LinearWhiteSpaceLexerFactory(
-            [NotNull] IAlternationLexerFactory alternationLexerFactory,
-            [NotNull] IConcatenationLexerFactory concatenationLexerFactory,
-            [NotNull] IRepetitionLexerFactory repetitionLexerFactory,
             [NotNull] ILexerFactory<WhiteSpace> whiteSpaceLexerFactory,
             [NotNull] ILexerFactory<NewLine> newLineLexerFactory)
         {
-            if (alternationLexerFactory == null)
-            {
-                throw new ArgumentNullException(nameof(alternationLexerFactory));
-            }
-            if (concatenationLexerFactory == null)
-            {
-                throw new ArgumentNullException(nameof(concatenationLexerFactory));
-            }
-            if (repetitionLexerFactory == null)
-            {
-                throw new ArgumentNullException(nameof(repetitionLexerFactory));
-            }
             if (whiteSpaceLexerFactory == null)
             {
                 throw new ArgumentNullException(nameof(whiteSpaceLexerFactory));
@@ -54,9 +28,6 @@ namespace Txt.ABNF.Core.LWSP
             {
                 throw new ArgumentNullException(nameof(newLineLexerFactory));
             }
-            AlternationLexerFactory = alternationLexerFactory;
-            ConcatenationLexerFactory = concatenationLexerFactory;
-            RepetitionLexerFactory = repetitionLexerFactory;
             WhiteSpaceLexerFactory = whiteSpaceLexerFactory;
             NewLineLexerFactory = newLineLexerFactory;
         }
@@ -65,28 +36,23 @@ namespace Txt.ABNF.Core.LWSP
         public static LinearWhiteSpaceLexerFactory Default { get; }
 
         [NotNull]
-        public IAlternationLexerFactory AlternationLexerFactory { get; }
-
-        [NotNull]
-        public IConcatenationLexerFactory ConcatenationLexerFactory { get; }
-
-        [NotNull]
         public ILexerFactory<NewLine> NewLineLexerFactory { get; }
-
-        [NotNull]
-        public IRepetitionLexerFactory RepetitionLexerFactory { get; }
 
         [NotNull]
         public ILexerFactory<WhiteSpace> WhiteSpaceLexerFactory { get; }
 
-        /// <inheritdoc />
         public override ILexer<LinearWhiteSpace> Create()
         {
-            var newLineLexer = NewLineLexerFactory.Create();
-            var whiteSpaceLexer = WhiteSpaceLexerFactory.Create();
-            var foldLexer = ConcatenationLexerFactory.Create(newLineLexer, whiteSpaceLexer);
-            var breakingWhiteSpaceLexer = AlternationLexerFactory.Create(whiteSpaceLexer, foldLexer);
-            var innerLexer = RepetitionLexerFactory.Create(breakingWhiteSpaceLexer, 0, int.MaxValue);
+            var wsp = WhiteSpaceLexerFactory.Create();
+            var crlf = NewLineLexerFactory.Create();
+            var innerLexer = Repetition.Create(
+                Alternation.Create(
+                    wsp,
+                    Concatenation.Create(
+                        crlf,
+                        wsp)),
+                0,
+                int.MaxValue);
             return new LinearWhiteSpaceLexer(innerLexer);
         }
     }

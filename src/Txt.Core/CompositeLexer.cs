@@ -7,6 +7,7 @@ using JetBrains.Annotations;
 
 namespace Txt.Core
 {
+    [Obsolete("Composing lexers is now significantly easier; the CompositeLexer helper class should be abandoned.")]
     public class CompositeLexer<TInner, TElement> : Lexer<TElement>
         where TInner : Element
         where TElement : Element

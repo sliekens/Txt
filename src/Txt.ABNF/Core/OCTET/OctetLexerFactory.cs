@@ -1,4 +1,5 @@
-﻿using Txt.Core;
+﻿using JetBrains.Annotations;
+using Txt.Core;
 
 namespace Txt.ABNF.Core.OCTET
 {
@@ -10,6 +11,7 @@ namespace Txt.ABNF.Core.OCTET
             Default = new OctetLexerFactory();
         }
 
+        [NotNull]
         public static OctetLexerFactory Default { get; }
 
         /// <inheritdoc />

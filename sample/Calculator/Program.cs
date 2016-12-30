@@ -14,7 +14,7 @@ namespace Calculator
         private static ILexer<Expression> GetExpressionLexer()
         {
             var expressionLexer = ExpressionLexerFactory.Default.Create();
-            FactorLexerFactory.Default.ExpressionProxyLexer.Initialize(expressionLexer);
+            FactorLexerFactory.Default.Expression.Initialize(expressionLexer);
             return expressionLexer;
         }
 
@@ -70,7 +70,9 @@ namespace Calculator
                         Console.WriteLine("Invalid input detected");
                         Console.ForegroundColor = ConsoleColor.Red;
                         using (var reader = new TextSourceReader(stringTextSource))
+                        {
                             Console.WriteLine(reader.ReadToEnd());
+                        }
                         Console.ForegroundColor = foregroundColor;
                     }
                 }

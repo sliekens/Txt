@@ -6,62 +6,49 @@ using Txt.Core;
 
 namespace Calculator.factor
 {
-    public class FactorLexerFactory : LexerFactory<Factor>
+    public sealed class FactorLexerFactory : RuleLexerFactory<Factor>
     {
         static FactorLexerFactory()
         {
             Default = new FactorLexerFactory(
-                Txt.ABNF.ConcatenationLexerFactory.Default,
-                Txt.ABNF.OptionLexerFactory.Default,
-                Txt.ABNF.TerminalLexerFactory.Default,
-                Txt.ABNF.AlternationLexerFactory.Default,
-                number.NumberLexerFactory.Default.Singleton(),
+                NumberLexerFactory.Default.Singleton(),
                 new ProxyLexer<Expression>());
         }
 
         public FactorLexerFactory(
-            IConcatenationLexerFactory concatenationLexerFactory,
-            IOptionLexerFactory optionLexerFactory,
-            ITerminalLexerFactory terminalLexerFactory,
-            IAlternationLexerFactory alternationLexerFactory,
             ILexerFactory<Number> numberLexerFactory,
-            ProxyLexer<Expression> expressionProxyLexer)
+            ProxyLexer<Expression> expressionLexer)
         {
-            ConcatenationLexerFactory = concatenationLexerFactory;
-            OptionLexerFactory = optionLexerFactory;
-            TerminalLexerFactory = terminalLexerFactory;
-            AlternationLexerFactory = alternationLexerFactory;
-            NumberLexerFactory = numberLexerFactory;
-            ExpressionProxyLexer = expressionProxyLexer;
+            if (numberLexerFactory == null)
+            {
+                throw new ArgumentNullException(nameof(numberLexerFactory));
+            }
+            if (expressionLexer == null)
+            {
+                throw new ArgumentNullException(nameof(expressionLexer));
+            }
+            Number = numberLexerFactory;
+            Expression = expressionLexer;
         }
 
         public static FactorLexerFactory Default { get; }
 
-        public IAlternationLexerFactory AlternationLexerFactory { get; }
+        public ProxyLexer<Expression> Expression { get; }
 
-        public IConcatenationLexerFactory ConcatenationLexerFactory { get; }
-
-        public ProxyLexer<Expression> ExpressionProxyLexer { get; }
-
-        public ILexerFactory<Number> NumberLexerFactory { get; }
-
-        public IOptionLexerFactory OptionLexerFactory { get; }
-
-        public ITerminalLexerFactory TerminalLexerFactory { get; }
+        public ILexerFactory<Number> Number { get; }
 
         public override ILexer<Factor> Create()
         {
-            var numberLexer = NumberLexerFactory.Create();
-            return new FactorLexer(
-                ConcatenationLexerFactory.Create(
-                    OptionLexerFactory.Create(
-                        TerminalLexerFactory.Create("-", StringComparer.Ordinal)),
-                    AlternationLexerFactory.Create(
-                        numberLexer,
-                        ConcatenationLexerFactory.Create(
-                            TerminalLexerFactory.Create("(", StringComparer.Ordinal),
-                            ExpressionProxyLexer,
-                            TerminalLexerFactory.Create(")", StringComparer.Ordinal)))));
+            var number = Number.Create();
+            var innerLexer = Concatenation.Create(
+                Option.Create(Terminal.Create("-", StringComparer.Ordinal)),
+                Alternation.Create(
+                    number,
+                    Concatenation.Create(
+                        Terminal.Create("(", StringComparer.Ordinal),
+                        Expression,
+                        Terminal.Create(")", StringComparer.Ordinal))));
+            return new FactorLexer(innerLexer);
         }
     }
 }
