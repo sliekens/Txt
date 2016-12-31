@@ -35,6 +35,7 @@ namespace Txt.ABNF
             Ordinal = ordinal;
         }
 
+        [NotNull]
         public Element Element { get; }
 
         public int Ordinal { get; }

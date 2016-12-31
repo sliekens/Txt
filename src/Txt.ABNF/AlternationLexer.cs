@@ -9,6 +9,7 @@ namespace Txt.ABNF
 {
     public class AlternationLexer : Lexer<Alternation>
     {
+        [NotNull]
         private readonly ILexer<Element>[] lexers;
 
         /// <summary>
@@ -18,7 +19,6 @@ namespace Txt.ABNF
         public AlternationLexer([NotNull] [ItemNotNull] params ILexer<Element>[] lexers)
         {
             if (lexers == null)
-
             {
                 throw new ArgumentNullException(nameof(lexers));
             }
@@ -38,7 +38,9 @@ namespace Txt.ABNF
             for (var i = 0; i < lexers.Length; i++)
             {
                 scanner.Seek(context.Offset);
-                var element = lexers[i].Read(scanner);
+                var lexer = lexers[i];
+                Debug.Assert(lexer != null, "lexer != null");
+                var element = lexer.Read(scanner);
                 if (element != null)
                 {
                     yield return new Alternation(element.Text, element, context, i + 1);

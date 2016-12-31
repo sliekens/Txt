@@ -6,6 +6,9 @@ namespace Txt.Core
     public class StringTextSource : TextSource
     {
         public StringTextSource([NotNull] string data)
+
+            // ReSharper disable once ConstantConditionalAccessQualifier
+            // ReSharper disable once AssignNullToNotNullAttribute
             : base(data?.ToCharArray())
         {
         }
