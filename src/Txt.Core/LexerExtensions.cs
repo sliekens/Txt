@@ -15,7 +15,8 @@ namespace Txt.Core
             {
                 throw new ArgumentNullException(nameof(scanner));
             }
-            var offset = scanner.StartRecording();
+            var offset = scanner.Offset;
+            scanner.StartRecording();
             TElement candidate = null;
             try
             {

@@ -430,7 +430,7 @@ namespace Txt.Core
         ///     Consumers must take responsibility of calling <see cref="StopRecording" /> when they no longer intend to reset the
         ///     current offset.
         /// </remarks>
-        public long StartRecording()
+        public void StartRecording()
         {
             if (disposed)
             {
@@ -448,7 +448,6 @@ namespace Txt.Core
                     ? previous
                     : new Snapshot(dataIndex, Offset, Line, Column));
             }
-            return Offset;
         }
 
         /// <summary>

@@ -76,9 +76,9 @@ namespace Txt.Core
             textSource.Seek(offset);
         }
 
-        public long StartRecording()
+        public void StartRecording()
         {
-            return textSource.StartRecording();
+            textSource.StartRecording();
         }
 
         public void StopRecording()
@@ -138,7 +138,8 @@ namespace Txt.Core
             {
                 throw new ObjectDisposedException(nameof(TextScanner));
             }
-            var offset = StartRecording();
+            var offset = Offset;
+            StartRecording();
             try
             {
                 var buffer = new char[s.Length];

@@ -70,7 +70,7 @@ namespace Txt.Core
         ///     current offset.
         /// </remarks>
         /// <returns>The <see cref="Offset" /> at which recording begins.</returns>
-        long StartRecording();
+        void StartRecording();
 
         /// <summary>
         ///     Stop recording characters and clear the internal buffer.

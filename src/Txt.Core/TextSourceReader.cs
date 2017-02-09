@@ -64,9 +64,9 @@ namespace Txt.Core
             textSource.Seek(offset);
         }
 
-        public long StartRecording()
+        public void StartRecording()
         {
-            return textSource.StartRecording();
+            textSource.StartRecording();
         }
 
         public void StopRecording()

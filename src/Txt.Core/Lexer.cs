@@ -134,7 +134,8 @@ namespace Txt.Core
                 {
                     if (!initialized)
                     {
-                        start = scanner.StartRecording();
+                        start = scanner.Offset;
+                        scanner.StartRecording();
                         inner = lexer.ReadImpl(scanner, context).GetEnumerator();
                         initialized = true;
                     }
