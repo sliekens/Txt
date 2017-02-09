@@ -1,4 +1,5 @@
-﻿using Moq;
+﻿using System.Diagnostics;
+using Moq;
 using Xunit;
 
 namespace Txt.Core
@@ -6,15 +7,32 @@ namespace Txt.Core
     public class SingletonLexerFactoryTests
     {
         [Fact]
-        public void FactMethodName()
+        public void FactoryAlwaysReturnsSameInstance()
         {
-            var mock = new Mock<ILexerFactory<Element>>(MockBehavior.Strict);
-            mock.Setup(factory => factory.Create()).Returns(() => new Mock<ILexer<Element>>().Object);
-            var sut = new SingletonLexerFactory<Element>(mock.Object);
+            var fakeLexerFactory = GetFakeLexerFactory();
+            var sut = new SingletonLexerFactory<Element>(fakeLexerFactory.Object);
             var first = sut.Create();
             var subsequent = sut.Create();
-            mock.Verify(factory => factory.Create(), Times.Once);
             Assert.Same(first, subsequent);
+        }
+
+        [Fact]
+        public void UnderlyingFactoryIsInvokedOnlyOnce()
+        {
+            var fakeLexerFactory = GetFakeLexerFactory();
+            var sut = new SingletonLexerFactory<Element>(fakeLexerFactory.Object);
+            sut.Create();
+            sut.Create();
+            fakeLexerFactory.Verify(factory => factory.Create(), Times.Once);
+        }
+
+        private static Mock<ILexerFactory<Element>> GetFakeLexerFactory()
+        {
+            var fakeLexerFactory = new Mock<ILexerFactory<Element>>(MockBehavior.Strict);
+            var setup = fakeLexerFactory.Setup(factory => factory.Create());
+            Debug.Assert(setup != null, "setup != null");
+            setup.Returns(() => new Mock<ILexer<Element>>().Object);
+            return fakeLexerFactory;
         }
     }
 }
