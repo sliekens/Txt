@@ -7,7 +7,11 @@ namespace Txt.ABNF.Core.OCTET
     {
         protected override IEnumerable<Octet> ReadImpl(ITextScanner scanner, ITextContext context)
         {
-            var value = scanner.Read();
+            var source = scanner.TextSource as IBinaryDataSource;
+            if (source == null) {
+                yield break;
+            }
+            var value = source.GetStream().ReadByte();
             if (value == -1)
             {
                 yield break;
