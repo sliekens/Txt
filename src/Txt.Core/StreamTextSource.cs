@@ -5,7 +5,7 @@ using JetBrains.Annotations;
 
 namespace Txt.Core
 {
-    public class StreamTextSource : TextSource
+    public class StreamTextSource : TextSource, IBinaryDataSource
     {
         private readonly BinaryReader reader;
 
@@ -57,6 +57,11 @@ namespace Txt.Core
         }
 
         public override Encoding Encoding { get; }
+
+        public Stream GetStream()
+        {
+            return reader.BaseStream;
+        }
 
         protected override void Dispose(bool disposing)
         {
