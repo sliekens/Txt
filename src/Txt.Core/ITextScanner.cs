@@ -17,6 +17,9 @@ namespace Txt.Core
         [NotNull]
         ITextContext GetContext();
 
+        [NotNull]
+        ITextSource TextSource { get; }
+
         /// <summary>
         ///     Compares the given character to the next available character and advances the scanner's position if there is a
         ///     match. This method performs a case-sensitive ordinal comparison.

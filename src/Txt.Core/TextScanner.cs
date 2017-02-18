@@ -41,6 +41,8 @@ namespace Txt.Core
             return new Cursor(Offset, Line, Column);
         }
 
+        public ITextSource TextSource => this.textSource;
+
         public int Peek()
         {
             return textSource.Peek();
