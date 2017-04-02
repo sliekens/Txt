@@ -1,10 +1,9 @@
 ﻿using JetBrains.Annotations;
-using Txt.ABNF;
 using Txt.Core;
 
 namespace Txt.ABNF.Core.CHAR
 {
-    public sealed class CharacterLexerFactory : RuleLexerFactory<Character>
+    public sealed class CharacterLexerFactory : LexerFactory<Character>
     {
         static CharacterLexerFactory()
         {
@@ -16,8 +15,7 @@ namespace Txt.ABNF.Core.CHAR
 
         public override ILexer<Character> Create()
         {
-            var innerLexer = ValueRange.Create('\x01', '\x7F');
-            return new CharacterLexer(innerLexer);
+            return new CharacterLexer();
         }
     }
 }

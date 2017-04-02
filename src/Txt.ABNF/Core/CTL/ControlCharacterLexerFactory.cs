@@ -1,11 +1,9 @@
-﻿using System;
-using JetBrains.Annotations;
-using Txt.ABNF;
+﻿using JetBrains.Annotations;
 using Txt.Core;
 
 namespace Txt.ABNF.Core.CTL
 {
-    public sealed class ControlCharacterLexerFactory : RuleLexerFactory<ControlCharacter>
+    public sealed class ControlCharacterLexerFactory : LexerFactory<ControlCharacter>
     {
         static ControlCharacterLexerFactory()
         {
@@ -17,10 +15,7 @@ namespace Txt.ABNF.Core.CTL
 
         public override ILexer<ControlCharacter> Create()
         {
-            var innerLexer = Alternation.Create(
-                ValueRange.Create('\x00', '\x1F'),
-                Terminal.Create("\x7F", StringComparer.Ordinal));
-            return new ControlCharacterLexer(innerLexer);
+            return new ControlCharacterLexer();
         }
     }
 }

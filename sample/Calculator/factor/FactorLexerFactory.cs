@@ -1,34 +1,26 @@
 ﻿using System;
 using Calculator.expression;
 using Calculator.number;
-using Txt.ABNF;
 using Txt.Core;
 
 namespace Calculator.factor
 {
-    public sealed class FactorLexerFactory : RuleLexerFactory<Factor>
+    public sealed class FactorLexerFactory : LexerFactory<Factor>
     {
         static FactorLexerFactory()
         {
-            Default = new FactorLexerFactory(
-                NumberLexerFactory.Default.Singleton(),
-                new ProxyLexer<Expression>());
+            Default = new FactorLexerFactory(NumberLexerFactory.Default.Singleton());
         }
 
         public FactorLexerFactory(
-            ILexerFactory<Number> numberLexerFactory,
-            ProxyLexer<Expression> expressionLexer)
+            ILexerFactory<Number> numberLexerFactory)
         {
             if (numberLexerFactory == null)
             {
                 throw new ArgumentNullException(nameof(numberLexerFactory));
             }
-            if (expressionLexer == null)
-            {
-                throw new ArgumentNullException(nameof(expressionLexer));
-            }
             Number = numberLexerFactory;
-            Expression = expressionLexer;
+            Expression = new ProxyLexer<Expression>();
         }
 
         public static FactorLexerFactory Default { get; }
@@ -39,16 +31,7 @@ namespace Calculator.factor
 
         public override ILexer<Factor> Create()
         {
-            var number = Number.Create();
-            var innerLexer = Concatenation.Create(
-                Option.Create(Terminal.Create("-", StringComparer.Ordinal)),
-                Alternation.Create(
-                    number,
-                    Concatenation.Create(
-                        Terminal.Create("(", StringComparer.Ordinal),
-                        Expression,
-                        Terminal.Create(")", StringComparer.Ordinal))));
-            return new FactorLexer(innerLexer);
+            return new FactorLexer(Number.Create(), Expression);
         }
     }
 }

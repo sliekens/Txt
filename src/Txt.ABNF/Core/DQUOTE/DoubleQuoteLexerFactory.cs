@@ -1,11 +1,9 @@
-﻿using System;
-using JetBrains.Annotations;
-using Txt.ABNF;
+﻿using JetBrains.Annotations;
 using Txt.Core;
 
 namespace Txt.ABNF.Core.DQUOTE
 {
-    public sealed class DoubleQuoteLexerFactory : RuleLexerFactory<DoubleQuote>
+    public sealed class DoubleQuoteLexerFactory : LexerFactory<DoubleQuote>
     {
         static DoubleQuoteLexerFactory()
         {
@@ -17,8 +15,7 @@ namespace Txt.ABNF.Core.DQUOTE
 
         public override ILexer<DoubleQuote> Create()
         {
-            var innerLexer = Terminal.Create("\x22", StringComparer.Ordinal);
-            return new DoubleQuoteLexer(innerLexer);
+            return new DoubleQuoteLexer();
         }
     }
 }

@@ -1,11 +1,9 @@
-﻿using System;
-using JetBrains.Annotations;
-using Txt.ABNF;
+﻿using JetBrains.Annotations;
 using Txt.Core;
 
 namespace Txt.ABNF.Core.SP
 {
-    public sealed class SpaceLexerFactory : RuleLexerFactory<Space>
+    public sealed class SpaceLexerFactory : LexerFactory<Space>
     {
         static SpaceLexerFactory()
         {
@@ -17,8 +15,7 @@ namespace Txt.ABNF.Core.SP
 
         public override ILexer<Space> Create()
         {
-            var innerLexer = Terminal.Create("\x20", StringComparer.Ordinal);
-            return new SpaceLexer(innerLexer);
+            return new SpaceLexer();
         }
     }
 }

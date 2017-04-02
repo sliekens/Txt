@@ -1,26 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using Txt.ABNF;
+using Txt.ABNF.Core.DIGIT;
 using Txt.Core;
 
 namespace Calculator.number
 {
-    public sealed class NumberLexer : Lexer<Number>
+    public sealed class NumberLexer : RuleLexer<Number>
     {
-        public NumberLexer(ILexer<Alternation> innerLexer)
+        public NumberLexer(ILexer<Digit> digit)
         {
-            if (innerLexer == null)
+            if (digit == null)
             {
-                throw new ArgumentNullException(nameof(innerLexer));
+                throw new ArgumentNullException(nameof(digit));
             }
-            InnerLexer = innerLexer;
+            var digits = Repetition.Create(digit, 1, int.MaxValue);
+            var fraction = Concatenation.Create(Terminal.Create(@".", StringComparer.Ordinal), digits);
+            InnerLexer = Alternation.Create(fraction, Concatenation.Create(digits, Option.Create(fraction)));
         }
 
         public ILexer<Alternation> InnerLexer { get; }
 
-        protected override IEnumerable<Number> ReadImpl(
-            ITextScanner scanner,
-            ITextContext context)
+        protected override IEnumerable<Number> ReadImpl(ITextScanner scanner, ITextContext context)
         {
             foreach (var alternation in InnerLexer.Read(scanner, context))
             {

@@ -4,11 +4,10 @@ using Txt.Core;
 
 namespace Txt.ABNF
 {
-    [Obsolete("Rule factories have moved to RuleLexer. Change lexers to derive from RuleLexer and build up rules in their constructor.", true)]
-    public abstract class RuleLexerFactory<T> : LexerFactory<T>
-        where T : Element
+    public abstract class RuleLexer<TRule> : Lexer<TRule>
+        where TRule : Element
     {
-        protected RuleLexerFactory()
+        protected RuleLexer()
             : this(
                 TerminalLexerFactory.Default,
                 ValueRangeLexerFactory.Default,
@@ -19,7 +18,7 @@ namespace Txt.ABNF
         {
         }
 
-        protected RuleLexerFactory(
+        protected RuleLexer(
             [NotNull] ITerminalLexerFactory terminalLexerFactory,
             [NotNull] IValueRangeLexerFactory valueRangeLexerFactory,
             [NotNull] IAlternationLexerFactory alternationLexerFactory,

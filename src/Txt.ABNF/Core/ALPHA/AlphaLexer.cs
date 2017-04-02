@@ -1,19 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using JetBrains.Annotations;
 using Txt.Core;
 
 namespace Txt.ABNF.Core.ALPHA
 {
-    public class AlphaLexer : Lexer<Alpha>
+    public class AlphaLexer : RuleLexer<Alpha>
     {
-        public AlphaLexer([NotNull] ILexer<Alternation> innerLexer)
+        public AlphaLexer()
         {
-            if (innerLexer == null)
-            {
-                throw new ArgumentNullException(nameof(innerLexer));
-            }
-            InnerLexer = innerLexer;
+            var upperCaseValueRangeLexer = ValueRange.Create('\x41', '\x5A');
+            var lowerCaseValueRangeLexer = ValueRange.Create('\x61', '\x7A');
+            InnerLexer = Alternation.Create(upperCaseValueRangeLexer, lowerCaseValueRangeLexer);
         }
 
         [NotNull]

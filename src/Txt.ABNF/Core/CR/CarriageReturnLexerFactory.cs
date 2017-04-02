@@ -1,11 +1,9 @@
-﻿using System;
-using JetBrains.Annotations;
-using Txt.ABNF;
+﻿using JetBrains.Annotations;
 using Txt.Core;
 
 namespace Txt.ABNF.Core.CR
 {
-    public sealed class CarriageReturnLexerFactory : RuleLexerFactory<CarriageReturn>
+    public sealed class CarriageReturnLexerFactory : LexerFactory<CarriageReturn>
     {
         static CarriageReturnLexerFactory()
         {
@@ -17,8 +15,7 @@ namespace Txt.ABNF.Core.CR
 
         public override ILexer<CarriageReturn> Create()
         {
-            var innerLexer = Terminal.Create("\x0D", StringComparer.Ordinal);
-            return new CarriageReturnLexer(innerLexer);
+            return new CarriageReturnLexer();
         }
     }
 }

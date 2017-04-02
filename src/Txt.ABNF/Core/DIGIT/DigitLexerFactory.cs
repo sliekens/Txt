@@ -1,10 +1,9 @@
 ﻿using JetBrains.Annotations;
-using Txt.ABNF;
 using Txt.Core;
 
 namespace Txt.ABNF.Core.DIGIT
 {
-    public sealed class DigitLexerFactory : RuleLexerFactory<Digit>
+    public sealed class DigitLexerFactory : LexerFactory<Digit>
     {
         static DigitLexerFactory()
         {
@@ -16,8 +15,7 @@ namespace Txt.ABNF.Core.DIGIT
 
         public override ILexer<Digit> Create()
         {
-            var innerLexer = ValueRange.Create('\x30', '\x39');
-            return new DigitLexer(innerLexer);
+            return new DigitLexer();
         }
     }
 }

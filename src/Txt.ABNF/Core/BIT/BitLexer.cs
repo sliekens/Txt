@@ -5,15 +5,13 @@ using Txt.Core;
 
 namespace Txt.ABNF.Core.BIT
 {
-    public sealed class BitLexer : Lexer<Bit>
+    public sealed class BitLexer : RuleLexer<Bit>
     {
-        public BitLexer([NotNull] ILexer<Alternation> innerLexer)
+        public BitLexer()
         {
-            if (innerLexer == null)
-            {
-                throw new ArgumentNullException(nameof(innerLexer));
-            }
-            InnerLexer = innerLexer;
+            InnerLexer = Alternation.Create(
+                Terminal.Create(@"0", StringComparer.Ordinal),
+                Terminal.Create(@"1", StringComparer.Ordinal));
         }
 
         [NotNull]

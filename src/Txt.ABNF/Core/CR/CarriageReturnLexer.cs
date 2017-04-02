@@ -1,28 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
-using Txt.ABNF;
 using Txt.Core;
 
 namespace Txt.ABNF.Core.CR
 {
-    public sealed class CarriageReturnLexer : Lexer<CarriageReturn>
+    public sealed class CarriageReturnLexer : RuleLexer<CarriageReturn>
     {
-        public CarriageReturnLexer([NotNull] ILexer<Terminal> innerLexer)
+        public CarriageReturnLexer()
         {
-            if (innerLexer == null)
-            {
-                throw new ArgumentNullException(nameof(innerLexer));
-            }
-            InnerLexer = innerLexer;
+            InnerLexer = Terminal.Create("\x0D", StringComparer.Ordinal);
         }
 
         [NotNull]
         public ILexer<Terminal> InnerLexer { get; }
 
-        protected override IEnumerable<CarriageReturn> ReadImpl(
-            ITextScanner scanner,
-            ITextContext context)
+        protected override IEnumerable<CarriageReturn> ReadImpl(ITextScanner scanner, ITextContext context)
         {
             foreach (var terminal in InnerLexer.Read(scanner, context))
             {

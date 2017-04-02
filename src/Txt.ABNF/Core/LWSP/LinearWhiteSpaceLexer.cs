@@ -1,28 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
-using Txt.ABNF;
+using Txt.ABNF.Core.CRLF;
+using Txt.ABNF.Core.WSP;
 using Txt.Core;
 
 namespace Txt.ABNF.Core.LWSP
 {
-    public sealed class LinearWhiteSpaceLexer : Lexer<LinearWhiteSpace>
+    public sealed class LinearWhiteSpaceLexer : RuleLexer<LinearWhiteSpace>
     {
-        public LinearWhiteSpaceLexer([NotNull] ILexer<Repetition> innerLexer)
+        public LinearWhiteSpaceLexer([NotNull] ILexer<WhiteSpace> wsp, [NotNull] ILexer<NewLine> crlf)
         {
-            if (innerLexer == null)
+            if (wsp == null)
             {
-                throw new ArgumentNullException(nameof(innerLexer));
+                throw new ArgumentNullException(nameof(wsp));
             }
-            InnerLexer = innerLexer;
+            if (crlf == null)
+            {
+                throw new ArgumentNullException(nameof(crlf));
+            }
+            InnerLexer = Repetition.Create(Alternation.Create(wsp, Concatenation.Create(crlf, wsp)), 0, int.MaxValue);
         }
 
         [NotNull]
         public ILexer<Repetition> InnerLexer { get; }
 
-        protected override IEnumerable<LinearWhiteSpace> ReadImpl(
-            ITextScanner scanner,
-            ITextContext context)
+        protected override IEnumerable<LinearWhiteSpace> ReadImpl(ITextScanner scanner, ITextContext context)
         {
             foreach (var repetition in InnerLexer.Read(scanner, context))
             {

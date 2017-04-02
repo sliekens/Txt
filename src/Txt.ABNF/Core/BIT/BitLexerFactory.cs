@@ -1,11 +1,9 @@
-﻿using System;
-using JetBrains.Annotations;
-using Txt.ABNF;
+﻿using JetBrains.Annotations;
 using Txt.Core;
 
 namespace Txt.ABNF.Core.BIT
 {
-    public sealed class BitLexerFactory : RuleLexerFactory<Bit>
+    public sealed class BitLexerFactory : LexerFactory<Bit>
     {
         static BitLexerFactory()
         {
@@ -17,10 +15,7 @@ namespace Txt.ABNF.Core.BIT
 
         public override ILexer<Bit> Create()
         {
-            var innerLexer = Alternation.Create(
-                Terminal.Create(@"0", StringComparer.Ordinal),
-                Terminal.Create(@"1", StringComparer.Ordinal));
-            return new BitLexer(innerLexer);
+            return new BitLexer();
         }
     }
 }

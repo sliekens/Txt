@@ -1,11 +1,10 @@
 ﻿using System;
-using Txt.ABNF;
 using Txt.ABNF.Core.DIGIT;
 using Txt.Core;
 
 namespace Calculator.number
 {
-    public sealed class NumberLexerFactory : RuleLexerFactory<Number>
+    public sealed class NumberLexerFactory : LexerFactory<Number>
     {
         static NumberLexerFactory()
         {
@@ -27,11 +26,7 @@ namespace Calculator.number
 
         public override ILexer<Number> Create()
         {
-            var digit = Digit.Create();
-            var digits = Repetition.Create(digit, 1, int.MaxValue);
-            var fraction = Concatenation.Create(Terminal.Create(@".", StringComparer.Ordinal), digits);
-            var innerLexer = Alternation.Create(fraction, Concatenation.Create(digits, Option.Create(fraction)));
-            return new NumberLexer(innerLexer);
+            return new NumberLexer(Digit.Create());
         }
     }
 }

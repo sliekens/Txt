@@ -1,12 +1,11 @@
 ﻿using System;
 using JetBrains.Annotations;
-using Txt.ABNF;
 using Txt.ABNF.Core.DIGIT;
 using Txt.Core;
 
 namespace Txt.ABNF.Core.HEXDIG
 {
-    public sealed class HexadecimalDigitLexerFactory : RuleLexerFactory<HexadecimalDigit>
+    public sealed class HexadecimalDigitLexerFactory : LexerFactory<HexadecimalDigit>
     {
         static HexadecimalDigitLexerFactory()
         {
@@ -30,15 +29,7 @@ namespace Txt.ABNF.Core.HEXDIG
 
         public override ILexer<HexadecimalDigit> Create()
         {
-            var innerLexer = Alternation.Create(
-                DigitLexerFactory.Create(),
-                Terminal.Create(@"A", StringComparer.OrdinalIgnoreCase),
-                Terminal.Create(@"B", StringComparer.OrdinalIgnoreCase),
-                Terminal.Create(@"C", StringComparer.OrdinalIgnoreCase),
-                Terminal.Create(@"D", StringComparer.OrdinalIgnoreCase),
-                Terminal.Create(@"E", StringComparer.OrdinalIgnoreCase),
-                Terminal.Create(@"F", StringComparer.OrdinalIgnoreCase));
-            return new HexadecimalDigitLexer(innerLexer);
+            return new HexadecimalDigitLexer(DigitLexerFactory.Create());
         }
     }
 }

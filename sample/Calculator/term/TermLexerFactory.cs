@@ -1,11 +1,10 @@
 ﻿using System;
 using Calculator.factor;
-using Txt.ABNF;
 using Txt.Core;
 
 namespace Calculator.term
 {
-    public sealed class TermLexerFactory : RuleLexerFactory<Term>
+    public sealed class TermLexerFactory : LexerFactory<Term>
     {
         static TermLexerFactory()
         {
@@ -27,18 +26,7 @@ namespace Calculator.term
 
         public override ILexer<Term> Create()
         {
-            var factor = Factor.Create();
-            var innerLexer = Concatenation.Create(
-                factor,
-                Repetition.Create(
-                    Concatenation.Create(
-                        Alternation.Create(
-                            Terminal.Create(@"*", StringComparer.Ordinal),
-                            Terminal.Create(@"/", StringComparer.Ordinal)),
-                        factor),
-                    0,
-                    int.MaxValue));
-            return new TermLexer(innerLexer);
+            return new TermLexer(Factor.Create());
         }
     }
 }

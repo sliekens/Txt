@@ -8,7 +8,8 @@ namespace Txt.ABNF.Core.OCTET
         protected override IEnumerable<Octet> ReadImpl(ITextScanner scanner, ITextContext context)
         {
             var source = scanner.TextSource as IBinaryDataSource;
-            if (source == null) {
+            if (source == null)
+            {
                 yield break;
             }
             var value = source.GetStream().ReadByte();

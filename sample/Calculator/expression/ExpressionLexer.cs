@@ -1,19 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
+using Calculator.term;
 using Txt.ABNF;
 using Txt.Core;
 
 namespace Calculator.expression
 {
-    public sealed class ExpressionLexer : Lexer<Expression>
+    public sealed class ExpressionLexer : RuleLexer<Expression>
     {
-        public ExpressionLexer(ILexer<Concatenation> innerLexer)
+        public ExpressionLexer(ILexer<Term> term)
         {
-            if (innerLexer == null)
+            if (term == null)
             {
-                throw new ArgumentNullException(nameof(innerLexer));
+                throw new ArgumentNullException(nameof(term));
             }
-            InnerLexer = innerLexer;
+            InnerLexer = Concatenation.Create(
+                term,
+                Repetition.Create(
+                    Concatenation.Create(
+                        Alternation.Create(
+                            Terminal.Create("+", StringComparer.Ordinal),
+                            Terminal.Create("-", StringComparer.Ordinal)),
+                        term),
+                    0,
+                    int.MaxValue));
         }
 
         public ILexer<Concatenation> InnerLexer { get; }

@@ -15,6 +15,7 @@ namespace Calculator
         {
             var expressionLexer = ExpressionLexerFactory.Default.Create();
             FactorLexerFactory.Default.Expression.Initialize(expressionLexer);
+
             return expressionLexer;
         }
 

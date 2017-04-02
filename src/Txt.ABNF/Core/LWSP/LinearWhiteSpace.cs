@@ -1,6 +1,4 @@
 ﻿using JetBrains.Annotations;
-using Txt.ABNF;
-using Txt.Core;
 
 namespace Txt.ABNF.Core.LWSP
 {

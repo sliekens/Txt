@@ -1,13 +1,12 @@
 ﻿using System;
 using JetBrains.Annotations;
-using Txt.ABNF;
 using Txt.ABNF.Core.CR;
 using Txt.ABNF.Core.LF;
 using Txt.Core;
 
 namespace Txt.ABNF.Core.CRLF
 {
-    public sealed class NewLineLexerFactory : RuleLexerFactory<NewLine>
+    public sealed class NewLineLexerFactory : LexerFactory<NewLine>
     {
         static NewLineLexerFactory()
         {
@@ -43,8 +42,7 @@ namespace Txt.ABNF.Core.CRLF
 
         public override ILexer<NewLine> Create()
         {
-            var innerLexer = Concatenation.Create(CarriageReturnLexerFactory.Create(), LineFeedLexerFactory.Create());
-            return new NewLineLexer(innerLexer);
+            return new NewLineLexer(CarriageReturnLexerFactory.Create(), LineFeedLexerFactory.Create());
         }
     }
 }

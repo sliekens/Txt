@@ -1,13 +1,12 @@
 ﻿using System;
 using JetBrains.Annotations;
-using Txt.ABNF;
 using Txt.ABNF.Core.CRLF;
 using Txt.ABNF.Core.WSP;
 using Txt.Core;
 
 namespace Txt.ABNF.Core.LWSP
 {
-    public sealed class LinearWhiteSpaceLexerFactory : RuleLexerFactory<LinearWhiteSpace>
+    public sealed class LinearWhiteSpaceLexerFactory : LexerFactory<LinearWhiteSpace>
     {
         static LinearWhiteSpaceLexerFactory()
         {
@@ -43,17 +42,7 @@ namespace Txt.ABNF.Core.LWSP
 
         public override ILexer<LinearWhiteSpace> Create()
         {
-            var wsp = WhiteSpaceLexerFactory.Create();
-            var crlf = NewLineLexerFactory.Create();
-            var innerLexer = Repetition.Create(
-                Alternation.Create(
-                    wsp,
-                    Concatenation.Create(
-                        crlf,
-                        wsp)),
-                0,
-                int.MaxValue);
-            return new LinearWhiteSpaceLexer(innerLexer);
+            return new LinearWhiteSpaceLexer(WhiteSpaceLexerFactory.Create(), NewLineLexerFactory.Create());
         }
     }
 }

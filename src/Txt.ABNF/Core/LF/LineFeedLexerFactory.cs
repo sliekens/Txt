@@ -1,11 +1,9 @@
-﻿using System;
-using JetBrains.Annotations;
-using Txt.ABNF;
+﻿using JetBrains.Annotations;
 using Txt.Core;
 
 namespace Txt.ABNF.Core.LF
 {
-    public sealed class LineFeedLexerFactory : RuleLexerFactory<LineFeed>
+    public sealed class LineFeedLexerFactory : LexerFactory<LineFeed>
     {
         static LineFeedLexerFactory()
         {
@@ -17,8 +15,7 @@ namespace Txt.ABNF.Core.LF
 
         public override ILexer<LineFeed> Create()
         {
-            var innerLexer = Terminal.Create("\x0A", StringComparer.Ordinal);
-            return new LineFeedLexer(innerLexer);
+            return new LineFeedLexer();
         }
     }
 }

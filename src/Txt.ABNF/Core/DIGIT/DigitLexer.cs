@@ -1,28 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using JetBrains.Annotations;
-using Txt.ABNF;
 using Txt.Core;
 
 namespace Txt.ABNF.Core.DIGIT
 {
-    public sealed class DigitLexer : Lexer<Digit>
+    public sealed class DigitLexer : RuleLexer<Digit>
     {
-        public DigitLexer([NotNull] ILexer<Terminal> innerLexer)
+        public DigitLexer()
         {
-            if (innerLexer == null)
-            {
-                throw new ArgumentNullException(nameof(innerLexer));
-            }
-            InnerLexer = innerLexer;
+            InnerLexer = ValueRange.Create('\x30', '\x39');
         }
 
         [NotNull]
         public ILexer<Terminal> InnerLexer { get; }
 
-        protected override IEnumerable<Digit> ReadImpl(
-            ITextScanner scanner,
-            ITextContext context)
+        protected override IEnumerable<Digit> ReadImpl(ITextScanner scanner, ITextContext context)
         {
             foreach (var terminal in InnerLexer.Read(scanner, context))
             {

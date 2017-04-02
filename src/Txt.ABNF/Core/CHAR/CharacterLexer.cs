@@ -1,27 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using JetBrains.Annotations;
 using Txt.Core;
 
 namespace Txt.ABNF.Core.CHAR
 {
-    public sealed class CharacterLexer : Lexer<Character>
+    public sealed class CharacterLexer : RuleLexer<Character>
     {
-        public CharacterLexer([NotNull] ILexer<Terminal> innerLexer)
+        public CharacterLexer()
         {
-            if (innerLexer == null)
-            {
-                throw new ArgumentNullException(nameof(innerLexer));
-            }
-            InnerLexer = innerLexer;
+            InnerLexer = ValueRange.Create('\x01', '\x7F');
         }
 
         [NotNull]
         public ILexer<Terminal> InnerLexer { get; }
 
-        protected override IEnumerable<Character> ReadImpl(
-            ITextScanner scanner,
-            ITextContext context)
+        protected override IEnumerable<Character> ReadImpl(ITextScanner scanner, ITextContext context)
         {
             foreach (var terminal in InnerLexer.Read(scanner, context))
             {
