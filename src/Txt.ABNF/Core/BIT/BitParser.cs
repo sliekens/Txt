@@ -7,15 +7,15 @@ namespace Txt.ABNF.Core.BIT
     {
         protected override bool ParseImpl(Bit value)
         {
-            if (value.Ordinal == 1)
+            switch (value.Text)
             {
-                return false;
+                case "0":
+                    return false;
+                case "1":
+                    return true;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
-            if (value.Ordinal == 2)
-            {
-                return true;
-            }
-            throw new ArgumentOutOfRangeException();
         }
     }
 }

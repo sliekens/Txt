@@ -9,7 +9,7 @@ namespace Txt.ABNF.Core.OCTET
         /// <summary>Initializes a new instance of the <see cref="Element" /> class with a given element to copy.</summary>
         /// <param name="element">The element to copy.</param>
         /// <exception cref="ArgumentNullException">The value of <paramref name="element" /> is a null reference.</exception>
-        public Octet([NotNull] Element element)
+        public Octet([NotNull] Octet element)
             : base(element)
         {
         }
