@@ -1,29 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using JetBrains.Annotations;
-using Txt.ABNF.Core.CR;
-using Txt.ABNF.Core.LF;
 using Txt.Core;
 
 namespace Txt.ABNF.Core.CRLF
 {
-    public sealed class NewLineLexer : RuleLexer<NewLine>
+    public sealed class NewLineLexer : RuleLexer<NewLine>, IInitializable
     {
-        public NewLineLexer([NotNull] ILexer<CarriageReturn> cr, [NotNull] ILexer<LineFeed> lf)
+        public NewLineLexer([NotNull] Grammar grammar)
+            : base(grammar)
         {
-            if (cr == null)
-            {
-                throw new ArgumentNullException(nameof(cr));
-            }
-            if (lf == null)
-            {
-                throw new ArgumentNullException(nameof(lf));
-            }
-            InnerLexer = Concatenation.Create(cr, lf);
         }
 
-        [NotNull]
-        public ILexer<Concatenation> InnerLexer { get; }
+        public ILexer<Element> InnerLexer { get; private set; }
+
+        public void Initialize()
+        {
+            var cr = Grammar.Rule("CR");
+            var lf = Grammar.Rule("LF");
+            InnerLexer = Concatenation.Create(cr, lf);
+        }
 
         protected override IEnumerable<NewLine> ReadImpl(ITextScanner scanner, ITextContext context)
         {

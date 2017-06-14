@@ -1,29 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using JetBrains.Annotations;
-using Txt.ABNF.Core.HTAB;
-using Txt.ABNF.Core.SP;
 using Txt.Core;
 
 namespace Txt.ABNF.Core.WSP
 {
-    public sealed class WhiteSpaceLexer : RuleLexer<WhiteSpace>
+    public sealed class WhiteSpaceLexer : RuleLexer<WhiteSpace>, IInitializable
     {
-        public WhiteSpaceLexer([NotNull] ILexer<Space> sp, [NotNull] ILexer<HorizontalTab> htab)
+        public WhiteSpaceLexer([NotNull] Grammar grammar)
+            : base(grammar)
         {
-            if (sp == null)
-            {
-                throw new ArgumentNullException(nameof(sp));
-            }
-            if (htab == null)
-            {
-                throw new ArgumentNullException(nameof(htab));
-            }
-            InnerLexer = Alternation.Create(sp, htab);
         }
 
-        [NotNull]
-        public ILexer<Alternation> InnerLexer { get; }
+        public ILexer<Element> InnerLexer { get; private set; }
+
+        public void Initialize()
+        {
+            InnerLexer = Alternation.Create(Grammar.Rule("SP"), Grammar.Rule("HTAB"));
+        }
 
         protected override IEnumerable<WhiteSpace> ReadImpl(ITextScanner scanner, ITextContext context)
         {

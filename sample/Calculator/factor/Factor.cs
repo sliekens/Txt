@@ -1,12 +1,22 @@
-﻿using Txt.ABNF;
+﻿using System.Collections.Generic;
 using Txt.Core;
 
 namespace Calculator.factor
 {
-    public class Factor : Concatenation
+    public class Factor : Element
     {
-        public Factor(Concatenation concatenation)
-            : base(concatenation)
+        public Factor(Element element)
+            : base(element)
+        {
+        }
+
+        public Factor(string terminals, ITextContext context)
+            : base(terminals, context)
+        {
+        }
+
+        public Factor(string sequence, IList<Element> elements, ITextContext context)
+            : base(sequence, elements, context)
         {
         }
     }

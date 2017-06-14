@@ -12,7 +12,9 @@ namespace Txt.ABNF.Core.CTL
         [InlineData("\x7F")]
         public void ReadSuccess(string input)
         {
-            var sut = ControlCharacterLexerFactory.Default.Create();
+            var grammar = new CoreGrammar();
+            grammar.Initialize();
+            var sut = grammar.Rule("CTL");
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {
                 var result = sut.Read(scanner);

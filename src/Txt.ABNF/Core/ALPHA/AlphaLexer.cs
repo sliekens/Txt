@@ -4,17 +4,21 @@ using Txt.Core;
 
 namespace Txt.ABNF.Core.ALPHA
 {
-    public class AlphaLexer : RuleLexer<Alpha>
+    public class AlphaLexer : RuleLexer<Alpha>, IInitializable
     {
-        public AlphaLexer()
+        public AlphaLexer([NotNull] Grammar grammar)
+            : base(grammar)
+        {
+        }
+
+        public ILexer<Alternation> InnerLexer { get; private set; }
+
+        public void Initialize()
         {
             var upperCaseValueRangeLexer = ValueRange.Create('\x41', '\x5A');
             var lowerCaseValueRangeLexer = ValueRange.Create('\x61', '\x7A');
             InnerLexer = Alternation.Create(upperCaseValueRangeLexer, lowerCaseValueRangeLexer);
         }
-
-        [NotNull]
-        public ILexer<Alternation> InnerLexer { get; }
 
         protected override IEnumerable<Alpha> ReadImpl(ITextScanner scanner, ITextContext context)
         {

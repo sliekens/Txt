@@ -5,17 +5,21 @@ using Txt.Core;
 
 namespace Txt.ABNF.Core.BIT
 {
-    public sealed class BitLexer : RuleLexer<Bit>
+    public sealed class BitLexer : RuleLexer<Bit>, IInitializable
     {
-        public BitLexer()
+        public BitLexer([NotNull] Grammar grammar)
+            : base(grammar)
+        {
+        }
+
+        public ILexer<Alternation> InnerLexer { get; private set; }
+
+        public void Initialize()
         {
             InnerLexer = Alternation.Create(
                 Terminal.Create(@"0", StringComparer.Ordinal),
                 Terminal.Create(@"1", StringComparer.Ordinal));
         }
-
-        [NotNull]
-        public ILexer<Alternation> InnerLexer { get; }
 
         protected override IEnumerable<Bit> ReadImpl(ITextScanner scanner, ITextContext context)
         {

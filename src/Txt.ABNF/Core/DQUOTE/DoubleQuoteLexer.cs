@@ -5,15 +5,19 @@ using Txt.Core;
 
 namespace Txt.ABNF.Core.DQUOTE
 {
-    public sealed class DoubleQuoteLexer : RuleLexer<DoubleQuote>
+    public sealed class DoubleQuoteLexer : RuleLexer<DoubleQuote>, IInitializable
     {
-        public DoubleQuoteLexer()
+        public DoubleQuoteLexer([NotNull] Grammar grammar)
+            : base(grammar)
+        {
+        }
+
+        public ILexer<Element> InnerLexer { get; private set; }
+
+        public void Initialize()
         {
             InnerLexer = Terminal.Create("\x22", StringComparer.Ordinal);
         }
-
-        [NotNull]
-        public ILexer<Terminal> InnerLexer { get; }
 
         protected override IEnumerable<DoubleQuote> ReadImpl(ITextScanner scanner, ITextContext context)
         {

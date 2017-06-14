@@ -5,15 +5,19 @@ using Txt.Core;
 
 namespace Txt.ABNF.Core.CR
 {
-    public sealed class CarriageReturnLexer : RuleLexer<CarriageReturn>
+    public sealed class CarriageReturnLexer : RuleLexer<CarriageReturn>, IInitializable
     {
-        public CarriageReturnLexer()
+        public CarriageReturnLexer([NotNull] Grammar grammar)
+            : base(grammar)
+        {
+        }
+
+        public ILexer<Element> InnerLexer { get; private set; }
+
+        public void Initialize()
         {
             InnerLexer = Terminal.Create("\x0D", StringComparer.Ordinal);
         }
-
-        [NotNull]
-        public ILexer<Terminal> InnerLexer { get; }
 
         protected override IEnumerable<CarriageReturn> ReadImpl(ITextScanner scanner, ITextContext context)
         {

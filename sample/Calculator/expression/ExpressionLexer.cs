@@ -1,19 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using Calculator.term;
 using Txt.ABNF;
 using Txt.Core;
 
 namespace Calculator.expression
 {
-    public sealed class ExpressionLexer : RuleLexer<Expression>
+    public sealed class ExpressionLexer : RuleLexer<Expression>, IInitializable
     {
-        public ExpressionLexer(ILexer<Term> term)
+        public ExpressionLexer(Grammar grammar)
+            : base(grammar)
         {
-            if (term == null)
-            {
-                throw new ArgumentNullException(nameof(term));
-            }
+        }
+
+        public ILexer<Element> InnerLexer { get; private set; }
+
+        public void Initialize()
+        {
+            var term = Grammar.Rule("term");
             InnerLexer = Concatenation.Create(
                 term,
                 Repetition.Create(
@@ -25,8 +28,6 @@ namespace Calculator.expression
                     0,
                     int.MaxValue));
         }
-
-        public ILexer<Concatenation> InnerLexer { get; }
 
         protected override IEnumerable<Expression> ReadImpl(
             ITextScanner scanner,

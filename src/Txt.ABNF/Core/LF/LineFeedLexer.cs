@@ -5,15 +5,19 @@ using Txt.Core;
 
 namespace Txt.ABNF.Core.LF
 {
-    public sealed class LineFeedLexer : RuleLexer<LineFeed>
+    public sealed class LineFeedLexer : RuleLexer<LineFeed>, IInitializable
     {
-        public LineFeedLexer()
+        public LineFeedLexer([NotNull] Grammar grammar)
+            : base(grammar)
+        {
+        }
+
+        public ILexer<Element> InnerLexer { get; private set; }
+
+        public void Initialize()
         {
             InnerLexer = Terminal.Create("\x0A", StringComparer.Ordinal);
         }
-
-        [NotNull]
-        public ILexer<Terminal> InnerLexer { get; }
 
         protected override IEnumerable<LineFeed> ReadImpl(ITextScanner scanner, ITextContext context)
         {

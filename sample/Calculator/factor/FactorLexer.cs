@@ -1,24 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using Calculator.expression;
-using Calculator.number;
 using Txt.ABNF;
 using Txt.Core;
 
 namespace Calculator.factor
 {
-    public sealed class FactorLexer : RuleLexer<Factor>
+    public sealed class FactorLexer : RuleLexer<Factor>, IInitializable
     {
-        public FactorLexer(ILexer<Number> number, ILexer<Expression> expression)
+        public FactorLexer(Grammar grammar)
+            : base(grammar)
         {
-            if (number == null)
-            {
-                throw new ArgumentNullException(nameof(number));
-            }
-            if (expression == null)
-            {
-                throw new ArgumentNullException(nameof(expression));
-            }
+        }
+
+        public ILexer<Element> InnerLexer { get; private set; }
+
+        public void Initialize()
+        {
+            var number = Grammar.Rule("number");
+            var expression = Grammar.Rule("expression");
             InnerLexer = Concatenation.Create(
                 Option.Create(Terminal.Create("-", StringComparer.Ordinal)),
                 Alternation.Create(
@@ -28,8 +27,6 @@ namespace Calculator.factor
                         expression,
                         Terminal.Create(")", StringComparer.Ordinal))));
         }
-
-        public ILexer<Concatenation> InnerLexer { get; }
 
         protected override IEnumerable<Factor> ReadImpl(ITextScanner scanner, ITextContext context)
         {

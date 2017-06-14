@@ -10,7 +10,9 @@ namespace Txt.ABNF.Core.DQUOTE
         [InlineData("\x22")]
         public void ReadSuccess(string input)
         {
-            var sut = DoubleQuoteLexerFactory.Default.Create();
+            var grammar = new CoreGrammar();
+            grammar.Initialize();
+            var sut = grammar.Rule("DQUOTE");
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {
                 var result = sut.Read(scanner);

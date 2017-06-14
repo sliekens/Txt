@@ -4,15 +4,19 @@ using Txt.Core;
 
 namespace Txt.ABNF.Core.VCHAR
 {
-    public sealed class VisibleCharacterLexer : RuleLexer<VisibleCharacter>
+    public sealed class VisibleCharacterLexer : RuleLexer<VisibleCharacter>, IInitializable
     {
-        public VisibleCharacterLexer()
+        public VisibleCharacterLexer([NotNull] Grammar grammar)
+            : base(grammar)
+        {
+        }
+
+        public ILexer<Element> InnerLexer { get; private set; }
+
+        public void Initialize()
         {
             InnerLexer = ValueRange.Create('\x21', '\x7E');
         }
-
-        [NotNull]
-        public ILexer<Terminal> InnerLexer { get; }
 
         protected override IEnumerable<VisibleCharacter> ReadImpl(ITextScanner scanner, ITextContext context)
         {

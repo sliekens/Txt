@@ -5,15 +5,19 @@ using Txt.Core;
 
 namespace Txt.ABNF.Core.SP
 {
-    public sealed class SpaceLexer : RuleLexer<Space>
+    public sealed class SpaceLexer : RuleLexer<Space>, IInitializable
     {
-        public SpaceLexer()
+        public SpaceLexer([NotNull] Grammar grammar)
+            : base(grammar)
+        {
+        }
+
+        public ILexer<Element> InnerLexer { get; private set; }
+
+        public void Initialize()
         {
             InnerLexer = Terminal.Create("\x20", StringComparer.Ordinal);
         }
-
-        [NotNull]
-        public ILexer<Terminal> InnerLexer { get; }
 
         protected override IEnumerable<Space> ReadImpl(ITextScanner scanner, ITextContext context)
         {

@@ -9,7 +9,9 @@ namespace Txt.ABNF.Core.LF
         [InlineData("\x0A")]
         public void ReadSuccess(string input)
         {
-            var sut = LineFeedLexerFactory.Default.Create();
+            var grammar = new CoreGrammar();
+            grammar.Initialize();
+            var sut = grammar.Rule("LF");
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {
                 var result = sut.Read(scanner);

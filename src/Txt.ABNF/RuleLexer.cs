@@ -7,8 +7,9 @@ namespace Txt.ABNF
     public abstract class RuleLexer<TRule> : Lexer<TRule>
         where TRule : Element
     {
-        protected RuleLexer()
+        protected RuleLexer([NotNull] Grammar grammar)
             : this(
+                grammar,
                 TerminalLexerFactory.Default,
                 ValueRangeLexerFactory.Default,
                 AlternationLexerFactory.Default,
@@ -16,9 +17,15 @@ namespace Txt.ABNF
                 RepetitionLexerFactory.Default,
                 OptionLexerFactory.Default)
         {
+            if (grammar == null)
+            {
+                throw new ArgumentNullException(nameof(grammar));
+            }
+            Grammar = grammar;
         }
 
         protected RuleLexer(
+            [NotNull] Grammar grammar,
             [NotNull] ITerminalLexerFactory terminalLexerFactory,
             [NotNull] IValueRangeLexerFactory valueRangeLexerFactory,
             [NotNull] IAlternationLexerFactory alternationLexerFactory,
@@ -26,6 +33,10 @@ namespace Txt.ABNF
             [NotNull] IRepetitionLexerFactory repetitionLexerFactory,
             [NotNull] IOptionLexerFactory optionLexerFactory)
         {
+            if (grammar == null)
+            {
+                throw new ArgumentNullException(nameof(grammar));
+            }
             if (terminalLexerFactory == null)
             {
                 throw new ArgumentNullException(nameof(terminalLexerFactory));
@@ -50,6 +61,7 @@ namespace Txt.ABNF
             {
                 throw new ArgumentNullException(nameof(optionLexerFactory));
             }
+            Grammar = grammar;
             Terminal = terminalLexerFactory;
             ValueRange = valueRangeLexerFactory;
             Alternation = alternationLexerFactory;
@@ -75,5 +87,7 @@ namespace Txt.ABNF
 
         [NotNull]
         public IValueRangeLexerFactory ValueRange { get; set; }
+
+        protected Grammar Grammar { get; }
     }
 }

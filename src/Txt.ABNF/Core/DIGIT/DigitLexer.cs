@@ -4,15 +4,19 @@ using Txt.Core;
 
 namespace Txt.ABNF.Core.DIGIT
 {
-    public sealed class DigitLexer : RuleLexer<Digit>
+    public sealed class DigitLexer : RuleLexer<Digit>, IInitializable
     {
-        public DigitLexer()
+        public DigitLexer([NotNull] Grammar grammar)
+            : base(grammar)
+        {
+        }
+
+        public ILexer<Element> InnerLexer { get; private set; }
+
+        public void Initialize()
         {
             InnerLexer = ValueRange.Create('\x30', '\x39');
         }
-
-        [NotNull]
-        public ILexer<Terminal> InnerLexer { get; }
 
         protected override IEnumerable<Digit> ReadImpl(ITextScanner scanner, ITextContext context)
         {

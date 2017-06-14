@@ -15,7 +15,9 @@ namespace Txt.ABNF.Core.LWSP
         [InlineData("\t\r\n \t \r\n  \t ")]
         public void ReadSuccess(string input)
         {
-            var sut = LinearWhiteSpaceLexerFactory.Default.Create();
+            var grammar = new CoreGrammar();
+            grammar.Initialize();
+            var sut = grammar.Rule("LWSP");
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {
                 var result = sut.Read(scanner);

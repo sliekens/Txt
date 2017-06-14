@@ -18,7 +18,9 @@ namespace Txt.ABNF.Core.DIGIT
         [InlineData("\x39")]
         public void ReadSuccess(string input)
         {
-            var sut = DigitLexerFactory.Default.Create();
+            var grammar = new CoreGrammar();
+            grammar.Initialize();
+            var sut = grammar.Rule("DIGIT");
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {
                 var result = sut.Read(scanner);

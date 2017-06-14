@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using Calculator.expression;
 using Calculator.factor;
 using Calculator.number;
@@ -11,14 +13,6 @@ namespace Calculator
 {
     public class Program
     {
-        private static ILexer<Expression> GetExpressionLexer()
-        {
-            var expressionLexer = ExpressionLexerFactory.Default.Create();
-            FactorLexerFactory.Default.Expression.Initialize(expressionLexer);
-
-            return expressionLexer;
-        }
-
         private static ExpressionParser GetExpressionParser()
         {
             var expressionParser = new ProxyParser<Expression, double>();
@@ -29,7 +23,9 @@ namespace Calculator
 
         private static void Main(string[] args)
         {
-            var lexer = GetExpressionLexer();
+            var grammar = new CalculatorGrammar();
+            grammar.Initialize();
+            var lexer = grammar.Rule<Expression>("expression");
             var parser = GetExpressionParser();
             CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
             var foregroundColor = Console.ForegroundColor;

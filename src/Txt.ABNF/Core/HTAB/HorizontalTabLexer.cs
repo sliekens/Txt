@@ -5,15 +5,19 @@ using Txt.Core;
 
 namespace Txt.ABNF.Core.HTAB
 {
-    public sealed class HorizontalTabLexer : RuleLexer<HorizontalTab>
+    public sealed class HorizontalTabLexer : RuleLexer<HorizontalTab>, IInitializable
     {
-        public HorizontalTabLexer()
+        public HorizontalTabLexer([NotNull] Grammar grammar)
+            : base(grammar)
+        {
+        }
+
+        public ILexer<Terminal> InnerLexer { get; private set; }
+
+        public void Initialize()
         {
             InnerLexer = Terminal.Create("\x09", StringComparer.Ordinal);
         }
-
-        [NotNull]
-        public ILexer<Terminal> InnerLexer { get; }
 
         protected override IEnumerable<HorizontalTab> ReadImpl(ITextScanner scanner, ITextContext context)
         {

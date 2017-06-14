@@ -17,7 +17,9 @@ namespace Txt.ABNF.Core.CHAR
         [InlineData("\x7F")]
         public void ReadSuccess(string input)
         {
-            var sut = CharacterLexerFactory.Default.Create();
+            var grammar = new CoreGrammar();
+            grammar.Initialize();
+            var sut = grammar.Rule("CHAR");
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {
                 var result = sut.Read(scanner);

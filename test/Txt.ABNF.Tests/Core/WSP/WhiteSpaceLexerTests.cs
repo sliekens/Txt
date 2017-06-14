@@ -13,7 +13,9 @@ namespace Txt.ABNF.Core.WSP
         [InlineData(@"	")]
         public void ReadSuccess(string input)
         {
-            var sut = WhiteSpaceLexerFactory.Default.Create();
+            var grammar = new CoreGrammar();
+            grammar.Initialize();
+            var sut = grammar.Rule("WSP");
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {
                 var result = sut.Read(scanner);

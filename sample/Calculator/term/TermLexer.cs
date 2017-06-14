@@ -1,19 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using Calculator.factor;
 using Txt.ABNF;
 using Txt.Core;
 
 namespace Calculator.term
 {
-    public sealed class TermLexer : RuleLexer<Term>
+    public sealed class TermLexer : RuleLexer<Term>, IInitializable
     {
-        public TermLexer(ILexer<Factor> factor)
+        public TermLexer(Grammar grammar)
+            : base(grammar)
         {
-            if (factor == null)
-            {
-                throw new ArgumentNullException(nameof(factor));
-            }
+        }
+
+        public ILexer<Element> InnerLexer { get; private set; }
+
+        public void Initialize()
+        {
+            var factor = Grammar.Rule("factor");
             InnerLexer = Concatenation.Create(
                 factor,
                 Repetition.Create(
@@ -25,8 +28,6 @@ namespace Calculator.term
                     0,
                     int.MaxValue));
         }
-
-        public ILexer<Concatenation> InnerLexer { get; }
 
         protected override IEnumerable<Term> ReadImpl(ITextScanner scanner, ITextContext context)
         {

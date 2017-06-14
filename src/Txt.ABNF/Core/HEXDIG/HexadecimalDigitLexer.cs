@@ -1,21 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
-using Txt.ABNF.Core.DIGIT;
 using Txt.Core;
 
 namespace Txt.ABNF.Core.HEXDIG
 {
-    public sealed class HexadecimalDigitLexer : RuleLexer<HexadecimalDigit>
+    public sealed class HexadecimalDigitLexer : RuleLexer<HexadecimalDigit>, IInitializable
     {
-        public HexadecimalDigitLexer([NotNull] ILexer<Digit> digit)
+        public HexadecimalDigitLexer([NotNull] Grammar grammar)
+            : base(grammar)
         {
-            if (digit == null)
-            {
-                throw new ArgumentNullException(nameof(digit));
-            }
+        }
+
+        public ILexer<Element> InnerLexer { get; private set; }
+
+        public void Initialize()
+        {
             InnerLexer = Alternation.Create(
-                digit,
+                Grammar.Rule("DIGIT"),
                 Terminal.Create(@"A", StringComparer.OrdinalIgnoreCase),
                 Terminal.Create(@"B", StringComparer.OrdinalIgnoreCase),
                 Terminal.Create(@"C", StringComparer.OrdinalIgnoreCase),
@@ -23,9 +25,6 @@ namespace Txt.ABNF.Core.HEXDIG
                 Terminal.Create(@"E", StringComparer.OrdinalIgnoreCase),
                 Terminal.Create(@"F", StringComparer.OrdinalIgnoreCase));
         }
-
-        [NotNull]
-        public ILexer<Alternation> InnerLexer { get; }
 
         protected override IEnumerable<HexadecimalDigit> ReadImpl(ITextScanner scanner, ITextContext context)
         {

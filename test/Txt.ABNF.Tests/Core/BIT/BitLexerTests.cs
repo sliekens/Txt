@@ -9,7 +9,9 @@ namespace Txt.ABNF.Core.BIT
         public void CannotReadNegativeOne()
         {
             var input = "-1";
-            var sut = BitLexerFactory.Default.Create();
+            var grammar = new CoreGrammar();
+            grammar.Initialize();
+            var sut = grammar.Rule("BIT");
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {
                 var result = sut.Read(scanner);
@@ -21,7 +23,9 @@ namespace Txt.ABNF.Core.BIT
         public void CanReadOne()
         {
             var input = "1";
-            var sut = BitLexerFactory.Default.Create();
+            var grammar = new CoreGrammar();
+            grammar.Initialize();
+            var sut = grammar.Rule("BIT");
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {
                 var result = sut.Read(scanner);
@@ -33,7 +37,9 @@ namespace Txt.ABNF.Core.BIT
         public void CanReadZero()
         {
             var input = "0";
-            var sut = BitLexerFactory.Default.Create();
+            var grammar = new CoreGrammar();
+            grammar.Initialize();
+            var sut = grammar.Rule("BIT");
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {
                 var result = sut.Read(scanner);

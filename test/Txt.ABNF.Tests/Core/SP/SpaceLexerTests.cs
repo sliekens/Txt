@@ -10,7 +10,9 @@ namespace Txt.ABNF.Core.SP
         [InlineData(" ")]
         public void ReadSuccess(string input)
         {
-            var sut = SpaceLexerFactory.Default.Create();
+            var grammar = new CoreGrammar();
+            grammar.Initialize();
+            var sut = grammar.Rule("SP");
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {
                 var result = sut.Read(scanner);

@@ -34,7 +34,9 @@ namespace Txt.ABNF.Core.ALPHA
         [InlineData("z")]
         public void CanReadLowercaseAsciiLetters(string input)
         {
-            var sut = AlphaLexerFactory.Default.Create();
+            var grammar = new CoreGrammar();
+            grammar.Initialize();
+            var sut = grammar.Rule("ALPHA");
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {
                 var result = sut.Read(scanner);
@@ -71,7 +73,9 @@ namespace Txt.ABNF.Core.ALPHA
         [InlineData("Z")]
         public void CanReadUppercaseAsciiLetters(string input)
         {
-            var sut = AlphaLexerFactory.Default.Create();
+            var grammar = new CoreGrammar();
+            grammar.Initialize();
+            var sut = grammar.Rule("ALPHA");
             using (var scanner = new TextScanner(new StringTextSource(input)))
             {
                 var result = sut.Read(scanner);

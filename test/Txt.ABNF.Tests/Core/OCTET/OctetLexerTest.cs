@@ -26,11 +26,13 @@ namespace Txt.ABNF.Core.OCTET
         [InlineData(0xFF, 0xFF)]
         public void ReadSuccess(byte input, byte expected)
         {
-            var octetLexer = OctetLexerFactory.Default.Create();
+            var grammar = new CoreGrammar();
+            grammar.Initialize();
+            var sut = grammar.Rule<Octet>("OCTET");
             using (var stream = new MemoryStream(new[] { input }))
             using (var scanner = new TextScanner(new StreamTextSource(stream)))
             {
-                var result = octetLexer.Read(scanner);
+                var result = sut.Read(scanner);
                 Assert.Equal(expected, result.Value);
             }
         }
@@ -41,10 +43,12 @@ namespace Txt.ABNF.Core.OCTET
             // I call this pure text: the text source is not binary encoded
             // The OCTET rule should not be used with pure text sources, because that just makes no sense
             // For that reason, I changed the OCTET lexer to read nothing unless the text source implements IBinaryDataSource
-            var octetLexer = OctetLexerFactory.Default.Create();
+            var grammar = new CoreGrammar();
+            grammar.Initialize();
+            var sut = grammar.Rule("OCTET");
             using (var scanner = new TextScanner(new StringTextSource("System.String")))
             {
-                var result = octetLexer.Read(scanner);
+                var result = sut.Read(scanner);
                 Assert.Null(result);
             }
         }
