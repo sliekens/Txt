@@ -13,6 +13,7 @@ using Txt.ABNF.Core.LWSP;
 using Txt.ABNF.Core.OCTET;
 using Txt.ABNF.Core.SP;
 using Txt.ABNF.Core.VCHAR;
+using Txt.ABNF.Core.WSP;
 
 namespace Txt.ABNF
 {
@@ -35,7 +36,7 @@ namespace Txt.ABNF
             AddRule("OCTET", new OctetLexer(this));
             AddRule("SP", new SpaceLexer(this));
             AddRule("VCHAR", new VisibleCharacterLexer(this));
-            AddRule("WSP", new LinearWhiteSpaceLexer(this));
+            AddRule("WSP", new WhiteSpaceLexer(this));
         }
     }
 }
