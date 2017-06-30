@@ -49,7 +49,7 @@ namespace Txt.Core
             [InlineData("012345", 4, 0)]
             [InlineData("012345", 5, 0)]
             [InlineData("012345", 6, 0)]
-            public void CtorAcceptsIndexInRange(string data, int startIndex, int length)
+            public void CtorAcceptsIndexInRange2(string data, int startIndex, int length)
             {
                 Assert.NotNull(new TextSourceCtors(data.ToCharArray(), startIndex, length));
             }
@@ -157,7 +157,7 @@ namespace Txt.Core
             [InlineData("012345", int.MinValue, 0)]
             [InlineData("012345", 7, 0)]
             [InlineData("012345", int.MaxValue, 0)]
-            public void CtorRejectsStartIndexOutOfRange(string data, int startIndex, int length)
+            public void CtorRejectsStartIndexOutOfRange2(string data, int startIndex, int length)
             {
                 Assert.Throws<ArgumentOutOfRangeException>(
                     "startIndex",

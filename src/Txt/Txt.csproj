@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Txt metapackage</Description>
+    <VersionPrefix>0.1.0</VersionPrefix>
+    <Authors>Steven Liekens</Authors>
+    <TargetFramework>netstandard1.0</TargetFramework>
+    <AssemblyName>Txt</AssemblyName>
+    <PackageId>Txt</PackageId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Txt.Core\Txt.Core.csproj" />
+    <ProjectReference Include="..\Txt.ABNF\Txt.ABNF.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{6AFE5181-DC35-4668-92B7-13C7D06686D7}"
 EndProject
@@ -10,33 +10,26 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		appveyor.yml = appveyor.yml
 		CACHE = CACHE
 		Core.abnf = Core.abnf
-		global.json = global.json
 		LICENSE = LICENSE
 		README.md = README.md
 		RFC5234.abnf = RFC5234.abnf
 	EndProjectSection
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Txt.ABNF", "src\Txt.ABNF\Txt.ABNF.xproj", "{8BD2F60F-82C9-444E-A290-4AE01C90593D}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{1C65ACFA-CF2F-4922-A7B5-9FB745B469B9}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Txt.ABNF.Tests", "test\Txt.ABNF.Tests\Txt.ABNF.Tests.xproj", "{BFB002EA-D011-4C31-9870-48D7B3987E61}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sample", "sample", "{F10BEB21-D1AF-416E-800D-348A6B1FC544}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Txt.Core", "src\Txt.Core\Txt.Core.xproj", "{B0EBCE28-C62B-4169-9051-C9C0B1F17B52}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Txt.ABNF", "src\Txt.ABNF\Txt.ABNF.csproj", "{8BD2F60F-82C9-444E-A290-4AE01C90593D}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Txt.Core.Tests", "test\Txt.Core.Tests\Txt.Core.Tests.xproj", "{B6421C49-53B7-48A4-8913-95191E7F6A23}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Txt.ABNF.Tests", "test\Txt.ABNF.Tests\Txt.ABNF.Tests.csproj", "{BFB002EA-D011-4C31-9870-48D7B3987E61}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Txt", "src\Txt\Txt.xproj", "{FA27D053-B091-433B-8D33-D28082B68BBA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Txt.Core", "src\Txt.Core\Txt.Core.csproj", "{B0EBCE28-C62B-4169-9051-C9C0B1F17B52}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Calculator", "sample\Calculator\Calculator.xproj", "{F3CA639E-DB7D-4551-A68A-F3B0D68E31D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Txt.Core.Tests", "test\Txt.Core.Tests\Txt.Core.Tests.csproj", "{B6421C49-53B7-48A4-8913-95191E7F6A23}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "shared", "shared", "{CF04A44E-04F6-4F47-BA2E-84A753418267}"
-	ProjectSection(SolutionItems) = preProject
-		src\shared\JetBrains.Annotations.cs = src\shared\JetBrains.Annotations.cs
-		src\shared\TaskHelper.cs = src\shared\TaskHelper.cs
-	EndProjectSection
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Txt", "src\Txt\Txt.csproj", "{FA27D053-B091-433B-8D33-D28082B68BBA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Calculator", "sample\Calculator\Calculator.csproj", "{F3CA639E-DB7D-4551-A68A-F3B0D68E31D1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -79,6 +72,5 @@ Global
 		{B6421C49-53B7-48A4-8913-95191E7F6A23} = {1C65ACFA-CF2F-4922-A7B5-9FB745B469B9}
 		{FA27D053-B091-433B-8D33-D28082B68BBA} = {6AFE5181-DC35-4668-92B7-13C7D06686D7}
 		{F3CA639E-DB7D-4551-A68A-F3B0D68E31D1} = {F10BEB21-D1AF-416E-800D-348A6B1FC544}
-		{CF04A44E-04F6-4F47-BA2E-84A753418267} = {6AFE5181-DC35-4668-92B7-13C7D06686D7}
 	EndGlobalSection
 EndGlobal
