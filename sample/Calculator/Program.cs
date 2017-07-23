@@ -7,14 +7,60 @@ namespace Calculator
 {
     public class Program
     {
+        private static readonly ConsoleColor DefaultForegroundColor = Console.ForegroundColor;
+
         private static void Main(string[] args)
         {
+            ShowHelp();
+            CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
             var grammar = new CalculatorGrammar();
             grammar.Initialize();
             var lexer = grammar.Rule<Expression>("expression");
             var parser = new CalculatorParser();
-            CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
-            var foregroundColor = Console.ForegroundColor;
+            string expression = null;
+            while (expression != "")
+            {
+                expression = PromptLine();
+                if (string.IsNullOrEmpty(expression))
+                {
+                    return;
+                }
+                using (var stringTextSource = new StringTextSource(expression))
+                using (var textScanner = new TextScanner(stringTextSource))
+                {
+                    var readResult = lexer.Read(textScanner);
+                    if (readResult != null)
+                    {
+                        var textRepresentation = readResult.Text;
+                        var parseResult = parser.ParseExpression(readResult);
+                        Console.WriteLine("{0}={1}", textRepresentation, parseResult);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid input detected");
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        using (var reader = new TextSourceReader(stringTextSource))
+                        {
+                            Console.WriteLine(reader.ReadToEnd());
+                        }
+                        Console.ForegroundColor = DefaultForegroundColor;
+                    }
+                }
+            }
+        }
+
+        private static string PromptLine()
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write("Enter an expression: ");
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            var expression = Console.ReadLine();
+            Console.ForegroundColor = DefaultForegroundColor;
+            return expression;
+        }
+
+        private static void ShowHelp()
+        {
             Console.WriteLine("This sample implements a grammar and parser for simple arithmetic expressions!");
             Console.WriteLine("Examples:");
             Console.WriteLine("-6+19");
@@ -25,41 +71,6 @@ namespace Calculator
             Console.WriteLine("(-3/4)+2");
             Console.WriteLine("(-5/6)+(-5)");
             Console.WriteLine("(3*1/5)+(2*5/8)");
-            string expression = null;
-            while (expression != "")
-            {
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.Write("Enter an expression: ");
-                Console.ForegroundColor = ConsoleColor.Cyan;
-                expression = Console.ReadLine();
-                Console.ForegroundColor = foregroundColor;
-                if (expression == "")
-                {
-                    return;
-                }
-                using (var stringTextSource = new StringTextSource(expression))
-                using (var textScanner = new TextScanner(stringTextSource))
-                {
-                    var readResult = lexer.Read(textScanner);
-                    if (readResult != null)
-                    {
-                        Console.WriteLine(
-                            "{0}={1}",
-                            readResult.Text,
-                            parser.ParseExpression(readResult));
-                    }
-                    else
-                    {
-                        Console.WriteLine("Invalid input detected");
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        using (var reader = new TextSourceReader(stringTextSource))
-                        {
-                            Console.WriteLine(reader.ReadToEnd());
-                        }
-                        Console.ForegroundColor = foregroundColor;
-                    }
-                }
-            }
         }
     }
 }
