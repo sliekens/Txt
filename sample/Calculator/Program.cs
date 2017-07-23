@@ -1,32 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using Calculator.expression;
-using Calculator.factor;
-using Calculator.number;
-using Calculator.term;
-using Txt.ABNF;
 using Txt.Core;
 
 namespace Calculator
 {
     public class Program
     {
-        private static ExpressionParser GetExpressionParser()
-        {
-            var expressionParser = new ProxyParser<Expression, double>();
-            var parser = new ExpressionParser(new TermParser(new FactorParser(new NumberParser(), expressionParser)));
-            expressionParser.Initialize(parser);
-            return parser;
-        }
-
         private static void Main(string[] args)
         {
             var grammar = new CalculatorGrammar();
             grammar.Initialize();
             var lexer = grammar.Rule<Expression>("expression");
-            var parser = GetExpressionParser();
+            var parser = new CalculatorParser();
             CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
             var foregroundColor = Console.ForegroundColor;
             Console.WriteLine("This sample implements a grammar and parser for simple arithmetic expressions!");
@@ -60,7 +46,7 @@ namespace Calculator
                         Console.WriteLine(
                             "{0}={1}",
                             readResult.Text,
-                            parser.Parse(readResult));
+                            parser.ParseExpression(readResult));
                     }
                     else
                     {
