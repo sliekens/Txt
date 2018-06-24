@@ -23,9 +23,9 @@ test_script:
 - dotnet test "test\Txt.Core.Tests" -c %CONFIGURATION% --no-build
 - dotnet test "test\Txt.ABNF.Tests" -c %CONFIGURATION% --no-build
 artifacts:
-  - path: **\*.nupkg
+  - path: src\**\*.nupkg
     name: lib
-  - path: **\publish
+  - path: sample\**\publish
     name: samples
 deploy:
  - provider: NuGet
