@@ -15,17 +15,17 @@ build_script:
 - dotnet build "test\Txt.ABNF.Tests" -c %CONFIGURATION% --no-dependencies --no-restore --version-suffix %LABEL%
 - dotnet build "sample\Calculator" -c %CONFIGURATION% --no-dependencies --no-restore --version-suffix %LABEL%
 after_build:
-- dotnet pack "src\Txt.Core" -c %CONFIGURATION% --no-build --version-suffix %LABEL% -o artifacts
-- dotnet pack "src\Txt.ABNF" -c %CONFIGURATION% --no-build --version-suffix %LABEL% -o artifacts
-- dotnet pack "src\Txt" -c %CONFIGURATION% --no-build --version-suffix %LABEL% -o artifacts
-- dotnet publish "sample\Calculator" -c %CONFIGURATION% --no-build --version-suffix %LABEL% -o artifacts\samples\Calculator
+- dotnet pack "src\Txt.Core" -c %CONFIGURATION% --no-build --version-suffix %LABEL%
+- dotnet pack "src\Txt.ABNF" -c %CONFIGURATION% --no-build --version-suffix %LABEL%
+- dotnet pack "src\Txt" -c %CONFIGURATION% --no-build --version-suffix %LABEL%
+- dotnet publish "sample\Calculator" -c %CONFIGURATION% --no-build --version-suffix %LABEL%
 test_script:
 - dotnet test "test\Txt.Core.Tests" -c %CONFIGURATION% --no-build
 - dotnet test "test\Txt.ABNF.Tests" -c %CONFIGURATION% --no-build
 artifacts:
-  - path: artifacts\**\*.nupkg
+  - path: **\*.nupkg
     name: lib
-  - path: artifacts\samples
+  - path: **\publish
     name: samples
 deploy:
  - provider: NuGet
