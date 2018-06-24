@@ -135,7 +135,6 @@ namespace Txt.Core
             WalkImpl(walker);
         }
 
-        /// <inheritdoc />
         IEnumerator IEnumerable.GetEnumerator()
         {
             return elements.GetEnumerator();
