@@ -25,8 +25,8 @@ test_script:
 artifacts:
   - path: src\**\*.nupkg
     name: lib
-  - path: sample\Calculator\bin\Any CPU\Debug\netcoreapp2.1\publish\
-    name: samples
+  - path: sample\**\publish\
+    name: sample
 deploy:
  - provider: NuGet
    server: https://www.myget.org/F/ci/api/v2/package
