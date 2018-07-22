@@ -10,6 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		appveyor.yml = appveyor.yml
 		CACHE = CACHE
 		Core.abnf = Core.abnf
+		Directory.build.props = Directory.build.props
 		LICENSE = LICENSE
 		README.md = README.md
 		RFC5234.abnf = RFC5234.abnf
@@ -72,5 +73,8 @@ Global
 		{B6421C49-53B7-48A4-8913-95191E7F6A23} = {1C65ACFA-CF2F-4922-A7B5-9FB745B469B9}
 		{FA27D053-B091-433B-8D33-D28082B68BBA} = {6AFE5181-DC35-4668-92B7-13C7D06686D7}
 		{F3CA639E-DB7D-4551-A68A-F3B0D68E31D1} = {F10BEB21-D1AF-416E-800D-348A6B1FC544}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F9C69CB6-C36A-4034-94DF-67F5CDC21D07}
 	EndGlobalSection
 EndGlobal
