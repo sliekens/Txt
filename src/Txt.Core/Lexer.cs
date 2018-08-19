@@ -99,21 +99,9 @@ namespace Txt.Core
                     [NotNull] ITextScanner scanner,
                     [NotNull] ITextContext context)
                 {
-                    if (lexer == null)
-                    {
-                        throw new ArgumentNullException(nameof(lexer));
-                    }
-                    if (scanner == null)
-                    {
-                        throw new ArgumentNullException(nameof(scanner));
-                    }
-                    if (context == null)
-                    {
-                        throw new ArgumentNullException(nameof(context));
-                    }
-                    this.lexer = lexer;
-                    this.scanner = scanner;
-                    this.context = context;
+                    this.lexer = lexer ?? throw new ArgumentNullException(nameof(lexer));
+                    this.scanner = scanner ?? throw new ArgumentNullException(nameof(scanner));
+                    this.context = context ?? throw new ArgumentNullException(nameof(context));
                 }
 
                 public TElement Current { get; private set; }

@@ -47,17 +47,9 @@ namespace Txt.Core
         /// </exception>
         protected Element([NotNull] string terminals, [NotNull] ITextContext context)
         {
-            if (terminals == null)
-            {
-                throw new ArgumentNullException(nameof(terminals));
-            }
-            if (context == null)
-            {
-                throw new ArgumentNullException(nameof(context));
-            }
-            text = terminals;
+            text = terminals ?? throw new ArgumentNullException(nameof(terminals));
             elements = EmptyElements;
-            Context = context;
+            Context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
         /// <summary>Initializes a new instance of the <see cref="Element" /> class with a given sequence and its context.</summary>
@@ -73,22 +65,15 @@ namespace Txt.Core
             [NotNull] [ItemNotNull] IList<Element> elements,
             [NotNull] ITextContext context)
         {
-            if (sequence == null)
-            {
-                throw new ArgumentNullException(nameof(sequence));
-            }
             if (elements == null)
             {
                 throw new ArgumentNullException(nameof(elements));
             }
-            if (context == null)
-            {
-                throw new ArgumentNullException(nameof(context));
-            }
-            text = sequence;
+
+            text = sequence ?? throw new ArgumentNullException(nameof(sequence));
             // ReSharper disable once AssignNullToNotNullAttribute
             this.elements = elements.Count == 0 ? EmptyElements : elements.ToArray();
-            Context = context;
+            Context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
         [NotNull]

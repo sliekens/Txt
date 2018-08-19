@@ -12,11 +12,7 @@ namespace Txt.Core
 
         public SingletonLexerFactory([NotNull] ILexerFactory<T> factory)
         {
-            if (factory == null)
-            {
-                throw new ArgumentNullException(nameof(factory));
-            }
-            Factory = factory;
+            Factory = factory ?? throw new ArgumentNullException(nameof(factory));
             lazy = new Lazy<ILexer<T>>(factory.Create);
         }
 

@@ -11,11 +11,7 @@ namespace Txt.Core
 
         public LexerFactoryAdapter([NotNull] ILexer<T> instance)
         {
-            if (instance == null)
-            {
-                throw new ArgumentNullException(nameof(instance));
-            }
-            this.instance = instance;
+            this.instance = instance ?? throw new ArgumentNullException(nameof(instance));
         }
 
         public override ILexer<T> Create()

@@ -27,36 +27,12 @@ namespace Txt.ABNF
             [NotNull] IRepetitionLexerFactory repetitionLexerFactory,
             [NotNull] IOptionLexerFactory optionLexerFactory)
         {
-            if (terminalLexerFactory == null)
-            {
-                throw new ArgumentNullException(nameof(terminalLexerFactory));
-            }
-            if (valueRangeLexerFactory == null)
-            {
-                throw new ArgumentNullException(nameof(valueRangeLexerFactory));
-            }
-            if (alternationLexerFactory == null)
-            {
-                throw new ArgumentNullException(nameof(alternationLexerFactory));
-            }
-            if (concatenationLexerFactory == null)
-            {
-                throw new ArgumentNullException(nameof(concatenationLexerFactory));
-            }
-            if (repetitionLexerFactory == null)
-            {
-                throw new ArgumentNullException(nameof(repetitionLexerFactory));
-            }
-            if (optionLexerFactory == null)
-            {
-                throw new ArgumentNullException(nameof(optionLexerFactory));
-            }
-            Terminal = terminalLexerFactory;
-            ValueRange = valueRangeLexerFactory;
-            Alternation = alternationLexerFactory;
-            Concatenation = concatenationLexerFactory;
-            Repetition = repetitionLexerFactory;
-            Option = optionLexerFactory;
+            Terminal = terminalLexerFactory ?? throw new ArgumentNullException(nameof(terminalLexerFactory));
+            ValueRange = valueRangeLexerFactory ?? throw new ArgumentNullException(nameof(valueRangeLexerFactory));
+            Alternation = alternationLexerFactory ?? throw new ArgumentNullException(nameof(alternationLexerFactory));
+            Concatenation = concatenationLexerFactory ?? throw new ArgumentNullException(nameof(concatenationLexerFactory));
+            Repetition = repetitionLexerFactory ?? throw new ArgumentNullException(nameof(repetitionLexerFactory));
+            Option = optionLexerFactory ?? throw new ArgumentNullException(nameof(optionLexerFactory));
         }
 
         [NotNull]

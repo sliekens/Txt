@@ -20,16 +20,13 @@ namespace Txt.ABNF
             {
                 throw new ArgumentNullException(nameof(terminal));
             }
-            if (comparer == null)
-            {
-                throw new ArgumentNullException(nameof(comparer));
-            }
+
             if (string.IsNullOrEmpty(terminal))
             {
                 throw new ArgumentException("Value cannot be null or empty.", nameof(terminal));
             }
             this.terminal = terminal;
-            this.comparer = comparer;
+            this.comparer = comparer ?? throw new ArgumentNullException(nameof(comparer));
         }
 
         protected override IEnumerable<Terminal> ReadImpl(ITextScanner scanner, ITextContext context)

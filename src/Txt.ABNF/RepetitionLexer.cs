@@ -17,10 +17,6 @@ namespace Txt.ABNF
         /// <param name="upperBound">A number that indicates the maximum number of occurrences (inclusive).</param>
         public RepetitionLexer([NotNull] ILexer<Element> lexer, int lowerBound, int upperBound)
         {
-            if (lexer == null)
-            {
-                throw new ArgumentNullException(nameof(lexer));
-            }
             if (lowerBound < 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(lowerBound), "Precondition: lowerBound >= 0");
@@ -29,7 +25,7 @@ namespace Txt.ABNF
             {
                 throw new ArgumentOutOfRangeException(nameof(upperBound), "Precondition: upperBound >= lowerBound");
             }
-            Lexer = lexer;
+            Lexer = lexer ?? throw new ArgumentNullException(nameof(lexer));
             LowerBound = lowerBound;
             UpperBound = upperBound;
         }

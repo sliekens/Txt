@@ -14,11 +14,7 @@ namespace Txt.Core
 
         public TextScanner([NotNull] ITextSource textSource)
         {
-            if (textSource == null)
-            {
-                throw new ArgumentNullException(nameof(textSource));
-            }
-            this.textSource = textSource;
+            this.textSource = textSource ?? throw new ArgumentNullException(nameof(textSource));
         }
 
         public int Column => textSource.Column;

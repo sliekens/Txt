@@ -56,11 +56,7 @@ namespace Txt.Core
 
         protected TextSource([NotNull] char[] data)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
-            this.data = data;
+            this.data = data ?? throw new ArgumentNullException(nameof(data));
             dataLength = this.data.Length;
         }
 
